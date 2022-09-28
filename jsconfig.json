@@ -9,6 +9,7 @@
       "@assets/*": ["assets/*"],
       "@hooks/*": ["hooks/*"],
       "@utils/*": ["utils/*"],
+      "@public/*": ["public/*"]
     }
   }
 }
