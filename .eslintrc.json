@@ -1,0 +1,8 @@
+{
+  "plugins": ["prettier"],
+  "extends": ["next/core-web-vitals", "eslint:recommended", "plugin:prettier/recommended", "google"],
+  "rules": {
+    "prettier/prettier": "error"
+  },
+  "parserOptions": {"requireConfigFile": false},
+}
