@@ -1,7 +1,8 @@
 {
     "env": {
         "browser": true,
-        "es2021": true
+        "es2021": true,
+        "node": true
     },
     "extends": [
         "plugin:react/recommended",
@@ -22,5 +23,12 @@
     ],
     "rules": {
         "react/react-in-jsx-scope": 0 //off
-    }
+    },
+    "ignore":[
+        "constructor", 
+        "render", 
+        "componentDidUpdate", 
+        "getDerivedStateFromProps", 
+        "componentDidMount"
+    ]
 }
