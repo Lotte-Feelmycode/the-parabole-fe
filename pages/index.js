@@ -1,5 +1,5 @@
-import Head from 'next/head'
-import CommerceLayout from '@components/common/CommerceLayout'
+import Head from 'next/head';
+import CommerceLayout from '@components/common/CommerceLayout';
 
 export default function Home() {
   return (
@@ -16,5 +16,5 @@ export default function Home() {
         </div>
       </section>
     </CommerceLayout>
-  )
+  );
 }
