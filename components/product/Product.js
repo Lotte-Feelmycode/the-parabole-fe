@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
+import styles from '@styles/product/product.module.scss';
 
 export default function Product({ product }) {
-  console.log('product props : ' + JSON.stringify(product));
+  // console.log('product props : ' + JSON.stringify(product));
   const router = useRouter();
   const onClick = (id, title) => {
     router.push(
@@ -14,11 +15,13 @@ export default function Product({ product }) {
       `/productDetail/${id}`,
     );
   };
+
   return (
-    <div>
+    <div className={styles.productInfo}>
       <a onClick={() => onClick(product.productId || 1, product.productName)}>
         <div>
           <img
+            className="productImg"
             src="https://contents.lotteon.com/itemimage/_v114501/LO/10/00/39/35/55/_1/00/03/93/55/6/LO1000393555_1000393556_1.jpg/dims/optimize/dims/resizemc/360x360"
             alt="천연 순면 마스크팩 시트 4종 100매 티트리 쉐어버터 로얄제리젤리 알로에"
           />
