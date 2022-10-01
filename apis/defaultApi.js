@@ -16,7 +16,7 @@ export const GET = async (url, params) => {
   }
 
   const { data } = await axios
-    .get(apiUrl, { params: params })
+    .get(apiUrl, { params })
     .then((res) => {
       return res.data;
     })
