@@ -5,8 +5,12 @@ import styles from '@styles/Home.module.scss';
 
 export default function Home() {
   const productListProps = {
-    size: 10,
+    size: 20,
     page: 1,
+    sellerId: '',
+    sellerName: '',
+    category: '',
+    productName: '',
   };
 
   return (

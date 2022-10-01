@@ -15,7 +15,7 @@ export const GET = async (url, params) => {
     return;
   }
 
-  await axios
+  const { data } = await axios
     .get(apiUrl, { params: params })
     .then((res) => {
       return res.data;
@@ -23,6 +23,7 @@ export const GET = async (url, params) => {
     .catch(function (error) {
       console.log(error);
     });
+  return data;
 };
 
 export const POST = async (url, body) => {
