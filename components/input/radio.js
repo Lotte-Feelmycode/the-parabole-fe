@@ -1,10 +1,12 @@
 import styled from "@emotion/styled";
-import { list } from "postcss";
+import useInput from "@hooks/useInput";
 import { useState } from "react";
+
 const Radio = ({
   name,
+  value,
+  text,
   onChange,
-  options,
 }) => {
   const [inputStatus, setInputStatus] = useState(null)
 
@@ -13,25 +15,18 @@ const Radio = ({
     onChange && onChange({ args: inputStatus })
   }
 
-  console.log(options);
-  const radioList = 
-    options && 
-    options.map(option => {
-      return (
-        <Div>
-          <RadioInput
-            type="radio"
-            name={name}
-            value={option.value}
-            checked={inputStatus === option.value}
-            onChange={() => handleRadiobutton(option.value)}
-          ></RadioInput>
-          <Label htmlFor={option.value}>{option.text}</Label>
-        </Div>
-      )
-    })
   return (
-    <Div>{radioList}</Div>
+    <Div>
+      <RadioInput
+        type="radio"
+        name={name}
+        value={value}
+        checked={inputStatus === value}
+        onChange={() => handleRadiobutton(value)
+        }
+      ></RadioInput>
+      <Label htmlFor={value}>{text}</Label>
+    </Div>
     
   )
 }
