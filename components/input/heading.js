@@ -5,13 +5,13 @@ const Heading = ({
   type,
   marginSize = 5,
 }) => {
-  console.log(type);
+  const titleVal = title;
 
   switch (type) {
-    case 'h1' : return <H1>{title}</H1>
-    case 'h2' : return <H2>{title}</H2>
-    case 'h3' : return <H3>{title}</H3>
-    default : return <H4>{title}</H4>
+    case 'h1' : return <H1>{titleVal}</H1>
+    case 'h2' : return <H2>{titleVal}</H2>
+    case 'h3' : return <H3>{titleVal}</H3>
+    default : return <H4>{titleVal}</H4>
   }
 }
 
