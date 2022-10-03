@@ -1,6 +1,7 @@
 import { POST } from '@apis/defaultApi';
 import useInput from '@hooks/useInput';
 import styled from '@emotion/styled';
+import Heading from '@components/input/heading';
 
 export default function Event() {
   const [title, onChangeTitle] = useInput('');
@@ -21,10 +22,10 @@ export default function Event() {
 
   return (
     <FormTemplate onSubmit={onSubmitHandler}>
-      <PageTitleTemplate>이벤트 등록</PageTitleTemplate>
+      <Heading title="이벤트 등록" type="h1"></Heading>
       <Divider></Divider>
+      <Heading title="이벤트 제목" type="h2"></Heading>
 
-      <FormTitleTemplate>이벤트 제목</FormTitleTemplate>
       <InputTemplate
         type="text"
         value={title}
@@ -32,7 +33,7 @@ export default function Event() {
         placeholder="이벤트 제목을 입력하세요"
       ></InputTemplate>
 
-      <FormTitleTemplate>이벤트 설명</FormTitleTemplate>
+      <Heading title="이벤트 설명" type="h2"></Heading>
       <InputTemplate
         type="text"
         value={descript}
@@ -40,14 +41,14 @@ export default function Event() {
         placeholder="이벤트 설명을 입력하세요"
       ></InputTemplate>
 
-      <FormTitleTemplate>이벤트 타입</FormTitleTemplate>
+      <Heading title="이벤트 타입" type="h2"></Heading>
       <label>
         <input type="radio" value={'RAFFLE'}></input>
         래플
       </label>
       <label>
         <input type="radio" value={'RAFFLE'}></input>
-        래플
+        선착순
       </label>
 
       <div className="posting-button-container">
@@ -69,12 +70,8 @@ const InputTemplate = styled.input`
   border: 1px solid #cccccc;
   font-size: 12px;
   padding: 1% 2%;
-  margin-top: 10px;
+  margin-top: 5px;
   margin-bottom: 30px;
-`;
-
-const PageTitleTemplate = styled.h1`
-  font-size: 24px;
 `;
 
 const FormTitleTemplate = styled.h3`
