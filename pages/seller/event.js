@@ -4,27 +4,27 @@ import styled from '@emotion/styled';
 import Heading from '@components/input/heading';
 import Input from '@components/input/input';
 import Radio from '@components/input/radio';
+import PostButton from '@components/input/button';
+import { useState } from 'react';
 export default function Event() {
   const [title, onChangeTitle] = useInput('');
   const [descript, onChangeDescript] = useInput('');
+  const [type, setEventType] = useState({ type: "FCFS" });
 
-  const eventTypeList = [
-    {
-      text: '래플 이벤트',
-      value: 'RAFFLE',
-    },
-    {
-      text: '선착순 이벤트',
-      value: 'FCFS',
-    },
-  ]
+  const handleTypeChange = (e) => {
+    // console.log(e);
+    // const { name, value } = e.target;
+    // setSelectData({
+    //   [name]: value,
+    // });
+  };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const eventParams = {
       sellerId: 1,
       createdBy: 'SELLER',
-      type: 'RAFFLE',
+      type: document.querySelector('input[name=eventType]:checked').value,
       title: title,
       descript: descript,
     };
@@ -55,15 +55,28 @@ export default function Event() {
       ></Input>
 
       <Heading title="이벤트 타입" type="h2"></Heading>
+      <Div>
+        <Radio
+          name="eventType"
+          value="RAFFLE"
+          text="추첨 이벤트"
+          onChange={handleTypeChange}
+        ></Radio>
 
-      <Radio name="eventType" options={eventTypeList}></Radio>
+        <Radio
+          name="eventType"
+          value="FCFS"
+          text="선착순 이벤트"
+          onChange={handleTypeChange(this)}
+        ></Radio>
+      </Div>
+
       <Divider></Divider>
-
-      <div className="posting-button-container">
-        <Button type="submit" onClick={onSubmitHandler}>
-          등록하기
-        </Button>
-      </div>
+      <PostButton
+        id="btnPost"
+        onClick={onSubmitHandler}
+        buttonText="등록하기"
+      ></PostButton>
     </FormTemplate>
   );
 }
@@ -79,11 +92,8 @@ const Divider = styled.hr`
   margin-bottom: 20px;
 `;
 
-const Button = styled.button`
-  background-color: tomato;
-  color: white;
-  focust: outline-none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  padding: 0.5em 1.5em 0.5em 1.5em;
-`;
+const Div = styled.div`
+  display: flex;
+  align-items : center;
+  flsx-direction : row;
+`
