@@ -2,6 +2,7 @@ import { POST } from '@apis/defaultApi';
 import useInput from '@hooks/useInput';
 import styled from '@emotion/styled';
 import Heading from '@components/input/heading';
+import Input from '@components/input/input';
 
 export default function Event() {
   const [title, onChangeTitle] = useInput('');
@@ -25,21 +26,22 @@ export default function Event() {
       <Heading title="이벤트 등록" type="h1"></Heading>
       <Divider></Divider>
       <Heading title="이벤트 제목" type="h2"></Heading>
-
-      <InputTemplate
+      <Input
         type="text"
+        name="eventTitle"
         value={title}
         onChange={onChangeTitle}
-        placeholder="이벤트 제목을 입력하세요"
-      ></InputTemplate>
+        placeHolder="이벤트 제목을 입력하세요"
+      ></Input>
 
       <Heading title="이벤트 설명" type="h2"></Heading>
-      <InputTemplate
+      <Input
         type="text"
+        name="eventDescript"
         value={descript}
         onChange={onChangeDescript}
-        placeholder="이벤트 설명을 입력하세요"
-      ></InputTemplate>
+        placeHolder="이벤트 설명을 입력하세요"
+      ></Input>
 
       <Heading title="이벤트 타입" type="h2"></Heading>
       <label>
