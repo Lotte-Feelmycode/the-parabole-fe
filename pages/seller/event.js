@@ -3,10 +3,21 @@ import useInput from '@hooks/useInput';
 import styled from '@emotion/styled';
 import Heading from '@components/input/heading';
 import Input from '@components/input/input';
-
+import Radio from '@components/input/radio';
 export default function Event() {
   const [title, onChangeTitle] = useInput('');
   const [descript, onChangeDescript] = useInput('');
+
+  const eventTypeList = [
+    {
+      text: '래플 이벤트',
+      value: 'RAFFLE',
+    },
+    {
+      text: '선착순 이벤트',
+      value: 'FCFS',
+    },
+  ]
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -44,14 +55,9 @@ export default function Event() {
       ></Input>
 
       <Heading title="이벤트 타입" type="h2"></Heading>
-      <label>
-        <input type="radio" value={'RAFFLE'}></input>
-        래플
-      </label>
-      <label>
-        <input type="radio" value={'RAFFLE'}></input>
-        선착순
-      </label>
+
+      <Radio name="eventType" options={eventTypeList}></Radio>
+      <Divider></Divider>
 
       <div className="posting-button-container">
         <Button type="submit" onClick={onSubmitHandler}>
@@ -67,18 +73,6 @@ const FormTemplate = styled.form`
   flex-direction: column;
 `;
 
-const InputTemplate = styled.input`
-  color: black;
-  border: 1px solid #cccccc;
-  font-size: 12px;
-  padding: 1% 2%;
-  margin-top: 5px;
-  margin-bottom: 30px;
-`;
-
-const FormTitleTemplate = styled.h3`
-  font-size: 18px;
-`;
 
 const Divider = styled.hr`
   color: black;
@@ -86,7 +80,7 @@ const Divider = styled.hr`
 `;
 
 const Button = styled.button`
-  background-color: rgb(99, 102, 241, 1);
+  background-color: tomato;
   color: white;
   focust: outline-none;
   border-radius: 0.25rem;
