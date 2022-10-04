@@ -13,7 +13,7 @@ const PostButton = ({ id, name, buttonText, onClickFunc }) => {
 const Button = styled.button`
   background-color: tomato;
   color: white;
-  focust: outline-none;
+  focus: outline-none;
   border-radius: 0.25rem;
   cursor: pointer;
   padding: 0.5em 1.5em 0.5em 1.5em;
