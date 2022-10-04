@@ -7,12 +7,9 @@ export default function Product({ product }) {
   const onClick = (id, title) => {
     router.push(
       {
-        pathname: `/productDetail/${id}`,
-        query: {
-          title,
-        },
+        pathname: `/product/${id}`,
       },
-      `/productDetail/${id}`,
+      `/product/${id}`,
     );
   };
 
