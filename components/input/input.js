@@ -1,7 +1,17 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
 const Input = ({
-  type, id, name, value, className, onChange, onInput, onKeyUp, onKeyDown, placeHolder, maxLength, 
+  type,
+  id,
+  name,
+  value,
+  className,
+  onChange,
+  onInput,
+  onKeyUp,
+  onKeyDown,
+  placeHolder,
+  maxLength,
 }) => {
   return (
     <InputCSS
@@ -16,9 +26,9 @@ const Input = ({
       onKeyDown={onKeyDown}
       placeholder={placeHolder}
       maxLength={maxLength}
-      ></InputCSS>
-  )
-}
+    ></InputCSS>
+  );
+};
 
 const InputCSS = styled.input`
   color: black;
@@ -29,4 +39,4 @@ const InputCSS = styled.input`
   margin-bottom: 30px;
 `;
 
-export default Input
+export default Input;

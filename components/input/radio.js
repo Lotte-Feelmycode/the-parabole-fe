@@ -1,19 +1,14 @@
-import styled from "@emotion/styled";
-import useInput from "@hooks/useInput";
-import { useState } from "react";
+import styled from '@emotion/styled';
+import useInput from '@hooks/useInput';
+import { useState } from 'react';
 
-const Radio = ({
-  name,
-  value,
-  text,
-  onChange,
-}) => {
-  const [inputStatus, setInputStatus] = useState(null)
+const Radio = ({ name, value, text, onChange }) => {
+  const [inputStatus, setInputStatus] = useState(null);
 
-  const handleRadiobutton = radioBtnValue => {
-    setInputStatus(radioBtnValue)
-    onChange && onChange({ args: inputStatus })
-  }
+  const handleRadiobutton = (radioBtnValue) => {
+    setInputStatus(radioBtnValue);
+    onChange && onChange({ args: inputStatus });
+  };
 
   return (
     <Div>
@@ -22,26 +17,24 @@ const Radio = ({
         name={name}
         value={value}
         checked={inputStatus === value}
-        onChange={() => handleRadiobutton(value)
-        }
+        onChange={() => handleRadiobutton(value)}
       ></RadioInput>
       <Label htmlFor={value}>{text}</Label>
     </Div>
-    
-  )
-}
+  );
+};
 
 const Div = styled.div`
   display: flex;
-  align-items : center;
-  flsx-direction : row;
-`
+  align-items: center;
+  flsx-direction: row;
+`;
 const Label = styled.label`
   font-size: 16px;
   line-height: 2rem;
   padding: 0.2em 0.4em;
   cursor: pointer;
-`
+`;
 const RadioInput = styled.input`
   vertical-align: middle;
   appearance: none;
@@ -56,14 +49,13 @@ const RadioInput = styled.input`
     cursor: pointer;
   }
 
-  ${(props) => 
-    props.checked && `
+  ${(props) =>
+    props.checked &&
+    `
       &:checked {
         border: 0.35em solid tomato;  
       }   
-    `
-  }
+    `}
+`;
 
-`
-
-export default Radio
+export default Radio;

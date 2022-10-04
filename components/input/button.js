@@ -1,18 +1,14 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
-const PostButton = ({
-  id, name, buttonText, onClickFunc
-}) => {
+const PostButton = ({ id, name, buttonText, onClickFunc }) => {
   return (
-  <div className="posting-button-container">
-    <Button
-    id={id}
-    name={name}
-    onClick={onClickFunc}
-    >{buttonText}</Button>
-  </div>
-  )
-}
+    <div className="posting-button-container">
+      <Button id={id} name={name} onClick={onClickFunc}>
+        {buttonText}
+      </Button>
+    </div>
+  );
+};
 
 const Button = styled.button`
   background-color: tomato;
@@ -23,5 +19,4 @@ const Button = styled.button`
   padding: 0.5em 1.5em 0.5em 1.5em;
 `;
 
-
-export default PostButton
+export default PostButton;

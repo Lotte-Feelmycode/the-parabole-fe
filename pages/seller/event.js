@@ -9,8 +9,9 @@ import { useState } from 'react';
 export default function Event() {
   const [title, onChangeTitle] = useInput('');
   const [descript, onChangeDescript] = useInput('');
-  const [type, setEventType] = useState({ type: "FCFS" });
+  const [type, setEventType] = useState({ type: 'FCFS' });
 
+  // TODO : 라디오버튼 수정예정
   const handleTypeChange = (e) => {
     // console.log(e);
     // const { name, value } = e.target;
@@ -19,6 +20,7 @@ export default function Event() {
     // });
   };
 
+  // API 호출 부분 수정 예정
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const eventParams = {
@@ -86,7 +88,6 @@ const FormTemplate = styled.form`
   flex-direction: column;
 `;
 
-
 const Divider = styled.hr`
   color: black;
   margin-bottom: 20px;
@@ -94,6 +95,7 @@ const Divider = styled.hr`
 
 const Div = styled.div`
   display: flex;
-  align-items : center;
-  flsx-direction : row;
-`
+  align-items: center;
+  flsx-direction: row;
+  margin-bottom: 20px;
+`;
