@@ -15,14 +15,18 @@ export const GET = async (url, params) => {
     return;
   }
 
-  await axios
+  const { data } = await axios
     .get(apiUrl, { params: params })
     .then((res) => {
-      return res.data;
+      console.log(res);
+      if (res.data) return res.data;
+      else return res;
     })
     .catch(function (error) {
       console.log(error);
+      return {};
     });
+  return data;
 };
 
 export const POST = async (url, body) => {
@@ -33,16 +37,20 @@ export const POST = async (url, body) => {
     return;
   }
 
-  await axios
+  const { data } = await axios
     .post(apiUrl, JSON.stringify(body), {
       headers: { 'Content-Type': `application/json` },
     })
     .then((res) => {
-      return res.data;
+      console.log(res);
+      if (res.data) return res.data;
+      else return res;
     })
     .catch(function (error) {
       console.log(error);
+      return {};
     });
+  return data;
 };
 
 export const PATCH = async (url, body) => {
@@ -53,16 +61,20 @@ export const PATCH = async (url, body) => {
     return;
   }
 
-  await axios
+  const { data } = await axios
     .patch(apiUrl, JSON.stringify(body), {
       headers: { 'Content-Type': `application/json` },
     })
     .then((res) => {
-      return res.data;
+      console.log(res);
+      if (res.data) return res.data;
+      else return res;
     })
     .catch(function (error) {
       console.log(error);
+      return {};
     });
+  return data;
 };
 
 export const DELETE = async (url, body) => {
@@ -73,15 +85,18 @@ export const DELETE = async (url, body) => {
     return;
   }
 
-  await axios
+  const { data } = await axios
     .delete(apiUrl, JSON.stringify(body), {
       headers: { 'Content-Type': `application/json` },
     })
     .then((res) => {
-      console.log(res.data);
-      return res.data;
+      console.log(res);
+      if (res.data) return res.data;
+      else return res;
     })
     .catch(function (error) {
       console.log(error);
+      return {};
     });
+  return data;
 };
