@@ -31,6 +31,7 @@ const Input = ({
 };
 
 const InputCSS = styled.input`
+  max-width: 60%;
   color: black;
   border: 1px solid #cccccc;
   font-size: 12px;
