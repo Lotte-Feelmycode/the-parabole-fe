@@ -37,7 +37,7 @@ const InputCSS = styled.input`
   font-size: 12px;
   padding: 1% 2%;
   margin-top: 5px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 `;
 
 export default Input;
