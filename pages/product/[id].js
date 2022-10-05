@@ -16,7 +16,7 @@ export default function ProductDetail() {
     const productId = router.query.id;
     if (productId) setProductId(productId);
     GET(`/product`, { productId: productId }).then((res) => {
-      if (res.product) {
+      if (res && res.product) {
         setProduct(res.product);
         setProductDetail(res.productDetail);
         setSeller(res.seller);
@@ -31,13 +31,13 @@ export default function ProductDetail() {
         <div className="container px-5 py-24 mx-auto">
           <h1 className={styles.section}>상품 상세 화면</h1>
           <div>
-            <div className="productNameTitle">
+            <div className="product-name-title">
               <h1>{product.productName}</h1>
             </div>
-            <div className="productPrice">
+            <div className="product-price">
               <span>{product.productPrice}</span>원
             </div>
-            <div className="productDetailImg">
+            <div className="product-detail-img">
               <ul>
                 {productDetail &&
                   productDetail.map((detail) => (
