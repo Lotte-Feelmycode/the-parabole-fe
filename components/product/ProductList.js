@@ -51,7 +51,7 @@ export default function ProductList({
   }, []);
 
   return (
-    <ul className="srchProductList">
+    <ul className="srch-product-list">
       {productList &&
         productList.map((product) => (
           <li key={product.productId}>
