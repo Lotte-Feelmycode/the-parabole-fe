@@ -23,7 +23,10 @@ export default function CommerceHeader() {
             <Link href="/">
               <a className="mr-5 hover:text-gray-900">홈</a>
             </Link>
-            <Link href="/sellerOffice">
+            <Link href="/event">
+              <a className="mr-5 hover:text-gray-900">이벤트</a>
+            </Link>
+            <Link href="/seller/main">
               <a className="mr-5 hover:text-gray-900">판매자센터</a>
             </Link>
             <Link href="/login">
