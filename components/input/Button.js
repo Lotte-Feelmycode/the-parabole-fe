@@ -4,10 +4,10 @@ const PostButton = ({ id, name, buttonText, onClickFunc, version }) => {
   var fontColor = '#ffffff';
   var backgroundColor = 'tomato';
 
-  if (version == 'light') {
+  if (version === 'light') {
     fontColor = 'black';
     backgroundColor = '#f9f9f9';
-  } else if (version == 'dark') {
+  } else if (version === 'dark') {
     fontColor = '#ffffff';
     backgroundColor = '#000000';
   }
