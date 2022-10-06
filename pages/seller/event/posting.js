@@ -7,6 +7,7 @@ import Radio from '@components/input/Radio';
 import PostButton from '@components/input/Button';
 import { useState, useRef } from 'react';
 import ImageUploader from '@components/input/ImageUploader';
+import BasicDateTimePicker from '@components/input/DatePicker';
 
 export default function Event() {
   const [title, onChangeTitle] = useInput('');
@@ -78,6 +79,13 @@ export default function Event() {
           onChange={handleTypeChange(this)}
         ></Radio>
       </Div>
+
+      <Divider></Divider>
+      <Heading title="이벤트 진행 일시" type="h2" />
+      <Heading title="시작 일시" type="h3" />
+      <BasicDateTimePicker />
+      <Heading title="종료 일시" type="h3" />
+      <BasicDateTimePicker />
       <Divider></Divider>
 
       {/* TODO: 이미지 업로드 추후 수정 */}
@@ -117,4 +125,10 @@ const Div = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+`;
+
+const DivDate = styled.div`
+  display: flex;
+  margin-bottom: 20px;
+  max-width: 50%;
 `;
