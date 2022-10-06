@@ -1,25 +1,46 @@
-import { GET } from '@apis/defaultApi';
-import SiteHead from '@components/common/SiteHead';
-import Heading from '@components/input/heading';
 import useInput from '@hooks/useInput';
 import styled from '@emotion/styled';
-import Input from '@components/input/input';
+import { useRouter } from 'next/router';
 import CommerceLayout from '@components/common/CommerceLayout';
+import SiteHead from '@components/common/SiteHead';
+import Heading from '@components/input/heading';
 import PostButton from '@components/input/button';
+import Input from '@components/input/input';
+import axios from 'axios';
 
-export default function UserSignIn() {
+export default function Signin() {
+  const router = useRouter();
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
 
-  const onSubmitHandler = (e) => {
+  function submitFormHandler(e) {
     e.preventDefault();
-    const signInDto = {
+
+    const reqBody = {
       email: email,
       password: password,
     };
 
-    const signin = GET('/user', signInDto);
-  };
+    axios
+      .post('http://localhost:8080/api/v1/user/signin', reqBody, {})
+      .then((res) => {
+        console.log(res.data);
+
+        if (res.status === 200) {
+          sessionStorage.setItem('login', res.data.userId);
+          if (res.data.message.includes('판매자')) {
+            router.push('/seller/main');
+          } else if (res.data.message.includes('사용자')) {
+            router.push('/');
+          }
+          alert(res.data.message);
+        }
+      })
+      .catch((error) => {
+        console.log(error + ' : 로그인 실패');
+        alert('로그인 실패');
+      });
+  }
 
   return (
     <CommerceLayout>
@@ -27,7 +48,6 @@ export default function UserSignIn() {
       <Divider />
       <Heading title="로그인" type="h1"></Heading>
       <br />
-
       <Div>
         <Heading title="이메일" type="h3"></Heading>
         <Input
@@ -56,11 +76,19 @@ export default function UserSignIn() {
         <br />
         <div className="clearfix">
           <SplitDiv>
-            <PostButton name="signupbtn" buttonText="회원가입하기"></PostButton>
+            <PostButton
+              name="signupbtn"
+              buttonText="회원가입하기"
+              onClickFunc={() => router.push('/user/signup')}
+            ></PostButton>
           </SplitDiv>
           <text>&nbsp;&nbsp;&nbsp;&nbsp;</text>
           <SplitDiv>
-            <PostButton name="signinbtn" buttonText="로그인하기"></PostButton>
+            <PostButton
+              name="signinbtn"
+              buttonText="로그인하기"
+              onClickFunc={submitFormHandler}
+            ></PostButton>
           </SplitDiv>
         </div>
       </Div>

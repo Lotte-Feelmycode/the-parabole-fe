@@ -1,4 +1,3 @@
-import { POST } from '@apis/defaultApi';
 import SiteHead from '@components/common/SiteHead';
 import Heading from '@components/input/heading';
 import useInput from '@hooks/useInput';
@@ -6,8 +5,14 @@ import styled from '@emotion/styled';
 import Input from '@components/input/input';
 import CommerceLayout from '@components/common/CommerceLayout';
 import PostButton from '@components/input/button';
+import { useRouter } from 'next/router';
+import axios from 'axios';
+import Signupconfirm from './signupconfirm';
+import { POST } from '@apis/defaultApi';
 
-export default function UserSignUp() {
+export default function Signup() {
+  const router = useRouter();
+
   const [email, onChangeEmail] = useInput('');
   const [username, onChangeUsername] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
@@ -15,9 +20,10 @@ export default function UserSignUp() {
   const [password, onChangePassword] = useInput('');
   const [passwordConfirmation, onChangePasswordConfirmation] = useInput('');
 
-  const onSubmitHandler = (e) => {
+  function submitFormHandler(e) {
     e.preventDefault();
-    const signUpDto = {
+
+    const reqBody = {
       email: email,
       username: username,
       nickname: nickname,
@@ -26,8 +32,45 @@ export default function UserSignUp() {
       passwordConfirmation: passwordConfirmation,
     };
 
-    const signup = POST('/user', signUpDto);
-  };
+    POST('/user/signup', reqBody)
+      .then((data) => {
+        console.log(data);
+        // {
+        //   <Signupconfirm userId={data}></Signupconfirm>;
+        // }
+        // router.push('/user/signupconfirm');
+        router.push(
+          {
+            pathname: '/user/signupconfirm',
+            query: { userId: res.data },
+          },
+          '/otp-verification',
+        );
+      })
+      .catch(function (error) {
+        console.log(error);
+        return {};
+      });
+
+    //res.data
+    //console.log(signdata.data);
+    //alert(signdata);//res.data
+    // axios
+    //   .post('http://localhost:8080/api/v1/user/signup', reqBody, {})
+    //   .then((res) => {
+    //     console.log(res);
+    //     console.log(res.data);
+    //     console.log(res.data.data);
+    //     alert(res.data.message);
+    //     // router.push('/user/signupconfirm');
+    //     //
+    //   })
+
+    //   .catch((error) => {
+    //     console.log(error + ' : 회원가입 실패');
+    //     alert('회원가입 실패');
+    //   });
+  }
 
   return (
     <CommerceLayout>
@@ -89,14 +132,18 @@ export default function UserSignUp() {
 
         <div className="clearfix">
           <SplitDiv>
-            <PostButton name="cancelbtn" buttonText="취소하기"></PostButton>
+            <PostButton
+              name="cancelbtn"
+              buttonText="취소하기"
+              onClickFunc={() => router.push('/')}
+            ></PostButton>
           </SplitDiv>
           <text>&nbsp;&nbsp;&nbsp;&nbsp;</text>
           <SplitDiv>
             <PostButton
               name="signupbtn"
               buttonText="회원가입하기"
-              type="submit"
+              onClickFunc={submitFormHandler}
             ></PostButton>
           </SplitDiv>
         </div>
