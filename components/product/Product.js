@@ -6,12 +6,9 @@ export default function Product({ product }) {
   // console.log('product props : ' + JSON.stringify(product));
   const router = useRouter();
   const onClick = (id, title) => {
-    router.push(
-      {
-        pathname: `/product/${id}`,
-      },
-      `/product/${id}`,
-    );
+    router.push({
+      pathname: `/product/${id}`,
+    });
   };
 
   return (
