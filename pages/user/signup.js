@@ -5,9 +5,7 @@ import styled from '@emotion/styled';
 import Input from '@components/input/input';
 import CommerceLayout from '@components/common/CommerceLayout';
 import PostButton from '@components/input/button';
-import { useRouter } from 'next/router';
-import axios from 'axios';
-import Signupconfirm from './signupconfirm';
+import Router from 'next/router';
 import { POST } from '@apis/defaultApi';
 
 export default function Signup() {
@@ -32,44 +30,21 @@ export default function Signup() {
       passwordConfirmation: passwordConfirmation,
     };
 
-    POST('/user/signup', reqBody)
-      .then((data) => {
-        console.log(data);
-        // {
-        //   <Signupconfirm userId={data}></Signupconfirm>;
-        // }
-        // router.push('/user/signupconfirm');
+    POST(`/user/signup`, reqBody)
+      .then((id) => {
+        console.log(id);
         router.push(
           {
-            pathname: '/user/signupconfirm',
-            query: { userId: res.data },
+            pathname: 'user/confirm',
+            query: { id: id },
           },
-          '/otp-verification',
+          '/user/confirm',
         );
       })
       .catch(function (error) {
         console.log(error);
         return {};
       });
-
-    //res.data
-    //console.log(signdata.data);
-    //alert(signdata);//res.data
-    // axios
-    //   .post('http://localhost:8080/api/v1/user/signup', reqBody, {})
-    //   .then((res) => {
-    //     console.log(res);
-    //     console.log(res.data);
-    //     console.log(res.data.data);
-    //     alert(res.data.message);
-    //     // router.push('/user/signupconfirm');
-    //     //
-    //   })
-
-    //   .catch((error) => {
-    //     console.log(error + ' : 회원가입 실패');
-    //     alert('회원가입 실패');
-    //   });
   }
 
   return (
