@@ -1,12 +1,7 @@
-import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 
 export default function Order({ order }) {
   const router = useRouter();
-
-  const onClick = (id) => {
-    router.push({});
-  };
 
   return (
     <div>
@@ -23,6 +18,8 @@ export default function Order({ order }) {
       <div>
         {order.productCnt} | {order.productRemain}
       </div>
+      <div>주문 상태 {order.state}</div>
+      <div>결제 수단 {order.payState}</div>
     </div>
   );
 }
