@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { GET } from '@apis/defaultApi';
 import styled from '@emotion/styled';
 import Pagination from '@components/common/Pagination';
+import * as color from '@utils/constants/themeColor';
 
 export default function ProductList({
   sellerId,
@@ -78,6 +79,7 @@ export default function ProductList({
           totalPage={totalPages}
           activePage={nowPage}
           setNowPageFunction={setNowPage}
+          theme={color.BlueTheme}
         />
       </PaginationSection>
     </div>
