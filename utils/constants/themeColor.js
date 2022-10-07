@@ -1,13 +1,15 @@
-export const MainColor1 = '#0084FF';
-export const ThemeColor1_1 = '#42BFDD';
-export const ThemeColor1_2 = '#BBE6E4';
+export const MainBlue = '#0084FF';
+export const ThemeBlue1 = '#42BFDD';
+export const ThemeBlue2 = '#BBE6E4';
 
-export const MainColor2 = '#FC4D99';
-export const ThemeColor2_1 = '#f283b6';
-export const ThemeColor2_2 = '#eed2cc';
+export const MainPink = '#FC4D99';
+export const ThemePink1 = '#f283b6';
+export const ThemePink2 = '#eed2cc';
 
-export const ThemeWhite = '#F0F6F6';
-export const ThemeGray = '#D6D6D6';
+export const ThemeWhite = '#FCFAFA';
 
-export const ThemeBlack1 = '#14110F';
-export const ThemeBlack2 = '#000009';
+export const ThemeGray1 = '#D6D6D6';
+export const ThemeGray2 = '#525252';
+
+export const ThemeBlack1 = '#0d0709';
+export const ThemeBlack2 = '#030301';
