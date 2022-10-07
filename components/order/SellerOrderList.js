@@ -8,7 +8,6 @@ export default function OrderList({ sellerId }) {
 
   useEffect(() => {
     GET(`/orderinfo/seller`, { sellerId }).then((res) => {
-      console.log(res);
       if (res) {
         setOrderList(res);
       }
