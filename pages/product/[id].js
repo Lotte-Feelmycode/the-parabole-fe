@@ -88,6 +88,7 @@ const ProductThumbnailImgSection = styled.div`
   margin: 10px 10px 10px 0;
   width: 45%;
 `;
+
 const ProductDetailTop = styled.div`
   position: relative;
   float: right;
