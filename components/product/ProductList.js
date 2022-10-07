@@ -1,7 +1,6 @@
 import Product from '@components/product/Product';
 import { useEffect, useState } from 'react';
 import { GET } from '@apis/defaultApi';
-import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import Pagination from '@components/common/Pagination';
 
