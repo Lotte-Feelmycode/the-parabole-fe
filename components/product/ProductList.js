@@ -13,12 +13,11 @@ export default function ProductList({
   page,
   size,
 }) {
-  //데이터용 후크
   const [productList, setProductList] = useState([]);
 
-  //페이징용 후크
   const INIT_PAGENUM = 0;
   const INIT_SIZENUM = 20;
+
   const [totalElementCnt, setTotalElementCnt] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [nowPage, setNowPage] = useState(page ? page : INIT_PAGENUM);
@@ -64,31 +63,31 @@ export default function ProductList({
 
   return (
     <div>
-      <ProductListSection>
-        <ProductUnorderedList className="srch-product-list">
+      <ProductListMain>
+        <ProductListSection>
           {productList &&
             productList.map((product) => (
-              <ProductListItem key={product.productId}>
+              <ProductItem key={product.productId}>
                 <Product product={product} />
-              </ProductListItem>
+              </ProductItem>
             ))}
-        </ProductUnorderedList>
+        </ProductListSection>
         <p>총 상품 갯수 : {totalElementCnt}</p>
-      </ProductListSection>
-      <ProductListPaginationSection>
+      </ProductListMain>
+      <PaginationSection>
         <Pagination
           totalPage={totalPages}
           activePage={nowPage}
           setNowPageFunction={setNowPage}
         />
-      </ProductListPaginationSection>
+      </PaginationSection>
     </div>
   );
 }
 
-const ProductListSection = styled.div``;
-const ProductUnorderedList = styled.ul``;
-const ProductListItem = styled.li``;
-const ProductListPaginationSection = styled.div`
+const ProductListMain = styled.div``;
+const ProductListSection = styled.ul``;
+const ProductItem = styled.li``;
+const PaginationSection = styled.div`
   text-align: center;
 `;
