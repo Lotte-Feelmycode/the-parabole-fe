@@ -11,6 +11,7 @@ const whiteTheme = color.whiteTheme;
 export const Blue = ({
   id,
   name,
+  className,
   buttonText,
   onClickFunc,
   width,
@@ -22,6 +23,7 @@ export const Blue = ({
     <ButtonComp
       id={id}
       name={name}
+      className={className}
       buttonText={buttonText}
       onClickFunc={onClickFunc}
       width={width}
@@ -35,6 +37,7 @@ export const Blue = ({
 export const SmallBlue = ({
   id,
   name,
+  className,
   buttonText,
   onClickFunc,
   width,
@@ -46,6 +49,7 @@ export const SmallBlue = ({
     <ButtonComp
       id={id}
       name={name}
+      className={className}
       buttonText={buttonText}
       onClickFunc={onClickFunc}
       width={width}
@@ -59,6 +63,7 @@ export const SmallBlue = ({
 export const LineBlue = ({
   id,
   name,
+  className,
   buttonText,
   onClickFunc,
   width,
@@ -70,6 +75,7 @@ export const LineBlue = ({
     <OutlineButtonComp
       id={id}
       name={name}
+      className={className}
       buttonText={buttonText}
       onClickFunc={onClickFunc}
       width={width}
@@ -83,6 +89,7 @@ export const LineBlue = ({
 export const Pink = ({
   id,
   name,
+  className,
   buttonText,
   onClickFunc,
   width,
@@ -94,6 +101,7 @@ export const Pink = ({
     <ButtonComp
       id={id}
       name={name}
+      className={className}
       buttonText={buttonText}
       onClickFunc={onClickFunc}
       width={width}
@@ -107,6 +115,7 @@ export const Pink = ({
 export const SmallPink = ({
   id,
   name,
+  className,
   buttonText,
   onClickFunc,
   width,
@@ -118,6 +127,7 @@ export const SmallPink = ({
     <ButtonComp
       id={id}
       name={name}
+      className={className}
       buttonText={buttonText}
       onClickFunc={onClickFunc}
       width={width}
@@ -131,6 +141,7 @@ export const SmallPink = ({
 export const LinePink = ({
   id,
   name,
+  className,
   buttonText,
   onClickFunc,
   width,
@@ -142,6 +153,7 @@ export const LinePink = ({
     <OutlineButtonComp
       id={id}
       name={name}
+      className={className}
       buttonText={buttonText}
       onClickFunc={onClickFunc}
       width={width}
@@ -155,6 +167,7 @@ export const LinePink = ({
 export const White = ({
   id,
   name,
+  className,
   buttonText,
   onClickFunc,
   width,
@@ -166,6 +179,7 @@ export const White = ({
     <ButtonComp
       id={id}
       name={name}
+      className={className}
       buttonText={buttonText}
       onClickFunc={onClickFunc}
       width={width}
@@ -179,6 +193,7 @@ export const White = ({
 export const SmallWhite = ({
   id,
   name,
+  className,
   buttonText,
   onClickFunc,
   width,
@@ -190,6 +205,7 @@ export const SmallWhite = ({
     <ButtonComp
       id={id}
       name={name}
+      className={className}
       buttonText={buttonText}
       onClickFunc={onClickFunc}
       width={width}
@@ -203,6 +219,7 @@ export const SmallWhite = ({
 export const SmallLineWhite = ({
   id,
   name,
+  className,
   buttonText,
   onClickFunc,
   width,
@@ -214,6 +231,7 @@ export const SmallLineWhite = ({
     <OutlineButtonComp
       id={id}
       name={name}
+      className={className}
       buttonText={buttonText}
       onClickFunc={onClickFunc}
       width={width}
@@ -227,6 +245,7 @@ export const SmallLineWhite = ({
 export const LineWhite = ({
   id,
   name,
+  className,
   buttonText,
   onClickFunc,
   width,
@@ -238,6 +257,7 @@ export const LineWhite = ({
     <OutlineButtonComp
       id={id}
       name={name}
+      className={className}
       buttonText={buttonText}
       onClickFunc={onClickFunc}
       width={width}
@@ -251,6 +271,7 @@ export const LineWhite = ({
 const ButtonComp = ({
   id,
   name,
+  className,
   buttonText,
   onClickFunc,
   theme,
@@ -262,6 +283,7 @@ const ButtonComp = ({
     <Button
       id={id}
       name={name}
+      className={className}
       onClick={onClickFunc}
       theme={theme}
       size={size}
@@ -276,6 +298,7 @@ const ButtonComp = ({
 const OutlineButtonComp = ({
   id,
   name,
+  className,
   buttonText,
   onClickFunc,
   theme,
@@ -287,6 +310,7 @@ const OutlineButtonComp = ({
     <OutLineButton
       id={id}
       name={name}
+      className={className}
       onClick={onClickFunc}
       theme={theme}
       size={size}
@@ -305,7 +329,6 @@ const Button = styled.button`
   padding: ${(props) => props.size.padding};
   height: ${(props) => props.size.height};
   width: ${(props) => props.width};
-  focus: outline-none;
   border-radius: 0.25rem;
   cursor: pointer;
   margin: 0 3px;
@@ -332,7 +355,6 @@ const OutLineButton = styled.button`
   padding: ${(props) => props.size.padding};
   height: ${(props) => props.size.height};
   width: ${(props) => props.width};
-  focus: outline-none;
   border-radius: 0.25rem;
   cursor: pointer;
   margin: 0 3px;
