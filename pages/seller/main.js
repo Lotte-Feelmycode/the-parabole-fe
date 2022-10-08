@@ -9,7 +9,7 @@ export default function Home() {
         <Heading title="🎁 이벤트" type="h1" />
         <ul>
           <li>
-            <Link href="event/newevent">
+            <Link href="event/new">
               <a>👉 이벤트 등록</a>
             </Link>
           </li>

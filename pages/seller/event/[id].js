@@ -28,13 +28,11 @@ export default function EventDetail() {
   const deleteClickHandler = async (e) => {
     e.preventDefault();
     DELETE(`/event/${eventId}`, {}).then((res) => {
-      console.log('page', res);
       if (res !== null) {
+        //TODO: 수정필요
         alert('삭제 되었습니다. ');
         router.push({ pathname: `/seller/event/list` }, `/seller/event/list`);
       }
-      console.log('eventId', eventId);
-      alert('');
     });
   };
 
