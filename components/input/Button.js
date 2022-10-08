@@ -8,315 +8,157 @@ const BlueTheme = color.BlueTheme;
 const PinkTheme = color.PinkTheme;
 const whiteTheme = color.whiteTheme;
 
-export const Blue = ({
-  id,
-  name,
-  className,
-  buttonText,
-  onClickFunc,
-  width,
-  disabled,
-}) => {
+export const Blue = ({ buttonText, onClickFunc, css }) => {
   const theme = BlueTheme;
   const size = OriginSize;
   return (
     <ButtonComp
-      id={id}
-      name={name}
-      className={className}
       buttonText={buttonText}
       onClickFunc={onClickFunc}
-      width={width}
       theme={theme}
       size={size}
-      disabled={disabled}
+      css={css}
     />
   );
 };
 
-export const SmallBlue = ({
-  id,
-  name,
-  className,
-  buttonText,
-  onClickFunc,
-  width,
-  disabled,
-}) => {
+export const SmallBlue = ({ buttonText, onClickFunc, css }) => {
   const theme = BlueTheme;
   const size = SmallSize;
   return (
     <ButtonComp
-      id={id}
-      name={name}
-      className={className}
       buttonText={buttonText}
       onClickFunc={onClickFunc}
-      width={width}
       theme={theme}
       size={size}
-      disabled={disabled}
+      css={css}
     />
   );
 };
 
-export const LineBlue = ({
-  id,
-  name,
-  className,
-  buttonText,
-  onClickFunc,
-  width,
-  disabled,
-}) => {
+export const LineBlue = ({ buttonText, onClickFunc, css }) => {
   const theme = BlueTheme;
   const size = OriginSize;
   return (
     <OutlineButtonComp
-      id={id}
-      name={name}
-      className={className}
       buttonText={buttonText}
       onClickFunc={onClickFunc}
-      width={width}
       theme={theme}
       size={size}
-      disabled={disabled}
+      css={css}
     />
   );
 };
 
-export const Pink = ({
-  id,
-  name,
-  className,
-  buttonText,
-  onClickFunc,
-  width,
-  disabled,
-}) => {
+export const Pink = ({ buttonText, onClickFunc, css }) => {
   const theme = PinkTheme;
   const size = OriginSize;
   return (
     <ButtonComp
-      id={id}
-      name={name}
-      className={className}
       buttonText={buttonText}
       onClickFunc={onClickFunc}
-      width={width}
       theme={theme}
       size={size}
-      disabled={disabled}
+      css={css}
     />
   );
 };
 
-export const SmallPink = ({
-  id,
-  name,
-  className,
-  buttonText,
-  onClickFunc,
-  width,
-  disabled,
-}) => {
+export const SmallPink = ({ buttonText, onClickFunc, css }) => {
   const theme = PinkTheme;
   const size = SmallSize;
   return (
     <ButtonComp
-      id={id}
-      name={name}
-      className={className}
       buttonText={buttonText}
       onClickFunc={onClickFunc}
-      width={width}
       theme={theme}
       size={size}
-      disabled={disabled}
+      css={css}
     />
   );
 };
 
-export const LinePink = ({
-  id,
-  name,
-  className,
-  buttonText,
-  onClickFunc,
-  width,
-  disabled,
-}) => {
+export const LinePink = ({ buttonText, onClickFunc, css }) => {
   const theme = PinkTheme;
   const size = OriginSize;
   return (
     <OutlineButtonComp
-      id={id}
-      name={name}
-      className={className}
       buttonText={buttonText}
       onClickFunc={onClickFunc}
-      width={width}
       theme={theme}
       size={size}
-      disabled={disabled}
+      css={css}
     />
   );
 };
 
-export const White = ({
-  id,
-  name,
-  className,
-  buttonText,
-  onClickFunc,
-  width,
-  disabled,
-}) => {
+export const White = ({ buttonText, onClickFunc, css }) => {
   const theme = whiteTheme;
   const size = OriginSize;
   return (
     <ButtonComp
-      id={id}
-      name={name}
-      className={className}
       buttonText={buttonText}
       onClickFunc={onClickFunc}
-      width={width}
       theme={theme}
       size={size}
-      disabled={disabled}
+      css={css}
     />
   );
 };
 
-export const SmallWhite = ({
-  id,
-  name,
-  className,
-  buttonText,
-  onClickFunc,
-  width,
-  disabled,
-}) => {
+export const SmallWhite = ({ buttonText, onClickFunc, css }) => {
   const theme = whiteTheme;
   const size = SmallSize;
   return (
     <ButtonComp
-      id={id}
-      name={name}
-      className={className}
       buttonText={buttonText}
       onClickFunc={onClickFunc}
-      width={width}
       theme={theme}
       size={size}
-      disabled={disabled}
+      css={css}
     />
   );
 };
 
-export const SmallLineWhite = ({
-  id,
-  name,
-  className,
-  buttonText,
-  onClickFunc,
-  width,
-  disabled,
-}) => {
+export const SmallLineWhite = ({ buttonText, onClickFunc, css }) => {
   const theme = whiteTheme;
   const size = SmallSize;
   return (
     <OutlineButtonComp
-      id={id}
-      name={name}
-      className={className}
       buttonText={buttonText}
       onClickFunc={onClickFunc}
-      width={width}
       theme={theme}
       size={size}
-      disabled={disabled}
+      {...css}
     />
   );
 };
 
-export const LineWhite = ({
-  id,
-  name,
-  className,
-  buttonText,
-  onClickFunc,
-  width,
-  disabled,
-}) => {
+export const LineWhite = ({ buttonText, onClickFunc, css }) => {
   const theme = whiteTheme;
   const size = OriginSize;
   return (
     <OutlineButtonComp
-      id={id}
-      name={name}
-      className={className}
       buttonText={buttonText}
       onClickFunc={onClickFunc}
-      width={width}
       theme={theme}
       size={size}
-      disabled={disabled}
+      {...css}
     />
   );
 };
 
-const ButtonComp = ({
-  id,
-  name,
-  className,
-  buttonText,
-  onClickFunc,
-  theme,
-  size,
-  width,
-  disabled,
-}) => {
+const ButtonComp = ({ buttonText, onClickFunc, theme, size, css }) => {
   return (
-    <Button
-      id={id}
-      name={name}
-      className={className}
-      onClick={onClickFunc}
-      theme={theme}
-      size={size}
-      width={width}
-      disabled={disabled}
-    >
+    <Button onClick={onClickFunc} theme={theme} size={size} {...css}>
       {buttonText}
     </Button>
   );
 };
 
-const OutlineButtonComp = ({
-  id,
-  name,
-  className,
-  buttonText,
-  onClickFunc,
-  theme,
-  size,
-  width,
-  disabled,
-}) => {
+const OutlineButtonComp = ({ buttonText, onClickFunc, theme, size, css }) => {
   return (
-    <OutLineButton
-      id={id}
-      name={name}
-      className={className}
-      onClick={onClickFunc}
-      theme={theme}
-      size={size}
-      width={width}
-      disabled={disabled}
-    >
+    <OutLineButton onClick={onClickFunc} theme={theme} size={size} {...css}>
       {buttonText}
     </OutLineButton>
   );
@@ -328,11 +170,10 @@ const Button = styled.button`
   border: ${(props) => props.theme.mainColor} solid 1px;
   padding: ${(props) => props.size.padding};
   height: ${(props) => props.size.height};
-  width: ${(props) => props.width};
   border-radius: 0.25rem;
   cursor: pointer;
-  margin: 0 3px;
   font-size: 17px;
+  ${(css) => css};
 
   &:hover {
     background: ${(props) => props.theme.color1};
@@ -354,11 +195,10 @@ const OutLineButton = styled.button`
   border: ${(props) => props.theme.mainColor} solid 1px;
   padding: ${(props) => props.size.padding};
   height: ${(props) => props.size.height};
-  width: ${(props) => props.width};
   border-radius: 0.25rem;
   cursor: pointer;
-  margin: 0 3px;
   font-size: 17px;
+  ${(css) => css};
 
   &:hover {
     background: ${(props) => props.theme.color2};
