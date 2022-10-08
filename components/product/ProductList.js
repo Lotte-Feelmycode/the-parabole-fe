@@ -50,7 +50,7 @@ export default function ProductList({
         if (res.numberOfElements === 0) {
           alert('상품이 없습니다.');
         } else if (res.content) {
-          setTotalElementCnt(res.numberOfElements);
+          setTotalElementCnt(res.totalElements);
           setProductList(res.content);
           setTotalPages(res.totalPages);
           setNowPage(res.pageable.pageNumber);
@@ -87,8 +87,19 @@ export default function ProductList({
 }
 
 const ProductListMain = styled.div``;
-const ProductListSection = styled.ul``;
-const ProductItem = styled.li``;
+
+const ProductListSection = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px;
+`;
+
+const ProductItem = styled.li`
+  flex: auto;
+  margin: 5px;
+  min-width: 200px;
+`;
+
 const PaginationSection = styled.div`
   text-align: center;
 `;
