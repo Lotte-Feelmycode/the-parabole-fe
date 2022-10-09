@@ -5,12 +5,11 @@ import styled from '@emotion/styled';
 import Input from '@components/input/input';
 import CommerceLayout from '@components/common/CommerceLayout';
 import PostButton from '@components/input/button';
-import Router from 'next/router';
 import { POST } from '@apis/defaultApi';
+import { useRouter } from 'next/router';
 
 export default function Signup() {
   const router = useRouter();
-
   const [email, onChangeEmail] = useInput('');
   const [username, onChangeUsername] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
@@ -33,12 +32,12 @@ export default function Signup() {
     POST(`/user/signup`, reqBody)
       .then((id) => {
         console.log(id);
+
         router.push(
           {
-            pathname: 'user/confirm',
-            query: { id: id },
+            pathname: `./confirm/${id}`,
           },
-          '/user/confirm',
+          `./confirm/${id}`,
         );
       })
       .catch(function (error) {
