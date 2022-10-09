@@ -104,29 +104,34 @@ export default function Signup() {
           required
         ></Input>
 
-        <div className="clearfix">
-          <SplitDiv>
-            <PostButton
-              name="cancelbtn"
-              buttonText="취소하기"
-              onClickFunc={() => router.push('/')}
-            ></PostButton>
-          </SplitDiv>
+        <BtnSection className="redirection-btn">
+          <PostButton
+            name="cancelbtn"
+            buttonText="홈으로"
+            onClickFunc={() => router.push('/')}
+          ></PostButton>
           <text>&nbsp;&nbsp;&nbsp;&nbsp;</text>
-          <SplitDiv>
-            <PostButton
-              name="signupbtn"
-              buttonText="회원가입하기"
-              onClickFunc={submitFormHandler}
-            ></PostButton>
-          </SplitDiv>
-        </div>
+          <PostButton
+            name="signupbtn"
+            buttonText="회원가입하기"
+            onClickFunc={submitFormHandler}
+          ></PostButton>
+        </BtnSection>
       </Div>
     </CommerceLayout>
   );
 }
 
-const SplitDiv = styled.div`
+const Button = styled.button`
+  background-color: ${(props) => props.backgroundColor};
+  color: ${(props) => props.fontColor};
+  focus: outline-none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  padding: 0.5em 1.5em 0.5em 1.5em;
+`;
+
+const BtnSection = styled.div`
   display: inline-block;
 `;
 

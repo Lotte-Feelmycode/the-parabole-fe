@@ -72,31 +72,28 @@ export default function Signin() {
         ></Input>
         <p>
           By creating an account you agree to our <a href="#">Terms Privacy</a>.
-        </p>{' '}
+        </p>
         <br />
-        <div className="clearfix">
-          <SplitDiv>
-            <PostButton
-              name="signupbtn"
-              buttonText="회원가입하기"
-              onClickFunc={() => router.push('/user/signup')}
-            ></PostButton>
-          </SplitDiv>
+
+        <BtnSection className="redirection-btn">
+          <PostButton
+            name="signupbtn"
+            buttonText="회원가입하기"
+            onClickFunc={() => router.push('/user/signup')}
+          ></PostButton>
           <text>&nbsp;&nbsp;&nbsp;&nbsp;</text>
-          <SplitDiv>
-            <PostButton
-              name="signinbtn"
-              buttonText="로그인하기"
-              onClickFunc={submitFormHandler}
-            ></PostButton>
-          </SplitDiv>
-        </div>
+          <PostButton
+            name="signinbtn"
+            buttonText="로그인하기"
+            onClickFunc={submitFormHandler}
+          ></PostButton>
+        </BtnSection>
       </Div>
     </CommerceLayout>
   );
 }
 
-const SplitDiv = styled.div`
+const BtnSection = styled.div`
   display: inline-block;
 `;
 

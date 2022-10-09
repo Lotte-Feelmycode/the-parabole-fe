@@ -26,10 +26,10 @@ export default function SellerHeader() {
             <Link href="/">
               <a className="mr-5 hover:text-gray-900">마켓</a>
             </Link>
-            <Link href="/login">
+            <Link href="/user/signin">
               <a className="mr-5 hover:text-gray-900">로그인</a>
             </Link>
-            <Link href="/signUp">
+            <Link href="/user/signup">
               <a className="mr-5 hover:text-gray-900">회원가입</a>
             </Link>
           </nav>
