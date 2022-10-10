@@ -5,7 +5,7 @@ import { numberToMonetary } from '@utils/moneyUtil';
 export default function Product({ product }) {
   // console.log('product props : ' + JSON.stringify(product));
   const router = useRouter();
-  const onClick = (id, title) => {
+  const onClick = (id) => {
     router.push({
       pathname: `/product/${id}`,
     });
