@@ -17,7 +17,7 @@ export default function UserCouponList({ userId }) {
           setTotalElementCnt(res.numberOfElements);
         }
       } else {
-        alert('쿠폰을 조회하지 못했습니다. 다시 시도해주세요.');
+        alert('사용자의 쿠폰을 조회하지 못했습니다. 다시 시도해주세요.');
       }
     });
   }, []);

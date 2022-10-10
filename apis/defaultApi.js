@@ -29,6 +29,27 @@ export const GET = async (url, params) => {
   return data;
 };
 
+export const GET_CUSTOM = async (url, params) => {
+  let apiUrl = API_BASE_URL + url;
+
+  if (!url) {
+    console.error(DEV_ERROR.INVALID_ARGS);
+    return;
+  }
+
+  const { data } = await axios
+    .get(apiUrl, { params: params })
+    .then((res) => {
+      console.log(res);
+      return res;
+    })
+    .catch(function (error) {
+      console.log(error);
+      return {};
+    });
+  return data;
+};
+
 export const POST = async (url, body) => {
   let apiUrl = API_BASE_URL + url;
 
