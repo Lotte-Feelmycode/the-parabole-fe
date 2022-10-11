@@ -6,6 +6,7 @@ import Heading from '@components/input/Heading';
 import styled from '@emotion/styled';
 import getTime from '@utils/functions';
 import * as btn from '@components/input/Button';
+import { EVENT_TYPE, EVENT_STATUS } from '@utils/constants/types';
 
 export default function EventList() {
   const router = useRouter();
@@ -77,13 +78,11 @@ export default function EventList() {
                 >
                   <td>{event.id}</td>
                   <td>
-                    <Tags>{event.type === 'RAFFLE' ? '추첨' : '선착순'}</Tags>
+                    <Tags>{EVENT_TYPE.filter((value) => value.code === event.type)[0].name}</Tags>
                   </td>
                   <td>{event.title}</td>
                   <td>{event.descript}</td>
-                  {event.status === 0 && <td width="100">진행 전</td>}
-                  {event.status === 1 && <td width="100">진행 중</td>}
-                  {event.status === 2 && <td width="100">종료</td>}
+                  <td>{EVENT_STATUS.filter((value) => value.code == event.status)[0].name}</td>               
                   <td>{getTime(event.startAt)}</td>
                   <td>{getTime(event.endAt)}</td>
                 </tr>
@@ -96,7 +95,7 @@ export default function EventList() {
             buttonText="등록하기"
             name="btnPost"
             onClickFunc={onSubmitHandler}
-          ></btn.SmallBlue>
+          />
         </Div>
       </SellerLayout>
     </>
