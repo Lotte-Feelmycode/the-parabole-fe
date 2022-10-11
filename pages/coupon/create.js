@@ -72,6 +72,7 @@ export default function CouponCreate() {
       .then((res) => {
         console.log(res);
 
+        // TODO: alert메시지 수정, 등록 완료 후에 redirection 여부도 추후 의견 통일하여 수정
         alert(
           res.sellerName +
             ' 판매자님의 ' +
