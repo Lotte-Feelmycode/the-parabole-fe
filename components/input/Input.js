@@ -1,43 +1,28 @@
 import styled from '@emotion/styled';
+import * as color from '@utils/constants/themeColor';
 
-const Input = ({
-  type,
-  id,
-  name,
-  value,
-  className,
-  onChange,
-  onInput,
-  onKeyUp,
-  onKeyDown,
-  placeHolder,
-  maxLength,
-}) => {
+const Input = ({ type, value, onChange, onInput, css }) => {
+  console.log('input :' + JSON.stringify({ ...css }));
   return (
     <InputCSS
       type={type}
-      id={id}
-      name={name}
       value={value}
-      className={className}
       onChange={onChange}
       onInput={onInput}
-      onKeyUp={onKeyUp}
-      onKeyDown={onKeyDown}
-      placeholder={placeHolder}
-      maxLength={maxLength}
-    ></InputCSS>
+      {...css}
+    />
   );
 };
 
 const InputCSS = styled.input`
-  max-width: 60%;
+  max-width: 100%;
   color: black;
-  border: 1px solid #cccccc;
+  border: 1px solid ${color.ThemeGray1};
   font-size: 12px;
   padding: 1% 2%;
   margin-top: 5px;
   margin-bottom: 25px;
+  ${(css) => css};
 `;
 
 export default Input;

@@ -5,7 +5,7 @@ import styles from '@styles/Home.module.scss';
 
 export default function Home() {
   const productListProps = {
-    size: 3,
+    size: 6,
     page: 0,
   };
 
