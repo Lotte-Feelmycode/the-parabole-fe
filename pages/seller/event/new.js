@@ -12,7 +12,6 @@ import SellerLayout from '@components/seller/SellerLayout';
 // import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 // import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 // import BasicDateTimePicker from '@components/input/DatePicker';
-
 import { useRouter } from 'next/router';
 import { numberToMonetary } from '@utils/moneyUtil';
 import getTime from '@utils/functions';
@@ -36,7 +35,7 @@ export default function Event() {
     // TODO : USER 정보 가져오기
     // const userId = sessionStorage.getItem("ID");
     const params = {
-      sellerId: 1,
+      userId: 1,
     };
     GET(`/product/list`, params).then((res) => {
       setProductList(res.data.content);
@@ -49,7 +48,7 @@ export default function Event() {
     // TODO : USER 정보 가져오기
     // const userId = sessionStorage.getItem("ID");
     const params = {
-      sellerId: 1,
+      userId: 1,
     };
     GET(`/coupon/seller/list`, params).then((res) => {
       console.log(res.data.content);
@@ -132,8 +131,8 @@ export default function Event() {
         <Divider />
 
         <Heading title="이벤트 진행 일시" type="h2" />
-        <Heading title="시작 일시" type="h3" />
-        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+        {/* <Heading title="시작 일시" type="h3" />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
           <CalendarContainer>
             <BasicDateTimePicker value={startAt} onChange={setStartAt} />
           </CalendarContainer>

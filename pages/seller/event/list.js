@@ -12,11 +12,11 @@ export default function EventList() {
   const [eventList, setEventList] = useState([]);
 
   // TODO : 로그인 정보 가져오기
-  // const sellerId = localStorage.getItem("ID");
-  const sellerId = 1;
+  // const userId = localStorage.getItem("ID");
+  const userId = 1;
 
   useEffect(() => {
-    GET(`/event/seller/${sellerId}`).then((res) => {
+    GET(`/event/seller/${userId}`).then((res) => {
       setEventList(res.data);
     });
   }, []);
