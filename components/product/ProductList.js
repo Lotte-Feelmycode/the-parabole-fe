@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { GET } from '@apis/defaultApi';
 import styled from '@emotion/styled';
 import Pagination from '@components/common/Pagination';
+import * as color from '@utils/constants/themeColor';
 
 export default function ProductList({
   sellerId,
@@ -49,7 +50,7 @@ export default function ProductList({
         if (res.numberOfElements === 0) {
           alert('상품이 없습니다.');
         } else if (res.content) {
-          setTotalElementCnt(res.numberOfElements);
+          setTotalElementCnt(res.totalElements);
           setProductList(res.content);
           setTotalPages(res.totalPages);
           setNowPage(res.pageable.pageNumber);
@@ -78,6 +79,7 @@ export default function ProductList({
           totalPage={totalPages}
           activePage={nowPage}
           setNowPageFunction={setNowPage}
+          theme={color.BlueTheme}
         />
       </PaginationSection>
     </div>
@@ -85,8 +87,19 @@ export default function ProductList({
 }
 
 const ProductListMain = styled.div``;
-const ProductListSection = styled.ul``;
-const ProductItem = styled.li``;
+
+const ProductListSection = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px;
+`;
+
+const ProductItem = styled.li`
+  flex: auto;
+  margin: 5px;
+  min-width: 200px;
+`;
+
 const PaginationSection = styled.div`
   text-align: center;
 `;
