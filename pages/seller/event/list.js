@@ -40,33 +40,57 @@ export default function EventList() {
       <SellerLayout>
         <Heading title="이벤트 목록" type="h1" />
         <Divider />
-        <Table>
-          <tr height="40">
-            <th>이벤트 번호</th>
-            <th>이벤트 타입</th>
-            <th>이벤트 제목</th>
-            <th>이벤트 설명</th>
-            <th>진행 상태</th>
-            <th>이벤트 시작일시</th>
-            <th>이벤트 종료일시</th>
-          </tr>
-          {eventList &&
-            eventList.map((event, index) => (
-              <Tr height="40" onClick={() => rowClickHandler(event)}>
-                <td width="100">{event.id}</td>
-                <td width="100">
-                  <Tags>{event.type === 'RAFFLE' ? '추첨' : '선착순'}</Tags>
-                </td>
-                <td width="250">{event.title}</td>
-                <td width="200">{event.descript}</td>
-                {event.status === 0 && <td width="100">진행 전</td>}
-                {event.status === 1 && <td width="100">진행 중</td>}
-                {event.status === 2 && <td width="100">종료</td>}
-                <td width="300">{getTime(event.startAt)}</td>
-                <td width="300">{getTime(event.endAt)}</td>
-              </Tr>
-            ))}
-        </Table>
+        <table class="w-full text-m text-center">
+          <thead class="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr class="h-12">
+              <th scope="col" class="py-3 w-10">
+                이벤트
+                <br />
+                번호
+              </th>
+              <th scope="col" class="py-3 px-10 w-24">
+                이벤트 타입
+              </th>
+              <th scope="col" class="py-3 px-10 w-40">
+                이벤트 제목
+              </th>
+              <th scope="col" class="py-3 px-10 w-40">
+                이벤트 설명
+              </th>
+              <th scope="col" class="py-3 px-10 w-24">
+                진행 상태
+              </th>
+              <th scope="col" class="py-3 px-10 w-40">
+                이벤트 시작일시
+              </th>
+              <th scope="col" class="py-3 px-10 w-40">
+                이벤트 종료일시
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {eventList &&
+              eventList.map((event, index) => (
+                <tr
+                  onClick={() => rowClickHandler(event)}
+                  class="h-24 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                >
+                  <td>{event.id}</td>
+                  <td>
+                    <Tags>{event.type === 'RAFFLE' ? '추첨' : '선착순'}</Tags>
+                  </td>
+                  <td>{event.title}</td>
+                  <td>{event.descript}</td>
+                  {event.status === 0 && <td width="100">진행 전</td>}
+                  {event.status === 1 && <td width="100">진행 중</td>}
+                  {event.status === 2 && <td width="100">종료</td>}
+                  <td>{getTime(event.startAt)}</td>
+                  <td>{getTime(event.endAt)}</td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+
         <Div>
           <btn.SmallBlue
             buttonText="등록하기"
