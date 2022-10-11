@@ -5,17 +5,17 @@ import Heading from '@components/input/Heading';
 import Input from '@components/input/Input';
 import Radio from '@components/input/Radio';
 import * as btn from '@components/input/Button';
-import { useState, useEffect } from 'react';
-import dayjs from 'dayjs';
 import ImageUploader from '@components/input/ImageUploader';
 import SellerLayout from '@components/seller/SellerLayout';
+import { numberToMonetary } from '@utils/moneyUtil';
+import getTime from '@utils/functions';
+import { EVENT_TYPE } from '@utils/constants/types';
+//import dayjs from 'dayjs';
 // import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 // import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 // import BasicDateTimePicker from '@components/input/DatePicker';
 import { useRouter } from 'next/router';
-import { numberToMonetary } from '@utils/moneyUtil';
-import getTime from '@utils/functions';
-import { EVENT_TYPE } from '@utils/constants/types';
+import { useState, useEffect } from 'react';
 
 export default function Event() {
   const router = useRouter();
@@ -35,7 +35,7 @@ export default function Event() {
     // TODO : USER 정보 가져오기
     // const userId = sessionStorage.getItem("ID");
     const params = {
-      userId: 1,
+      sellerId: 1,
     };
     GET(`/product/list`, params).then((res) => {
       setProductList(res.data.content);
@@ -59,13 +59,16 @@ export default function Event() {
   // TODO : API 호출 부분 수정 (이미지 업로더, 경품목록)
   const onSubmitHandler = (e) => {
     e.preventDefault();
+
     const eventParams = {
       //userId: localStorage.getItem("ID"),
       userId: 1,
       createdBy: 'SELLER',
       type: eventType,
-      startAt: dayjs(startAt).format('YYYY-MM-DDTHH:mm:ss'),
-      endAt: dayjs(endAt).format('YYYY-MM-DDTHH:mm:ss'),
+      //startAt: dayjs(startAt).format('YYYY-MM-DDTHH:mm:ss'),
+      //endAt: dayjs(endAt).format('YYYY-MM-DDTHH:mm:ss'),
+      startAt: new Date().toISOString().substring(0, 19),
+      endAt: new Date().toISOString().substring(0, 19),
       title: title,
       descript: descript,
       eventImage: {
