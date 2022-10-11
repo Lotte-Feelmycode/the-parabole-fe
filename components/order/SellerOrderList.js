@@ -7,7 +7,7 @@ export default function OrderList({ sellerId }) {
   const [orderList, setOrderList] = useState([]);
 
   useEffect(() => {
-    GET(`/orderinfo/seller`, { sellerId }).then((res) => {
+    GET(`/orderinfo/seller`, { sellerId: sellerId }).then((res) => {
       if (res) {
         setOrderList(res);
       }
@@ -15,17 +15,32 @@ export default function OrderList({ sellerId }) {
   }, [sellerId]);
 
   return (
-    <ul className="order-list">
-      {orderList &&
-        orderList.map((order) => (
-          <Li key={order.id}>
-            <Order order={order} />
-          </Li>
-        ))}
-    </ul>
+    <>
+      <table>
+        <thead>
+          <Th>이미지</Th>
+          <Th>유저이메일</Th>
+          <Th>주문상품</Th>
+          <Th>할인가격</Th>
+          <Th>가격</Th>
+          <Th>주문수량</Th>
+          <Th>재고</Th>
+          <Th>주문 상태</Th>
+          <Th>결제 수단</Th>
+        </thead>
+        <tbody>
+          {orderList && orderList.map((order) => <Order order={order} />)}
+        </tbody>
+      </table>
+    </>
   );
 }
 
-const Li = styled.li`
-  margin-bottom: 30px;
+const Th = styled.th`
+  background-color: #5252521f;
+  padding: 10px;
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+  font-family: 'SansBold';
 `;
