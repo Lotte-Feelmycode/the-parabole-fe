@@ -1,41 +1,48 @@
 import styled from '@emotion/styled';
-import useInput from '@hooks/useInput';
 import { useState } from 'react';
 
-const Radio = ({ name, value, text, onChange }) => {
+const Radio = ({
+  formName,
+  style,
+  className,
+  onChange,
+  items,
+  radioDirection = 'horizontal',
+  InputClassName,
+}) => {
   const [inputStatus, setInputStatus] = useState(null);
-
-  const handleRadiobutton = (radioBtnValue) => {
-    setInputStatus(radioBtnValue);
-    onChange && onChange({ args: inputStatus });
+  const handleRadiobutton = (e) => {
+    setInputStatus(e.target.value);
+    onChange && onChange(e);
   };
 
-  return (
-    <Div>
-      <RadioInput
+  const radioList = items?.map(({ code, name }) => (
+    <InputContainer
+      key={code}
+      style={style}
+      className={`${radioDirection} ${className}`}
+    >
+      <Input
         type="radio"
-        name={name}
-        value={value}
-        checked={inputStatus === value}
-        onChange={() => handleRadiobutton(value)}
-      ></RadioInput>
-      <Label htmlFor={value}>{text}</Label>
-    </Div>
+        id={(code, name)}
+        className={InputClassName}
+        name={formName}
+        checked={inputStatus === code}
+        value={code}
+        onChange={(e) => handleRadiobutton(e)}
+      />
+      <Label htmlFor={(code, name)}>{name}</Label>
+    </InputContainer>
+  ));
+
+  return (
+    <div style={{ display: radioDirection === 'vertical' ? 'block' : 'flex' }}>
+      {radioList}
+    </div>
   );
 };
 
-const Div = styled.div`
-  display: flex;
-  align-items: center;
-  flsx-direction: row;
-`;
-const Label = styled.label`
-  font-size: 16px;
-  line-height: 2rem;
-  padding: 0.2em 0.4em;
-  cursor: pointer;
-`;
-const RadioInput = styled.input`
+const Input = styled.input`
   vertical-align: middle;
   appearance: none;
   border: max(2px, 0.1em) solid gray;
@@ -43,6 +50,7 @@ const RadioInput = styled.input`
   width: 1.25em;
   height: 1.25em;
   transition: border 0.1s ease-in-out;
+  margin-right: 10px;
 
   &:hover {
     box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
@@ -56,6 +64,24 @@ const RadioInput = styled.input`
         border: 0.35em solid tomato;  
       }   
     `}
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+
+  &.vertical {
+    margin-bottom: 20px;
+  }
+
+  &.horizontal {
+    margin-right: 30px;
+  }
+`;
+
+const Label = styled.label`
+  cursor: pointer;
 `;
 
 export default Radio;
