@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import SellerLayout from '@components/seller/SellerLayout';
 import SiteHead from '@components/common/SiteHead';
 import Heading from '@components/input/Heading';
-import PostButton from '@components/input/Button';
+import * as btn from '@components/input/Button';
 import getTime from '@utils/functions';
 
 export default function EventDetail() {
@@ -73,12 +73,12 @@ export default function EventDetail() {
             // 진행 전인 이벤트만 수정 및 삭제 가능
             // 수정 및 삭제 버튼 - 이벤트 핸들러 붙이기
             <DivHor>
-              <PostButton buttonText="수정하기" />
-              <PostButton
+              <btn.LineBlue buttonText="수정하기"></btn.LineBlue>
+              <btn.Blue
                 buttonText="삭제하기"
-                name="btnDeleteEvent"
+                //name="btnDeleteEvent"
                 onClickFunc={deleteClickHandler}
-              />
+              ></btn.Blue>
             </DivHor>
           )}
         </div>

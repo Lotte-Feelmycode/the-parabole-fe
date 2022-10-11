@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import Heading from '@components/input/Heading';
 import Input from '@components/input/Input';
 import Radio from '@components/input/Radio';
-import PostButton from '@components/input/Button';
+import * as btn from '@components/input/Button';
 import { useState } from 'react';
 import dayjs from 'dayjs';
 import ImageUploader from '@components/input/ImageUploader';
@@ -78,7 +78,10 @@ export default function Event() {
           name="eventTitle"
           value={title}
           onChange={onChangeTitle}
-          placeHolder="이벤트 제목을 입력하세요"
+          css={{
+            border: '0.1px solid #52525224',
+            placeHolder: '이벤트 제목을 입력하세요',
+          }}
         ></Input>
         <Divider></Divider>
         <Heading title="이벤트 설명" type="h2"></Heading>
@@ -87,7 +90,10 @@ export default function Event() {
           name="eventDescript"
           value={descript}
           onChange={onChangeDescript}
-          placeHolder="이벤트 설명을 입력하세요"
+          css={{
+            border: '0.1px solid #52525224',
+            placeHolder: '이벤트 설명을 입력하세요',
+          }}
         ></Input>
         <Divider></Divider>
         <Heading title="이벤트 타입" type="h2"></Heading>
@@ -147,12 +153,17 @@ export default function Event() {
 
         <Divider></Divider>
         <Div>
-          <PostButton
+          <btn.Blue
+            buttonText="등록하기"
+            // name="btnPost"
+            // onClickFunc={onSubmitHandler}
+          ></btn.Blue>
+          {/* <PostButton
             id="btnPost"
             value={dayjs(new Date())}
             onClickFunc={onSubmitHandler}
             buttonText="등록하기"
-          ></PostButton>
+          ></PostButton> */}
         </Div>
       </FormTemplate>
     </SellerLayout>
