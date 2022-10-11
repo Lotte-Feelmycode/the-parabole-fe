@@ -76,7 +76,7 @@ export default function Event() {
           onChange={onChangeTitle}
           css={{
             border: '0.1px solid #52525224',
-            placeHolder: '이벤트 제목을 입력하세요',
+            placeholder: '이벤트 제목을 입력하세요',
           }}
         ></Input>
         <Divider />
@@ -88,7 +88,7 @@ export default function Event() {
           onChange={onChangeDescript}
           css={{
             border: '0.1px solid #52525224',
-            placeHolder: '이벤트 설명을 입력하세요',
+            placeholder: '이벤트 설명을 입력하세요',
           }}
         ></Input>
         <Divider />
