@@ -6,22 +6,27 @@ export default function Coupon({ coupon }) {
 
   return (
     <div className="coupon">
-      <div className="coupon-body">
-        <div className="couponInfoUnit">
-          <HighlightInfo>{coupon.name}</HighlightInfo>
-          <div>{coupon.type}</div>
-          <div> {coupon.discountRate}</div>
-          <div> {coupon.discountAmount}</div>
-          <div> {coupon.createdAt}</div>
-          <div> {coupon.validAt}</div>
-          <strong>
-            <div> {coupon.expiresAt}</div>
-          </strong>
-          <div> {coupon.maxDiscountAmount}</div>
-          <div> {coupon.minPaymentAmount}</div>
-          <div> {coupon.detail}</div>
-          <div> {coupon.cnt}</div>
-        </div>
+      <div className="coupon-table">
+        <tbody>
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <th
+              scope="row"
+              class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+            >
+              {coupon.name}
+            </th>
+            <td class="py-4 px-6">{coupon.type}</td>
+            <td class="py-4 px-6">{coupon.discountRate}</td>
+            <td class="py-4 px-6">{coupon.discountAmount}</td>
+            <td class="py-4 px-6">{coupon.createdAt}</td>
+            <td class="py-4 px-6">{coupon.validAt}</td>
+            <td class="py-4 px-6">{coupon.expiresAt}</td>
+            <td class="py-4 px-6">{coupon.maxDiscountAmount}</td>
+            <td class="py-4 px-6">{coupon.minPaymentAmount}</td>
+            <td class="py-4 px-6">{coupon.detail}</td>
+            <td class="py-4 px-6">{coupon.cnt}</td>
+          </tr>
+        </tbody>
       </div>
     </div>
   );
