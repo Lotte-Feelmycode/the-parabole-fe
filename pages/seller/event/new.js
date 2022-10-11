@@ -29,15 +29,6 @@ export default function Event() {
   const [startAt, setStartAt] = useState(new Date());
   const [endAt, setEndAt] = useState(new Date());
 
-  // TODO : 라디오버튼 수정예정
-  const handleTypeChange = (e) => {
-    // console.log(e);
-    // const { na0.me, value } = e.target;
-    // setSelectData({
-    //   [name]: value,
-    // });
-  };
-
   const onSearchProductsHandler = (e) => {
     e.preventDefault();
 
@@ -87,15 +78,12 @@ export default function Event() {
       ],
     };
 
-    //<Table props={header, body}></Table>
-    console.log(eventParams);
-
-    // POST('/event', eventParams).then((res) => {
-    //   if (res && res.data > 0) {
-    //     alert('이벤트가 등록되었습니다. ');
-    //     router.push({ pathname: `/seller/event/list` }, `/seller/event/list`);
-    //   }
-    // });
+    POST('/event', eventParams).then((res) => {
+      if (res && res.data > 0) {
+        alert('이벤트가 등록되었습니다. ');
+        router.push({ pathname: `/seller/event/list` }, `/seller/event/list`);
+      }
+    });
   };
 
   return (
@@ -144,7 +132,7 @@ export default function Event() {
 
         <Heading title="이벤트 진행 일시" type="h2" />
         <Heading title="시작 일시" type="h3" />
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
           <CalendarContainer>
             <BasicDateTimePicker value={startAt} onChange={setStartAt} />
           </CalendarContainer>
@@ -152,7 +140,7 @@ export default function Event() {
           <CalendarContainer>
             <BasicDateTimePicker value={endAt} onChange={setEndAt} />
           </CalendarContainer>
-        </LocalizationProvider>
+        </LocalizationProvider> */}
         <Divider />
 
         <Div>
@@ -168,7 +156,6 @@ export default function Event() {
             onClickFunc={onSearchCouponsHandler}
           ></btn.SmallBlue>
         </Div>
-        {/* ================================== */}
 
         <table class="text-m text-center">
           <thead class="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -315,7 +302,6 @@ export default function Event() {
               ))}
           </tbody>
         </table>
-        {/* ================================== */}
 
         {/* TODO: 동적 테이블 추가 */}
         <Divider />
