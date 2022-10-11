@@ -93,8 +93,14 @@ export default function ProductDetail() {
                   </TotalInputSection>
                 </InputSection>
                 <BtnSection>
-                  <btn.LineBlue buttonText="장바구니" css={{ width: '50%' }} />
-                  <btn.Blue buttonText="바로구매" css={{ width: '48%' }} />
+                  <btn.LineBlue
+                    buttonText="장바구니"
+                    css={{ width: '49%', 'margin-right': '1%' }}
+                  />
+                  <btn.Blue
+                    buttonText="바로구매"
+                    css={{ width: '49%', 'margin-left': '1%' }}
+                  />
                 </BtnSection>
               </ProductDetailTop>
             </ProductTopSection>
