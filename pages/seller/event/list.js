@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Heading from '@components/input/Heading';
 import styled from '@emotion/styled';
 import getTime from '@utils/functions';
+import * as btn from '@components/input/Button';
 
 export default function EventList() {
   const router = useRouter();
@@ -16,7 +17,7 @@ export default function EventList() {
 
   useEffect(() => {
     GET(`/event/seller/${sellerId}`).then((res) => {
-      setEventList(res);
+      setEventList(res.data);
     });
   }, []);
 
@@ -30,13 +31,17 @@ export default function EventList() {
     }
   };
 
+  const onSubmitHandler = () => {
+    router.push({ pathname: `/seller/event/new` });
+  };
+
   return (
     <>
       <SellerLayout>
         <Heading title="이벤트 목록" type="h1" />
         <Divider />
         <Table>
-          {/* <Tr height="40">
+          <tr height="40">
             <th>이벤트 번호</th>
             <th>이벤트 타입</th>
             <th>이벤트 제목</th>
@@ -44,7 +49,7 @@ export default function EventList() {
             <th>진행 상태</th>
             <th>이벤트 시작일시</th>
             <th>이벤트 종료일시</th>
-          </Tr> */}
+          </tr>
           {eventList &&
             eventList.map((event, index) => (
               <Tr height="40" onClick={() => rowClickHandler(event)}>
@@ -57,11 +62,18 @@ export default function EventList() {
                 {event.status === 0 && <td width="100">진행 전</td>}
                 {event.status === 1 && <td width="100">진행 중</td>}
                 {event.status === 2 && <td width="100">종료</td>}
-                <td width="250">{getTime(event.startAt)}</td>
-                <td width="250">{getTime(event.endAt)}</td>
+                <td width="300">{getTime(event.startAt)}</td>
+                <td width="300">{getTime(event.endAt)}</td>
               </Tr>
             ))}
         </Table>
+        <Div>
+          <btn.SmallBlue
+            buttonText="등록하기"
+            name="btnPost"
+            onClickFunc={onSubmitHandler}
+          ></btn.SmallBlue>
+        </Div>
       </SellerLayout>
     </>
   );
@@ -93,4 +105,10 @@ const Tags = styled.span`
   margin: 0 0.5rem;
   padding: 0.5rem 1rem;
   border-radius: 3rem;
+`;
+
+const Div = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  margin: 20px;
 `;

@@ -18,8 +18,8 @@ export default function EventDetail() {
     if (eventId) {
       setEventId(eventId);
       GET(`/event/${eventId}`).then((res) => {
-        if (res && res.id == eventId) {
-          setEvent(res);
+        if (res && res.data.id == eventId) {
+          setEvent(res.data);
         }
       });
     }
@@ -28,7 +28,7 @@ export default function EventDetail() {
   const deleteClickHandler = async (e) => {
     e.preventDefault();
     DELETE(`/event/${eventId}`, {}).then((res) => {
-      if (res !== null) {
+      if (res && res.success == true) {
         //TODO: 수정필요
         alert('삭제 되었습니다. ');
         router.push({ pathname: `/seller/event/list` }, `/seller/event/list`);

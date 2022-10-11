@@ -41,12 +41,8 @@ export default function Event() {
       userId: 1,
       createdBy: 'SELLER',
       type: 'RAFFLE',
-      //startAt: dayjs(startAt).format('YYYY.MM.DDTHH:mm:ss'),
-      startAt: dayjs(startAt).format(),
-      endAt: dayjs(endAt).format(),
-
-      //endAt: dayjs(endAt).format('YYYY.MM.DDTHH:mm:ss'),
-      //type: document.querySelector('input[name=eventType]:checked').value,
+      startAt: dayjs(startAt).format('YYYY-MM-DDTHH:mm:ss'),
+      endAt: dayjs(endAt).format('YYYY-MM-DDTHH:mm:ss'),
       title: title,
       descript: descript,
       eventImage: {
@@ -71,7 +67,7 @@ export default function Event() {
     <SellerLayout>
       <FormTemplate onSubmit={onSubmitHandler}>
         <Heading title="이벤트 등록" type="h1"></Heading>
-        <Divider></Divider>
+        <Divider />
         <Heading title="이벤트 제목" type="h2"></Heading>
         <Input
           type="text"
@@ -83,7 +79,7 @@ export default function Event() {
             placeHolder: '이벤트 제목을 입력하세요',
           }}
         ></Input>
-        <Divider></Divider>
+        <Divider />
         <Heading title="이벤트 설명" type="h2"></Heading>
         <Input
           type="text"
@@ -95,7 +91,7 @@ export default function Event() {
             placeHolder: '이벤트 설명을 입력하세요',
           }}
         ></Input>
-        <Divider></Divider>
+        <Divider />
         <Heading title="이벤트 타입" type="h2"></Heading>
         <Div>
           <Radio
@@ -112,8 +108,7 @@ export default function Event() {
             onChange={handleTypeChange(this)}
           ></Radio>
         </Div>
-        <Divider></Divider>
-
+        <Divider />
         <Heading title="이벤트 진행 일시" type="h2" />
         <Heading title="시작 일시" type="h3" />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -137,33 +132,27 @@ export default function Event() {
             />
           </CalendarContainer>
         </LocalizationProvider>
-
-        <Divider></Divider>
-
+        <Divider />
+        <Heading title="이벤트 경품 선택" type="h2"></Heading>
+        {/* TODO: 동적 테이블 추가 */}
+        <Divider />
         {/* TODO: 이미지 업로드 추후 수정 */}
         <Heading title="이벤트 배너 이미지" type="h2"></Heading>
         <Div>
           <ImageUploader></ImageUploader>
         </Div>
-        <Divider></Divider>
+        <Divider />
         <Heading title="이벤트 상세 이미지" type="h2"></Heading>
         <Div>
           <ImageUploader></ImageUploader>
         </Div>
-
-        <Divider></Divider>
+        <Divider />
         <Div>
           <btn.Blue
             buttonText="등록하기"
-            // name="btnPost"
-            // onClickFunc={onSubmitHandler}
-          ></btn.Blue>
-          {/* <PostButton
-            id="btnPost"
-            value={dayjs(new Date())}
+            name="btnPost"
             onClickFunc={onSubmitHandler}
-            buttonText="등록하기"
-          ></PostButton> */}
+          ></btn.Blue>
         </Div>
       </FormTemplate>
     </SellerLayout>
