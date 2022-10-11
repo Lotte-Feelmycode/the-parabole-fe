@@ -24,61 +24,59 @@ export default function UserCouponList({ userId }) {
 
   return (
     <div>
-      <ul>
-        <div class="overflow-x-auto relative">
-          <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th scope="col" class="py-3 px-6">
-                  쿠폰명
-                </th>
-                <th scope="col" class="py-3 px-6">
-                  SerialNo
-                </th>
-                <th scope="col" class="py-3 px-6">
-                  판매자 이름
-                </th>
-                <th scope="col" class="py-3 px-6">
-                  쿠폰 타입
-                </th>
-                <th scope="col" class="py-3 px-6">
-                  할인율/할인액
-                </th>
-                <th scope="col" class="py-3 px-6">
-                  사용 여부
-                </th>
-                <th scope="col" class="py-3 px-6">
-                  사용 일자
-                </th>
-                <th scope="col" class="py-3 px-6">
-                  획득 일자
-                </th>
-                <th scope="col" class="py-3 px-6">
-                  유효 시작일
-                </th>
-                <th scope="col" class="py-3 px-6">
-                  쿠폰 만료일
-                </th>
-                <th scope="col" class="py-3 px-6">
-                  최대할인금액
-                </th>
-                <th scope="col" class="py-3 px-6">
-                  최소결제금액
-                </th>
-              </tr>
-            </thead>
+      <div class="overflow-x-auto relative">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" class="py-3 px-6">
+                쿠폰명
+              </th>
+              <th scope="col" class="py-3 px-6">
+                SerialNo
+              </th>
+              <th scope="col" class="py-3 px-6">
+                판매자 이름
+              </th>
+              <th scope="col" class="py-3 px-6">
+                쿠폰 타입
+              </th>
+              <th scope="col" class="py-3 px-6">
+                할인율/할인액
+              </th>
+              <th scope="col" class="py-3 px-6">
+                사용 여부
+              </th>
+              <th scope="col" class="py-3 px-6">
+                사용 일자
+              </th>
+              <th scope="col" class="py-3 px-6">
+                획득 일자
+              </th>
+              <th scope="col" class="py-3 px-6">
+                유효 시작일
+              </th>
+              <th scope="col" class="py-3 px-6">
+                쿠폰 만료일
+              </th>
+              <th scope="col" class="py-3 px-6">
+                최대할인금액
+              </th>
+              <th scope="col" class="py-3 px-6">
+                최소결제금액
+              </th>
+            </tr>
+          </thead>
+          <tbody>
             {userCouponList &&
               userCouponList.map((userCoupon) => (
-                <li key={userCoupon.serialNo}>
-                  <UserCoupon userCoupon={userCoupon} />
-                </li>
+                <UserCoupon userCoupon={userCoupon} />
               ))}
-          </table>
-        </div>
-      </ul>
+          </tbody>
+        </table>
+      </div>
       <br />
       <strong>
-        <p>총 쿠폰 갯수 : {totalElementCnt}</p>
+        <p>총 쿠폰 수량 : {totalElementCnt}</p>
       </strong>
     </div>
   );
