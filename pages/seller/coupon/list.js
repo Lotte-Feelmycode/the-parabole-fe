@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 export default function SellersCouponList() {
   const [role, setRole] = useState('');
-  const [userId, setUserId] = useState(2);
+  const [userId, setUserId] = useState(4);
   const [sellerId, setSellerId] = useState();
 
   // TODO:

@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import Input from '@components/input/input';
 import CommerceLayout from '@components/common/CommerceLayout';
 import PostButton from '@components/input/button';
-import { GET_CUSTOM, POST } from '@apis/defaultApi';
+import { GET, POST_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useInput from '@hooks/useInput';
@@ -31,7 +31,7 @@ export default function CouponCreate() {
   // setUserId(현재로그인되어있는userId-세션,쿠키 등에서 얻어올 것임);
 
   useEffect(() => {
-    GET_CUSTOM(`/user/role`, { userId }).then((res) => {
+    GET(`/user/role`, { userId }).then((res) => {
       if (res.message === 'ROLE_USER') {
         setRole('USER');
       }
@@ -68,15 +68,13 @@ export default function CouponCreate() {
       cnt: cnt,
     };
 
-    POST(`/coupon/create`, reqBody)
+    POST_DATA(`/coupon/create`, reqBody)
       .then((res) => {
         console.log(res);
 
         // TODO: alert메시지 수정, 등록 완료 후에 redirection 여부도 추후 의견 통일하여 수정
         alert(
-          res.sellerName +
-            ' 판매자님의 ' +
-            res.type +
+          res.type +
             " 유형의 '" +
             res.couponName +
             "' 쿠폰이 \n" +
