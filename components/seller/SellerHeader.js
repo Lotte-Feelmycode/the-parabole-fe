@@ -23,7 +23,7 @@ export default function SellerHeader() {
             <Link href="/seller/main">
               <a className="mr-5 hover:text-gray-900">홈</a>
             </Link>
-            <Link href="/seller/event">
+            <Link href="/seller/event/list">
               <a className="mr-5 hover:text-gray-900">이벤트</a>
             </Link>
             <Link href="/">
