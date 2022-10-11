@@ -16,16 +16,10 @@ export default function ShowCouponList() {
 
   useEffect(() => {
     GET_CUSTOM(`/user/role`, { userId }).then((res) => {
-      console.log(res);
-      console.log(res.data);
-
       if (res.message === 'ROLE_USER') {
-        console.log('userId is ' + res.data);
         setRole('USER');
-        // setUserId(res.data);
       }
       if (res.message === 'ROLE_SELLER') {
-        console.log('sellerid is ' + res.data);
         setRole('SELLER');
         setSellerId(res.data);
       }

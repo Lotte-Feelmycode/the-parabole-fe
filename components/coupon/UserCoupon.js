@@ -2,8 +2,6 @@ import styled from '@emotion/styled';
 import { MainColor1 } from '@utils/constants/themeColor';
 
 export default function UserCoupon({ userCoupon }) {
-  console.log('USER COUPON props : ' + JSON.stringify(userCoupon));
-
   return (
     <div className="usercoupon">
       <div className="usercoupon-body">

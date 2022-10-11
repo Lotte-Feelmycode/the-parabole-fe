@@ -11,7 +11,6 @@ export default function UsersCouponList() {
   return (
     <CommerceLayout>
       <SiteHead title="User's Coupon List" />
-
       <section className="flex min-h-screen flex-col text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">
           <h1 className={styles.section}>THE PARABOLE</h1>
