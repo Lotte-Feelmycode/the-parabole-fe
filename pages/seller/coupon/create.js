@@ -105,24 +105,24 @@ export default function CouponCreate() {
     <CommerceLayout>
       <SiteHead title="쿠폰 등록" />
       <Divider />
-      <Heading title="쿠폰 등록" type="h1"></Heading>
+      <Heading title="쿠폰 등록" type="h1" />
       <br />
 
       <Div>
-        <Heading title="쿠폰명" type="h3"></Heading>
+        <Heading title="쿠폰명" type="h3" />
         <Input
           type="string"
           onChange={onChangeName}
           value={name}
           placeHolder="쿠폰명을 입력하세요."
-        ></Input>
-        <Heading title="쿠폰 유형" type="h3"></Heading>
+        />
+        <Heading title="쿠폰 유형" type="h3" />
         <Input
           type="string"
           onChange={onChangeType}
           value={type}
           placeHolder="쿠폰 유형을 선택하세요."
-        ></Input>
+        />
 
         {/* TODO: 쿠폰 유형 선택하는 Input 을 Dropdown UI 로 수정 작업
         TODO: Input 받을때 쿠폰 만료일은 유효 시작일 이후로 설정되어야함. Validation 추가 작업 */}
@@ -143,73 +143,73 @@ export default function CouponCreate() {
           </options>
         </select> */}
 
-        <Heading title="쿠폰 할인율/금액" type="h3"></Heading>
+        <Heading title="쿠폰 할인율/금액" type="h3" />
         <Input
           type="number"
           onChange={onChangeDiscountValue}
           value={discountValue}
           placeHolder="등록할 쿠폰의 할인율 또는 할인액수을 입력하세요."
-        ></Input>
-        <Heading title="쿠폰 유효 시작일" type="h3"></Heading>
+        />
+        <Heading title="쿠폰 유효 시작일" type="h3" />
         <Input
           type="date"
           onChange={onChangeValidAt}
           value={validAt}
           placeHolder="쿠폰 사용 가능 시작일을 입력하세요."
-        ></Input>
+        />
         <Input
           type="time"
           onChange={onChangeValidTime}
           value={validTime}
           placeHolder="쿠폰 사용 가능 시작 시간을 입력하세요."
-        ></Input>
-        <Heading title="쿠폰 만료일" type="h3"></Heading>
+        />
+        <Heading title="쿠폰 만료일" type="h3" />
         <Input
           type="date"
           onChange={onChangeExpiresAt}
           value={expiresAt.toI}
           placeHolder="쿠폰 만료일을 입력하세요."
-        ></Input>
+        />
         <Input
           type="time"
           onChange={onChangeExpireTime}
           value={expireTime}
           placeHolder="쿠폰 사용 가능 시작 시간을 입력하세요."
-        ></Input>
-        <Heading title="최대 할인 금액" type="h3"></Heading>
+        />
+        <Heading title="최대 할인 금액" type="h3" />
         <Input
           type="number"
           onChange={onChangeMaxDiscountAmount}
           value={maxDiscountAmount}
           placeHolder="쿠폰을 사용할 시 최대 할인 가능 금액을 입력하세요."
-        ></Input>
-        <Heading title="최소 결제 금액" type="h3"></Heading>
+        />
+        <Heading title="최소 결제 금액" type="h3" />
         <Input
           type="number"
           onChange={onChangeMinPaymentAmount}
           value={minPaymentAmount}
           placeHolder="쿠폰을 사용할 시 최소 결제해야 하는 금액을 입력하세요."
-        ></Input>
+        />
         <Heading title="쿠폰 상세 설명" type="h3"></Heading>
         <Input
           type="string"
           onChange={onChangeDetail}
           value={detail}
           placeHolder="쿠폰 상세 설명을 입력하세요."
-        ></Input>
+        />
         <Heading title="쿠폰 발행 수량" type="h3"></Heading>
         <Input
           type="number"
           onChange={onChangeCnt}
           value={cnt}
           placeHolder="해당 쿠폰을 발행할 수량을 입력하세요."
-        ></Input>
+        />
         <BtnSection className="redirection-btn">
           <PostButton
             name="createbtn"
             buttonText="쿠폰 등록하기"
             onClickFunc={submitFormHandler}
-          ></PostButton>
+          />
         </BtnSection>
       </Div>
     </CommerceLayout>
