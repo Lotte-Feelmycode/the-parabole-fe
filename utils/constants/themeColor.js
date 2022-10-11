@@ -1,13 +1,35 @@
-export const MainColor1 = '#145C9E';
-export const ThemeColor1_1 = '#42BFDD';
-export const ThemeColor1_2 = '#BBE6E4';
+export const MainBlue = '#0084FF';
+export const ThemeBlueWhite = '#EBF5FF';
+export const ColorBlue1 = '#0069CC';
+export const ColorBlue2 = '#C2E0FF';
 
-export const MainColor2 = '#E0B0D5';
-export const ThemeColor2_1 = '#E3BAC6';
-export const ThemeColor2_2 = '#faf7c8';
+export const MainPink = '#FC4D99';
+export const ThemePinkWhite = '#FFEBF3';
+export const ColorPink1 = '#F1046B';
+export const ColorPink2 = '#FFC2DA';
 
+export const ThemeBlack = '#0D0709';
+export const ThemeGray1 = '#525252';
+export const ThemeGray2 = '#D6D6D6';
 export const ThemeWhite = '#F0F6F6';
-export const ThemeGray = '#D6D6D6';
 
-export const ThemeBlack1 = '#14110F';
-export const ThemeBlack2 = '#000009';
+export const BlueTheme = {
+  mainColor: MainBlue,
+  white: ThemeBlueWhite,
+  color1: ColorBlue1,
+  color2: ColorBlue2,
+};
+
+export const PinkTheme = {
+  mainColor: MainPink,
+  white: ThemePinkWhite,
+  color1: ColorPink1,
+  color2: ColorPink2,
+};
+
+export const whiteTheme = {
+  mainColor: ThemeGray1,
+  white: ThemeWhite,
+  color1: ThemeBlack,
+  color2: ThemeGray2,
+};
