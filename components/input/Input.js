@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import * as color from '@utils/constants/themeColor';
 
 const Input = ({ type, value, onChange, onInput, attr, css }) => {
-  console.log('input :' + JSON.stringify({ ...css }));
   return (
     <InputCSS
       type={type}

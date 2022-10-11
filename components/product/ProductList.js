@@ -16,13 +16,10 @@ export default function ProductList({
   page,
   size,
 }) {
-  // console.log(sellerId);
-  const [nowPage, setNowPage] = useState(page);
-
   const [productList, setProductList] = useState([]);
-
   const [totalElementCnt, setTotalElementCnt] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [nowPage, setNowPage] = useState(page);
 
   useEffect(() => {
     GET(`/product/list`, {
