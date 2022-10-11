@@ -43,27 +43,27 @@ export default function EventList() {
         <table class="w-full text-m text-center">
           <thead class="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr class="h-12">
-              <th scope="col" class="py-3 w-10">
+              <th scope="col" class="py-1 w-10">
                 이벤트
                 <br />
                 번호
               </th>
-              <th scope="col" class="py-3 px-10 w-24">
+              <th scope="col" class="py-1 px-10 w-24">
                 이벤트 타입
               </th>
-              <th scope="col" class="py-3 px-10 w-40">
+              <th scope="col" class="py-1 px-10 w-40">
                 이벤트 제목
               </th>
-              <th scope="col" class="py-3 px-10 w-40">
+              <th scope="col" class="py-1 px-10 w-40">
                 이벤트 설명
               </th>
-              <th scope="col" class="py-3 px-10 w-24">
+              <th scope="col" class="py-1 px-10 w-24">
                 진행 상태
               </th>
-              <th scope="col" class="py-3 px-10 w-40">
+              <th scope="col" class="py-1 px-10 w-40">
                 이벤트 시작일시
               </th>
-              <th scope="col" class="py-3 px-10 w-40">
+              <th scope="col" class="py-1 px-10 w-40">
                 이벤트 종료일시
               </th>
             </tr>
@@ -73,7 +73,7 @@ export default function EventList() {
               eventList.map((event, index) => (
                 <tr
                   onClick={() => rowClickHandler(event)}
-                  class="h-24 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  class="h-16 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                 >
                   <td>{event.id}</td>
                   <td>
