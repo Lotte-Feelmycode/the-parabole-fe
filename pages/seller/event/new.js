@@ -9,12 +9,13 @@ import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import ImageUploader from '@components/input/ImageUploader';
 import SellerLayout from '@components/seller/SellerLayout';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import BasicDateTimePicker from '@components/input/DatePicker';
+
 import { useRouter } from 'next/router';
 import { numberToMonetary } from '@utils/moneyUtil';
 import getTime from '@utils/functions';
-import BasicDateTimePicker from '@components/input/DatePicker';
 import { EVENT_TYPE } from '@utils/constants/types';
 
 export default function Event() {
