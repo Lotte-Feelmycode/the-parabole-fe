@@ -6,7 +6,7 @@ import CouponList from '@components/coupon/CouponList';
 import { GET } from '@apis/defaultApi';
 import { useEffect, useState } from 'react';
 
-export default function UserCouponList() {
+export default function UsersCouponList() {
   const [role, setRole] = useState('');
   const [userId, setUserId] = useState(2);
   const [sellerId, setSellerId] = useState();
