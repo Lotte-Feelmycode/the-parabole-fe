@@ -4,9 +4,9 @@ import useInput from '@hooks/useInput';
 import styled from '@emotion/styled';
 import Input from '@components/input/input';
 import CommerceLayout from '@components/common/CommerceLayout';
-import PostButton from '@components/input/button';
 import { POST } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
+import * as btn from '@components/input/Button';
 
 export default function Signup() {
   const router = useRouter();
@@ -105,17 +105,9 @@ export default function Signup() {
         ></Input>
 
         <BtnSection className="redirection-btn">
-          <PostButton
-            name="cancelbtn"
-            buttonText="홈으로"
-            onClickFunc={() => router.push('/')}
-          ></PostButton>
+          <btn.Blue buttonText="홈으로" onClickFunc={() => router.push('/')} />
           <text>&nbsp;&nbsp;&nbsp;&nbsp;</text>
-          <PostButton
-            name="signupbtn"
-            buttonText="회원가입하기"
-            onClickFunc={submitFormHandler}
-          ></PostButton>
+          <btn.Blue buttonText="회원가입하기" onClickFunc={submitFormHandler} />
         </BtnSection>
       </Div>
     </CommerceLayout>

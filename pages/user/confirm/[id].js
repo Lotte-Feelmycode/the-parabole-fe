@@ -3,10 +3,10 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { MainColor1 } from '@utils/constants/themeColor';
-import PostButton from '@components/input/Button';
 import SiteHead from '@components/common/SiteHead';
 import CommerceLayout from '@components/common/CommerceLayout';
 import Heading from '@components/input/Heading';
+import * as btn from '@components/input/Button';
 
 export default function SignupConfirm() {
   const router = useRouter();
@@ -44,18 +44,16 @@ export default function SignupConfirm() {
         <br></br>
         <br></br>
         <BtnSection className="redirection-btn">
-          <PostButton
-            className="HomeBtn"
+          <btn.Blue
             buttonText="홈으로"
             styled
             onClickFunc={() => router.push('/')}
-          ></PostButton>
+          />
           <text>&nbsp;&nbsp;&nbsp;&nbsp;</text>
-          <PostButton
-            name="signinbtn"
+          <btn.Blue
             buttonText="로그인하기"
             onClickFunc={() => router.push('/user/signin')}
-          ></PostButton>
+          />
         </BtnSection>
       </Div>
     </CommerceLayout>

@@ -1,0 +1,13 @@
+.SidebarCard {
+  margin: 3rem auto;
+}
+.sidebarTag p {
+  display: block;
+  padding: 5px;
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  padding: 2px;
+  cursor: pointer;
+}

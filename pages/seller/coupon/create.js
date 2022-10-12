@@ -1,10 +1,10 @@
+import * as color from '@utils/constants/themeColor';
+import * as btn from '@components/input/Button';
 import SiteHead from '@components/common/SiteHead';
 import Heading from '@components/input/heading';
-import * as color from '@utils/constants/themeColor';
 import styled from '@emotion/styled';
 import Input from '@components/input/input';
 import CommerceLayout from '@components/common/CommerceLayout';
-import PostButton from '@components/input/button';
 import { GET, POST_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -203,8 +203,7 @@ export default function CouponCreate() {
           placeHolder="해당 쿠폰을 발행할 수량을 입력하세요."
         />
         <BtnSection className="redirection-btn">
-          <PostButton
-            name="createbtn"
+          <btn.Blue
             buttonText="쿠폰 등록하기"
             onClickFunc={submitFormHandler}
           />
@@ -213,15 +212,6 @@ export default function CouponCreate() {
     </CommerceLayout>
   );
 }
-
-const Button = styled.button`
-  background-color: ${(props) => props.backgroundColor};
-  color: ${(props) => props.fontColor};
-  focus: outline-none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  padding: 0.5em 1.5em 0.5em 1.5em;
-`;
 
 const BtnSection = styled.div`
   display: inline-block;
