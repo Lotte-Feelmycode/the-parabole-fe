@@ -1,6 +1,6 @@
 import Product from '@components/product/Product';
 import { useEffect, useState } from 'react';
-import { GET } from '@apis/defaultApi';
+import { GET_DATA } from '@apis/defaultApi';
 import styled from '@emotion/styled';
 import Pagination from '@components/common/Pagination';
 import * as color from '@utils/constants/themeColor';
@@ -22,7 +22,7 @@ export default function ProductList({
   const [nowPage, setNowPage] = useState(page);
 
   useEffect(() => {
-    GET(`/product/list`, {
+    GET_DATA(`/product/list`, {
       sellerId,
       sellerName: sellerName,
       category: category,

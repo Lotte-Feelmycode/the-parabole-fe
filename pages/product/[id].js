@@ -3,7 +3,7 @@ import SiteHead from '@components/common/SiteHead.js';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { useState, useEffect } from 'react';
-import { GET, POST } from '@apis/defaultApi';
+import { GET_DATA, POST_DATA } from '@apis/defaultApi';
 import { numberToMonetary } from '@utils/moneyUtil';
 import * as color from '@utils/constants/themeColor';
 import * as btn from '@components/input/Button';
@@ -26,7 +26,7 @@ export default function ProductDetail() {
   useEffect(() => {
     const productId = router.query.id;
     if (productId) setProductId(productId);
-    GET(`/product`, { productId: productId }).then((res) => {
+    GET_DATA(`/product`, { productId: productId }).then((res) => {
       if (res && res.product) {
         setProduct(res.product);
         setProductDetail(res.productDetail);
@@ -58,7 +58,7 @@ export default function ProductDetail() {
       return;
     }
 
-    POST(`/cart/product/add`, {
+    POST_DATA(`/cart/product/add`, {
       userId: userId,
       productId: productId,
       cnt: count,
@@ -81,7 +81,7 @@ export default function ProductDetail() {
   function directOrder() {
     function DoOrderInfo(flag) {
       if (!flag) return;
-      POST(`/orderinfo`, {
+      POST_DATA(`/orderinfo`, {
         OrderInfoListDto: [
           {
             userId: userId,
@@ -103,7 +103,7 @@ export default function ProductDetail() {
     if (!isCountValid()) {
       return;
     }
-    GET(`/order`, {
+    GET_DATA(`/order`, {
       userId: userId,
     }).then((res) => {
       if (res && res.success === true) {
