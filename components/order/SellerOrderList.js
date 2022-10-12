@@ -16,17 +16,37 @@ export default function OrderList({ sellerId }) {
 
   return (
     <>
-      <table>
-        <thead>
-          <Td>이미지</Td>
-          <Td>유저이메일</Td>
-          <Td>주문상품</Td>
-          <Td>할인가격</Td>
-          <Td>가격</Td>
-          <Td>주문수량</Td>
-          <Td>재고</Td>
-          <Td>주문 상태</Td>
-          <Td>결제 수단</Td>
+      <table class="w-full text-m text-center">
+        <thead class="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr class="h-12">
+            <td scope="col" class="py-1">
+              이미지
+            </td>
+            <td scope="col" class="py-1">
+              유저이메일
+            </td>
+            <td scope="col" class="py-1">
+              주문상품
+            </td>
+            <td scope="col" class="py-1">
+              할인가격
+            </td>
+            <td scope="col" class="py-1">
+              가격
+            </td>
+            <td scope="col" class="py-1">
+              주문수량
+            </td>
+            <td scope="col" class="py-1">
+              재고
+            </td>
+            <td scope="col" class="py-1">
+              주문 상태
+            </td>
+            <td scope="col" class="py-1">
+              결제 수단
+            </td>
+          </tr>
         </thead>
         <tbody>
           {orderList && orderList.map((order) => <Order order={order} />)}
