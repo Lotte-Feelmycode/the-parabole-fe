@@ -7,6 +7,10 @@ module.exports = {
   ],
   darkMode:'class',
   theme: {
+    textColor:{
+      'mainblue' : '#0084FF',
+      'secondblue' : '#067fefc2',
+    },
     extend: {},
   },
   plugins: [],
