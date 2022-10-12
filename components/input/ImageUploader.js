@@ -31,6 +31,7 @@ const ImageUploader = () => {
         onChange={onChangeImage}
         style={{ display: 'none' }}
       />
+
       <btn.SmallLineWhite
         name="btnImgUpload"
         onClickFunc={onClickFileBtn}
