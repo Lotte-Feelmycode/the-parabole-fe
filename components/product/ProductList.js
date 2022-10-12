@@ -44,7 +44,7 @@ export default function ProductList({
         alert('상품을 찾을 수 없습니다. 다시 시도해주세요.');
       }
     });
-  }, [sellerId, sellerName, category, productName, page, size]);
+  }, [sellerId, sellerName, category, productName, nowPage, size]);
 
   return (
     <div>
