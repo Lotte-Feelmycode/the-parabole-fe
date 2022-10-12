@@ -95,7 +95,6 @@ export default function ProductDetail() {
         if (res && res.success) {
           router.push({ pathname: `/order` });
         } else {
-          orderflag = false;
           console.log(res);
         }
       });
@@ -104,8 +103,6 @@ export default function ProductDetail() {
     if (!isCountValid()) {
       return;
     }
-
-    var orderflag = true;
     GET(`/order`, {
       userId: userId,
     }).then((res) => {
