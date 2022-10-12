@@ -3,7 +3,7 @@ import SiteHead from '@components/common/SiteHead.js';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { useState, useEffect } from 'react';
-import { GET_DATA, POST_DATA } from '@apis/defaultApi';
+import { GET_DATA, GET, POST } from '@apis/defaultApi';
 import { numberToMonetary } from '@utils/moneyUtil';
 import * as color from '@utils/constants/themeColor';
 import * as btn from '@components/input/Button';
@@ -58,19 +58,18 @@ export default function ProductDetail() {
       return;
     }
 
-    POST_DATA(`/cart/product/add`, {
+    POST(`/cart/product/add`, {
       userId: userId,
       productId: productId,
       cnt: count,
     }).then((res) => {
-      if (
-        res &&
-        res.success &&
-        confirm(
-          '장바구니에 성공적으로 담겼습니다. 장바구니페이지로 이동하시겠습니까?',
-        )
-      ) {
-        router.push({ pathname: `/cart` });
+      if (res && res.success) {
+        const confirmMsg =
+          '장바구니에 성공적으로 담겼습니다. 장바구니페이지로 이동하시겠습니까?';
+        const confirmFlag = confirm(confirmMsg);
+        if (confirmFlag) {
+          router.push({ pathname: `/cart` });
+        }
       } else {
         // TODO 장바구니 실패했을때 경우의 수 추가
         console.log(res);
@@ -81,7 +80,7 @@ export default function ProductDetail() {
   function directOrder() {
     function DoOrderInfo(flag) {
       if (!flag) return;
-      POST_DATA(`/orderinfo`, {
+      POST(`/orderinfo`, {
         OrderInfoListDto: [
           {
             userId: userId,
@@ -100,10 +99,11 @@ export default function ProductDetail() {
       });
     }
 
+    // TODO : order 구현 후 동작 연결 예정
     if (!isCountValid()) {
       return;
     }
-    GET_DATA(`/order`, {
+    GET(`/order`, {
       userId: userId,
     }).then((res) => {
       if (res && res.success === true) {
