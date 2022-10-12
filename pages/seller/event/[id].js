@@ -7,12 +7,14 @@ import SiteHead from '@components/common/SiteHead';
 import Heading from '@components/input/Heading';
 import * as btn from '@components/input/Button';
 import getTime from '@utils/functions';
+import { EVENT_TYPE, EVENT_STATUS } from '@utils/constants/types';
 
 export default function EventDetail() {
   const router = useRouter();
   const [eventId, setEventId] = useState(router.query.id);
   const [event, setEvent] = useState([]);
 
+  const EVENT_BEFORE = 0;
   useEffect(() => {
     const eventId = router.query.id;
     if (eventId) {
@@ -48,9 +50,8 @@ export default function EventDetail() {
           <br />
           <Heading title="이벤트 유형" type="h3" />
           <span>
-            {event.type && event.type === 'RAFFLE'
-              ? '추첨 이벤트'
-              : '선착순 이벤트'}
+            {EVENT_TYPE.filter((value) => value.code === event.type)[0].name}
+            &nbsp;이벤트
           </span>
           <br />
           <br />
@@ -69,14 +70,12 @@ export default function EventDetail() {
           <Img src={event.eventImage && event.eventImage.eventDetailImg}></Img>
           <br />
 
-          {event.status === 0 && (
-            // 진행 전인 이벤트만 수정 및 삭제 가능
-            // 수정 및 삭제 버튼 - 이벤트 핸들러 붙이기
+          {event.status === EVENT_BEFORE && (
+            // TODO: 수정
             <DivHor>
-              <btn.LineBlue buttonText="수정하기"></btn.LineBlue>
+              <btn.LineBlue buttonText="수정하기" />
               <btn.Blue
                 buttonText="삭제하기"
-                //name="btnDeleteEvent"
                 onClickFunc={deleteClickHandler}
               ></btn.Blue>
             </DivHor>

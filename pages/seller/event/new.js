@@ -311,12 +311,12 @@ export default function Event() {
         {/* TODO: 이미지 업로드 추후 수정 */}
         <Heading title="이벤트 배너 이미지" type="h2" />
         <Div>
-          <ImageUploader></ImageUploader>
+          <ImageUploader />
         </Div>
         <Divider />
         <Heading title="이벤트 상세 이미지" type="h2" />
         <Div>
-          <ImageUploader></ImageUploader>
+          <ImageUploader />
         </Div>
         <Divider />
         <Div>
@@ -324,7 +324,7 @@ export default function Event() {
             buttonText="등록하기"
             name="btnPost"
             onClickFunc={onSubmitHandler}
-          ></btn.Blue>
+          />
         </Div>
       </FormTemplate>
     </SellerLayout>
