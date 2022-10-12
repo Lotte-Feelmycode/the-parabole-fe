@@ -1,27 +1,9 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { ORDER_STATE } from '@utils/constants/types';
-import { ORDER_PAY_STATE } from '@utils/constants/types';
+import { getPayState, getOrderState } from '@utils/functions';
 
 export default function Order({ order }) {
   const router = useRouter();
-
-  const getPayState = (prop) => {
-    const payState = ORDER_PAY_STATE.map((state) => {
-      if (state.key === prop) return state.name;
-    });
-    return payState;
-  };
-
-  const SelectBox = (props) => {
-    return (
-      <select defaultValue={props.defaultValue}>
-        {props.options.map((option) => (
-          <option value={option.value}>{option.name}</option>
-        ))}
-      </select>
-    );
-  };
 
   return (
     <tr>
