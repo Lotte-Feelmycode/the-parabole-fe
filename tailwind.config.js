@@ -10,6 +10,7 @@ module.exports = {
     textColor:{
       'mainblue' : '#0084FF',
       'secondblue' : '#067fefc2',
+      'ThemeGray1' : '#525252',
     },
     extend: {},
   },
