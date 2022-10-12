@@ -16,7 +16,7 @@ export default function CommerceHeader() {
   return (
     <>
       <header className="text-gray-700 body-font">
-        <div className="fixed w-full h-12 md:h-20 bg-white border-b border-gray-200">
+        <div className="fixed w-full h-12 md:h-20 bg-white border-b border-gray-200 z-50">
           <div className="justify-between box-border items-center container px-5 mx-auto md:py-0.5 flex">
             {/* 로고 */}
             <div className="block static mr-6">
