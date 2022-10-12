@@ -99,6 +99,7 @@ export default function ProductDetail() {
       });
     }
 
+    // TODO : order 구현 후 동작 연결 예정
     if (!isCountValid()) {
       return;
     }
