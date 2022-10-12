@@ -78,11 +78,23 @@ export default function EventList() {
                 >
                   <td>{event.id}</td>
                   <td>
-                    <Tags>{EVENT_TYPE.filter((value) => value.code === event.type)[0].name}</Tags>
+                    <Tags>
+                      {
+                        EVENT_TYPE.filter(
+                          (value) => value.code === event.type,
+                        )[0].name
+                      }
+                    </Tags>
                   </td>
                   <td>{event.title}</td>
                   <td>{event.descript}</td>
-                  <td>{EVENT_STATUS.filter((value) => value.code == event.status)[0].name}</td>               
+                  <td>
+                    {
+                      EVENT_STATUS.filter(
+                        (value) => value.code == event.status,
+                      )[0].name
+                    }
+                  </td>
                   <td>{getTime(event.startAt)}</td>
                   <td>{getTime(event.endAt)}</td>
                 </tr>
@@ -90,7 +102,7 @@ export default function EventList() {
           </tbody>
         </table>
 
-        <Div>
+        <Div class="btnname">
           <btn.SmallBlue
             buttonText="등록하기"
             name="btnPost"
@@ -105,20 +117,6 @@ export default function EventList() {
 const Divider = styled.hr`
   color: black;
   margin-bottom: 20px;
-`;
-
-const Table = styled.table`
-  text-align: center;
-`;
-
-const Tr = styled.tr`
-  border: 0.1px solid white;
-  backgorund-color: white;
-`;
-
-const Th = styled.tr`
-  border: 0.1px solid white;
-  background-color: #e4e7eb78;
 `;
 
 const Tags = styled.span`
