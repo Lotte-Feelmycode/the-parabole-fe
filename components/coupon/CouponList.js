@@ -41,7 +41,7 @@ export default function CouponList({ sellerId }) {
               <th scope="col" className="py-3 px-6">
                 할인율/액수
               </th>
-              <th scope="col" className="py-3 px-6">
+              {/* <th scope="col" className="py-3 px-6">
                 생성 일자
               </th>
               <th scope="col" className="py-3 px-6">
@@ -55,16 +55,16 @@ export default function CouponList({ sellerId }) {
               </th>
               <th scope="col" className="py-3 px-6">
                 최소결제금액
-              </th>
+              </th> */}
               <th scope="col" className="py-3 px-6">
                 쿠폰 상세설명
               </th>
               <th scope="col" className="py-3 px-6">
                 발급 수량(총 수량)
               </th>
-              {/* <th scope="col" class="py-3 px-6">
+              <th scope="col" class="py-3 px-6">
                 잔여 수량
-              </th> */}
+              </th>
             </tr>
           </thead>
           <tbody>

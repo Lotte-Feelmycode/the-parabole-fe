@@ -4,11 +4,15 @@ import styles from '@styles/Home.module.scss';
 import UserCouponList from '@components/coupon/UserCouponList';
 import { GET } from '@apis/defaultApi';
 import { useEffect, useState } from 'react';
-import CouponAssignLayout from '@components/coupon/CouponAssignLayout';
+import CouponList from '@components/coupon/CouponList';
+import styled from '@emotion/styled';
+import UserSearchBar from '@components/coupon/UserSearchBar';
 
 export default function CouponAssign() {
+  const uid = 4;
+
   const [role, setRole] = useState('');
-  const [userId, setUserId] = useState(4);
+  const [userId, setUserId] = useState(uid);
   const [sellerId, setSellerId] = useState();
 
   // TODO:
@@ -25,36 +29,34 @@ export default function CouponAssign() {
       }
     });
   }, []);
-
   const userProps = {
     userId: userId,
   };
-
   const sellerProps = {
     sellerId: sellerId,
   };
-
   if (role === 'USER') {
     return (
       <CommerceLayout>
         <SiteHead title="User's Coupon List" />
-        <section classNameName="flex min-h-screen flex-col text-gray-600 body-font">
-          <div classNameName="container px-5 py-24 mx-auto">
-            <h1 classNameName={styles.section}>THE PARABOLE</h1>
-            <h2 classNameName={styles.section}>사용자가 보유한 쿠폰목록</h2>
-            <UserCouponList {...userProps}></UserCouponList>
-          </div>
-        </section>
+        <p>사용자는 쿠폰을 생성할 수 없습니다.</p>
       </CommerceLayout>
     );
   }
-
   if (role === 'SELLER') {
     return (
       <CommerceLayout>
         <SiteHead title="Seller's Coupon List" />
-        <CouponAssignLayout></CouponAssignLayout>
+        <MainSection>
+          <CouponList {...sellerProps}></CouponList>
+          <UserSearchBar></UserSearchBar>
+        </MainSection>
       </CommerceLayout>
     );
   }
 }
+
+const MainSection = styled.div`
+  display: flex;
+  /* justify-content: space-between; */
+`;
