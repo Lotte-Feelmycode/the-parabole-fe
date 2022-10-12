@@ -30,13 +30,13 @@ const ImageUploader = () => {
         accept="image/*"
         onChange={onChangeImage}
         style={{ display: 'none' }}
-      ></input>
+      />
+
       <btn.SmallLineWhite
         name="btnImgUpload"
         onClickFunc={onClickFileBtn}
         buttonText="이미지 등록"
-        version="light"
-      ></btn.SmallLineWhite>
+      />
     </div>
   );
 };

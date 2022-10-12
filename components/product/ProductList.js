@@ -1,9 +1,12 @@
 import Product from '@components/product/Product';
 import { useEffect, useState } from 'react';
-import { GET } from '@apis/defaultApi';
+import { GET_DATA } from '@apis/defaultApi';
 import styled from '@emotion/styled';
 import Pagination from '@components/common/Pagination';
 import * as color from '@utils/constants/themeColor';
+
+const INIT_PAGENUM = 0;
+const INIT_SIZENUM = 20;
 
 export default function ProductList({
   sellerId,
@@ -14,37 +17,19 @@ export default function ProductList({
   size,
 }) {
   const [productList, setProductList] = useState([]);
-
-  const INIT_PAGENUM = 0;
-  const INIT_SIZENUM = 20;
-
   const [totalElementCnt, setTotalElementCnt] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  const [nowPage, setNowPage] = useState(page ? page : INIT_PAGENUM);
-  const [nowSize, setNowSize] = useState(size ? size : INIT_SIZENUM);
-
-  const [searchProductListParams, setSearchProductListParams] = useState({
-    sellerId: sellerId,
-    sellerName: sellerName,
-    category: category,
-    productName: productName,
-    size: nowSize,
-    page: nowPage,
-  });
+  const [nowPage, setNowPage] = useState(page);
 
   useEffect(() => {
-    setSearchProductListParams({
-      sellerId: sellerId,
+    GET_DATA(`/product/list`, {
+      sellerId,
       sellerName: sellerName,
       category: category,
       productName: productName,
-      size: nowSize,
+      size: size,
       page: nowPage,
-    });
-  }, [nowSize, nowPage]);
-
-  useEffect(() => {
-    GET(`/product/list`, searchProductListParams).then((res) => {
+    }).then((res) => {
       if (res) {
         console.log(res);
         if (res.numberOfElements === 0) {
@@ -59,7 +44,7 @@ export default function ProductList({
         alert('상품을 찾을 수 없습니다. 다시 시도해주세요.');
       }
     });
-  }, [searchProductListParams]);
+  }, [sellerId, sellerName, category, productName, nowPage, size]);
 
   return (
     <div>
@@ -85,6 +70,15 @@ export default function ProductList({
     </div>
   );
 }
+
+ProductList.defaultProps = {
+  sellerId: '',
+  sellerName: '',
+  category: '',
+  productName: '',
+  size: INIT_SIZENUM,
+  page: INIT_PAGENUM,
+};
 
 const ProductListMain = styled.div``;
 
