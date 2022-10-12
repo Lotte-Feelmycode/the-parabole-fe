@@ -8,7 +8,7 @@ const BlueTheme = color.BlueTheme;
 const PinkTheme = color.PinkTheme;
 const whiteTheme = color.whiteTheme;
 
-export const Blue = ({ buttonText, onClickFunc, css }) => {
+export const Blue = ({ buttonText, onClickFunc, attr, css }) => {
   const theme = BlueTheme;
   const size = OriginSize;
   return (
@@ -17,12 +17,13 @@ export const Blue = ({ buttonText, onClickFunc, css }) => {
       onClickFunc={onClickFunc}
       theme={theme}
       size={size}
+      attr={attr}
       css={css}
     />
   );
 };
 
-export const SmallBlue = ({ buttonText, onClickFunc, css }) => {
+export const SmallBlue = ({ buttonText, onClickFunc, attr, css }) => {
   const theme = BlueTheme;
   const size = SmallSize;
   return (
@@ -31,12 +32,13 @@ export const SmallBlue = ({ buttonText, onClickFunc, css }) => {
       onClickFunc={onClickFunc}
       theme={theme}
       size={size}
+      attr={attr}
       css={css}
     />
   );
 };
 
-export const LineBlue = ({ buttonText, onClickFunc, css }) => {
+export const LineBlue = ({ buttonText, onClickFunc, attr, css }) => {
   const theme = BlueTheme;
   const size = OriginSize;
   return (
@@ -45,12 +47,13 @@ export const LineBlue = ({ buttonText, onClickFunc, css }) => {
       onClickFunc={onClickFunc}
       theme={theme}
       size={size}
+      attr={attr}
       css={css}
     />
   );
 };
 
-export const Pink = ({ buttonText, onClickFunc, css }) => {
+export const Pink = ({ buttonText, onClickFunc, attr, css }) => {
   const theme = PinkTheme;
   const size = OriginSize;
   return (
@@ -59,12 +62,13 @@ export const Pink = ({ buttonText, onClickFunc, css }) => {
       onClickFunc={onClickFunc}
       theme={theme}
       size={size}
+      attr={attr}
       css={css}
     />
   );
 };
 
-export const SmallPink = ({ buttonText, onClickFunc, css }) => {
+export const SmallPink = ({ buttonText, onClickFunc, attr, css }) => {
   const theme = PinkTheme;
   const size = SmallSize;
   return (
@@ -73,12 +77,13 @@ export const SmallPink = ({ buttonText, onClickFunc, css }) => {
       onClickFunc={onClickFunc}
       theme={theme}
       size={size}
+      attr={attr}
       css={css}
     />
   );
 };
 
-export const LinePink = ({ buttonText, onClickFunc, css }) => {
+export const LinePink = ({ buttonText, onClickFunc, attr, css }) => {
   const theme = PinkTheme;
   const size = OriginSize;
   return (
@@ -87,12 +92,13 @@ export const LinePink = ({ buttonText, onClickFunc, css }) => {
       onClickFunc={onClickFunc}
       theme={theme}
       size={size}
+      attr={attr}
       css={css}
     />
   );
 };
 
-export const White = ({ buttonText, onClickFunc, css }) => {
+export const White = ({ buttonText, onClickFunc, attr, css }) => {
   const theme = whiteTheme;
   const size = OriginSize;
   return (
@@ -101,12 +107,13 @@ export const White = ({ buttonText, onClickFunc, css }) => {
       onClickFunc={onClickFunc}
       theme={theme}
       size={size}
+      attr={attr}
       css={css}
     />
   );
 };
 
-export const SmallWhite = ({ buttonText, onClickFunc, css }) => {
+export const SmallWhite = ({ buttonText, onClickFunc, attr, css }) => {
   const theme = whiteTheme;
   const size = SmallSize;
   return (
@@ -115,12 +122,13 @@ export const SmallWhite = ({ buttonText, onClickFunc, css }) => {
       onClickFunc={onClickFunc}
       theme={theme}
       size={size}
+      attr={attr}
       css={css}
     />
   );
 };
 
-export const SmallLineWhite = ({ buttonText, onClickFunc, css }) => {
+export const SmallLineWhite = ({ buttonText, onClickFunc, attr, css }) => {
   const theme = whiteTheme;
   const size = SmallSize;
   return (
@@ -129,12 +137,13 @@ export const SmallLineWhite = ({ buttonText, onClickFunc, css }) => {
       onClickFunc={onClickFunc}
       theme={theme}
       size={size}
-      {...css}
+      attr={attr}
+      css={css}
     />
   );
 };
 
-export const LineWhite = ({ buttonText, onClickFunc, css }) => {
+export const LineWhite = ({ buttonText, onClickFunc, attr, css }) => {
   const theme = whiteTheme;
   const size = OriginSize;
   return (
@@ -143,28 +152,48 @@ export const LineWhite = ({ buttonText, onClickFunc, css }) => {
       onClickFunc={onClickFunc}
       theme={theme}
       size={size}
-      {...css}
+      attr={attr}
+      css={css}
     />
   );
 };
 
-const ButtonComp = ({ buttonText, onClickFunc, theme, size, css }) => {
+const ButtonComp = ({ buttonText, onClickFunc, theme, size, attr, css }) => {
   return (
-    <Button onClick={onClickFunc} theme={theme} size={size} {...css}>
+    <ButtonStyled
+      onClick={onClickFunc}
+      theme={theme}
+      size={size}
+      {...attr}
+      css={css}
+    >
       {buttonText}
-    </Button>
+    </ButtonStyled>
   );
 };
 
-const OutlineButtonComp = ({ buttonText, onClickFunc, theme, size, css }) => {
+const OutlineButtonComp = ({
+  buttonText,
+  onClickFunc,
+  theme,
+  size,
+  attr,
+  css,
+}) => {
   return (
-    <OutLineButton onClick={onClickFunc} theme={theme} size={size} {...css}>
+    <OutLineButtonStyled
+      onClick={onClickFunc}
+      theme={theme}
+      size={size}
+      {...attr}
+      css={css}
+    >
       {buttonText}
-    </OutLineButton>
+    </OutLineButtonStyled>
   );
 };
 
-const Button = styled.button`
+const ButtonStyled = styled.button`
   background-color: ${(props) => props.theme.mainColor};
   color: ${(props) => props.theme.white};
   border: ${(props) => props.theme.mainColor} solid 1px;
@@ -173,7 +202,7 @@ const Button = styled.button`
   border-radius: 0.25rem;
   cursor: pointer;
   font-size: 17px;
-  ${(css) => css};
+  ${(props) => props.css};
 
   &:hover {
     background: ${(props) => props.theme.color1};
@@ -189,7 +218,7 @@ const Button = styled.button`
   }
 `;
 
-const OutLineButton = styled.button`
+const OutLineButtonStyled = styled.button`
   background-color: ${(props) => props.theme.white};
   color: ${(props) => props.theme.mainColor};
   border: ${(props) => props.theme.mainColor} solid 1px;
@@ -198,7 +227,7 @@ const OutLineButton = styled.button`
   border-radius: 0.25rem;
   cursor: pointer;
   font-size: 17px;
-  ${(css) => css};
+  ${(props) => props.css};
 
   &:hover {
     background: ${(props) => props.theme.color2};

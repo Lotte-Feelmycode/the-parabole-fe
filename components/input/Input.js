@@ -1,15 +1,15 @@
 import styled from '@emotion/styled';
 import * as color from '@utils/constants/themeColor';
 
-const Input = ({ type, value, onChange, onInput, css }) => {
-  console.log('input :' + JSON.stringify({ ...css }));
+const Input = ({ type, value, onChange, onInput, attr, css }) => {
   return (
     <InputCSS
       type={type}
       value={value}
       onChange={onChange}
       onInput={onInput}
-      {...css}
+      {...attr}
+      css={css}
     />
   );
 };
@@ -22,7 +22,7 @@ const InputCSS = styled.input`
   padding: 1% 2%;
   margin-top: 5px;
   margin-bottom: 25px;
-  ${(css) => css};
+  ${(props) => props.css};
 `;
 
 export default Input;
