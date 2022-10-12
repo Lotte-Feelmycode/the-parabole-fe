@@ -7,10 +7,11 @@ import styled from '@emotion/styled';
 
 export default function Home() {
   const router = useRouter();
+
+  const userId = 2;
   const [sellerId, setSellerId] = useState(router.query.id);
 
   useEffect(() => {
-    console.log(router.query.id);
     setSellerId(router.query.id);
   }, [router.query.id]);
 
@@ -23,7 +24,7 @@ export default function Home() {
         <div className="container px-5 py-24 mx-auto">
           <H1>THE PARABOLE SELLER OFFICE</H1>
           {/* TODO: sellerId는 로그인한 판매자의 userId를 받아와야 함 */}
-          <SellerOrderList sellerId={2} />
+          <SellerOrderList sellerId={userId} />
         </div>
       </section>
     </SellerLayout>
