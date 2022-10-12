@@ -1,12 +1,10 @@
 import SiteHead from '@components/common/SiteHead.js';
 import UserOrderList from '@components/order/UserOrderList';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import CommerceLayout from '@components/common/CommerceLayout';
 import styled from '@emotion/styled';
 
 export default function Home() {
-  const router = useRouter();
   const userId = 1;
 
   return (
