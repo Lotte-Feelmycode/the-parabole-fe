@@ -1,4 +1,4 @@
-import { GET } from '@apis/defaultApi';
+import { GET_DATA } from '@apis/defaultApi';
 import SellerLayout from '@components/seller/SellerLayout';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
@@ -17,8 +17,10 @@ export default function EventList() {
   const userId = 1;
 
   useEffect(() => {
-    GET(`/event/seller/${userId}`).then((res) => {
-      setEventList(res.data);
+    GET_DATA(`/event/seller/${userId}`).then((res) => {
+      if (res) {
+        setEventList(res);
+      }
     });
   }, []);
 
@@ -70,7 +72,7 @@ export default function EventList() {
             </tr>
           </thead>
           <tbody>
-            {eventList &&
+            {eventList && Array.isArray(eventList) && eventList.length > 0 ? (
               eventList.map((event, index) => (
                 <tr
                   onClick={() => rowClickHandler(event)}
@@ -98,11 +100,18 @@ export default function EventList() {
                   <td>{getTime(event.startAt)}</td>
                   <td>{getTime(event.endAt)}</td>
                 </tr>
-              ))}
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7" class="py-10">
+                  등록된 이벤트가 없습니다. 이벤트를 등록해 보세요!
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
 
-        <Div class="btnname">
+        <Div>
           <btn.SmallBlue
             buttonText="등록하기"
             name="btnPost"
