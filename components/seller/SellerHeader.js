@@ -6,7 +6,7 @@ export default function SellerHeader() {
       <header className="text-gray-700 body-font">
         <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
           <a
-            href="/sellerOffice"
+            href="/seller/main"
             className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
           >
             <img src="/parabole_pink.svg" className="sellerlogo" />
@@ -23,13 +23,16 @@ export default function SellerHeader() {
             <Link href="/seller/main">
               <a className="mr-5 hover:text-gray-900">홈</a>
             </Link>
+            <Link href="/seller/event/list">
+              <a className="mr-5 hover:text-gray-900">이벤트</a>
+            </Link>
             <Link href="/">
               <a className="mr-5 hover:text-gray-900">마켓</a>
             </Link>
-            <Link href="/login">
+            <Link href="/user/signin">
               <a className="mr-5 hover:text-gray-900">로그인</a>
             </Link>
-            <Link href="/signUp">
+            <Link href="/user/signup">
               <a className="mr-5 hover:text-gray-900">회원가입</a>
             </Link>
           </nav>
