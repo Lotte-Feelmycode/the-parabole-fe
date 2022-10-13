@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 import * as btn from '@components/input/Button';
 
 function Coupon({ coupon }) {
-  console.log('USER COUPON props : ' + JSON.stringify(coupon));
-
   return (
     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
       <th

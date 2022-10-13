@@ -11,7 +11,6 @@ function UserSearchBar() {
   const [userList, setUserList] = useState([]);
 
   useEffect(() => {
-    console.log(' 새로운 get 받아왔어요');
     () => {};
   }, [userList]);
 

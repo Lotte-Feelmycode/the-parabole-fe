@@ -5,7 +5,6 @@ export default function UserSearchResult({ userList }) {
 
   useEffect(() => {
     setGetList(userList);
-    console.log('set GetList');
   }, []);
 
   if (getList) {

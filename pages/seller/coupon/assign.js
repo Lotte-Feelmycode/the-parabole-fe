@@ -27,12 +27,15 @@ export default function CouponAssign() {
       }
     });
   }, []);
+
   const userProps = {
     userId: userId,
   };
+
   const sellerProps = {
     sellerId: sellerId,
   };
+
   if (role === 'USER') {
     return (
       <CommerceLayout>
@@ -41,6 +44,7 @@ export default function CouponAssign() {
       </CommerceLayout>
     );
   }
+
   if (role === 'SELLER') {
     return (
       <CommerceLayout>

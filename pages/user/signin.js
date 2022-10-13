@@ -80,7 +80,7 @@ export default function Signin() {
             buttonText="회원가입하기"
             onClickFunc={() => router.push('/user/signup')}
           />
-          <text>&nbsp;&nbsp;&nbsp;&nbsp;</text>
+          <div className="px=5" />
           <btn.Blue buttonText="로그인하기" onClickFunc={submitFormHandler} />
         </BtnSection>
       </Div>

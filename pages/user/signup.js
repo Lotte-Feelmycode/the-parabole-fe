@@ -106,7 +106,7 @@ export default function Signup() {
 
         <BtnSection className="redirection-btn">
           <btn.Blue buttonText="홈으로" onClickFunc={() => router.push('/')} />
-          <text>&nbsp;&nbsp;&nbsp;&nbsp;</text>
+          <div className="px=5" />
           <btn.Blue buttonText="회원가입하기" onClickFunc={submitFormHandler} />
         </BtnSection>
       </Div>
