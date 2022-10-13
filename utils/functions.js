@@ -1,4 +1,6 @@
-export default function getTime(str) {
+import { ORDER_PAY_STATE, ORDER_STATE } from './constants/types';
+
+function getTime(str) {
   const getDate = str.split('T')[0];
   const date =
     str.split('T')[0].split('-')[0] +
@@ -16,3 +18,19 @@ export default function getTime(str) {
 
   return date + time;
 }
+
+function getPayState(prop) {
+  const payState = ORDER_PAY_STATE.map((state) => {
+    if (state.key === prop) return state.name;
+  });
+  return payState;
+}
+
+function getOrderState(prop) {
+  const orderState = ORDER_STATE.map((state) => {
+    if (state.value === prop) return state.name;
+  });
+  return orderState;
+}
+
+export { getTime, getPayState, getOrderState };

@@ -7,7 +7,7 @@ import SiteHead from '@components/common/SiteHead';
 import Heading from '@components/input/Heading';
 import * as btn from '@components/input/Button';
 import getTime from '@utils/functions';
-import { EVENT_TYPE, EVENT_STATUS } from '@utils/constants/types';
+import { EVENT_TYPE } from '@utils/constants/types';
 
 export default function EventDetail() {
   const router = useRouter();
@@ -15,6 +15,7 @@ export default function EventDetail() {
   const [event, setEvent] = useState([]);
 
   const EVENT_BEFORE = 0;
+
   useEffect(() => {
     const eventId = router.query.id;
     if (eventId) {
@@ -22,6 +23,9 @@ export default function EventDetail() {
       GET(`/event/${eventId}`).then((res) => {
         if (res && res.data.id == eventId) {
           setEvent(res.data);
+        } else {
+          alert('잘못된 요청입니다.');
+          router.push({ pathname: `/seller/event/list` });
         }
       });
     }
@@ -30,7 +34,7 @@ export default function EventDetail() {
   const deleteClickHandler = async (e) => {
     e.preventDefault();
     DELETE(`/event/${eventId}`, {}).then((res) => {
-      if (res && res.success == true) {
+      if (res && res.success == true && confirm('삭제하시겠습니까?')) {
         //TODO: 수정필요
         alert('삭제 되었습니다. ');
         router.push({ pathname: `/seller/event/list` }, `/seller/event/list`);
@@ -50,7 +54,9 @@ export default function EventDetail() {
           <br />
           <Heading title="이벤트 유형" type="h3" />
           <span>
-            {EVENT_TYPE.filter((value) => value.code === event.type)[0].name}
+            {event.type && typeof event.type === 'string'
+              ? EVENT_TYPE.filter((value) => value.code === event.type)[0].name
+              : ''}
             &nbsp;이벤트
           </span>
           <br />
