@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { getPayState, getOrderState } from '@utils/functions';
+import { getPayState } from '@utils/functions';
+import Selectbox from '@components/input/SelectBox';
 
 export default function Order({ order }) {
   const router = useRouter();
@@ -17,7 +18,7 @@ export default function Order({ order }) {
       <Td>{order.productCnt}</Td>
       <Td>{order.productRemain}</Td>
       <Td>
-        <SelectBox options={ORDER_STATE} defaultValue={order.state} />
+        <Selectbox props={ORDER_STATE} defaultValue={order.state} />
       </Td>
       <Td>{getPayState(order.payState)}</Td>
       <Td></Td>

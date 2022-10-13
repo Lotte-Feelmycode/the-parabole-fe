@@ -33,4 +33,12 @@ function getOrderState(prop) {
   return orderState;
 }
 
-export { getTime, getPayState, getOrderState };
+function getOrderTotal(orders) {
+  let total = 0;
+  orders.map((order) => {
+    total += order.productPrice;
+  });
+  return total;
+}
+
+export { getTime, getPayState, getOrderState, getOrderTotal };
