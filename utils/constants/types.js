@@ -41,6 +41,7 @@ export const ORDER_PAY_STATE = [
   { key: 'VIRTUAL_ACCOUNT', name: '가상계좌' },
   { key: 'KAKAO_PAY', name: '카카오페이' },
   { key: 'TOSS', name: '토스' },
-  { key: 'WITHOUT_BANK', name: '무통장입금' },
+  { key: 'WITHOUT_BANK', name: '무통장입금(결제 전)' },
+  { key: 'WITHOUT_BANK_PAY', name: '무통장입금(결제완료)' },
   { key: 'NAVER_PAY', name: '네이버페이' },
 ];
