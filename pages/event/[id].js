@@ -1,36 +1,54 @@
 import { POST, GET } from '@apis/defaultApi';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import EventPrize from '@components/event/eventPrize';
+import EventPrize from '@components/event/EventPrize';
+import CommerceLayout from '@components/common/CommerceLayout';
 
 export default function EventDetail() {
+  const [eventInfo, setEventInfo] = useState([]);
+  const [eventImage, setEventImage] = useState([]);
   const router = useRouter();
   const [eventId, setEventId] = useState(router.query.id);
   const [eventDetail, setEventDetail] = useState([]);
 
   useEffect(() => {
     const eventId = router.query.id;
-    if (eventId) setEventId(eventId);
-    GET('/event', { eventId: eventId }).then((res) => {
-      //console.log(res[0].eventPrizes);
-      if (res[0].eventPrizes) {
+
+    GET('/event/', { eventId }).then((res) => {
+      if (res && res[0]) {
+        setEventInfo(res[0]);
+        setEventImage(res[0].eventImage);
         setEventDetail(res[0].eventPrizes);
-        console.log(res);
+        console.log(res[0]);
         console.log(eventDetail);
-        const productId = eventDetail.filter((product) => product.id);
-        console.log(productId);
-        POST('/eventprize', productId).then((result) => {
-          if (result) {
-            console.log(result);
-          }
-        });
+        console.log(eventDetail.eventId);
+        setEventId(eventId);
       }
     });
-  }, []);
+  }, [router.query.id]);
 
   return (
-    <ul>
-      {/* {eventDetail && <EventPrize eventprize={eventPrizes} />}</ul> */}
-    </ul>
+    <CommerceLayout>
+      <section className="flex min-h-screen flex-col text-gray-600 body-font">
+        <div className="container px-5 py-24 mx-auto">
+          <div className="event-detail-startAt">
+            {eventInfo.startAt} ~ {eventInfo.endAt}
+          </div>
+          <div className="event-detail-img">
+            <img src={eventImage.eventDetailImg} style={{ width: '100%' }} />
+          </div>
+          <div className="event-detail-descript">{eventInfo.descript}</div>
+
+          <div className="flex flex-wrap">
+            {eventDetail &&
+              eventDetail.map((event) => (
+                <div key={event.eventPrizeId} style={{ width: '33%' }}>
+                  <EventPrize event={event} eventId={eventId} />
+                </div>
+              ))}
+          </div>
+        </div>
+      </section>
+    </CommerceLayout>
   );
 }
