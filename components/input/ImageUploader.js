@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import styled from '@emotion/styled';
 import { IMAGE_UPLOAD_THUMBNAIL } from '@utils/constants/images';
-import PostButton from '@components/input/Button';
+import * as btn from '@components/input/Button';
 
 const ImageUploader = () => {
   const [imageUrl, setImageUrl] = useState(null);
@@ -30,13 +30,13 @@ const ImageUploader = () => {
         accept="image/*"
         onChange={onChangeImage}
         style={{ display: 'none' }}
-      ></input>
-      <PostButton
+      />
+
+      <btn.SmallLineWhite
         name="btnImgUpload"
         onClickFunc={onClickFileBtn}
         buttonText="이미지 등록"
-        version="light"
-      ></PostButton>
+      />
     </div>
   );
 };

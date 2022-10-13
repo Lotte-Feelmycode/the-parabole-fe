@@ -3,42 +3,131 @@ import SiteHead from '@components/common/SiteHead.js';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { useState, useEffect } from 'react';
-import { GET } from '@apis/defaultApi';
+import { GET_DATA, GET, POST } from '@apis/defaultApi';
 import { numberToMonetary } from '@utils/moneyUtil';
-import * as btn from '@components/input/Button';
 import * as color from '@utils/constants/themeColor';
+import * as btn from '@components/input/Button';
 import Input from '@components/input/Input';
-import useInput from '@hooks/useInput';
 
 export default function ProductDetail() {
+  // TODO : userID
+  const userId = 1;
+
   const router = useRouter();
   const [productId, setProductId] = useState(router.query.id);
   const [product, setProduct] = useState({});
   const [productDetail, setProductDetail] = useState([]);
   const [seller, setSeller] = useState('');
-  const [count, setCount] = useInput(1);
+  const [count, setCount] = useState(1);
+
+  const [maxCount, setMaxCount] = useState(100);
+  const minCount = 0;
 
   useEffect(() => {
     const productId = router.query.id;
     if (productId) setProductId(productId);
-    GET(`/product`, { productId: productId }).then((res) => {
+    GET_DATA(`/product`, { productId: productId }).then((res) => {
       if (res && res.product) {
         setProduct(res.product);
         setProductDetail(res.productDetail);
         setSeller(res.storeName);
+        setMaxCount(
+          res.product.productRemains < 100 ? res.product.productRemains : 100,
+        );
       }
     });
   }, [router.query]);
 
   function goToStore(storeId) {
     if (storeId) {
-      router.push({
-        pathname: `/store/${storeId}`,
-      });
+      router.push({ pathname: `/store/${storeId}` });
     }
   }
 
-  const maxCount = product.productRemains < 100 ? product.productRemains : 100;
+  function isCountValid() {
+    if (count > maxCount || count < minCount) {
+      setCount(1);
+      alert('담을 수 있는 수를 초과했습니다.');
+      return false;
+    }
+    return true;
+  }
+
+  function addCart() {
+    if (!isCountValid()) {
+      return;
+    }
+
+    POST(`/cart/product/add`, {
+      userId: userId,
+      productId: productId,
+      cnt: count,
+    }).then((res) => {
+      if (res && res.success) {
+        const confirmMsg =
+          '장바구니에 성공적으로 담겼습니다. 장바구니페이지로 이동하시겠습니까?';
+        const confirmFlag = confirm(confirmMsg);
+        if (confirmFlag) {
+          router.push({ pathname: `/cart` });
+        }
+      } else {
+        // TODO 장바구니 실패했을때 경우의 수 추가
+        console.log(res);
+      }
+    });
+  }
+
+  function directOrder() {
+    function DoOrderInfo(flag) {
+      if (!flag) return;
+      POST(`/orderinfo`, {
+        OrderInfoListDto: [
+          {
+            userId: userId,
+            productName: product.productName,
+            productCnt: count,
+            productPrice: product.productPrice,
+            productDiscoutPrice: product.productPrice,
+          },
+        ],
+      }).then((res) => {
+        if (res && res.success) {
+          router.push({ pathname: `/order` });
+        } else {
+          console.log(res);
+        }
+      });
+    }
+
+    // TODO : order 구현 후 동작 연결 예정
+    if (!isCountValid()) {
+      return;
+    }
+    GET(`/order`, {
+      userId: userId,
+    }).then((res) => {
+      if (res && res.success === true) {
+        DoOrderInfo();
+      } else {
+        console.log(res);
+      }
+    });
+  }
+
+  useEffect(() => {
+    countCheck(count);
+  }, [count]);
+
+  const onCountChange = (e) => {
+    countCheck(e.target.value);
+  };
+
+  const countCheck = (number) => {
+    let num = number;
+    if (num > maxCount) num = maxCount;
+    if (num < minCount) num = minCount;
+    setCount(num);
+  };
 
   return (
     <CommerceLayout>
@@ -76,13 +165,13 @@ export default function ProductDetail() {
                   <ProductCountSection>
                     <Input
                       type="number"
-                      onChange={setCount}
+                      onChange={onCountChange}
                       value={count}
-                      css={{
-                        min: 0,
+                      attr={{
+                        min: minCount,
                         max: maxCount,
-                        width: '100%',
                       }}
+                      css={{ width: '100%' }}
                     />
                   </ProductCountSection>
                   <TotalInputSection>
@@ -93,8 +182,16 @@ export default function ProductDetail() {
                   </TotalInputSection>
                 </InputSection>
                 <BtnSection>
-                  <btn.LineBlue buttonText="장바구니" css={{ width: '50%' }} />
-                  <btn.Blue buttonText="바로구매" css={{ width: '48%' }} />
+                  <btn.LineBlue
+                    buttonText="장바구니"
+                    onClickFunc={addCart}
+                    css={{ width: '49%', marginRight: '1%' }}
+                  />
+                  <btn.Blue
+                    buttonText="바로구매"
+                    onClickFunc={directOrder}
+                    css={{ width: '49%', marginLeft: '1%' }}
+                  />
                 </BtnSection>
               </ProductDetailTop>
             </ProductTopSection>
@@ -142,7 +239,7 @@ const ProductThumbnailImgSection = styled.div`
   position: relative;
   float: left;
   margin: 10px 10px 10px 0;
-  width: 45%;
+  width: 50%;
 `;
 
 const ProductDetailTop = styled.div`
