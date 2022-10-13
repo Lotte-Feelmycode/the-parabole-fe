@@ -4,16 +4,19 @@ import SiteHead from '@components/common/SiteHead';
 import Heading from '@components/input/heading';
 import styled from '@emotion/styled';
 import Input from '@components/input/input';
-import CommerceLayout from '@components/common/CommerceLayout';
 import { GET, POST_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useInput from '@hooks/useInput';
 
 export default function CouponCreate() {
+  // TODO:
+  // setUserId(현재로그인되어있는userId-세션,쿠키 등에서 얻어올 것임);
+  const uidFromStorage = 4;
+
   const router = useRouter();
   const [name, onChangeName] = useInput('');
-  const [userId, onChangeUserId] = useInput(4);
+  const [userId, onChangeUserId] = useInput(uidFromStorage);
   const [type, onChangeType] = useInput(1);
   const [discountValue, onChangeDiscountValue] = useInput(0);
   const [validAt, onChangeValidAt] = useInput(Date);
@@ -25,32 +28,19 @@ export default function CouponCreate() {
   const [detail, onChangeDetail] = useInput('');
   const [cnt, onChangeCnt] = useInput();
 
-  const [role, setRole] = useState('');
-
-  // TODO:
-  // setUserId(현재로그인되어있는userId-세션,쿠키 등에서 얻어올 것임);
-
   useEffect(() => {
     GET(`/user/role`, { userId }).then((res) => {
       if (res.message === 'ROLE_USER') {
-        setRole('USER');
-      }
-      if (res.message === 'ROLE_SELLER') {
-        setRole('SELLER');
+        alert('잘못된 접근입니다.');
+        router.push('/');
+      } else if (res.message === 'ROLE_SELLER') {
+        setSellerId(res.data);
+      } else {
+        alert('로그인 후에 사용 가능합니다.');
+        router.push('/user/signin');
       }
     });
   }, []);
-
-  if (role === 'USER') {
-    return (
-      <CommerceLayout>
-        <p>
-          해당 사용자는 판매자가 아니라 쿠폰을 등록할 수 없습니다. 판매자로
-          로그인 후에 사용해주세요.
-        </p>
-      </CommerceLayout>
-    );
-  }
 
   function submitFormHandler(e) {
     e.preventDefault();
@@ -89,18 +79,8 @@ export default function CouponCreate() {
       });
   }
 
-  // TODO: Dropdown select 수행 관련 함수
-  // function changeTypeSelect() {
-  //   var typeSelect = querySelector('#type-select');
-  //   var selectValue = typeSelect.options[typeSelect.selectedIndex].value;
-  //   var selectText = typeSelect.options[typeSelect.selectedIndex].text;
-
-  //   console.log(selectValue);
-  //   console.log(selectText);
-  // }
-
   return (
-    <CommerceLayout>
+    <SellerLayout>
       <SiteHead title="쿠폰 등록" />
       <Divider />
       <Heading title="쿠폰 등록" type="h1" />
@@ -209,7 +189,7 @@ export default function CouponCreate() {
           />
         </BtnSection>
       </Div>
-    </CommerceLayout>
+    </SellerLayout>
   );
 }
 

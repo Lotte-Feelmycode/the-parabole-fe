@@ -5,14 +5,15 @@ import useInput from '@hooks/useInput';
 import Input from '@components/input/Input';
 import Heading from '@components/input/Heading';
 import UserSearchResult from './UserSearchResult';
+import React from 'react';
+import { useRouter } from 'next/router';
 
 function UserSearchBar() {
+  const router = useRouter();
   const [name, onChangeName] = useInput('');
   const [userList, setUserList] = useState([]);
-
-  useEffect(() => {
-    () => {};
-  }, [userList]);
+  // var par = null;
+  // useEffect(() => {par = userList}, [userList]);
 
   function submitFormHandler(e) {
     e.preventDefault();
@@ -21,6 +22,7 @@ function UserSearchBar() {
       .then((res) => {
         console.log(res);
         setUserList(res);
+        // router.push(router.asPath);
       })
       .catch(function (error) {
         console.log(error);
@@ -39,7 +41,7 @@ function UserSearchBar() {
       <btn.SmallBlue buttonText="검색" onClickFunc={submitFormHandler} />
 
       {/* TODO:(수정필요) 자식 컴포넌트로 userList가 refresh 되지 않아서 원하는 대로 목록을 불러오지 못합니다. */}
-      <UserSearchResult {...userList}></UserSearchResult>
+      <UserSearchResult userList={userList}></UserSearchResult>
     </div>
   );
 }

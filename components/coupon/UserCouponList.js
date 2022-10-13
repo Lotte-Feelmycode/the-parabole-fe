@@ -1,6 +1,6 @@
 import { GET_DATA } from '@apis/defaultApi';
+import { getTime } from '@utils/functions';
 import { useEffect, useState } from 'react';
-import getTime from '@utils/functions';
 
 function UserCoupon({ userCoupon }) {
   return (

@@ -2,6 +2,7 @@ import { GET_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import * as btn from '@components/input/Button';
+import { getTime } from '@utils/functions';
 
 function Coupon({ coupon }) {
   return (
