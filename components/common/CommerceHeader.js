@@ -39,6 +39,9 @@ export default function CommerceHeader() {
             <Link href="/user/signup">
               <a className="mr-5 hover:text-gray-900">회원가입</a>
             </Link>
+            <Link href="/user/mypage">
+              <a className="mr-5 hover:text-gray-900">마이페이지</a>
+            </Link>
           </nav>
         </div>
       </header>
