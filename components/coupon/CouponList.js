@@ -1,11 +1,33 @@
 import { GET_DATA } from '@apis/defaultApi';
-import Coupon from '@components/coupon/Coupon';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import * as btn from '@components/input/Button';
-import styled from '@emotion/styled';
 
-export default function CouponList({ sellerId }) {
+function Coupon({ coupon }) {
+  console.log('USER COUPON props : ' + JSON.stringify(coupon));
+
+  return (
+    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+      <th
+        scope="row"
+        className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+      >
+        {coupon.name}
+      </th>
+      <td className="py-4 px-6">{coupon.type}</td>
+      <td className="py-4 px-6">{coupon.discountValue}</td>
+      {/* <td className="py-4 px-6">{getTime(coupon.createdAt)}</td>
+      <td className="py-4 px-6">{getTime(coupon.validAt)}</td>
+      <td className="py-4 px-6">{getTime(coupon.expiresAt)}</td>
+      <td className="py-4 px-6">{coupon.maxDiscountAmount}</td>
+      <td className="py-4 px-6">{coupon.minPaymentAmount}</td> */}
+      <td className="py-4 px-6">{coupon.detail}</td>
+      <td className="py-4 px-6">{coupon.cnt}</td>
+    </tr>
+  );
+}
+
+function CouponList({ sellerId }) {
   const router = useRouter();
   const [couponList, setCouponList] = useState([]);
   const [totalElementCnt, setTotalElementCnt] = useState(0);
@@ -62,14 +84,16 @@ export default function CouponList({ sellerId }) {
               <th scope="col" className="py-3 px-6">
                 발급 수량(총 수량)
               </th>
-              <th scope="col" class="py-3 px-6">
+              <th scope="col" className="py-3 px-6">
                 잔여 수량
               </th>
             </tr>
           </thead>
           <tbody>
             {couponList &&
-              couponList.map((coupon) => <Coupon coupon={coupon} />)}
+              couponList.map((coupon) => (
+                <Coupon key={coupon.name} coupon={coupon} />
+              ))}
           </tbody>
         </table>
       </div>
@@ -84,3 +108,5 @@ export default function CouponList({ sellerId }) {
     </div>
   );
 }
+
+export default CouponList;

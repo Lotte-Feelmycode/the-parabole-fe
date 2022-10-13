@@ -1,42 +1,48 @@
-import { GET } from '@apis/defaultApi';
-import { useEffect, useState } from 'react';
+import { GET_DATA } from '@apis/defaultApi';
+import { useEffect, useState, forceUpdate, Component } from 'react';
 import * as btn from '@components/input/Button';
+import useInput from '@hooks/useInput';
+import Input from '@components/input/Input';
+import Heading from '@components/input/Heading';
+import UserSearchResult from './UserSearchResult';
 
-export default function UserSearchBar({}) {
+function UserSearchBar() {
+  const [name, onChangeName] = useInput('');
   const [userList, setUserList] = useState([]);
 
-  // useEffect(() => {
-  //   GET(`/user/list`, {}).then((res) => {
-  //     setUserList(res.data);
-  //   });
-  // }, []);
+  useEffect(() => {
+    console.log(' 새로운 get 받아왔어요');
+    () => {};
+  }, [userList]);
 
-  function userSearch(name) {
-    GET(`/user/listbyname`, { name }).then((res) => {
-      if (res.response.status === 200) {
-        console.log(res.data.data);
-        setUserList(res.data.data);
-      }
-    });
+  function submitFormHandler(e) {
+    e.preventDefault();
+
+    GET_DATA(`/user/listbyname`, { name })
+      .then((res) => {
+        console.log(res);
+        setUserList(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+        return {};
+      });
   }
 
   return (
     <div>
-      <input type="text" placeholder="Search..">
-        <btn.LineBlue
-          buttonText="회원가입하기"
-          type="submit"
-          onClickFunc={() => userSearch()}
-        />
-      </input>
-      <ul className="user-list">
-        {userList &&
-          userList.map((user) => (
-            <li key={user.id}>
-              {user.username}&nbsp;{user.email}&nbsp;{user.phone}
-            </li>
-          ))}
-      </ul>
+      <Heading title="쿠폰 배정할 유저 검색창" type="h2" />
+      <Input
+        type="text"
+        placeHolder="사용자명을 입력하세요"
+        onChange={onChangeName}
+      ></Input>
+      <btn.SmallBlue buttonText="검색" onClickFunc={submitFormHandler} />
+
+      {/* TODO:(수정필요) 자식 컴포넌트로 userList가 refresh 되지 않아서 원하는 대로 목록을 불러오지 못합니다. */}
+      <UserSearchResult {...userList}></UserSearchResult>
     </div>
   );
 }
+
+export default UserSearchBar;

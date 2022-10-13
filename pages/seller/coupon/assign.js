@@ -1,7 +1,5 @@
 import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead.js';
-import styles from '@styles/Home.module.scss';
-import UserCouponList from '@components/coupon/UserCouponList';
 import { GET } from '@apis/defaultApi';
 import { useEffect, useState } from 'react';
 import CouponList from '@components/coupon/CouponList';
@@ -47,16 +45,33 @@ export default function CouponAssign() {
     return (
       <CommerceLayout>
         <SiteHead title="Seller's Coupon List" />
-        <MainSection>
-          <CouponList {...sellerProps}></CouponList>
-          <UserSearchBar></UserSearchBar>
-        </MainSection>
+        <PageContainer>
+          <CouponSection>
+            <CouponList {...sellerProps}></CouponList>
+          </CouponSection>
+          <SearchbarSection>
+            <UserSearchBar></UserSearchBar>
+          </SearchbarSection>
+        </PageContainer>
       </CommerceLayout>
     );
   }
 }
 
-const MainSection = styled.div`
+const PageContainer = styled.div`
   display: flex;
-  /* justify-content: space-between; */
+  flex-direction: row;
+  justify-content: center;
+`;
+
+const CouponSection = styled.div`
+  background-color: #ff9e2c;
+  flex: 1;
+  padding: 1rem;
+`;
+
+const SearchbarSection = styled.div`
+  background-color: #2f902c;
+  flex: 1;
+  padding: 1rem;
 `;
