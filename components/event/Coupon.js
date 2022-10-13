@@ -1,13 +1,12 @@
 import styled from '@emotion/styled';
 import Head from 'next/head';
 import * as COLOR from '@utils/constants/themeColor';
-
+import { getTime } from '@utils/functions';
 export default function Coupon({ couponInfo }) {
   return (
     <>
       <Head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <body>
@@ -16,7 +15,7 @@ export default function Coupon({ couponInfo }) {
             <h3></h3>
             <h3>{couponInfo.couponDetail}</h3>
             <br />
-            <p>유효 기간: {couponInfo.expiresAt}</p>
+            <p>유효 기간: {getTime(couponInfo.expiresAt)}</p>
             <Circle1 />
             <Circle2 />
           </CouponCard>

@@ -1,8 +1,9 @@
-import { POST, GET } from '@apis/defaultApi';
+import { GET_DATA } from '@apis/defaultApi';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import EventPrize from '@components/event/EventPrize';
 import CommerceLayout from '@components/common/CommerceLayout';
+import { getTime } from '@utils/functions';
 
 export default function EventDetail() {
   const [eventInfo, setEventInfo] = useState([]);
@@ -14,15 +15,14 @@ export default function EventDetail() {
   useEffect(() => {
     const eventId = router.query.id;
 
-    GET('/event/', { eventId }).then((res) => {
+    GET_DATA('/event/', { eventId }).then((res) => {
       if (res && res[0]) {
         setEventInfo(res[0]);
         setEventImage(res[0].eventImage);
         setEventDetail(res[0].eventPrizes);
-        console.log(res[0]);
-        console.log(eventDetail);
-        console.log(eventDetail.eventId);
         setEventId(eventId);
+        console.log(eventInfo);
+        console.log(eventId);
       }
     });
   }, [router.query.id]);
@@ -32,7 +32,7 @@ export default function EventDetail() {
       <section className="flex min-h-screen flex-col text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">
           <div className="event-detail-startAt">
-            {eventInfo.startAt} ~ {eventInfo.endAt}
+            {getTime(eventInfo.startAt)} ~ {getTime(eventInfo.endAt)}
           </div>
           <div className="event-detail-img">
             <img src={eventImage.eventDetailImg} style={{ width: '100%' }} />
@@ -42,7 +42,7 @@ export default function EventDetail() {
           <div className="flex flex-wrap">
             {eventDetail &&
               eventDetail.map((event) => (
-                <div key={event.eventPrizeId} style={{ width: '33%' }}>
+                <div key={event.eventPrizeId} className="xl:w-1/3 md:w-1/2 p-4">
                   <EventPrize event={event} eventId={eventId} />
                 </div>
               ))}

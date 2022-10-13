@@ -2,23 +2,11 @@ import styled from '@emotion/styled';
 import { useState, useEffect } from 'react';
 import Coupon from '@components/event/Coupon';
 import * as btn from '@components/input/Button';
-import { POST, GET } from '@apis/defaultApi';
+import { POST_DATA, POST } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
-export default function EventPrize({
-  // couponDetail,
-  // couponDiscountRate,
-  // couponId,
-  // eventPrizeId,
-  // prizeType,
-  // productId,
-  // productImg,
-  // productName,
-  // stock,
-  // expiresAt,
-  event,
-  eventId,
-}) {
+export default function EventPrize({ event, eventId }) {
   const [couponInfo, setCouponInfo] = useState([event]);
+  const [state, setState] = useState();
   //TODO 나중에 userId 제대로
   const userId = 3;
   const router = useRouter();
@@ -34,12 +22,30 @@ export default function EventPrize({
     }).then((res) => {
       console.log(res);
       if (res) {
-        alert('응모 성공');
+        if (res.success) {
+          alert('응모 성공');
+          location.reload();
+        } else {
+          alert('이미 응모 하셨습니다.');
+        }
+      } else {
+        alert('잠시후 다시 시도해주세요');
       }
     });
 
     return;
   }
+  useEffect(() => {
+    POST_DATA('/event/participant/check', {
+      userId,
+      eventId,
+    }).then((res) => {
+      if (!res) {
+        setState('disabled');
+      }
+    });
+  });
+
   if (event.prizeType === 'PRODUCT') {
     return (
       <div>
@@ -56,6 +62,7 @@ export default function EventPrize({
           <btn.Blue
             buttonText={'이벤트 응모'}
             onClickFunc={() => applyEvent(eventId, event.eventPrizeId)}
+            attr={{ disabled: state }}
           />
         </div>
       </div>
@@ -67,6 +74,8 @@ export default function EventPrize({
           <div>
             <Coupon couponInfo={couponInfo} />
           </div>
+          <br />
+          <br />
           <div>{event.couponDiscountRate}% 할인 쿠폰</div>
         </div>
         <div className="prize-stock">총 수량 : {event.stock} 개</div>
@@ -74,8 +83,8 @@ export default function EventPrize({
         <btn.Blue
           buttonText={'이벤트 응모'}
           onClickFunc={() => applyEvent(eventId, event.eventPrizeId)}
+          attr={{ disabled: state }}
         />
-        <btn.LineBlue buttonText={'응모 완료'} />
       </div>
     );
   }
