@@ -1,23 +1,18 @@
 import styled from '@emotion/styled';
 import { ICON_SEARCH_MAGNIFY } from '@utils/constants/icons';
 import { useState } from 'react';
-const SearchBar = ({
-  placeholder,
-  onKeyUp,
-  onChange,
-  onInput,
-}) => {
+const SearchBar = ({ placeholder, onKeyUp, onChange, onInput }) => {
   const [searchValue, setSearchValue] = useState('');
 
   const onClickHandler = (e) => {
     e.preventDefault();
-    console.log(searchValue);
-  }
+  };
 
   return (
     <Bar>
       <InputDiv>
-        <input className='hover:bg-gray-100'
+        <input
+          className="hover:bg-gray-100"
           type="text"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
@@ -27,14 +22,12 @@ const SearchBar = ({
 
       <button onClick={onClickHandler}>
         <IconSpan>
-          <img src={ICON_SEARCH_MAGNIFY}/>
+          <img src={ICON_SEARCH_MAGNIFY} />
         </IconSpan>
       </button>
     </Bar>
   );
 };
-
-
 
 const Bar = styled.div`
   cursor: text;
