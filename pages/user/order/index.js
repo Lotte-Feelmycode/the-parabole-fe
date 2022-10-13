@@ -35,12 +35,6 @@ export default function OrderAndPayment({ produts }) {
     },
   ]);
 
-  const orderInfoDto = {
-    productId: 2,
-    productName: '돼지국밥',
-    productPrice: 8000,
-    productCnt: 1,
-  };
   function getSum() {
     let sum = 0;
     for (var i = 0; i < product.length; i++) {
@@ -53,16 +47,9 @@ export default function OrderAndPayment({ produts }) {
     POST(`/orderinfo?userId=` + userId, {
       orderInfoDto: product,
     });
-    console.log('order');
   }
-  // function selectPay(cnt) {
-  //   return <PayList />;
-  // }
-
-  function selected() {}
 
   const [userId, setUserId] = useState(getUserId);
-  const [payState, setPayState] = useState();
 
   return (
     <>
@@ -164,23 +151,8 @@ export default function OrderAndPayment({ produts }) {
   );
 }
 
-const Button = styled.button`
-  background-color: ${color.ThemeBlueWhite};
-  padding: 15px;
-  border-radius: 0.25rem;
-  margin: 5px;
-  &:hover {
-    background-color: ${color.ColorBlue2};
-    cursor: pointer;
-  }
-`;
-
 const Td = styled.td`
   text-align: center;
-`;
-
-const H2 = styled.span`
-  font-size: 15px;
 `;
 
 const H1 = styled.h1`
