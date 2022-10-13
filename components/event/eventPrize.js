@@ -20,7 +20,6 @@ export default function EventPrize({ event, eventId }) {
       eventId,
       eventPrizeId,
     }).then((res) => {
-      console.log(res);
       if (res) {
         if (res.success) {
           alert('응모 성공');

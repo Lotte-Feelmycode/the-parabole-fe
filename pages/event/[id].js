@@ -21,8 +21,6 @@ export default function EventDetail() {
         setEventImage(res[0].eventImage);
         setEventDetail(res[0].eventPrizes);
         setEventId(eventId);
-        console.log(eventInfo);
-        console.log(eventId);
       }
     });
   }, [router.query.id]);
