@@ -10,9 +10,10 @@ import SellerLayout from '@components/seller/SellerLayout';
 export default function CouponAssign() {
   // TODO:
   // setUserId(현재로그인되어있는userId-세션,쿠키 등에서 얻어올 것임);
-  const uidFromStorage = 2;
+  const uidFromStorage = 4;
 
   const router = useRouter();
+  const [role, setRole] = useState();
   const [userId, setUserId] = useState(uidFromStorage);
   const [sellerId, setSellerId] = useState();
 
@@ -22,6 +23,7 @@ export default function CouponAssign() {
         alert('잘못된 접근입니다.');
         router.push('/');
       } else if (res.message === 'ROLE_SELLER') {
+        setRole('SELLER');
         setSellerId(res.data);
       } else {
         alert('로그인 후에 사용 가능합니다.');
@@ -34,19 +36,21 @@ export default function CouponAssign() {
     sellerId: sellerId,
   };
 
-  return (
-    <SellerLayout>
-      <SiteHead title="Seller's Coupon List" />
-      <PageContainer>
-        <CouponSection>
-          <CouponList {...sellerProps}></CouponList>
-        </CouponSection>
-        <SearchbarSection>
-          <UserSearchBar></UserSearchBar>
-        </SearchbarSection>
-      </PageContainer>
-    </SellerLayout>
-  );
+  if (role === 'SELLER') {
+    return (
+      <SellerLayout>
+        <SiteHead title="Seller's Coupon List" />
+        <PageContainer>
+          <CouponSection>
+            <CouponList {...sellerProps}></CouponList>
+          </CouponSection>
+          <SearchbarSection>
+            <UserSearchBar></UserSearchBar>
+          </SearchbarSection>
+        </PageContainer>
+      </SellerLayout>
+    );
+  }
 }
 
 const PageContainer = styled.div`
