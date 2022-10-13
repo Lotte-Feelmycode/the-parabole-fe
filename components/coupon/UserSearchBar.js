@@ -37,8 +37,9 @@ function UserSearchBar() {
         type="text"
         placeHolder="사용자명을 입력하세요"
         onChange={onChangeName}
+        css={{ width: '49%', marginRight: '1.5%' }}
       ></Input>
-      <btn.SmallBlue buttonText="검색" onClickFunc={submitFormHandler} />
+      <btn.SmallPink buttonText="검색" onClickFunc={submitFormHandler} />
 
       {/* TODO:(수정필요) 자식 컴포넌트로 userList가 refresh 되지 않아서 원하는 대로 목록을 불러오지 못합니다. */}
       <UserSearchResult userList={userList}></UserSearchResult>
