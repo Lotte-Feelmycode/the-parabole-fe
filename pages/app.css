@@ -19,16 +19,6 @@
 }
 
 @font-face {
-  font-family: "AppleSDGothicNeoB";
-  src: url("../fonts/AppleSDGothicNeoEB.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "AppleSDGothicNeoH";
-  src: url("../fonts/AppleSDGothicNeoH.ttf") format("truetype");
-}
-
-@font-face {
   font-family: "AppleSDGothicNeoM";
   src: url("../fonts/AppleSDGothicNeoL.ttf") format("truetype");
 }
@@ -41,14 +31,4 @@
 @font-face {
   font-family: "AppleSDGothicNeoR";
   src: url("../fonts/AppleSDGothicNeoR.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "AppleSDGothicNeoR";
-  src: url("../fonts/AppleSDGothicNeoSB.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "AppleSDGothicNeoR";
-  src: url("../fonts/AppleSDGothicNeoT.ttf") format("truetype");
 }
