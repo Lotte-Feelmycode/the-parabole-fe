@@ -98,10 +98,8 @@ const BtnSection = styled.div`
 
 const Div = styled.div`
   display: flex;
-  margin-left: 40px;
   flex-direction: column;
-  margin-bottom: 20px;
-  margin-right: 40px;
+  margin: 15% 30%;
 `;
 
 const Divider = styled.hr`

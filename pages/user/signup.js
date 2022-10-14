@@ -128,15 +128,6 @@ export default function Signup() {
   );
 }
 
-const Button = styled.button`
-  background-color: ${(props) => props.backgroundColor};
-  color: ${(props) => props.fontColor};
-  focus: outline-none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  padding: 0.5em 1.5em 0.5em 1.5em;
-`;
-
 const TitleSection = styled.div`
   margin-left: 40px;
   margin-bottom: 20px;
@@ -150,9 +141,7 @@ const BtnSection = styled.div`
 const Div = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 40px;
-  margin-bottom: 20px;
-  margin-right: 40px;
+  margin: 15% 30%;
 `;
 
 const FormTemplate = styled.form`
