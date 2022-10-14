@@ -135,7 +135,7 @@ const BtnSection = styled.div`
 const Div = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 20% 30%;
+  margin: 7% 35%;
 `;
 
 const Divider = styled.hr`

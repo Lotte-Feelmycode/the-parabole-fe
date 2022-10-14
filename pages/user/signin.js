@@ -94,7 +94,7 @@ const P = styled.p`
 const Div = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 20% 30%;
+  margin: 10% 35%;
 `;
 
 const BtnSection = styled.div`
