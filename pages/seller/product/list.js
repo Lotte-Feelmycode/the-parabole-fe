@@ -4,9 +4,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import Heading from '@components/input/Heading';
 import styled from '@emotion/styled';
-import getTime from '@utils/functions';
 import * as btn from '@components/input/Button';
-import { EVENT_TYPE, EVENT_STATUS } from '@utils/constants/types';
 
 export default function ProductList() {
   const router = useRouter();
@@ -17,8 +15,8 @@ export default function ProductList() {
   const userId = 1;
 
   useEffect(() => {
-    GET_DATA(`/product/seller/list`, { userId }).then((res) => {
-      if (res.content) {
+    GET_DATA(`/product/list`, { sellerId: userId }).then((res) => {
+      if (res) {
         setProductList(res.content);
       }
     });
