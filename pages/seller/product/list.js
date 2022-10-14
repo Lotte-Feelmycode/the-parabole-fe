@@ -69,11 +69,7 @@ export default function ProductList() {
         </table>
 
         <Div>
-          <btn.SmallBlue
-            buttonText="등록하기"
-            name="btnPost"
-            // onClickFunc={onSubmitHandler}
-          />
+          <btn.SmallBlue buttonText="등록하기" name="btnPost" />
         </Div>
       </SellerLayout>
     </>
