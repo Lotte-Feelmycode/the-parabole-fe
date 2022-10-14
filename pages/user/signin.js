@@ -46,8 +46,9 @@ export default function Signin() {
     <CommerceLayout>
       <SiteHead title="로그인" />
       <Divider />
-      <Heading title="로그인" type="h1"></Heading>
-      <br />
+      <TitleSection>
+        <Heading title="로그인" type="h1"></Heading>
+      </TitleSection>
       <Div>
         <Heading title="이메일" type="h3"></Heading>
         <Input
@@ -57,8 +58,7 @@ export default function Signin() {
           onChange={onChangeEmail}
         ></Input>
         <label>
-          <input type="checkbox" checked="checked" name="remember" /> Remember
-          me
+          <input type="checkbox" id="myCheck" /> Remember me
         </label>
         <br />
         <br />
@@ -70,17 +70,17 @@ export default function Signin() {
           onChange={onChangePassword}
           required
         ></Input>
-        <p>
+        <P>
           By creating an account you agree to our <a href="#">Terms Privacy</a>.
-        </p>
+        </P>
         <br />
 
         <BtnSection className="redirection-btn">
-          <btn.Blue
+          <btn.LineBlue
             buttonText="회원가입하기"
             onClickFunc={() => router.push('/user/signup')}
           />
-          <div className="px=5" />
+          <div className="py-3" />
           <btn.Blue buttonText="로그인하기" onClickFunc={submitFormHandler} />
         </BtnSection>
       </Div>
@@ -88,8 +88,12 @@ export default function Signin() {
   );
 }
 
+const P = styled.p`
+  font-size: small;
+`;
+
 const BtnSection = styled.div`
-  display: inline-block;
+  display: grid;
 `;
 
 const Div = styled.div`
@@ -97,9 +101,16 @@ const Div = styled.div`
   margin-left: 40px;
   flex-direction: column;
   margin-bottom: 20px;
+  margin-right: 40px;
 `;
 
 const Divider = styled.hr`
   color: black;
   margin-bottom: 20px;
+`;
+
+const TitleSection = styled.div`
+  margin-left: 40px;
+  margin-bottom: 20px;
+  margin-top: 40px;
 `;

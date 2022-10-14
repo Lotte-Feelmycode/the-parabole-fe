@@ -20,14 +20,26 @@ export default function Signup() {
   function submitFormHandler(e) {
     e.preventDefault();
 
-    const reqBody = {
-      email: email,
-      username: username,
-      nickname: nickname,
-      phone: phone,
-      password: password,
-      passwordConfirmation: passwordConfirmation,
-    };
+    if (
+      email &&
+      username &&
+      nickname &&
+      phone &&
+      password &&
+      passwordConfirmation
+    ) {
+      const reqBody = {
+        email: email,
+        username: username,
+        nickname: nickname,
+        phone: phone,
+        password: password,
+        passwordConfirmation: passwordConfirmation,
+      };
+    } else {
+      alert(`회원가입란을 전부 작성해주세요.`);
+      return;
+    }
 
     POST(`/user/signup`, reqBody)
       .then((id) => {
@@ -50,8 +62,9 @@ export default function Signup() {
     <CommerceLayout>
       <SiteHead title="회원가입" />
       <Divider />
-      <Heading title="회원가입" type="h1"></Heading>
-      <br />
+      <TitleSection>
+        <Heading title="회원가입" type="h1"></Heading>
+      </TitleSection>
 
       <Div>
         <Heading title="이메일" type="h3"></Heading>
@@ -103,10 +116,14 @@ export default function Signup() {
           onChange={onChangePasswordConfirmation}
           required
         ></Input>
+        <div className="py-2" />
 
         <BtnSection className="redirection-btn">
-          <btn.Blue buttonText="홈으로" onClickFunc={() => router.push('/')} />
-          <div className="px=5" />
+          <btn.SmallLineWhite
+            buttonText="홈으로"
+            onClickFunc={() => router.push('/')}
+          />
+          <div className="py-3" />
           <btn.Blue buttonText="회원가입하기" onClickFunc={submitFormHandler} />
         </BtnSection>
       </Div>
@@ -123,15 +140,22 @@ const Button = styled.button`
   padding: 0.5em 1.5em 0.5em 1.5em;
 `;
 
+const TitleSection = styled.div`
+  margin-left: 40px;
+  margin-bottom: 20px;
+  margin-top: 40px;
+`;
+
 const BtnSection = styled.div`
-  display: inline-block;
+  display: grid;
 `;
 
 const Div = styled.div`
   display: flex;
-  margin-left: 40px;
   flex-direction: column;
+  margin-left: 40px;
   margin-bottom: 20px;
+  margin-right: 40px;
 `;
 
 const FormTemplate = styled.form`
