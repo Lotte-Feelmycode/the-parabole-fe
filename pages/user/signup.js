@@ -4,7 +4,7 @@ import useInput from '@hooks/useInput';
 import styled from '@emotion/styled';
 import Input from '@components/input/input';
 import CommerceLayout from '@components/common/CommerceLayout';
-import { POST } from '@apis/defaultApi';
+import { POST, POST_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
 import * as btn from '@components/input/Button';
 
@@ -20,24 +20,24 @@ export default function Signup() {
   function submitFormHandler(e) {
     e.preventDefault();
 
+    const reqBody = {
+      email: email,
+      username: username,
+      nickname: nickname,
+      phone: phone,
+      password: password,
+      passwordConfirmation: passwordConfirmation,
+    };
+
     if (
-      email &&
-      username &&
-      nickname &&
-      phone &&
-      password &&
-      passwordConfirmation
+      !reqBody.email ||
+      !reqBody.username ||
+      !reqBody.nickname ||
+      !reqBody.phone ||
+      !reqBody.password ||
+      !reqBody.passwordConfirmation
     ) {
-      const reqBody = {
-        email: email,
-        username: username,
-        nickname: nickname,
-        phone: phone,
-        password: password,
-        passwordConfirmation: passwordConfirmation,
-      };
-    } else {
-      alert(`회원가입란을 전부 작성해주세요.`);
+      alert(`입력란을 모두 채워주세요.`);
       return;
     }
 
@@ -45,12 +45,9 @@ export default function Signup() {
       .then((id) => {
         console.log(id);
 
-        router.push(
-          {
-            pathname: `./confirm/${id}`,
-          },
-          `./confirm/${id}`,
-        );
+        router.push({
+          pathname: `./welcome/${id}`,
+        });
       })
       .catch(function (error) {
         console.log(error);
