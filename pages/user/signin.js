@@ -46,11 +46,11 @@ export default function Signin() {
     <CommerceLayout>
       <SiteHead title="로그인" />
       <Divider />
-      <TitleSection>
-        <Heading title="로그인" type="h1"></Heading>
-      </TitleSection>
       <Div>
-        <Heading title="이메일" type="h3"></Heading>
+        <TitleSection>
+          <Heading title="로그인" type="h1" />
+        </TitleSection>
+        <Heading title="이메일" type="h3" />
         <Input
           type="email"
           name="email"
@@ -60,9 +60,8 @@ export default function Signin() {
         <label>
           <input type="checkbox" id="myCheck" /> Remember me
         </label>
-        <br />
-        <br />
-        <Heading title="비밀번호" type="h3"></Heading>
+        <div className="py-2" />
+        <Heading title="비밀번호" type="h3" />
         <Input
           type="password"
           name="password"
@@ -92,14 +91,14 @@ const P = styled.p`
   font-size: small;
 `;
 
-const BtnSection = styled.div`
-  display: grid;
-`;
-
 const Div = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 15% 30%;
+  margin: 20% 30%;
+`;
+
+const BtnSection = styled.div`
+  display: grid;
 `;
 
 const Divider = styled.hr`
@@ -108,7 +107,5 @@ const Divider = styled.hr`
 `;
 
 const TitleSection = styled.div`
-  margin-left: 40px;
   margin-bottom: 20px;
-  margin-top: 40px;
 `;

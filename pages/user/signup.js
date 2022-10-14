@@ -4,7 +4,7 @@ import useInput from '@hooks/useInput';
 import styled from '@emotion/styled';
 import Input from '@components/input/input';
 import CommerceLayout from '@components/common/CommerceLayout';
-import { POST, POST_DATA } from '@apis/defaultApi';
+import { POST } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
 import * as btn from '@components/input/Button';
 
@@ -59,11 +59,11 @@ export default function Signup() {
     <CommerceLayout>
       <SiteHead title="회원가입" />
       <Divider />
-      <TitleSection>
-        <Heading title="회원가입" type="h1"></Heading>
-      </TitleSection>
 
       <Div>
+        <TitleSection>
+          <Heading title="회원가입" type="h1"></Heading>
+        </TitleSection>
         <Heading title="이메일" type="h3"></Heading>
         <Input
           type="email"
@@ -128,12 +128,6 @@ export default function Signup() {
   );
 }
 
-const TitleSection = styled.div`
-  margin-left: 40px;
-  margin-bottom: 20px;
-  margin-top: 40px;
-`;
-
 const BtnSection = styled.div`
   display: grid;
 `;
@@ -141,15 +135,14 @@ const BtnSection = styled.div`
 const Div = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 15% 30%;
-`;
-
-const FormTemplate = styled.form`
-  display: flex;
-  flex-direction: column;
+  margin: 20% 30%;
 `;
 
 const Divider = styled.hr`
   color: black;
+  margin-bottom: 20px;
+`;
+
+const TitleSection = styled.div`
   margin-bottom: 20px;
 `;

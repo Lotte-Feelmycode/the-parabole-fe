@@ -8,12 +8,14 @@ import { GET, POST_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useInput from '@hooks/useInput';
+import SellerLayout from '@components/seller/SellerLayout';
 
 export default function CouponCreate() {
   // TODO:
   // setUserId(현재로그인되어있는userId-세션,쿠키 등에서 얻어올 것임);
   const uidFromStorage = 4;
   const [role, setRole] = useState();
+  const [sellerId, setSellerId] = useState();
 
   const router = useRouter();
   const [name, onChangeName] = useInput('');
@@ -185,12 +187,11 @@ export default function CouponCreate() {
             value={cnt}
             placeHolder="해당 쿠폰을 발행할 수량을 입력하세요."
           />
-          <BtnSection className="redirection-btn">
-            <btn.Blue
-              buttonText="쿠폰 등록하기"
-              onClickFunc={submitFormHandler}
-            />
-          </BtnSection>
+          <btn.Pink
+            buttonText="쿠폰 등록하기"
+            onClickFunc={submitFormHandler}
+            css={{ width: '40%' }}
+          />
         </Div>
       </SellerLayout>
     );
@@ -198,7 +199,7 @@ export default function CouponCreate() {
 }
 
 const BtnSection = styled.div`
-  display: inline-block;
+  width: '50%';
 `;
 
 const Div = styled.div`

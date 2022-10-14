@@ -22,7 +22,6 @@ function UserSearchBar() {
       .then((res) => {
         console.log(res);
         setUserList(res);
-        // router.push(router.asPath);
       })
       .catch(function (error) {
         console.log(error);
@@ -42,7 +41,18 @@ function UserSearchBar() {
       <btn.SmallPink buttonText="검색" onClickFunc={submitFormHandler} />
 
       {/* TODO:(수정필요) 자식 컴포넌트로 userList가 refresh 되지 않아서 원하는 대로 목록을 불러오지 못합니다. */}
-      <UserSearchResult userList={userList}></UserSearchResult>
+      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th className="py-3 px-6">사용자명</th>
+            <th className="py-3 px-6">이메일</th>
+            <th className="py-3 px-6">전화번호</th>
+          </tr>
+        </thead>
+        <tbody>
+          <UserSearchResult userList={userList}></UserSearchResult>
+        </tbody>
+      </table>
     </div>
   );
 }
