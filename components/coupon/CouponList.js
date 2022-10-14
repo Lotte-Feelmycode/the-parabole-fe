@@ -1,6 +1,6 @@
 import { GET_DATA } from '@apis/defaultApi';
 import Coupon from '@components/coupon/Coupon';
-import PostButton from '@components/input/Button';
+import * as btn from '@components/input/Button';
 import { MainColor1 } from '@utils/constants/themeColor';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -77,7 +77,7 @@ export default function CouponList({ sellerId }) {
       <strong>
         <p>총 쿠폰 수량 : {totalElementCnt}</p>
       </strong>
-      <PostButton
+      <btn.Blue
         id="createbtn"
         onClickFunc={() => router.push('./create')}
         buttonText="쿠폰 등록하기"

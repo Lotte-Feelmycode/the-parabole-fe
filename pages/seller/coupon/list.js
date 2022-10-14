@@ -3,7 +3,7 @@ import SiteHead from '@components/common/SiteHead.js';
 import styles from '@styles/Home.module.scss';
 import UserCouponList from '@components/coupon/UserCouponList';
 import CouponList from '@components/coupon/CouponList';
-import { GET } from '@apis/defaultApi';
+import { GET_DATA } from '@apis/defaultApi';
 import { useEffect, useState } from 'react';
 
 export default function SellersCouponList() {
@@ -15,7 +15,7 @@ export default function SellersCouponList() {
   // setUserId(현재로그인되어있는userId-세션,쿠키 등에서 얻어올 것임);
 
   useEffect(() => {
-    GET(`/user/role`, { userId }).then((res) => {
+    GET_DATA(`/user/role`, { userId }).then((res) => {
       if (res.message === 'ROLE_USER') {
         setRole('USER');
       }

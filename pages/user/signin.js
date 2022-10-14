@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead';
 import Heading from '@components/input/heading';
-import PostButton from '@components/input/button';
+import * as btn from '@components/input/button';
 import Input from '@components/input/input';
 import axios from 'axios';
 
@@ -76,17 +76,17 @@ export default function Signin() {
         <br />
 
         <BtnSection className="redirection-btn">
-          <PostButton
+          <btn.Blue
             name="signupbtn"
             buttonText="회원가입하기"
             onClickFunc={() => router.push('/user/signup')}
-          ></PostButton>
+          ></btn.Blue>
           <text>&nbsp;&nbsp;&nbsp;&nbsp;</text>
-          <PostButton
+          <btn.Blue
             name="signinbtn"
             buttonText="로그인하기"
             onClickFunc={submitFormHandler}
-          ></PostButton>
+          ></btn.Blue>
         </BtnSection>
       </Div>
     </CommerceLayout>
