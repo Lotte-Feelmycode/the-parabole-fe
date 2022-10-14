@@ -22,7 +22,7 @@ export default function () {
     } else if (input === 2) {
       return (
         <div>
-          <MyProfile />
+          <MyProfile userId={userId}></MyProfile>
         </div>
       );
     }

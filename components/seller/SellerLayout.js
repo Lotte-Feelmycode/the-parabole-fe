@@ -7,7 +7,6 @@ export default function SellerLayout({ children }) {
     <>
       <SellerHeader />
       <SiteHead title={'Seller Office'} />
-
       <section className="flex min-h-screen flex-col text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">
           <div>{children}</div>
