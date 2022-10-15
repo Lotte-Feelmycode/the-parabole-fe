@@ -14,16 +14,17 @@ export default function EventDetail() {
 
   useEffect(() => {
     const eventId = router.query.id;
-
-    GET_DATA('/event/', { eventId }).then((res) => {
-      if (res && res[0]) {
-        setEventInfo(res[0]);
-        setEventImage(res[0].eventImage);
-        setEventDetail(res[0].eventPrizes);
-        setEventId(eventId);
-      }
-    });
-  }, [router.query.id]);
+    if (eventId) {
+      GET_DATA(`/event/${eventId}`).then((res) => {
+        if (res) {
+          setEventInfo(res);
+          setEventImage(res.eventImage);
+          setEventDetail(res.eventPrizes);
+          setEventId(eventId);
+        }
+      });
+    }
+  }, [router.query]);
 
   return (
     <CommerceLayout>
