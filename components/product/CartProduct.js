@@ -95,7 +95,7 @@ export default function CartProduct({
           <SmallWhite
             buttonText="-"
             onClickFunc={minusBtnClick}
-            attr={optionCount <= 1 ? { disabled: 'true' } : ''}
+            attr={optionCount <= 1 ? { disabled: true } : ''}
             css={{
               borderBottomRightRadius: '0',
               borderTopRightRadius: '0',
@@ -115,7 +115,7 @@ export default function CartProduct({
           <SmallWhite
             buttonText="+"
             onClickFunc={plusBtnClick}
-            attr={optionCount >= maxCount ? { disabled: 'true' } : ''}
+            attr={optionCount >= maxCount ? { disabled: true } : ''}
             css={{
               borderBottomLeftRadius: '0 !important ',
               borderTopLeftRadius: '0',
