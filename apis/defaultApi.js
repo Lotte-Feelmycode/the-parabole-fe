@@ -165,18 +165,16 @@ export const PATCH_DATA = async (url, body) => {
   return data;
 };
 
-export const DELETE_DATA = async (url, body) => {
+export const DELETE_DATA = async (url, params) => {
   let apiUrl = API_BASE_URL + url;
 
-  if (!(url && body)) {
+  if (!(url && params)) {
     console.error(DEV_ERROR.INVALID_ARGS);
     return;
   }
 
   const { data } = await axios
-    .delete(apiUrl, JSON.stringify(body), {
-      headers: { 'Content-Type': `application/json` },
-    })
+    .delete(apiUrl, { params: params })
     .then((res) => {
       console.log(res);
       if (res.data) return res.data;
