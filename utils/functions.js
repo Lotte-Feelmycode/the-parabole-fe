@@ -19,18 +19,11 @@ function getTime(str) {
   return date + time;
 }
 
-function getPayState(prop) {
-  const payState = ORDER_PAY_STATE.map((state) => {
-    if (state.key === prop) return state.name;
-  });
-  return payState;
-}
-
-function getOrderState(prop) {
-  const orderState = ORDER_STATE.map((state) => {
+function getState(state, prop) {
+  const resultState = state.map((state) => {
     if (state.value === prop) return state.name;
   });
-  return orderState;
+  return resultState;
 }
 
 function getOrderTotal(orders) {
@@ -41,4 +34,4 @@ function getOrderTotal(orders) {
   return total;
 }
 
-export { getTime, getPayState, getOrderState, getOrderTotal };
+export { getTime, getState, getOrderTotal };
