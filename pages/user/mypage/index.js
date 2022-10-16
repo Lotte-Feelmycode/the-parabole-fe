@@ -1,6 +1,7 @@
 import CommerceLayout from '@components/common/CommerceLayout';
 import { useState } from 'react';
 import UserOrderList from '@components/order/UserOrderList';
+import EventApplyList from '@components/user/EventApplyList';
 
 export default function () {
   // TODO: userId 집어넣기
@@ -19,7 +20,7 @@ export default function () {
     } else if (input === 1) {
       return <div>1</div>;
     } else if (input === 2) {
-      return <div>2</div>;
+      return <EventApplyList />;
     }
   }
 
@@ -38,7 +39,7 @@ export default function () {
           </a>
         ))}
       </nav>
-      <div>{showMypageMainComp(nowState)}</div>
+      <div>{showMypageMainComp(2)}</div>
     </CommerceLayout>
   );
 }
