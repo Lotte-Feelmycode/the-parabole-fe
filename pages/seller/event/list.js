@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import Heading from '@components/input/Heading';
 import styled from '@emotion/styled';
-import getTime from '@utils/functions';
+import { getTime } from '@utils/functions';
 import * as btn from '@components/input/Button';
 import { EVENT_TYPE, EVENT_STATUS } from '@utils/constants/types';
 

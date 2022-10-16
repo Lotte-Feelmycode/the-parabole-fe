@@ -6,8 +6,9 @@ import SellerLayout from '@components/seller/SellerLayout';
 import SiteHead from '@components/common/SiteHead';
 import Heading from '@components/input/Heading';
 import * as btn from '@components/input/Button';
-import getTime from '@utils/functions';
+import { getTime } from '@utils/functions';
 import { EVENT_TYPE } from '@utils/constants/types';
+import EventParticipant from '@components/event/EventParticipantList';
 
 export default function EventDetail() {
   const router = useRouter();
@@ -91,6 +92,10 @@ export default function EventDetail() {
     </SellerLayout>
   );
 }
+
+const Test = styled.div`
+  backgroudn-color: black;
+`;
 
 const Divider = styled.hr`
   color: black;
