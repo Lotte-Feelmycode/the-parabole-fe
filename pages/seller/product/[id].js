@@ -7,7 +7,8 @@ import { GET } from '@apis/defaultApi';
 import { numberToMonetary } from '@utils/moneyUtil';
 import Input from '@components/input/Input';
 import ImageUploader from '@components/input/ImageUploader';
-import PostButton from '@components/input/Button';
+import * as btn from '@components/input/Button';
+import EventParticipantList from '@components/event/EventParticipantList';
 
 export default function ProductDetail() {
   // TODO: userId를 가져올 때 저장되어있는 걸(cookie, localstorage)로 가져오게 변경
@@ -88,9 +89,10 @@ export default function ProductDetail() {
           <br />
           <ImageUploader></ImageUploader>
           <br />
-          <PostButton {...buttonProperties}></PostButton>
+          <btn.Blue {...buttonProperties}></btn.Blue>
         </Div>
       </CommerceLayout>
+      <EventParticipantList eventId={userId} />
     </>
   );
 }

@@ -4,8 +4,8 @@ import * as color from '@utils/constants/themeColor';
 import styled from '@emotion/styled';
 import Input from '@components/input/input';
 import CommerceLayout from '@components/common/CommerceLayout';
-import PostButton from '@components/input/button';
-import { GET, POST_DATA } from '@apis/defaultApi';
+import * as btn from '@components/input/button';
+import { GET_DATA, POST_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useInput from '@hooks/useInput';
@@ -31,7 +31,7 @@ export default function CouponCreate() {
   // setUserId(현재로그인되어있는userId-세션,쿠키 등에서 얻어올 것임);
 
   useEffect(() => {
-    GET(`/user/role`, { userId }).then((res) => {
+    GET_DATA(`/user/role`, { userId }).then((res) => {
       if (res.message === 'ROLE_USER') {
         setRole('USER');
       }
@@ -203,7 +203,7 @@ export default function CouponCreate() {
           placeHolder="해당 쿠폰을 발행할 수량을 입력하세요."
         />
         <BtnSection className="redirection-btn">
-          <PostButton
+          <btn.Blue
             name="createbtn"
             buttonText="쿠폰 등록하기"
             onClickFunc={submitFormHandler}
