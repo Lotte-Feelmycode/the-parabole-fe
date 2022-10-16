@@ -1,10 +1,7 @@
 import { GET_DATA } from '@apis/defaultApi';
-import Coupon from '@components/coupon/Coupon';
 import * as btn from '@components/input/Button';
-import { MainColor1 } from '@utils/constants/themeColor';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import * as btn from '@components/input/Button';
 import { getTime } from '@utils/functions';
 
 function Coupon({ coupon }) {
@@ -18,11 +15,7 @@ function Coupon({ coupon }) {
       </th>
       <td className="py-4 px-6">{coupon.type}</td>
       <td className="py-4 px-6">{coupon.discountValue}</td>
-      {/* <td className="py-4 px-6">{getTime(coupon.createdAt)}</td>
-      <td className="py-4 px-6">{getTime(coupon.validAt)}</td>
-      <td className="py-4 px-6">{getTime(coupon.expiresAt)}</td>
-      <td className="py-4 px-6">{coupon.maxDiscountAmount}</td>
-      <td className="py-4 px-6">{coupon.minPaymentAmount}</td> */}
+
       <td className="py-4 px-6">{coupon.detail}</td>
       <td className="py-4 px-6">{coupon.cnt}</td>
     </tr>
@@ -65,21 +58,6 @@ function CouponList({ sellerId }) {
               <th scope="col" className="py-3 px-6">
                 할인율/액수
               </th>
-              {/* <th scope="col" className="py-3 px-6">
-                생성 일자
-              </th>
-              <th scope="col" className="py-3 px-6">
-                쿠폰 유효 시작일시
-              </th>
-              <th scope="col" className="py-3 px-6">
-                쿠폰 만료일시
-              </th>
-              <th scope="col" className="py-3 px-6">
-                최대할인금액
-              </th>
-              <th scope="col" className="py-3 px-6">
-                최소결제금액
-              </th> */}
               <th scope="col" className="py-3 px-6">
                 쿠폰 상세설명
               </th>

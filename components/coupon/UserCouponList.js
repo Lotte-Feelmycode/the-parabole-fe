@@ -16,12 +16,12 @@ function UserCoupon({ userCoupon }) {
       <td className="py-4 px-6">{userCoupon.type}</td>
       <td className="py-4 px-6">{userCoupon.RateOrAmount}</td>
       <td className="py-4 px-6">{userCoupon.useState}</td>
-      <td className="py-4 px-6">{userCoupon.useDate}</td>
+      {/* <td className="py-4 px-6">{userCoupon.useDate}</td>
       <td className="py-4 px-6">{getTime(userCoupon.acquiredDate)}</td>
-      <td className="py-4 px-6">{getTime(userCoupon.validAt)}</td>
+      <td className="py-4 px-6">{getTime(userCoupon.validAt)}</td> */}
       <td className="py-4 px-6">{getTime(userCoupon.expiresAt)}</td>
-      <td className="py-4 px-6">{userCoupon.maxDiscountAmount}</td>
-      <td className="py-4 px-6">{userCoupon.minPaymentAmount}</td>
+      {/* <td className="py-4 px-6">{userCoupon.maxDiscountAmount}</td>
+      <td className="py-4 px-6">{userCoupon.minPaymentAmount}</td> */}
     </tr>
   );
 }
@@ -70,7 +70,7 @@ function UserCouponList({ userId }) {
               <th scope="col" className="py-3 px-6">
                 사용 여부
               </th>
-              <th scope="col" className="py-3 px-6">
+              {/* <th scope="col" className="py-3 px-6">
                 사용 일자
               </th>
               <th scope="col" className="py-3 px-6">
@@ -78,16 +78,16 @@ function UserCouponList({ userId }) {
               </th>
               <th scope="col" className="py-3 px-6">
                 유효 시작일
-              </th>
+              </th> */}
               <th scope="col" className="py-3 px-6">
                 쿠폰 만료일
               </th>
-              <th scope="col" className="py-3 px-6">
+              {/* <th scope="col" className="py-3 px-6">
                 최대할인금액
               </th>
               <th scope="col" className="py-3 px-6">
                 최소결제금액
-              </th>
+              </th> */}
             </tr>
           </thead>
           <tbody>

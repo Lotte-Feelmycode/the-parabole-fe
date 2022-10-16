@@ -1,12 +1,14 @@
 import SiteHead from '@components/common/SiteHead.js';
-import styles from '@styles/Home.module.scss';
-import CouponList from '@components/coupon/CouponList';
-import { GET, GET_DATA } from '@apis/defaultApi';
+import { GET } from '@apis/defaultApi';
 import { useEffect, useState } from 'react';
+import Checkbox from '@components/coupon/Checkbox';
+import styled from '@emotion/styled';
+import UserSearchBar from '@components/coupon/UserSearchBar';
 import { useRouter } from 'next/router';
 import SellerLayout from '@components/seller/SellerLayout';
+import Select from '@components/coupon/Select';
 
-export default function SellersCouponList() {
+export default function CouponAssign() {
   // TODO:
   // setUserId(현재로그인되어있는userId-세션,쿠키 등에서 얻어올 것임);
   const uidFromStorage = 4;
@@ -39,14 +41,34 @@ export default function SellersCouponList() {
     return (
       <SellerLayout>
         <SiteHead title="Seller's Coupon List" />
-        <section className="flex min-h-screen flex-col text-gray-600 body-font">
-          <div className="container px-5 py-24 mx-auto">
-            <h1 className={styles.section}>THE PARABOLE</h1>
-            <h2 className={styles.section}>판매자가 등록한 쿠폰목록</h2>
-            <CouponList {...sellerProps}></CouponList>
-          </div>
-        </section>
+        <PageContainer>
+          <CouponSection>
+            {/* <CouponList {...sellerProps}></CouponList> */}
+            {/* <Select sellerId={sellerId} /> */}
+            <Checkbox sellerId={sellerId}></Checkbox>
+          </CouponSection>
+          <SearchbarSection>
+            {/* <UserSearchBar></UserSearchBar> */}
+            {/* <Select /> */}
+          </SearchbarSection>
+        </PageContainer>
       </SellerLayout>
     );
   }
 }
+
+const PageContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+const CouponSection = styled.div`
+  flex: 1;
+  padding: 1rem;
+`;
+
+const SearchbarSection = styled.div`
+  flex: 1;
+  padding: 1rem;
+`;
