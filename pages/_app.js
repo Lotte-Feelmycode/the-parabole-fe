@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }) {
 }
 
 const Div = styled.div`
-  font-family: 'SansMedium';
+  font-family: 'AppleSDGothicNeoM';
 `;
 
 export default MyApp;
