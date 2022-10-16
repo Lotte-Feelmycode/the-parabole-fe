@@ -1,7 +1,7 @@
 import SiteHead from '@components/common/SiteHead.js';
 import styles from '@styles/Home.module.scss';
 import CouponList from '@components/coupon/CouponList';
-import { GET } from '@apis/defaultApi';
+import { GET_DATA } from '@apis/defaultApi';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import SellerLayout from '@components/seller/SellerLayout';
@@ -17,7 +17,7 @@ export default function SellersCouponList() {
   const [sellerId, setSellerId] = useState();
 
   useEffect(() => {
-    GET(`/user/role`, { userId }).then((res) => {
+    GET_DATA(`/user/role`, { userId }).then((res) => {
       if (res.message === 'ROLE_USER') {
         alert('잘못된 접근입니다.');
         router.push('/');
