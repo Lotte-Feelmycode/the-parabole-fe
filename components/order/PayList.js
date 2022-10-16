@@ -2,12 +2,17 @@ import { ORDER_PAY } from '@utils/constants/types';
 import Pay from '@components/order/Pay';
 import { useEffect, useState } from 'react';
 import OrderList from './SellerOrderList';
+import styled from '@emotion/styled';
 
 export default function PayList() {
   const [count, setCount] = useState(0);
   const [index, setIndex] = useState(-1);
 
   useEffect(() => {}, [index]);
+
+  const btnCss = {
+    width: '12rem',
+  };
 
   function clicked(idx) {
     setCount(count + 1);
@@ -20,13 +25,20 @@ export default function PayList() {
         <Pay
           buttonText={name}
           onClickFunc={() => clicked(idx)}
-          css={{ border: '1px solid black' }}
+          css={{
+            width: '12rem',
+            border: '2px solid #0084FF',
+          }}
         />
       );
     } else {
       return (
         <div>
-          <Pay buttonText={name} onClickFunc={() => clicked(idx)} />
+          <Pay
+            css={btnCss}
+            buttonText={name}
+            onClickFunc={() => clicked(idx)}
+          />
         </div>
       );
     }
@@ -36,9 +48,13 @@ export default function PayList() {
     <>
       {ORDER_PAY.map((order) => (
         <a onClick={() => {}}>
-          <div>{selectPay(order.name, order.index)}</div>
+          <Div>{selectPay(order.name, order.index)}</Div>
         </a>
       ))}
     </>
   );
 }
+
+const Div = styled.div`
+  display: inline-block;
+`;
