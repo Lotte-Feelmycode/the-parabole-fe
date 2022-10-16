@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 export default function UsersCouponList() {
   // TODO:
   // setUserId(현재로그인되어있는userId-세션,쿠키 등에서 얻어올 것임);
-  const uidFromStorage = 4;
+  const uidFromStorage = 2;
 
   const router = useRouter();
   const [role, setRole] = useState();

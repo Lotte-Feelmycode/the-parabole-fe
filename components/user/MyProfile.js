@@ -2,6 +2,7 @@ import { GET_DATA } from '@apis/defaultApi';
 import Heading from '@components/input/Heading';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import SiteHead from '@components/common/SiteHead';
 
 export default function MyProfile({ userId }) {
   const [userInfo, setUserInfo] = useState([]);
@@ -16,24 +17,41 @@ export default function MyProfile({ userId }) {
 
   return (
     <>
-      <Div>
-        <Heading title="사용자 이름" type="h1"></Heading>
-        <p>{userInfo.username}</p>
-        <Heading title="닉네임" type="h1"></Heading>
+      <SiteHead title="My Profile" />
+      <Heading title="My Profile" type="h1" styled={{ float: 'right' }} />
+      <BgDiv>
+        <div className="py-7" />
+        <Heading title="사용자 이름" type="h2" />
+        <P>{userInfo.username}</P>
+        <Heading title="닉네임" type="h2" />
         <p>{userInfo.nickname}</p>
-        <Heading title="이메일" type="h1"></Heading>
+        <Heading title="이메일" type="h2" />
         <p>{userInfo.email}</p>
-        <Heading title="계정 역할" type="h1"></Heading>
+        <Heading title="계정 역할" type="h2" />
         <p>{userInfo.role}</p>
-        <Heading title="연락처" type="h1"></Heading>
+        <Heading title="연락처" type="h2" />
         <p>{userInfo.phone}</p>
-      </Div>
+        <div className="py-5" />
+      </BgDiv>
     </>
   );
 }
 
-const Div = styled.div`
+const BgDiv = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 10% 35%;
+  margin: 4% 30%;
+  align-items: center;
+  background-color: #a7cdfc;
+  border-radius: 7%;
+
+  p {
+    margin-bottom: 10px;
+    padding: 8px;
+  }
+`;
+
+const P = styled.p`
+  margin-bottom: 20px;
+  font-size: large;
 `;
