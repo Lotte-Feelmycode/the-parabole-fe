@@ -2,7 +2,6 @@ import { getTime } from '@utils/functions';
 import styled from '@emotion/styled';
 
 export default function EventApply({ applyInfo }) {
-  console.log(applyInfo);
   return (
     <div style={{ paddingBottom: '3rem' }}>
       <ApplyTime>

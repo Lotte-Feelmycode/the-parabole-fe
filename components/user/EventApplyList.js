@@ -19,19 +19,15 @@ export default function EventApplyList() {
   }, [userId]);
   function ApplyFunc(list, status) {
     list = total;
-    console.log('전체');
-    console.log(status);
     if (status === 1) {
       list.map((event) => {
         if (event.status === 1) {
-          console.log(event, '1번놈');
           setApplyInfo([event]);
         }
       });
     } else if (status == 2) {
       list.map((event) => {
         if (event.status === 2) {
-          console.log(event, '2번놈');
           setApplyInfo([event]);
         }
       });
