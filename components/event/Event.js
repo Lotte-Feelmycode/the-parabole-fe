@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import getTime from '@utils/functions';
+import { getTime } from '@utils/functions';
 
 export default function Event({ event }) {
   console.log('EVENT');

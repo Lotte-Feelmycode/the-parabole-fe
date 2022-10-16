@@ -1,4 +1,7 @@
 import { GET_DATA } from '@apis/defaultApi';
+import Coupon from '@components/coupon/Coupon';
+import * as btn from '@components/input/Button';
+import { MainColor1 } from '@utils/constants/themeColor';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import * as btn from '@components/input/Button';
