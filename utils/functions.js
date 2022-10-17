@@ -18,11 +18,19 @@ function getTime(str) {
 }
 
 function getState(state, prop) {
-  console.log(state, prop);
   const resultState = state.map((state) => {
     if (state.value === prop) return state.name;
   });
   return resultState;
 }
 
-export { getTime, getState };
+function getOrderTotal(orders) {
+  if (!orders) return;
+  let total = 0;
+  orders.map((order) => {
+    total += order.productPrice;
+  });
+  return total;
+}
+
+export { getTime, getState, getOrderTotal };
