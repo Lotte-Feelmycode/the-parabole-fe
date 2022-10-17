@@ -14,6 +14,7 @@ export default function EventPrize({ event, eventId }) {
   useEffect(() => {
     setCouponInfo(event);
   }, [event]);
+
   function applyEvent(eventId, eventPrizeId) {
     //TODO: userID 나중에 받아와야함
     POST('/event/participant', {
@@ -89,7 +90,7 @@ export default function EventPrize({ event, eventId }) {
         <div
           style={{ float: 'right', paddingRight: '106px', fontSize: 'large' }}
         >
-          <strong>{event.couponDiscountRate}원 할인 쿠폰</strong> {event.stock}
+          <strong>{event.couponDiscountValue}원 할인 쿠폰</strong> {event.stock}
           개
         </div>
         <br />
