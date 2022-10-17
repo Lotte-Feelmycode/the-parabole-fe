@@ -1,5 +1,3 @@
-import { ORDER_PAY_STATE, ORDER_STATE } from './constants/types';
-
 function getTime(str) {
   const getDate = str.split('T')[0];
   const date =
@@ -20,6 +18,7 @@ function getTime(str) {
 }
 
 function getState(state, prop) {
+  console.log(state, prop);
   const resultState = state.map((state) => {
     if (state.value === prop) return state.name;
   });
