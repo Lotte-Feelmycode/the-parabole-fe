@@ -1,5 +1,3 @@
-import { ORDER_PAY_STATE, ORDER_STATE } from './constants/types';
-
 function getTime(str) {
   if (str) {
     const getDate = str.split('T')[0];
@@ -27,4 +25,13 @@ function getState(state, prop) {
   return resultState;
 }
 
-export { getTime, getState };
+function getOrderTotal(orders) {
+  if (!orders) return;
+  let total = 0;
+  orders.map((order) => {
+    total += order.productPrice;
+  });
+  return total;
+}
+
+export { getTime, getState, getOrderTotal };

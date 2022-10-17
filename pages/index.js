@@ -12,14 +12,9 @@ export default function Home() {
   return (
     <CommerceLayout>
       <SiteHead title="Home" />
-
-      <section className="flex min-h-screen flex-col text-gray-600 body-font">
-        <div className="container px-5 py-24 mx-auto">
-          <h1 className={styles.section}>THE PARABOLE</h1>
-          <h2 className={styles.section}>상품목록</h2>
-          <ProductList {...productListProps} />
-        </div>
-      </section>
+      <h1 className={styles.section}>THE PARABOLE</h1>
+      <h2 className={styles.section}>상품목록</h2>
+      <ProductList {...productListProps} />
     </CommerceLayout>
   );
 }

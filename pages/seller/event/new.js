@@ -160,32 +160,32 @@ export default function Event() {
           ></btn.SmallBlue>
         </Div>
 
-        <table class="text-m text-center">
-          <thead class="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr class="h-12">
-              <th scope="col" class="py-3 px-6 w-32">
-                <span class="sr-only">Image</span>
+        <table className="text-m text-center">
+          <thead className="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr className="h-12">
+              <th scope="col" className="py-3 px-6 w-32">
+                <span className="sr-only">Image</span>
               </th>
-              <th scope="col" class="py-3 px-10 w-40">
+              <th scope="col" className="py-3 px-10 w-40">
                 상품명
               </th>
-              <th scope="col" class="py-3 px-10 w-40">
+              <th scope="col" className="py-3 px-10 w-40">
                 상품카테고리
               </th>
-              <th scope="col" class="py-3 px-10 w-40 ">
+              <th scope="col" className="py-3 px-10 w-40 ">
                 상품 가격
               </th>
-              <th scope="col" class="py-3 px-6  w-40">
+              <th scope="col" className="py-3 px-6  w-40">
                 상품 재고
               </th>
-              <th scope="col" class="py-3 px-6">
-                <div class="flex items-center">
+              <th scope="col" className="py-3 px-6">
+                <div className="flex items-center">
                   <input
                     id="checkbox-table-1"
                     type="checkbox"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
-                  <label for="checkbox-table-1" class="sr-only">
+                  <label for="checkbox-table-1" className="sr-only">
                     checkbox
                   </label>
                 </div>
@@ -195,33 +195,33 @@ export default function Event() {
           <tbody>
             {productList &&
               productList.map((product, index) => (
-                <tr class="h-24 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <td class="p-4 w-32">
+                <tr className="h-24 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <td className="p-4 w-32">
                     <img src={product.productThumbnailImg} alt="상품"></img>
                   </td>
-                  <td class="py-4 px-8 w-40">{product.productName}</td>
-                  <td class="py-4 px-8 w-40">{product.productCategory}</td>
-                  <td class="py-4 px-10 w-40">
+                  <td className="py-4 px-8 w-40">{product.productName}</td>
+                  <td className="py-4 px-8 w-40">{product.productCategory}</td>
+                  <td className="py-4 px-10 w-40">
                     {numberToMonetary(product.productPrice)} 원
                   </td>
-                  <td class="py-4 px-10 w-40">{product.productRemains}</td>
-                  <td class="p-4 w-4">
-                    <div class="flex items-center">
+                  <td className="py-4 px-10 w-40">{product.productRemains}</td>
+                  <td className="p-4 w-4">
+                    <div className="flex items-center">
                       <input
                         id="checkbox-table-1"
                         type="checkbox"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                       />
-                      <label for="checkbox-table-1" class="sr-only">
+                      <label for="checkbox-table-1" className="sr-only">
                         checkbox
                       </label>
                     </div>
                   </td>
                 </tr>
               ))}
-            <tr class="h-24 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <td colspan="6" class="px-4 w-32">
-                <div class="flex items-center">
+            <tr className="h-24 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+              <td colspan="6" className="px-4 w-32">
+                <div className="flex items-center">
                   <btn.SmallBlue buttonText="상품 등록" />
                 </div>
               </td>
@@ -230,38 +230,38 @@ export default function Event() {
         </table>
 
         <Divider />
-        <table class="w-full text-sm text-center">
-          <thead class="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <table className="w-full text-sm text-center">
+          <thead className="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" class="py-3 px-6">
+              <th scope="col" className="py-3 px-6">
                 쿠폰명
               </th>
-              <th scope="col" class="py-3 px-6">
+              <th scope="col" className="py-3 px-6">
                 쿠폰 유형
               </th>
-              <th scope="col" class="py-3 px-6">
+              <th scope="col" className="py-3 px-6">
                 할인율/금액
               </th>
-              <th scope="col" class="py-3 px-6">
+              <th scope="col" className="py-3 px-6">
                 최소금액
               </th>
-              <th scope="col" class="py-3 px-6">
+              <th scope="col" className="py-3 px-6">
                 최대금액
               </th>
-              <th scope="col" class="py-3 px-6">
+              <th scope="col" className="py-3 px-6">
                 시작일자
               </th>
-              <th scope="col" class="py-3 px-6">
+              <th scope="col" className="py-3 px-6">
                 만료일자
               </th>
-              <th scope="col" class="py-3 px-6">
-                <div class="flex items-center">
+              <th scope="col" className="py-3 px-6">
+                <div className="flex items-center">
                   <input
                     id="checkbox-table-1"
                     type="checkbox"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
-                  <label for="checkbox-table-1" class="sr-only">
+                  <label for="checkbox-table-1" className="sr-only">
                     checkbox
                   </label>
                 </div>
@@ -271,32 +271,34 @@ export default function Event() {
           <tbody>
             {couponList &&
               couponList.map((coupon, index) => (
-                <tr class="h-24 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <td class="py-4 px-8 w-40">{coupon.name}</td>
-                  <td class="py-4 px-8 w-40">
+                <tr className="h-24 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <td className="py-4 px-8 w-40">{coupon.name}</td>
+                  <td className="py-4 px-8 w-40">
                     {coupon.type === '1' ? '할인율' : '금액'}
                   </td>
-                  <td class="py-4 px-10 w-40">
+                  <td className="py-4 px-10 w-40">
                     {coupon.type === '1'
                       ? coupon.discountRate + '%'
                       : numberToMonetary(coupon.discountAmount) + '원'}
                   </td>
-                  <td class="py-4 px-10 w-40">
+                  <td className="py-4 px-10 w-40">
                     {numberToMonetary(coupon.maxDiscountAmount)}원
                   </td>
-                  <td class="py-4 px-10 w-40">
+                  <td className="py-4 px-10 w-40">
                     {numberToMonetary(coupon.minPaymentAmount)}원
                   </td>
-                  <td class="py-4 px-10 w-40">{getTime(coupon.validAt)}</td>
-                  <td class="py-4 px-10 w-40">{getTime(coupon.expiresAt)}</td>
-                  <td class="p-4 w-4">
-                    <div class="flex items-center">
+                  <td className="py-4 px-10 w-40">{getTime(coupon.validAt)}</td>
+                  <td className="py-4 px-10 w-40">
+                    {getTime(coupon.expiresAt)}
+                  </td>
+                  <td className="p-4 w-4">
+                    <div className="flex items-center">
                       <input
                         id="checkbox-table-1"
                         type="checkbox"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                       />
-                      <label for="checkbox-table-1" class="sr-only">
+                      <label for="checkbox-table-1" className="sr-only">
                         checkbox
                       </label>
                     </div>

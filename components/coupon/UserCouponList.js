@@ -1,8 +1,32 @@
 import { GET_DATA } from '@apis/defaultApi';
-import UserCoupon from '@components/coupon/UserCoupon';
+import { getTime } from '@utils/functions';
 import { useEffect, useState } from 'react';
 
-export default function UserCouponList({ userId }) {
+function UserCoupon({ userCoupon }) {
+  return (
+    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+      <th
+        scope="row"
+        className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+      >
+        {userCoupon.name}
+      </th>
+      <td className="py-4 px-6">{userCoupon.serialNo}</td>
+      <td className="py-4 px-6">{userCoupon.sellerName}</td>
+      <td className="py-4 px-6">{userCoupon.type}</td>
+      <td className="py-4 px-6">{userCoupon.RateOrAmount}</td>
+      <td className="py-4 px-6">{userCoupon.useState}</td>
+      {/* <td className="py-4 px-6">{userCoupon.useDate}</td>
+      <td className="py-4 px-6">{getTime(userCoupon.acquiredDate)}</td>
+      <td className="py-4 px-6">{getTime(userCoupon.validAt)}</td> */}
+      <td className="py-4 px-6">{getTime(userCoupon.expiresAt)}</td>
+      {/* <td className="py-4 px-6">{userCoupon.maxDiscountAmount}</td>
+      <td className="py-4 px-6">{userCoupon.minPaymentAmount}</td> */}
+    </tr>
+  );
+}
+
+function UserCouponList({ userId }) {
   const [userCouponList, setUserCouponList] = useState([]);
   const [totalElementCnt, setTotalElementCnt] = useState(0);
 
@@ -46,7 +70,7 @@ export default function UserCouponList({ userId }) {
               <th scope="col" className="py-3 px-6">
                 사용 여부
               </th>
-              <th scope="col" className="py-3 px-6">
+              {/* <th scope="col" className="py-3 px-6">
                 사용 일자
               </th>
               <th scope="col" className="py-3 px-6">
@@ -54,22 +78,22 @@ export default function UserCouponList({ userId }) {
               </th>
               <th scope="col" className="py-3 px-6">
                 유효 시작일
-              </th>
+              </th> */}
               <th scope="col" className="py-3 px-6">
                 쿠폰 만료일
               </th>
-              <th scope="col" className="py-3 px-6">
+              {/* <th scope="col" className="py-3 px-6">
                 최대할인금액
               </th>
               <th scope="col" className="py-3 px-6">
                 최소결제금액
-              </th>
+              </th> */}
             </tr>
           </thead>
           <tbody>
             {userCouponList &&
               userCouponList.map((userCoupon) => (
-                <UserCoupon userCoupon={userCoupon} />
+                <UserCoupon key={userCoupon.serialNo} userCoupon={userCoupon} />
               ))}
           </tbody>
         </table>
@@ -81,3 +105,5 @@ export default function UserCouponList({ userId }) {
     </div>
   );
 }
+
+export default UserCouponList;
