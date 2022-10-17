@@ -1,7 +1,7 @@
 import SiteHead from '@components/common/SiteHead.js';
 import { GET } from '@apis/defaultApi';
 import { useEffect, useState } from 'react';
-import CouponList from '@components/coupon/CouponList';
+import CouponListChk from '@components/coupon/CouponListChk';
 import styled from '@emotion/styled';
 import UserSearchBar from '@components/coupon/UserSearchBar';
 import { useRouter } from 'next/router';
@@ -45,7 +45,7 @@ export default function CouponAssign() {
         <Heading title="쿠폰 배정" type="h1" />
         <PageContainer>
           <Split>
-            <CouponList {...sellerProps}></CouponList>
+            <CouponListChk {...sellerProps}></CouponListChk>
           </Split>
           <Split>
             <UserSearchBar></UserSearchBar>

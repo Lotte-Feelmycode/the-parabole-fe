@@ -5,13 +5,14 @@ import { useEffect, useState } from 'react';
 import { getTime } from '@utils/functions';
 import styled from '@emotion/styled';
 
-function Coupon({ coupon }) {
+function CouponChk({ coupon }) {
   return (
     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
       <th
         scope="row"
         className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
       >
+        <Chk type="checkbox" />
         {coupon.name}
       </th>
       <td className="py-4 px-6">{coupon.type}</td>
@@ -23,7 +24,7 @@ function Coupon({ coupon }) {
   );
 }
 
-function CouponList({ sellerId }) {
+function CouponListChk({ sellerId }) {
   const router = useRouter();
   const [couponList, setCouponList] = useState([]);
   const [totalElementCnt, setTotalElementCnt] = useState(0);
@@ -73,7 +74,7 @@ function CouponList({ sellerId }) {
           <tbody>
             {couponList &&
               couponList.map((coupon) => (
-                <Coupon key={coupon.name} coupon={coupon} />
+                <CouponChk key={coupon.name} coupon={coupon} />
               ))}
           </tbody>
         </table>
@@ -95,4 +96,8 @@ function CouponList({ sellerId }) {
   );
 }
 
-export default CouponList;
+export default CouponListChk;
+
+const Chk = styled.input`
+  margin-right: 8px;
+`;

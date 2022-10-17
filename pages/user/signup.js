@@ -4,7 +4,7 @@ import useInput from '@hooks/useInput';
 import styled from '@emotion/styled';
 import Input from '@components/input/input';
 import CommerceLayout from '@components/common/CommerceLayout';
-import { POST } from '@apis/defaultApi';
+import { POST_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
 import * as btn from '@components/input/Button';
 
@@ -41,7 +41,7 @@ export default function Signup() {
       return;
     }
 
-    POST(`/user/signup`, reqBody)
+    POST_DATA(`/user/signup`, reqBody)
       .then((id) => {
         console.log(id);
 

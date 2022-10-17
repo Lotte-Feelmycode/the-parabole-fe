@@ -1,10 +1,10 @@
 import SiteHead from '@components/common/SiteHead.js';
 import styles from '@styles/Home.module.scss';
-import CouponList from '@components/coupon/CouponList';
-import { GET, GET_DATA } from '@apis/defaultApi';
+import { GET } from '@apis/defaultApi';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import SellerLayout from '@components/seller/SellerLayout';
+import CouponList from '@components/coupon/CouponList';
 
 export default function SellersCouponList() {
   // TODO:
