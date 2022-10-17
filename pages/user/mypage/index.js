@@ -2,6 +2,7 @@ import CommerceLayout from '@components/common/CommerceLayout';
 import { useState } from 'react';
 import UserOrderList from '@components/order/UserOrderList';
 import EventApplyList from '@components/user/EventApplyList';
+import MyProfile from '@components/user/MyProfile';
 
 export default function () {
   // TODO: userId 집어넣기
@@ -20,7 +21,11 @@ export default function () {
     } else if (input === 1) {
       return <EventApplyList />;
     } else if (input === 2) {
-      return <div>2</div>;
+      return (
+        <div>
+          <MyProfile userId={userId}></MyProfile>
+        </div>
+      );
     }
   }
 

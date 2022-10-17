@@ -27,19 +27,19 @@ export default function ProductList() {
       <SellerLayout>
         <Heading title="상품 목록" type="h1" />
         <Divider />
-        <table class="w-full text-m text-center">
-          <thead class="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr class="h-12">
-              <th scope="col" class="py-1 w-10">
+        <table className="w-full text-m text-center">
+          <thead className="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr className="h-12">
+              <th scope="col" className="py-1 w-10">
                 상품명
               </th>
-              <th scope="col" class="py-1 px-10 w-24">
+              <th scope="col" className="py-1 px-10 w-24">
                 재고
               </th>
-              <th scope="col" class="py-1 px-10 w-40">
+              <th scope="col" className="py-1 px-10 w-40">
                 가격
               </th>
-              <th scope="col" class="py-1 px-10 w-40">
+              <th scope="col" className="py-1 px-10 w-40">
                 카테고리
               </th>
             </tr>
@@ -49,7 +49,7 @@ export default function ProductList() {
             Array.isArray(productList) &&
             productList.length > 0 ? (
               productList.map((product, index) => (
-                <tr class="h-16 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <tr className="h-16 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                   <td>{product.productName}</td>
                   <td>{product.productRemains}</td>
                   <td>{product.productPrice}</td>
@@ -58,7 +58,7 @@ export default function ProductList() {
               ))
             ) : (
               <tr>
-                <td colSpan="7" class="py-10">
+                <td colSpan="7" className="py-10">
                   등록된 상품이 없습니다. 상품을 등록해주세요.
                 </td>
               </tr>

@@ -27,7 +27,7 @@ export const PinkTheme = {
   color2: ColorPink2,
 };
 
-export const whiteTheme = {
+export const WhiteTheme = {
   mainColor: ThemeGray1,
   white: ThemeWhite,
   color1: ThemeBlack,

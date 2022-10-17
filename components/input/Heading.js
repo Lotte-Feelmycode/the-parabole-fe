@@ -19,7 +19,6 @@ const Heading = ({ title, type, marginSize = 5 }) => {
 const H1 = styled.h1`
   font-size: 32px;
   font-weight: bold;
-  color: to
   margin-bottom: 5px;
 `;
 const H2 = styled.h2`

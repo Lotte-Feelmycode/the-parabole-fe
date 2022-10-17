@@ -15,19 +15,19 @@ export default function EventParticipantList({ eventId }) {
 
   return (
     <>
-      <table class="w-full text-m text-center">
-        <thead class="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr class="h-12">
-            <td scope="col" class="py-1">
+      <table className="w-full text-m text-center">
+        <thead className="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr className="h-12">
+            <td scope="col" className="py-1">
               이벤트 시작일자
             </td>
-            <td scope="col" class="py-1">
+            <td scope="col" className="py-1">
               참여한 유저 이메일
             </td>
-            <td scope="col" class="py-1">
+            <td scope="col" className="py-1">
               참여한 유저 이름
             </td>
-            <td scope="col" class="py-1">
+            <td scope="col" className="py-1">
               참여한 유저 전화번호
             </td>
           </tr>

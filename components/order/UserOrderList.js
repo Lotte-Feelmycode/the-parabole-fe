@@ -16,31 +16,31 @@ export default function OrderList({ userId }) {
 
   return (
     <>
-      <table class="w-full text-m text-center">
-        <thead class="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr class="h-12">
-            <td scope="col" class="py-1">
+      <table className="w-full text-m text-center">
+        <thead className="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr className="h-12">
+            <td scope="col" className="py-1">
               이미지
             </td>
-            <td scope="col" class="py-1">
+            <td scope="col" className="py-1">
               주문상품
             </td>
-            <td scope="col" class="py-1">
+            <td scope="col" className="py-1">
               할인가격
             </td>
-            <td scope="col" class="py-1">
+            <td scope="col" className="py-1">
               가격
             </td>
-            <td scope="col" class="py-1">
+            <td scope="col" className="py-1">
               주문수량
             </td>
-            <td scope="col" class="py-1">
+            <td scope="col" className="py-1">
               재고
             </td>
-            <td scope="col" class="py-1">
+            <td scope="col" className="py-1">
               주문 상태
             </td>
-            <td scope="col" class="py-1">
+            <td scope="col" className="py-1">
               결제 수단
             </td>
           </tr>
