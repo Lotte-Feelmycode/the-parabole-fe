@@ -5,22 +5,16 @@ import { getTime } from '@utils/functions';
 export default function Coupon({ couponInfo }) {
   return (
     <>
-      <Head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-      <body>
-        <div>
-          <CouponCard>
-            <h3></h3>
-            <h3>{couponInfo.couponDetail}</h3>
-            <br />
-            <p>유효 기간: {getTime(couponInfo.expiresAt)}</p>
-            <Circle1 />
-            <Circle2 />
-          </CouponCard>
-        </div>
-      </body>
+      <div>
+        <CouponCard>
+          <h3></h3>
+          <h3>{couponInfo.couponDetail}</h3>
+          <br />
+          <p>유효 기간: {getTime(couponInfo.expiresAt)}</p>
+          <Circle1 />
+          <Circle2 />
+        </CouponCard>
+      </div>
     </>
   );
 }
@@ -36,7 +30,7 @@ const CouponCard = styled.div`
   position: relative;
 `;
 const Circle1 = styled.div`
-  background: #f0fff3;
+  background: #ffffff;
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -46,7 +40,7 @@ const Circle1 = styled.div`
   left: -25px;
 `;
 const Circle2 = styled.div`
-  background: #f0fff3;
+  background: #ffffff;
   width: 50px;
   height: 50px;
   border-radius: 50%;

@@ -4,6 +4,7 @@ import Coupon from '@components/event/Coupon';
 import * as btn from '@components/input/Button';
 import { POST_DATA, POST } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
+
 export default function EventPrize({ event, eventId }) {
   const [couponInfo, setCouponInfo] = useState([event]);
   const [state, setState] = useState();
@@ -50,8 +51,17 @@ export default function EventPrize({ event, eventId }) {
       <div>
         <div style={{ width: '300px', height: '300px' }}>
           <EventPrizeImg className="prize-img" src={event.productImg} />
+          <btn.Blue
+            buttonText={'이벤트 응모'}
+            onClickFunc={() => applyEvent(eventId, event.eventPrizeId)}
+            attr={{ disabled: state }}
+            css={{ position: 'relative', bottom: '73px', left: '256px' }}
+          />
         </div>
-        <div className="prize-body">
+        <div
+          className="prize-body"
+          style={{ float: 'right', paddingRight: '110px' }}
+        >
           <div>
             <div className="prize-name">
               <strong>{event.productName}</strong>
@@ -62,36 +72,29 @@ export default function EventPrize({ event, eventId }) {
               <strong>총 수량 </strong> : {event.stock} 개
             </div>
           </div>
-          <btn.Blue
-            buttonText={'이벤트 응모'}
-            onClickFunc={() => applyEvent(eventId, event.eventPrizeId)}
-            attr={{ disabled: state }}
-          />
         </div>
       </div>
     );
   } else if (event.prizeType === 'COUPON') {
     return (
       <div>
-        <div style={{ width: '300px', height: '266px' }}>
+        <div style={{ width: '300px', height: '249px' }}>
           <div>
             <Coupon couponInfo={couponInfo} />
-          </div>
-          <br />
-          <br />
-          <div>
-            <strong>{event.couponDiscountRate}원 할인 쿠폰</strong>
+            <btn.Blue
+              buttonText={'이벤트 응모'}
+              onClickFunc={() => applyEvent(eventId, event.eventPrizeId)}
+              attr={{ disabled: state }}
+              css={{ position: 'relative', left: '250px', bottom: '23px' }}
+            />
           </div>
         </div>
-        <div className="prize-stock">
-          <strong>총 수량 </strong>: {event.stock} 개
+        <div style={{ float: 'right', paddingRight: '94px' }}>
+          <strong>{event.couponDiscountRate}원 할인 쿠폰</strong>
+          <div className="prize-stock">
+            <strong>총 수량 </strong>: {event.stock} 개
+          </div>
         </div>
-
-        <btn.Blue
-          buttonText={'이벤트 응모'}
-          onClickFunc={() => applyEvent(eventId, event.eventPrizeId)}
-          attr={{ disabled: state }}
-        />
       </div>
     );
   }
@@ -99,4 +102,5 @@ export default function EventPrize({ event, eventId }) {
 
 const EventPrizeImg = styled.img`
   object-fit: fill;
+  border-radius: 9rem;
 `;
