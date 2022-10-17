@@ -1,3 +1,10 @@
+export const APPLY_TYPE = {
+  eventBegin: 0,
+  eventProceeding: 1,
+  eventEnd: 2,
+  eventTotal: 3,
+};
+
 export const EVENT_TYPE = [
   {
     value: 'FCFS',

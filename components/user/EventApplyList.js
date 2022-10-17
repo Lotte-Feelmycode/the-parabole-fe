@@ -4,11 +4,13 @@ import EventApply from '@components/user/EventApply';
 import styles from '@styles/Home.module.scss';
 import * as btn from '@components/input/Button';
 import styled from '@emotion/styled';
+import { APPLY_TYPE } from '@utils/constants/types';
 
 export default function EventApplyList() {
   const userId = 2;
   const [applyInfo, setApplyInfo] = useState([]);
   const [total, setTotal] = useState([]);
+
   useEffect(() => {
     GET_DATA(`/event/user/participant/${userId}`).then((res) => {
       if (res) {
@@ -17,17 +19,19 @@ export default function EventApplyList() {
       }
     });
   }, [userId]);
+
   function ApplyFunc(list, status) {
     list = total;
-    if (status === 1) {
+
+    if (status === APPLY_TYPE.eventProceeding) {
       list.map((event) => {
-        if (event.status === 1) {
+        if (event.status === APPLY_TYPE.eventProceeding) {
           setApplyInfo([event]);
         }
       });
-    } else if (status == 2) {
+    } else if (status == APPLY_TYPE.eventEnd) {
       list.map((event) => {
-        if (event.status === 2) {
+        if (event.status === APPLY_TYPE.eventEnd) {
           setApplyInfo([event]);
         }
       });
@@ -35,6 +39,7 @@ export default function EventApplyList() {
       setApplyInfo(total);
     }
   }
+
   return (
     <section>
       <div className="container px-5 py-24 mx-auto">
@@ -44,19 +49,21 @@ export default function EventApplyList() {
           <SpanMargin>
             <btn.LineWhite
               buttonText={'전체'}
-              onClickFunc={() => ApplyFunc(applyInfo, 3)}
+              onClickFunc={() => ApplyFunc(applyInfo, APPLY_TYPE.eventTotal)}
             />
           </SpanMargin>
           <SpanMargin>
             <btn.LineWhite
               buttonText={'진행중'}
-              onClickFunc={() => ApplyFunc(applyInfo, 1)}
+              onClickFunc={() =>
+                ApplyFunc(applyInfo, APPLY_TYPE.eventProceeding)
+              }
             />
           </SpanMargin>
           <SpanMargin>
             <btn.LineWhite
               buttonText={'종료'}
-              onClickFunc={() => ApplyFunc(applyInfo, 2)}
+              onClickFunc={() => ApplyFunc(applyInfo, APPLY_TYPE.eventEnd)}
             />
           </SpanMargin>
           {/* TODO: 당첨 미당첨 구현 */}

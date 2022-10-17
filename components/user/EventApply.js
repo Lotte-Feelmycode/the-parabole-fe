@@ -1,6 +1,6 @@
 import { getTime } from '@utils/functions';
 import styled from '@emotion/styled';
-import * as btn from '@components/input/Button';
+import { APPLY_TYPE } from '@utils/constants/types';
 
 export default function EventApply({ applyInfo }) {
   return (
@@ -38,9 +38,9 @@ export default function EventApply({ applyInfo }) {
           </div>
 
           <div>
-            {applyInfo.status === 0 ? (
+            {applyInfo.status === APPLY_TYPE.eventBegin ? (
               <div>시작전 이벤트</div>
-            ) : applyInfo.status === 1 ? (
+            ) : applyInfo.status === APPLY_TYPE.eventProceeding ? (
               <div
                 style={{
                   borderRadius: '2rem',
