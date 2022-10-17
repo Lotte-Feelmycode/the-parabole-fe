@@ -30,7 +30,7 @@ const CouponCard = styled.div`
   position: relative;
 `;
 const Circle1 = styled.div`
-  background: #ffffff;
+  background: #f6f6f6;
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -40,7 +40,7 @@ const Circle1 = styled.div`
   left: -25px;
 `;
 const Circle2 = styled.div`
-  background: #ffffff;
+  background: #f6f6f6;
   width: 50px;
   height: 50px;
   border-radius: 50%;

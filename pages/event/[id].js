@@ -41,15 +41,29 @@ export default function EventDetail() {
           </div>
           <div
             className="event-detail-descript"
-            style={{ fontSize: 'x-large', padding: '10px' }}
+            style={{ fontSize: 'x-large', padding: '24px' }}
           >
             {eventInfo.descript}
           </div>
 
-          <div className="flex flex-wrap">
+          <div
+            className="flex flex-wrap"
+            style={{ marginLeft: '100px', marginTop: '10px' }}
+          >
             {eventDetail &&
               eventDetail.map((event) => (
-                <div key={event.eventPrizeId} className="xl:w-1/3 md:w-1/2 p-4">
+                <div
+                  key={event.eventPrizeId}
+                  className="xl:w-1/3 md:w-1/2 p-4"
+                  style={{
+                    border: '0.1px solid #D6D6D6',
+                    borderRadius: '2rem',
+                    width: '408px',
+                    height: '456px',
+                    marginRight: '32px',
+                    backgroundColor: '#F6F6F6',
+                  }}
+                >
                   <EventPrize event={event} eventId={eventId} />
                 </div>
               ))}
