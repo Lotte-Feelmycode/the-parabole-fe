@@ -6,7 +6,7 @@ import Heading from '@components/input/Heading';
 import styled from '@emotion/styled';
 import { getTime, getState } from '@utils/functions';
 import * as btn from '@components/input/Button';
-import { EVENT_TYPE, EVENT_STATUS, EVENET_STATE } from '@utils/constants/types';
+import { EVENT_TYPE, EVENT_STATUS } from '@utils/constants/types';
 
 export default function EventList() {
   const router = useRouter();

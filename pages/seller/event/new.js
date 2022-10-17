@@ -11,7 +11,7 @@ import { numberToMonetary } from '@utils/moneyUtil';
 import { getTimeNotKor, getState } from '@utils/functions';
 import { EVENT_TYPE } from '@utils/constants/types';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { PRIZE_TYPE } from '@utils/constants/types';
 export default function Event() {
   const router = useRouter();
