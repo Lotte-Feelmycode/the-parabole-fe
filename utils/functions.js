@@ -1,4 +1,9 @@
-function getTime(str) {
+/**
+ * 일시 데이터를 '00년 00월 00일 오후/오전 00시 00분'으로 리턴하는 함수
+ * @param {*} str
+ * @returns
+ */
+export function getTime(str) {
   const getDate = str.split('T')[0];
   const date =
     str.split('T')[0].split('-')[0] +
@@ -17,14 +22,25 @@ function getTime(str) {
   return date + time;
 }
 
-function getState(state, prop) {
+/**
+ * 딕셔너리 객체 입력시 name 리턴하는 함수
+ * @param {*} state
+ * @param {*} prop
+ * @returns
+ */
+export function getState(state, prop) {
   const resultState = state.map((state) => {
     if (state.value === prop) return state.name;
   });
   return resultState;
 }
 
-function getOrderTotal(orders) {
+/**
+ * 주문 금액 총합 리턴하는 함수
+ * @param {*} orders
+ * @returns
+ */
+export function getOrderTotal(orders) {
   if (!orders) return;
   let total = 0;
   orders.map((order) => {
@@ -33,9 +49,31 @@ function getOrderTotal(orders) {
   return total;
 }
 
-function getTimeNotKor(str) {
+/**
+ * 일시 데이터를 '00-00-00 00:00:00'으로 리턴하는 함수
+ * @param {*} str
+ * @returns
+ */
+export function getTimeNotKor(str) {
   if (str) {
-    return str.split('T')[0] + '-' + str.split('T')[1];
+    return str.split('T')[0] + ' ' + str.split('T')[1];
   }
 }
-export { getTime, getState, getOrderTotal, getTimeNotKor };
+
+/**
+ * null값 체크
+ * @param {*} value
+ * @returns
+ */
+export var isEmpty = function (value) {
+  if (
+    value == '' ||
+    value == null ||
+    value == undefined ||
+    (value != null && typeof value == 'object' && !Object.keys(value).length)
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+};
