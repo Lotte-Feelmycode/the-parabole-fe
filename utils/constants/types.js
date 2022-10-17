@@ -24,6 +24,10 @@ export const EVENT_STATUS = [
   },
 ];
 
+export const PRIZE_TYPE = [
+  { value: 'PRODUCT', name: '상품' },
+  { value: 'COUPON', name: '쿠폰' },
+];
 export const ORDER_STATE = [
   { value: 'BEFORE_PAY', name: '입금전' },
   { value: 'PAY_COMPLETE', name: '결제완료' },
