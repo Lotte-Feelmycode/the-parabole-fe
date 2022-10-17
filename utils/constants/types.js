@@ -35,12 +35,17 @@ export const ORDER_STATE = [
 ];
 
 export const ORDER_PAY_STATE = [
-  { key: 'CARD', name: '카드결제' },
-  { key: 'BANK_TRANSFER', name: '실시간 계좌이체' },
-  { key: 'PHONE', name: '휴대폰결제' },
-  { key: 'VIRTUAL_ACCOUNT', name: '가상계좌' },
-  { key: 'KAKAO_PAY', name: '카카오페이' },
-  { key: 'TOSS', name: '토스' },
-  { key: 'WITHOUT_BANK', name: '무통장입금' },
-  { key: 'NAVER_PAY', name: '네이버페이' },
+  { value: 'CARD', name: '카드결제' },
+  { value: 'BANK_TRANSFER', name: '실시간 계좌이체' },
+  { value: 'PHONE', name: '휴대폰결제' },
+  { value: 'VIRTUAL_ACCOUNT', name: '가상계좌' },
+  { value: 'KAKAO_PAY', name: '카카오페이' },
+  { value: 'TOSS', name: '토스' },
+  { value: 'WITHOUT_BANK', name: '무통장입금' },
+  { value: 'NAVER_PAY', name: '네이버페이' },
+];
+
+export const EVENT_STATE = [
+  { value: 'RAFFLE', name: '래플 이벤트' },
+  { value: 'FCFS', name: '선착순 이벤트' },
 ];
