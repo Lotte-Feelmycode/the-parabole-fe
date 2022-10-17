@@ -69,13 +69,14 @@ export default function EventApplyList() {
         <h2 className={styles.section}>
           나의 이벤트 참여 횟수: {applyInfo && applyInfo.length}
         </h2>
-
-        {applyInfo &&
-          applyInfo.map((apply) => (
-            <div key={apply.eventId}>
-              <EventApply applyInfo={apply} />
-            </div>
-          ))}
+        <div className="flex flex-wrap -m-4" style={{ marginRight: '-4rem' }}>
+          {applyInfo &&
+            applyInfo.map((apply) => (
+              <div classkey={apply.eventId} className="xl:w-1/2">
+                <EventApply applyInfo={apply} />
+              </div>
+            ))}
+        </div>
       </div>
     </section>
   );

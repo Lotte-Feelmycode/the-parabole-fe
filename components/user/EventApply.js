@@ -1,20 +1,22 @@
 import { getTime } from '@utils/functions';
 import styled from '@emotion/styled';
+import * as btn from '@components/input/Button';
 
 export default function EventApply({ applyInfo }) {
   return (
-    <div style={{ paddingBottom: '3rem' }}>
+    <div style={{ paddingBottom: '3rem', width: '764px' }}>
       <ApplyTime>
         <div style={{ float: 'left' }}>
-          <strong>응모 일시: </strong> {getTime(applyInfo.eventTimeStartAt)}
+          {getTime(applyInfo.eventTimeStartAt)}
+          <strong>응모</strong>
         </div>
         <div style={{ float: 'right' }}>
           {applyInfo.status === 0 ? (
-            <div>이벤트 상태: 시작전</div>
+            <div>시작전 이벤트</div>
           ) : applyInfo.status === 1 ? (
-            <div>이벤트 상태: 진행중</div>
+            <div>진행중인 이벤트</div>
           ) : (
-            <div>이벤트 상태: 종료</div>
+            <div>종료된 이벤트</div>
           )}
         </div>
       </ApplyTime>
@@ -24,7 +26,7 @@ export default function EventApply({ applyInfo }) {
         style={{
           paddingTop: '2rem',
           paddingBottom: '2rem',
-          width: '1000px',
+          width: '764px',
           outline: 'auto',
         }}
       >
@@ -32,9 +34,9 @@ export default function EventApply({ applyInfo }) {
         <div
           className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col"
           style={{
-            width: '15rem',
+            width: '21.5rem',
             height: '190px',
-            marginLeft: '40px',
+            marginLeft: '14px',
             backgroundColor: '#F6F6F6',
           }}
         >
@@ -46,13 +48,16 @@ export default function EventApply({ applyInfo }) {
           </div>
         </div>
         <div style={{ marginLeft: '40px', marginTop: '15px' }}>
-          <div style={{ paddingBottom: '1rem' }}>
-            <strong>이벤트 제목: </strong> {applyInfo.eventTitle}
+          <div style={{ paddingBottom: '1rem', fontSize: 'xx-large' }}>
+            {applyInfo.eventTitle}
           </div>
 
           <div style={{ paddingBottom: '1rem' }}>
-            <strong>이벤트 기간:</strong> {getTime(applyInfo.startAt)} ~{' '}
+            {getTime(applyInfo.startAt)} ~<br />
             {getTime(applyInfo.endAt)}
+          </div>
+          <div>
+            <btn.LineBlue buttonText={'응모 상세정보'} />
           </div>
         </div>
 
@@ -62,9 +67,8 @@ export default function EventApply({ applyInfo }) {
   );
 }
 const EventImg = styled.img`
-  width: 183px;
-  height: 149px;
-  margin-left: 1.7rem;
+  height: 153px;
+  margin-left: 1.1rem;
   margin-top: 1rem;
 `;
 
@@ -72,7 +76,7 @@ const ApplyTime = styled.div`
   outline: auto;
   background-color: #d6d6d6;
   height: 64px;
-  width: 1000px;
+  width: 764px;
   padding: 1rem;
   display: table-cell;
   vertical-align: middle;
