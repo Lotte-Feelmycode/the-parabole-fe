@@ -11,15 +11,15 @@ export const EVENT_TYPE = [
 
 export const EVENT_STATUS = [
   {
-    value: '0',
+    value: 0,
     name: '진행 전',
   },
   {
-    value: '1',
+    value: 1,
     name: '진행 중',
   },
   {
-    value: '2',
+    value: 2,
     name: '종료',
   },
 ];
