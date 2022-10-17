@@ -6,7 +6,7 @@ import SellerLayout from '@components/seller/SellerLayout';
 import SiteHead from '@components/common/SiteHead';
 import Heading from '@components/input/Heading';
 import * as btn from '@components/input/Button';
-import { getTime } from '@utils/functions';
+import { getTime, getState } from '@utils/functions';
 import { EVENT_TYPE } from '@utils/constants/types';
 import EventParticipant from '@components/event/EventParticipantList';
 
@@ -55,9 +55,7 @@ export default function EventDetail() {
           <br />
           <Heading title="이벤트 유형" type="h3" />
           <span>
-            {event.type && typeof event.type === 'string'
-              ? EVENT_TYPE.filter((value) => value.code === event.type)[0].name
-              : ''}
+            {getState(EVENT_TYPE, event.type)}
             &nbsp;이벤트
           </span>
           <br />
