@@ -33,4 +33,9 @@ function getOrderTotal(orders) {
   return total;
 }
 
-export { getTime, getState, getOrderTotal };
+function getTimeNotKor(str) {
+  if (str) {
+    return str.split('T')[0] + '-' + str.split('T')[1];
+  }
+}
+export { getTime, getState, getOrderTotal, getTimeNotKor };
