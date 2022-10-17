@@ -21,8 +21,7 @@ export default function Signin() {
       password: password,
     };
 
-    axios
-      .post('http://localhost:8080/api/v1/user/signin', reqBody, {})
+    POST(`/user/signin`, reqBody)
       .then((res) => {
         console.log(res.data);
 
@@ -36,7 +35,7 @@ export default function Signin() {
           alert(res.data.message);
         }
       })
-      .catch((error) => {
+      .catch(function (error) {
         console.log(error + ' : 로그인 실패');
         alert('로그인 실패');
       });
