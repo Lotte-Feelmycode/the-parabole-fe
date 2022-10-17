@@ -35,14 +35,14 @@ export const ORDER_STATE = [
 ];
 
 export const ORDER_PAY = [
-  { key: 'CARD', name: '카드결제', index: 1 },
-  { key: 'BANK_TRANSFER', name: '실시간 계좌이체', index: 2 },
-  { key: 'PHONE', name: '휴대폰결제', index: 3 },
-  { key: 'VIRTUAL_ACCOUNT', name: '가상계좌', index: 4 },
-  { key: 'KAKAO_PAY', name: '카카오페이', index: 5 },
-  { key: 'TOSS', name: '토스', index: 6 },
-  { key: 'WITHOUT_BANK', name: '무통장입금(결제 전)', index: 7 },
-  { key: 'NAVER_PAY', name: '네이버페이', index: 8 },
+  { value: 'CARD', name: '카드결제', index: 1 },
+  { value: 'BANK_TRANSFER', name: '실시간 계좌이체', index: 2 },
+  { value: 'PHONE', name: '휴대폰결제', index: 3 },
+  { value: 'VIRTUAL_ACCOUNT', name: '가상계좌', index: 4 },
+  { value: 'KAKAO_PAY', name: '카카오페이', index: 5 },
+  { value: 'TOSS', name: '토스', index: 6 },
+  { value: 'WITHOUT_BANK', name: '무통장입금(결제 전)', index: 7 },
+  { value: 'NAVER_PAY', name: '네이버페이', index: 8 },
 ];
 
 export const ORDER_PAY_STATE = [
