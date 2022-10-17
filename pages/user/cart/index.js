@@ -74,19 +74,19 @@ export default function Cart() {
     itemList.forEach((item) => {
       if (item.cartItemId === cartItemId) {
         if (checkBoxStates.get(cartItemId)) {
-          setTotalPrice(totalPrice - item.product.productPrice * item.count);
+          const changedPrice =
+            totalPrice -
+            item.product.productPrice * item.count +
+            item.product.productPrice * cnt;
+          setTotalPrice(changedPrice);
         }
         item.count = cnt;
-        if (checkBoxStates.get(cartItemId)) {
-          setTotalPrice(totalPrice + item.product.productPrice * item.count);
-        }
       }
     });
   }
 
   function cartCheckBoxChange({ cartItemId, flag }) {
     if (checkBoxStates.get(cartItemId) !== flag) {
-      console.log(cartItemId, flag);
       if (flag) {
         setNumberOfChekced(numberOfChekced + 1);
         itemList.forEach((item) => {
@@ -107,7 +107,6 @@ export default function Cart() {
   }
 
   function TotalCheckBoxChange(flag) {
-    console.log(checkBoxStates);
     var calcTotalPrice = 0;
     var checkCount = numberOfChekced;
 

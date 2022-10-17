@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import { SmallWhite } from '@components/input/Button';
 import Input from '@components/input/Input';
 import { PATCH } from '@apis/defaultApi';
-import Heading from '@components/input/Heading';
 
 export default function CartProduct({
   userId,
@@ -134,11 +133,6 @@ export default function CartProduct({
     </>
   );
 }
-
-const CartProductSection = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;
 
 const ProductSection = styled.a`
   display: flex;
