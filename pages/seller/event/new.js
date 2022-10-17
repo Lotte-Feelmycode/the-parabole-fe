@@ -1,6 +1,9 @@
+import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+
 import { GET, POST } from '@apis/defaultApi';
 import useInput from '@hooks/useInput';
-import styled from '@emotion/styled';
 import Heading from '@components/input/Heading';
 import Input from '@components/input/Input';
 import Radio from '@components/input/Radio';
@@ -8,11 +11,10 @@ import * as btn from '@components/input/Button';
 import ImageUploader from '@components/input/ImageUploader';
 import SellerLayout from '@components/seller/SellerLayout';
 import { numberToMonetary } from '@utils/moneyUtil';
-import { getTimeNotKor, getState } from '@utils/functions';
-import { EVENT_TYPE } from '@utils/constants/types';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { PRIZE_TYPE } from '@utils/constants/types';
+import { getTimeNotKor, getState, isEmpty } from '@utils/functions';
+import { EVENT_TYPE, PRIZE_TYPE } from '@utils/constants/types';
+import { EVENT_ERROR } from '@utils/constants/errors';
+
 export default function Event() {
   const router = useRouter();
 
@@ -27,23 +29,52 @@ export default function Event() {
   const [endAt, onEndAt] = useInput();
   const [stockList, setStockList] = useState([]);
 
-  function addStock(prize, newStock) {
-    // e.target.value로 index 가져옴
-    // index로 배열에서 product id / coupon id 찾음
-    //
-    console.log(prize);
-    console.log(newStock);
-
-    const pid = prize.id;
-
-    const arrIdx = prizeList.findIndex((e) => e.prizeId == pid);
-
-    let copyArr = [...prizeList];
-    copyArr[arrIdx] = { ...copyArr[arrIdx], stock: newStock };
-
-    setprizeList(copyArr);
+  // 이벤트 등록 validation check
+  function validation(inputParams) {
+    if (isEmpty(inputParams.title)) {
+      alert(EVENT_ERROR.NO_EVENT_TITLE);
+      return;
+    }
+    if (isEmpty(inputParams.descript)) {
+      alert(EVENT_ERROR.NO_DESCRIPT);
+      return;
+    }
+    if (isEmpty(inputParams.type)) {
+      alert(EVENT_ERROR.NO_EVENT_TYPE);
+      return;
+    }
+    if (isEmpty(inputParams.startAt)) {
+      alert(EVENT_ERROR.NO_START_AT);
+      return;
+    }
+    if (isEmpty(inputParams.endAt)) {
+      alert(EVENT_ERROR.NO_END_AT);
+      return;
+    }
+    if (
+      inputParams.startAt >= inputParams.endAt ||
+      inputParams.startAt <= new Date() ||
+      inputParams.endAt <= new Date()
+    ) {
+      alert(EVENT_ERROR.INVALID_DATE);
+      return;
+    }
+    if (prizeList.length < 1) {
+      alert(EVENT_ERROR.NO_PRIZE_LIST);
+      return;
+    }
+    if (isEmpty(inputParams.eventImage.eventBannerImg)) {
+      alert(EVENT_ERROR.NO_EVENT_BANNER_IMAGE);
+      return;
+    }
+    if (isEmpty(inputParams.eventImage.EventDetailImg)) {
+      alert(EVENT_ERROR.NO_EVENT_DETAIL_IMAGE);
+      return;
+    }
+    return true;
   }
 
+  // 경품 수량 (-) 버튼 클릭 이벤트
   const minusBtnClick = (e, index) => {
     e.preventDefault();
 
@@ -54,6 +85,7 @@ export default function Event() {
     setStockList(copyArray);
   };
 
+  // 경품 수량 (+) 버튼 클릭 이벤트
   const plusBtnClick = (e, index) => {
     e.preventDefault();
 
@@ -64,6 +96,7 @@ export default function Event() {
     setStockList(copyArray);
   };
 
+  // 이벤트 경품 조회 컴포넌트
   function ProductList({ inputProductList }) {
     return (
       <table className="w-full text-m text-center px-4 pb-8">
@@ -120,6 +153,7 @@ export default function Event() {
     );
   }
 
+  // 이벤트 쿠폰 조회 컴포넌트
   function CouponList({ inputCouponList }) {
     return (
       <table className="w-full text-m text-center px-4 py-16">
@@ -186,6 +220,7 @@ export default function Event() {
     );
   }
 
+  // 선택 경품 목록 컴포넌트
   function EventPrizes({ inputList }) {
     return (
       <div className="w-full">
@@ -259,6 +294,7 @@ export default function Event() {
     );
   }
 
+  // 경품 (상품) 선택 핸들러
   const onAddProductPrizeHandler = (e) => {
     e.preventDefault();
 
@@ -289,6 +325,7 @@ export default function Event() {
     setprizeList([tmpobj, ...prizeList]);
   };
 
+  // 경품 (쿠폰) 선택 핸들러
   const onAddCouponPrizeHandler = (e) => {
     e.preventDefault();
 
@@ -317,6 +354,7 @@ export default function Event() {
     setprizeList([tmpobj, ...prizeList]);
   };
 
+  // 경품(상품) 버튼 클릭시 조회 이벤트 핸들러
   const onSearchProductsHandler = (e) => {
     e.preventDefault();
 
@@ -330,6 +368,7 @@ export default function Event() {
     });
   };
 
+  // 경품(쿠폰) 버튼 클릭시 조회 이벤트 핸들러
   const onSearchCouponsHandler = (e) => {
     e.preventDefault();
 
@@ -344,18 +383,16 @@ export default function Event() {
     });
   };
 
-  // TODO : API 호출 부분 수정 (이미지 업로더, 경품목록)
+  // 이벤트 등록 버튼 핸들러
+  // TODO : 이미지 업로더 수정
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    console.log(prizeList);
     let copyArr = [...prizeList];
 
     for (var i = 0; i < prizeList.length; i++) {
       copyArr[i] = { ...copyArr[i], stock: stockList.at(i).stock };
     }
-
-    setprizeList(copyArr);
 
     const eventParams = {
       //userId: localStorage.getItem("ID"),
@@ -373,14 +410,14 @@ export default function Event() {
       eventPrizeCreateRequestDtos: prizeList,
     };
 
-    console.log(eventParams);
-
-    POST('/event', eventParams).then((res) => {
-      if (res && res.data && confirm('이벤트를 등록하시겠습니까?') > 0) {
-        alert('이벤트가 등록되었습니다. ');
-        router.push({ pathname: `/seller/event/list` }, `/seller/event/list`);
-      }
-    });
+    if (validation(eventParams)) {
+      POST('/event', eventParams).then((res) => {
+        if (res && res.data && confirm('이벤트를 등록하시겠습니까?') > 0) {
+          alert('이벤트가 등록되었습니다. ');
+          router.push({ pathname: `/seller/event/list` }, `/seller/event/list`);
+        }
+      });
+    }
   };
 
   return (
