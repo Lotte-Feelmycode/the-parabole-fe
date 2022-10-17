@@ -18,9 +18,9 @@ export default function () {
         </div>
       );
     } else if (input === 1) {
-      return <div>1</div>;
-    } else if (input === 2) {
       return <EventApplyList />;
+    } else if (input === 2) {
+      return <div>2</div>;
     }
   }
 
