@@ -39,7 +39,7 @@ export default function () {
           </a>
         ))}
       </nav>
-      <div>{showMypageMainComp(2)}</div>
+      <div>{showMypageMainComp(nowState)}</div>
     </CommerceLayout>
   );
 }
