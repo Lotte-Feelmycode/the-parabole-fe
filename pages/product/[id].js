@@ -3,7 +3,7 @@ import SiteHead from '@components/common/SiteHead.js';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { useState, useEffect } from 'react';
-import { GET_DATA, GET, POST } from '@apis/defaultApi';
+import { GET_DATA, GET, POST, POST_DATA } from '@apis/defaultApi';
 import { numberToMonetary } from '@utils/moneyUtil';
 import * as color from '@utils/constants/themeColor';
 import * as btn from '@components/input/Button';
@@ -58,21 +58,30 @@ export default function ProductDetail() {
       return;
     }
 
+    if (count === 0) {
+      return;
+    }
+
     POST(`/cart/product/add`, {
       userId: userId,
       productId: productId,
       cnt: count,
     }).then((res) => {
-      if (res && res.success) {
-        const confirmMsg =
-          '장바구니에 성공적으로 담겼습니다. 장바구니페이지로 이동하시겠습니까?';
-        const confirmFlag = confirm(confirmMsg);
-        if (confirmFlag) {
-          router.push({ pathname: `/cart` });
+      if (res) {
+        if (res.success) {
+          const confirmMsg =
+            '장바구니에 성공적으로 담겼습니다. 장바구니페이지로 이동하시겠습니까?';
+          const confirmFlag = confirm(confirmMsg);
+          if (confirmFlag) {
+            router.push({ pathname: `/user/cart` });
+          }
+        } else {
+          console.log(res);
+          alert(res.data.message);
         }
       } else {
         // TODO 장바구니 실패했을때 경우의 수 추가
-        console.log(res);
+        alert('이미 추가된 상품입니다.');
       }
     });
   }

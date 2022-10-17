@@ -6,7 +6,7 @@ const SmallSize = { height: '30px', padding: '0 0.5em' };
 
 const BlueTheme = color.BlueTheme;
 const PinkTheme = color.PinkTheme;
-const whiteTheme = color.whiteTheme;
+const whiteTheme = color.WhiteTheme;
 
 export const Blue = ({ buttonText, onClickFunc, attr, css }) => {
   const theme = BlueTheme;
@@ -41,6 +41,21 @@ export const SmallBlue = ({ buttonText, onClickFunc, attr, css }) => {
 export const LineBlue = ({ buttonText, onClickFunc, attr, css }) => {
   const theme = BlueTheme;
   const size = OriginSize;
+  return (
+    <OutlineButtonComp
+      buttonText={buttonText}
+      onClickFunc={onClickFunc}
+      theme={theme}
+      size={size}
+      attr={attr}
+      css={css}
+    />
+  );
+};
+
+export const SmallLineBlue = ({ buttonText, onClickFunc, attr, css }) => {
+  const theme = BlueTheme;
+  const size = SmallSize;
   return (
     <OutlineButtonComp
       buttonText={buttonText}

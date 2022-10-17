@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { GET_DATA } from '@apis/defaultApi';
 import Event from '@components/event/Event';
+import styled from '@emotion/styled';
 
 export default function EventList() {
   const [eventList, setEventList] = useState([]);
@@ -12,13 +13,14 @@ export default function EventList() {
   }, []);
 
   return (
-    <ul className="event-list">
-      {eventList &&
-        eventList.map((event) => (
-          <li key={event.id}>
-            <Event event={event} />
-          </li>
-        ))}
-    </ul>
+    <>
+      <List>
+        {eventList && eventList.map((event) => <Event event={event} />)}
+      </List>
+    </>
   );
 }
+
+const List = styled.div`
+  display: inline-block;
+`;
