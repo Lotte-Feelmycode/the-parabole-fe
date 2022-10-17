@@ -53,10 +53,14 @@ export default function EventPrize({ event, eventId }) {
         </div>
         <div className="prize-body">
           <div>
-            <div className="prize-name">{event.productName}</div>
+            <div className="prize-name">
+              <strong>{event.productName}</strong>
+            </div>
           </div>
           <div>
-            <div className="prize-stock">총 수량 : {event.stock} 개</div>
+            <div className="prize-stock">
+              <strong>총 수량 </strong> : {event.stock} 개
+            </div>
           </div>
           <btn.Blue
             buttonText={'이벤트 응모'}
@@ -69,15 +73,19 @@ export default function EventPrize({ event, eventId }) {
   } else if (event.prizeType === 'COUPON') {
     return (
       <div>
-        <div style={{ width: '300px', height: '300px' }}>
+        <div style={{ width: '300px', height: '266px' }}>
           <div>
             <Coupon couponInfo={couponInfo} />
           </div>
           <br />
           <br />
-          <div>{event.couponDiscountRate}% 할인 쿠폰</div>
+          <div>
+            <strong>{event.couponDiscountRate}원 할인 쿠폰</strong>
+          </div>
         </div>
-        <div className="prize-stock">총 수량 : {event.stock} 개</div>
+        <div className="prize-stock">
+          <strong>총 수량 </strong>: {event.stock} 개
+        </div>
 
         <btn.Blue
           buttonText={'이벤트 응모'}
