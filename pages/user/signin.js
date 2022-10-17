@@ -7,6 +7,7 @@ import Heading from '@components/input/heading';
 import Input from '@components/input/input';
 import axios from 'axios';
 import * as btn from '@components/input/Button';
+import { POST } from '@apis/defaultApi';
 
 export default function Signin() {
   const router = useRouter();
@@ -23,17 +24,15 @@ export default function Signin() {
 
     POST(`/user/signin`, reqBody)
       .then((res) => {
-        console.log(res.data);
+        console.log(res);
 
-        if (res.status === 200) {
-          sessionStorage.setItem('login', res.data.userId);
-          if (res.data.message.includes('판매자')) {
-            router.push('/seller/main');
-          } else if (res.data.message.includes('사용자')) {
-            router.push('/');
-          }
-          alert(res.data.message);
+        sessionStorage.setItem('userId', res.data);
+        if (res.message === '판매자 로그인 성공') {
+          router.push('/seller/main');
+        } else if (res.message === '사용자 로그인 성공') {
+          router.push('/');
         }
+        alert(res.message);
       })
       .catch(function (error) {
         console.log(error + ' : 로그인 실패');
