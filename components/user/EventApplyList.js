@@ -66,7 +66,7 @@ export default function EventApplyList() {
         </div>
         <div style={{ paddingBottom: '2rem' }}></div>
 
-        <h2 className={styles.section}>
+        <h2 className={styles.section} style={{ fontSize: 'x-large' }}>
           나의 이벤트 참여 횟수: {applyInfo && applyInfo.length}
         </h2>
         <div className="flex flex-wrap -m-4" style={{ marginRight: '-4rem' }}>

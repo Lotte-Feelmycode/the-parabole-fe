@@ -5,29 +5,14 @@ import * as btn from '@components/input/Button';
 export default function EventApply({ applyInfo }) {
   return (
     <div style={{ paddingBottom: '3rem', width: '764px' }}>
-      <ApplyTime>
-        <div style={{ float: 'left' }}>
-          {getTime(applyInfo.eventTimeStartAt)}
-          <strong>응모</strong>
-        </div>
-        <div style={{ float: 'right' }}>
-          {applyInfo.status === 0 ? (
-            <div>시작전 이벤트</div>
-          ) : applyInfo.status === 1 ? (
-            <div>진행중인 이벤트</div>
-          ) : (
-            <div>종료된 이벤트</div>
-          )}
-        </div>
-      </ApplyTime>
-
       <div
         className="flex flex-wrap"
         style={{
           paddingTop: '2rem',
           paddingBottom: '2rem',
           width: '764px',
-          outline: 'auto',
+          border: '0.1px solid #D6D6D6',
+          borderRadius: '2rem',
         }}
       >
         <br />
@@ -52,13 +37,42 @@ export default function EventApply({ applyInfo }) {
             {applyInfo.eventTitle}
           </div>
 
+          <div>
+            {applyInfo.status === 0 ? (
+              <div>시작전 이벤트</div>
+            ) : applyInfo.status === 1 ? (
+              <div
+                style={{
+                  borderRadius: '2rem',
+                  backgroundColor: '#C2E0FF',
+                  paddingLeft: '1rem',
+                  width: '132px',
+                  paddingTop: '0.1rem',
+                  marginBottom: '1rem',
+                }}
+              >
+                <strong>진행중인 이벤트</strong>
+              </div>
+            ) : (
+              <div
+                style={{
+                  borderRadius: '2rem',
+                  backgroundColor: '#C2E0FF',
+                  paddingLeft: '1rem',
+                  width: '122px',
+                  paddingTop: '0.1rem',
+                  marginBottom: '1rem',
+                }}
+              >
+                <strong>종료된 이벤트</strong>
+              </div>
+            )}
+          </div>
           <div style={{ paddingBottom: '1rem' }}>
             {getTime(applyInfo.startAt)} ~<br />
             {getTime(applyInfo.endAt)}
           </div>
-          <div>
-            <btn.LineBlue buttonText={'응모 상세정보'} />
-          </div>
+          <div></div>
         </div>
 
         <div className="event-check"></div>
