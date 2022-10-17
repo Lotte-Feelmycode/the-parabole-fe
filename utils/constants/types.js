@@ -1,25 +1,25 @@
 export const EVENT_TYPE = [
   {
-    code: 'FCFS',
+    value: 'FCFS',
     name: '선착순',
   },
   {
-    code: 'RAFFLE',
+    value: 'RAFFLE',
     name: '추첨',
   },
 ];
 
 export const EVENT_STATUS = [
   {
-    code: '0',
+    value: '0',
     name: '진행 전',
   },
   {
-    code: '1',
+    value: '1',
     name: '진행 중',
   },
   {
-    code: '2',
+    value: '2',
     name: '종료',
   },
 ];
@@ -54,9 +54,4 @@ export const ORDER_PAY_STATE = [
   { value: 'TOSS', name: '토스' },
   { value: 'WITHOUT_BANK', name: '무통장입금' },
   { value: 'NAVER_PAY', name: '네이버페이' },
-];
-
-export const EVENT_STATE = [
-  { value: 'RAFFLE', name: '래플 이벤트' },
-  { value: 'FCFS', name: '선착순 이벤트' },
 ];
