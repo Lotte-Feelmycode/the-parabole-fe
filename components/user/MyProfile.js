@@ -2,7 +2,6 @@ import { GET_DATA } from '@apis/defaultApi';
 import Heading from '@components/input/Heading';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import SiteHead from '@components/common/SiteHead';
 
 export default function MyProfile({ userId }) {
   const [userInfo, setUserInfo] = useState([]);
@@ -17,7 +16,6 @@ export default function MyProfile({ userId }) {
 
   return (
     <>
-      <SiteHead title="My Profile" />
       <Heading title="My Profile" type="h1" styled={{ float: 'right' }} />
       <BgDiv>
         <div className="py-7" />
