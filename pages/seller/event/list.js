@@ -100,7 +100,7 @@ export default function EventList() {
         </table>
 
         <Div>
-          <btn.SmallBlue
+          <btn.SmallPink
             buttonText="등록하기"
             name="btnPost"
             onClickFunc={onSubmitHandler}
