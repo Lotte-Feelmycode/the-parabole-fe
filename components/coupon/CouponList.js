@@ -3,6 +3,7 @@ import * as btn from '@components/input/Button';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getTime } from '@utils/functions';
+import styled from '@emotion/styled';
 
 function Coupon({ coupon }) {
   return (
@@ -11,6 +12,7 @@ function Coupon({ coupon }) {
         scope="row"
         className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
       >
+        <Chk type="checkbox" />
         {coupon.name}
       </th>
       <td className="py-4 px-6">{coupon.type}</td>
@@ -95,3 +97,7 @@ function CouponList({ sellerId }) {
 }
 
 export default CouponList;
+
+const Chk = styled.input`
+  margin-right: 8px;
+`;

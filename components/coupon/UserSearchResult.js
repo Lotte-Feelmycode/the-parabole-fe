@@ -1,3 +1,5 @@
+import styled from '@emotion/styled';
+
 export default function UserSearchResult({ user }) {
   // if (!userList) {
   //   return <p>해당 유저명을 가지는 사용자가 존재하지 않습니다.</p>;
@@ -11,9 +13,17 @@ export default function UserSearchResult({ user }) {
       >
         {user.userId}
       </th> */}
-      <td className="py-4 px-6">{user.username}</td>
+      {/* <input type="checkbox" /> */}
+      <td className="py-4 px-6">
+        <Chk type="checkbox" />
+        {user.username}
+      </td>
       <td className="py-4 px-6">{user.email}</td>
       <td className="py-4 px-6">{user.phone}</td>
     </tr>
   );
 }
+
+const Chk = styled.input`
+  margin-right: 8px;
+`;

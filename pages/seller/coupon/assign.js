@@ -6,6 +6,8 @@ import styled from '@emotion/styled';
 import UserSearchBar from '@components/coupon/UserSearchBar';
 import { useRouter } from 'next/router';
 import SellerLayout from '@components/seller/SellerLayout';
+import * as btn from '@components/input/Button';
+import Heading from '@components/input/Heading';
 
 export default function CouponAssign() {
   // TODO:
@@ -40,13 +42,19 @@ export default function CouponAssign() {
     return (
       <SellerLayout>
         <SiteHead title="Seller's Coupon List" />
+        <Heading title="쿠폰 배정" type="h1" />
         <PageContainer>
-          <CouponSection>
+          <Split>
             <CouponList {...sellerProps}></CouponList>
-          </CouponSection>
-          <SearchbarSection>
+          </Split>
+          <Split>
             <UserSearchBar></UserSearchBar>
-          </SearchbarSection>
+            <btn.SmallPink
+              buttonText="쿠폰 배정"
+              onClickFunc={() => router.push('./assignAf')}
+              css
+            />
+          </Split>
         </PageContainer>
       </SellerLayout>
     );
@@ -59,12 +67,7 @@ const PageContainer = styled.div`
   justify-content: center;
 `;
 
-const CouponSection = styled.div`
-  flex: 1;
-  padding: 1rem;
-`;
-
-const SearchbarSection = styled.div`
+const Split = styled.div`
   flex: 1;
   padding: 1rem;
 `;
