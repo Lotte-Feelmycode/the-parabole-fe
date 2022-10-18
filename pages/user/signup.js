@@ -58,91 +58,128 @@ export default function Signup() {
   return (
     <CommerceLayout>
       <SiteHead title="회원가입" />
-      <Divider />
+      <div className="bg-white py-6 sm:py-8 lg:py-12">
+        <div className="max-w-screen-2xl px-4 md:px-8 mx-auto">
+          <h2 className="text-gray-800 text-2xl lg:text-3xl font-bold text-center mb-4 md:mb-8">
+            회원가입
+          </h2>
 
-      <Div>
-        <TitleSection>
-          <Heading title="회원가입" type="h1"></Heading>
-        </TitleSection>
-        <Heading title="이메일" type="h3"></Heading>
-        <Input
-          type="email"
-          name="email"
-          placeHolder="이메일을 입력하세요."
-          onChange={onChangeEmail}
-        ></Input>
+          <form className="max-w-lg border rounded-lg mx-auto" method="post">
+            <div className="flex flex-col gap-4 p-4 md:p-8">
+              <div>
+                <label
+                  for="email"
+                  className="inline-block text-gray-800 text-sm sm:text-base mb-2"
+                >
+                  이메일
+                </label>
+                <input
+                  className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                  type="email"
+                  name="email"
+                  placeHolder="이메일을 입력하세요."
+                  onChange={onChangeEmail}
+                  required
+                />
+              </div>
 
-        <Heading title="사용자 이름" type="h3"></Heading>
-        <Input
-          type="text"
-          name="username"
-          placeHolder="사용자 이름을 입력하세요."
-          onChange={onChangeUsername}
-        ></Input>
+              <div>
+                <label
+                  for="username"
+                  className="inline-block text-gray-800 text-sm sm:text-base mb-2"
+                >
+                  사용자명
+                </label>
+                <input
+                  className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                  type="text"
+                  name="username"
+                  placeHolder="사용자 이름을 입력하세요."
+                  onChange={onChangeUsername}
+                  required
+                />
+              </div>
 
-        <Heading title="닉네임" type="h3"></Heading>
-        <Input
-          type="text"
-          name="nickname"
-          placeHolder="닉네임을 입력하세요."
-          onChange={onChangeNickname}
-        ></Input>
+              <div>
+                <label
+                  for="nickname"
+                  className="inline-block text-gray-800 text-sm sm:text-base mb-2"
+                >
+                  닉네임
+                </label>
+                <input
+                  className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                  type="text"
+                  name="nickname"
+                  placeHolder="닉네임을 입력하세요."
+                  onChange={onChangeNickname}
+                  required
+                />
+              </div>
 
-        <Heading title="전화번호" type="h3"></Heading>
-        <Input
-          type="tel"
-          name="phone"
-          placeHolder="전화번호를 입력하세요."
-          onChange={onChangePhone}
-        ></Input>
+              <div>
+                <label
+                  for="tel"
+                  className="inline-block text-gray-800 text-sm sm:text-base mb-2"
+                >
+                  전화번호
+                </label>
+                <input
+                  className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                  type="tel"
+                  name="phone"
+                  placeHolder="전화번호를 입력하세요."
+                  onChange={onChangePhone}
+                  required
+                />
+              </div>
 
-        <Heading title="비밀번호" type="h3"></Heading>
-        <Input
-          type="password"
-          name="password"
-          placeHolder="비밀번호를 입력하세요."
-          onChange={onChangePassword}
-          required
-        ></Input>
+              <div>
+                <label
+                  for="password"
+                  className="inline-block text-gray-800 text-sm sm:text-base mb-2"
+                >
+                  비밀번호
+                </label>
+                <input
+                  className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                  type="password"
+                  name="password"
+                  placeHolder="비밀번호를 입력하세요."
+                  onChange={onChangePassword}
+                  required
+                />
+              </div>
 
-        <Heading title="비밀번호 확인" type="h3"></Heading>
-        <Input
-          type="password"
-          name="passwordConfirmation"
-          placeHolder="비밀번호 재확인"
-          onChange={onChangePasswordConfirmation}
-          required
-        ></Input>
-        <div className="py-2" />
+              <div>
+                <label
+                  for="passwordConfirmation"
+                  className="inline-block text-gray-800 text-sm sm:text-base mb-2"
+                >
+                  비밀번호 확인
+                </label>
+                <input
+                  className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                  type="password"
+                  name="passwordConfirmation"
+                  placeHolder="비밀번호를 다시 입력하세요."
+                  onChange={onChangePasswordConfirmation}
+                  required
+                />
+              </div>
 
-        <BtnSection className="redirection-btn">
-          <btn.SmallLineWhite
-            buttonText="홈으로"
-            onClickFunc={() => router.push('/')}
-          />
-          <div className="py-3" />
-          <btn.Blue buttonText="회원가입하기" onClickFunc={submitFormHandler} />
-        </BtnSection>
-      </Div>
+              <button
+                type="button"
+                className="block bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 mt-3 mb-2 px-8 py-6"
+                buttonText="회원가입하기"
+                onClick={submitFormHandler}
+              >
+                회원가입하기
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </CommerceLayout>
   );
 }
-
-const BtnSection = styled.div`
-  display: grid;
-`;
-
-const Div = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 7% 35%;
-`;
-
-const Divider = styled.hr`
-  color: black;
-  margin-bottom: 20px;
-`;
-
-const TitleSection = styled.div`
-  margin-bottom: 20px;
-`;
