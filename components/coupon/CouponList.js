@@ -3,7 +3,6 @@ import * as btn from '@components/input/Button';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getTime } from '@utils/functions';
-import styled from '@emotion/styled';
 
 function Coupon({ coupon }) {
   return (
@@ -19,6 +18,7 @@ function Coupon({ coupon }) {
 
       <td className="py-4 px-6">{coupon.detail}</td>
       <td className="py-4 px-6">{coupon.cnt}</td>
+      <td className="py-4 px-6">{coupon.remains}</td>
     </tr>
   );
 }

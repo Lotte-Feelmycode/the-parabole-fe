@@ -21,14 +21,14 @@ export default function SignupConfirm() {
   return (
     <CommerceLayout>
       <SiteHead title="회원가입 완료" />
-      <div class="bg-white py-6 sm:py-8 lg:py-12">
-        <div class="max-w-screen-2xl px-4 md:px-8 mx-auto font-semibold">
-          <h2 class="text-gray-800 text-2xl lg:text-3xl font-bold text-center mb-4 md:mb-8">
+      <div className="bg-white py-6 sm:py-8 lg:py-12">
+        <div className="max-w-screen-2xl px-4 md:px-8 mx-auto font-semibold">
+          <h2 className="text-gray-800 text-2xl lg:text-3xl font-bold text-center mb-4 md:mb-8">
             회원가입 완료
           </h2>
-          <div class="max-w-lg border rounded-lg mx-auto bg-blue-200">
-            <div class="flex flex-col items-center gap-4 p-4 md:p-8">
-              <span class="text-black-400 text-lg relative px-4 ">
+          <div className="max-w-lg border rounded-lg mx-auto bg-blue-200">
+            <div className="flex flex-col items-center gap-4 p-4 md:p-8">
+              <span className="text-black-400 text-lg relative px-4 ">
                 THE PARABOLE 회원 가입을 축하합니다 :)
                 <br />
                 {userInfo.username} 님의 가입 정보는 아래와 같습니다.
@@ -80,7 +80,7 @@ export default function SignupConfirm() {
               </div>
             </div>
 
-            <div class="flex justify-center items-center bg-gray-100 p-4">
+            <div className="flex justify-center items-center bg-gray-100 p-4">
               <button
                 className="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 mr-5 px-8 py-4"
                 onClick={() => router.push('/')}
