@@ -1,14 +1,20 @@
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 import { EVENT_TYPE } from '@utils/constants/types';
 import { getTime, getState } from '@utils/functions';
 
 export default function Event({ event }) {
-  console.log('EVENT');
+  const router = useRouter();
+  const onClick = (id) => {
+    router.push({
+      pathname: `/event/${id}`,
+    });
+  };
 
   return (
     <>
       <EventDiv>
-        <a>
+        <a className="cursor-pointer" onClick={() => onClick(event.id)}>
           <div>
             <EventImage
               src={event.eventImage.eventBannerImg}
@@ -17,7 +23,9 @@ export default function Event({ event }) {
           </div>
           <Content>
             <Left>{event.storeName}</Left>
-            <Right>{getState(EVENT_TYPE, event.type)}</Right>
+            <Right>
+              <Tags>{getState(EVENT_TYPE, event.type)}</Tags>
+            </Right>
             <br />
             <br />
             <Title>{event.title}</Title>
@@ -76,4 +84,13 @@ const EventImage = styled.img`
   height: 10rem;
   margin: auto;
   margin-bottom: 1rem;
+`;
+
+const Tags = styled.span`
+  background-color: black;
+  color: #fff;
+  font-size: 1rem;
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 3rem;
 `;
