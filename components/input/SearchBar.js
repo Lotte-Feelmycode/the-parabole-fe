@@ -1,11 +1,21 @@
 import styled from '@emotion/styled';
 import { ICON_SEARCH_MAGNIFY } from '@utils/constants/icons';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
+
 const SearchBar = ({ placeholder, onKeyUp, onChange, onInput }) => {
   const [searchValue, setSearchValue] = useState('');
+  const router = useRouter();
 
-  const onClickHandler = (e) => {
+  const onClickHandler = () => {
+    router.push({ pathname: '/product', query: { searchValue: searchValue } });
+  };
+
+  const handleOnKeyPress = (e) => {
     e.preventDefault();
+    if (e.key === 'Enter') {
+      onClickHandler();
+    }
   };
 
   return (
@@ -16,6 +26,7 @@ const SearchBar = ({ placeholder, onKeyUp, onChange, onInput }) => {
           type="text"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
+          onKeyUp={handleOnKeyPress}
           placeholder={placeholder}
         />
       </InputDiv>
