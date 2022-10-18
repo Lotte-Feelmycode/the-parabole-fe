@@ -14,6 +14,7 @@ function getTime(str) {
     if (time >= 13) time = '오후 ' + (time - 12) + '시 ';
     else time = '오전 ' + time + '시 ';
     time += getTime.split(':')[1] + '분 ';
+
     return date + time;
   }
 }
