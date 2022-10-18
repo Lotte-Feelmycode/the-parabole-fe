@@ -12,7 +12,7 @@ import { GET_DATA, POST_DATA } from '@apis/defaultApi';
 export const AppContext = createContext();
 
 export default function OrderAndPayment() {
-  const getUserId = 1;
+  const getUserId = 3;
 
   const [userId, setUserId] = useState(getUserId);
   // product를 받아서 값을 넣어야 하지만 지금은 그냥 들어가 있는 테스트 값

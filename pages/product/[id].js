@@ -11,7 +11,7 @@ import Input from '@components/input/Input';
 
 export default function ProductDetail() {
   // TODO : userID
-  const userId = 1;
+  const userId = 3;
 
   const router = useRouter();
   const [productId, setProductId] = useState(router.query.id);
