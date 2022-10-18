@@ -3,7 +3,7 @@
  * @param {*} str
  * @returns
  */
-function getTime(str) {
+export function getTime(str) {
   if (str) {
     const getDate = str.split('T')[0];
     const date =

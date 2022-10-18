@@ -3,6 +3,7 @@ export const ICON_SEARCH_MAGNIFY =
 export const ICON_CART_BLUE = require('@assets/cart-blue.svg').default.src;
 export const ICON_CART_TRANS = require('@assets/cart-transparent.svg').default
   .src;
+export const ICON_CART_BLACK = require('@assets/cart-black.svg').default.src;
 
 export const ICON_SHOP = require('@assets/icon-shop.svg').default.src;
 export const ICON_PERCENT = require('@assets/icon-percent.svg').default.src;
