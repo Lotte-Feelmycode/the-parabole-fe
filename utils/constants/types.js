@@ -18,19 +18,23 @@ export const EVENT_TYPE = [
 
 export const EVENT_STATUS = [
   {
-    value: '0',
+    value: 0,
     name: '진행 전',
   },
   {
-    value: '1',
+    value: 1,
     name: '진행 중',
   },
   {
-    value: '2',
+    value: 2,
     name: '종료',
   },
 ];
 
+export const PRIZE_TYPE = [
+  { value: 'PRODUCT', name: '상품' },
+  { value: 'COUPON', name: '쿠폰' },
+];
 export const ORDER_STATE = [
   { value: 'BEFORE_PAY', name: '입금전' },
   { value: 'PAY_COMPLETE', name: '결제완료' },
