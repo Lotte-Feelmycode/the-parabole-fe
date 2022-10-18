@@ -6,9 +6,10 @@ const Links = {
   LINK_MAIN: '/',
   LINK_EVENT: '/event',
   LINK_SELLER_MAIN: '/seller/main',
-  LINK_CART: '/cart',
+  LINK_CART: '/user/cart',
   LINK_SIGNIN: '/user/signin',
   LINK_SINGUP: '/user/signup',
+  LINK_MYPAGE: '/user/mypage',
 };
 
 export default function CommerceHeader() {
@@ -63,8 +64,10 @@ export default function CommerceHeader() {
                   회원가입
                 </a>
               </Link>
-              <Link href="/">
-                <a className="px-5 font-medium hover:text-gray-700">고객센터</a>
+              <Link href={Links.LINK_MYPAGE}>
+                <a className="px-5 font-medium hover:text-gray-700">
+                  마이페이지
+                </a>
               </Link>
             </nav>
           </div>
