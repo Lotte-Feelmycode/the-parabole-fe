@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import EVENET_STATE, { EVENT_STATE } from '@utils/constants/types';
+import { EVENT_TYPE } from '@utils/constants/types';
 import { getTime, getState } from '@utils/functions';
 
 export default function Event({ event }) {
@@ -17,7 +17,7 @@ export default function Event({ event }) {
           </div>
           <Content>
             <Left>{event.storeName}</Left>
-            <Right>{getState(EVENT_STATE, event.type)}</Right>
+            <Right>{getState(EVENT_TYPE, event.type)}</Right>
             <br />
             <br />
             <Title>{event.title}</Title>
