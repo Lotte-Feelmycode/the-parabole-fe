@@ -5,6 +5,7 @@ import styles from '@styles/Home.module.scss';
 import * as btn from '@components/input/Button';
 import styled from '@emotion/styled';
 import { APPLY_TYPE } from '@utils/constants/types';
+import Heading from '@components/input/Heading';
 
 export default function EventApplyList() {
   const userId = 2;
@@ -43,8 +44,7 @@ export default function EventApplyList() {
   return (
     <section>
       <div className="container px-5 py-24 mx-auto">
-        <h1 className={styles.section}>THE PARABOLE</h1>
-        <h2 className={styles.section}>사용자 이벤트 목록</h2>
+        <Heading title={'사용자 이벤트 목록'} type="h1" />
         <div style={{ paddingBottom: '2rem' }}>
           <SpanMargin>
             <btn.LineWhite
