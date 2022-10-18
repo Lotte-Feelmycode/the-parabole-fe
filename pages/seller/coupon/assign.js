@@ -1,12 +1,15 @@
 import SiteHead from '@components/common/SiteHead.js';
-import styles from '@styles/Home.module.scss';
 import { GET } from '@apis/defaultApi';
 import { useEffect, useState } from 'react';
+import CouponListChk from '@components/coupon/CouponListChk';
+import styled from '@emotion/styled';
+import UserSearchBar from '@components/coupon/UserSearchBar';
 import { useRouter } from 'next/router';
 import SellerLayout from '@components/seller/SellerLayout';
-import CouponList from '@components/coupon/CouponList';
+import * as btn from '@components/input/Button';
+import Heading from '@components/input/Heading';
 
-export default function SellersCouponList() {
+export default function CouponAssign() {
   // TODO:
   // setUserId(현재로그인되어있는userId-세션,쿠키 등에서 얻어올 것임);
   const uidFromStorage = 4;
@@ -39,14 +42,32 @@ export default function SellersCouponList() {
     return (
       <SellerLayout>
         <SiteHead title="Seller's Coupon List" />
-        <section className="flex min-h-screen flex-col text-gray-600 body-font">
-          <div className="container px-5 py-24 mx-auto">
-            <h1 className={styles.section}>THE PARABOLE</h1>
-            <h2 className={styles.section}>판매자가 등록한 쿠폰목록</h2>
-            <CouponList {...sellerProps}></CouponList>
-          </div>
-        </section>
+        <Heading title="쿠폰 배정" type="h1" />
+        <PageContainer>
+          <Split>
+            <CouponListChk {...sellerProps}></CouponListChk>
+          </Split>
+          <Split>
+            <UserSearchBar></UserSearchBar>
+            <btn.SmallPink
+              buttonText="쿠폰 배정"
+              onClickFunc={() => router.push('./assignAf')}
+              css
+            />
+          </Split>
+        </PageContainer>
       </SellerLayout>
     );
   }
 }
+
+const PageContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+const Split = styled.div`
+  flex: 1;
+  padding: 1rem;
+`;

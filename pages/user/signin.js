@@ -4,9 +4,10 @@ import { useRouter } from 'next/router';
 import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead';
 import Heading from '@components/input/heading';
-import * as btn from '@components/input/button';
 import Input from '@components/input/input';
 import axios from 'axios';
+import * as btn from '@components/input/Button';
+import { POST } from '@apis/defaultApi';
 
 export default function Signin() {
   const router = useRouter();
@@ -21,22 +22,19 @@ export default function Signin() {
       password: password,
     };
 
-    axios
-      .post('http://localhost:8080/api/v1/user/signin', reqBody, {})
+    POST(`/user/signin`, reqBody)
       .then((res) => {
-        console.log(res.data);
+        console.log(res);
 
-        if (res.status === 200) {
-          sessionStorage.setItem('login', res.data.userId);
-          if (res.data.message.includes('판매자')) {
-            router.push('/seller/main');
-          } else if (res.data.message.includes('사용자')) {
-            router.push('/');
-          }
-          alert(res.data.message);
+        sessionStorage.setItem('userId', res.data);
+        if (res.message === '판매자 로그인 성공') {
+          router.push('/seller/main');
+        } else if (res.message === '사용자 로그인 성공') {
+          router.push('/');
         }
+        alert(res.message);
       })
-      .catch((error) => {
+      .catch(function (error) {
         console.log(error + ' : 로그인 실패');
         alert('로그인 실패');
       });
@@ -46,10 +44,11 @@ export default function Signin() {
     <CommerceLayout>
       <SiteHead title="로그인" />
       <Divider />
-      <Heading title="로그인" type="h1"></Heading>
-      <br />
       <Div>
-        <Heading title="이메일" type="h3"></Heading>
+        <TitleSection>
+          <Heading title="로그인" type="h1" />
+        </TitleSection>
+        <Heading title="이메일" type="h3" />
         <Input
           type="email"
           name="email"
@@ -57,12 +56,10 @@ export default function Signin() {
           onChange={onChangeEmail}
         ></Input>
         <label>
-          <input type="checkbox" checked="checked" name="remember" /> Remember
-          me
+          <input type="checkbox" id="myCheck" /> Remember me
         </label>
-        <br />
-        <br />
-        <Heading title="비밀번호" type="h3"></Heading>
+        <div className="py-2" />
+        <Heading title="비밀번호" type="h3" />
         <Input
           type="password"
           name="password"
@@ -70,41 +67,43 @@ export default function Signin() {
           onChange={onChangePassword}
           required
         ></Input>
-        <p>
+        <P>
           By creating an account you agree to our <a href="#">Terms Privacy</a>.
-        </p>
+        </P>
         <br />
 
         <BtnSection className="redirection-btn">
-          <btn.Blue
-            name="signupbtn"
+          <btn.LineBlue
             buttonText="회원가입하기"
             onClickFunc={() => router.push('/user/signup')}
-          ></btn.Blue>
-          <text>&nbsp;&nbsp;&nbsp;&nbsp;</text>
-          <btn.Blue
-            name="signinbtn"
-            buttonText="로그인하기"
-            onClickFunc={submitFormHandler}
-          ></btn.Blue>
+          />
+          <div className="py-3" />
+          <btn.Blue buttonText="로그인하기" onClickFunc={submitFormHandler} />
         </BtnSection>
       </Div>
     </CommerceLayout>
   );
 }
 
-const BtnSection = styled.div`
-  display: inline-block;
+const P = styled.p`
+  font-size: small;
 `;
 
 const Div = styled.div`
   display: flex;
-  margin-left: 40px;
   flex-direction: column;
-  margin-bottom: 20px;
+  margin: 10% 35%;
+`;
+
+const BtnSection = styled.div`
+  display: grid;
 `;
 
 const Divider = styled.hr`
   color: black;
+  margin-bottom: 20px;
+`;
+
+const TitleSection = styled.div`
   margin-bottom: 20px;
 `;
