@@ -98,7 +98,6 @@ export default function ProductDetail() {
           },
         ],
       };
-      console.log('ORDERINFODTO: ', params);
       POST(`/orderinfo`, params).then((res) => {
         if (res && res.success) {
           router.push({ pathname: `/user/order` });
