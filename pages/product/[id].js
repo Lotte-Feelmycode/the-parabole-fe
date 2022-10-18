@@ -87,21 +87,21 @@ export default function ProductDetail() {
   }
 
   function directOrder() {
-    function DoOrderInfo(flag) {
-      if (!flag) return;
-      POST(`/orderinfo`, {
-        OrderInfoListDto: [
+    function DoOrderInfo() {
+      const params = {
+        userId: 3,
+        orderInfoDto: [
           {
-            userId: userId,
-            productName: product.productName,
+            productId: productId,
             productCnt: count,
-            productPrice: product.productPrice,
-            productDiscoutPrice: product.productPrice,
+            sellerId: 1,
           },
         ],
-      }).then((res) => {
+      };
+      console.log('ORDERINFODTO: ', params);
+      POST(`/orderinfo`, params).then((res) => {
         if (res && res.success) {
-          router.push({ pathname: `/order` });
+          router.push({ pathname: `/user/order` });
         } else {
           console.log(res);
         }
@@ -112,15 +112,7 @@ export default function ProductDetail() {
     if (!isCountValid()) {
       return;
     }
-    GET(`/order`, {
-      userId: userId,
-    }).then((res) => {
-      if (res && res.success === true) {
-        DoOrderInfo();
-      } else {
-        console.log(res);
-      }
-    });
+    DoOrderInfo();
   }
 
   useEffect(() => {

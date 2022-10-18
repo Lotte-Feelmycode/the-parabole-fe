@@ -25,7 +25,7 @@ export default function Product({ product }) {
           </tr>
           <tr>
             <TdTitle>가격</TdTitle>
-            <Td>{product.productDiscountPrice}</Td>
+            <Td>{product.productPrice}</Td>
           </tr>
         </tbody>
       </table>

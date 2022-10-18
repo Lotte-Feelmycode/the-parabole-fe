@@ -7,30 +7,16 @@ import * as btn from '@components/input/Button';
 import ProductList from '@components/order/ProductList';
 import { numberToMonetary } from '@utils/moneyUtil';
 import PayList from '@components/order/PayList';
-import { POST } from '@apis/defaultApi';
-import { getOrderTotal } from '@utils/functions';
+import { GET_DATA, POST_DATA } from '@apis/defaultApi';
 
 export const AppContext = createContext();
 
-export default function OrderAndPayment({ produts }) {
+export default function OrderAndPayment() {
   const getUserId = 1;
 
   const [userId, setUserId] = useState(getUserId);
   // product를 받아서 값을 넣어야 하지만 지금은 그냥 들어가 있는 테스트 값
-  const [product, setProduct] = useState([
-    {
-      productId: 1,
-      productName: '한우국밥',
-      productPrice: 10000,
-      productCnt: 5,
-    },
-    {
-      productId: 2,
-      productName: '돼지국밥',
-      productPrice: 8000,
-      productCnt: 1,
-    },
-  ]);
+  const [product, setProduct] = useState([]);
 
   function getSum() {
     let sum = 0;
@@ -40,15 +26,23 @@ export default function OrderAndPayment({ produts }) {
     return sum;
   }
 
+  useEffect(() => {
+    console.log(userId);
+    GET_DATA(`/orderinfo`, { userId }).then((res) => {
+      console.log(res);
+      setProduct(res);
+    });
+  }, []);
+
+  const params = {
+    userId: userId,
+    orderState: '주문 확정',
+  };
+
   function orderProduct() {
-    POST(
-      `/orderinfo?userId=` + userId,
-      {
-        orderInfoDto: product,
-      }.then((res) => {
-        setProduct(res);
-      }),
-    );
+    POST_DATA(`/order`, params).then((res) => {
+      setProduct(res);
+    });
   }
 
   const input = {
@@ -126,14 +120,14 @@ export default function OrderAndPayment({ produts }) {
             <br />
             <hr />
             <br />
-            <div>
-              <H2>쿠폰 / 할인</H2>
-              <>총 금액</>
-              <Total>{numberToMonetary(getOrderTotal(product))}원</Total>
-            </div>
-            <br />
-            <hr />
-            <br />
+            {/* <div> */}
+            {/* <H2>쿠폰 / 할인</H2> */}
+            {/* <>총 금액</>&nbsp;&nbsp;&nbsp; */}
+            {/* <Total>{numberToMonetary(getOrderTotal(product))}원</Total> */}
+            {/* </div> */}
+            {/* <br /> */}
+            {/* <hr /> */}
+            {/* <br /> */}
             <div>
               <H2>결제방식</H2>
               <PayList />
