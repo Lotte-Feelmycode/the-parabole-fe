@@ -1,12 +1,8 @@
 import SiteHead from '@components/common/SiteHead';
-import Heading from '@components/input/heading';
 import useInput from '@hooks/useInput';
-import styled from '@emotion/styled';
-import Input from '@components/input/input';
 import CommerceLayout from '@components/common/CommerceLayout';
 import { POST_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
-import * as btn from '@components/input/Button';
 
 export default function Signup() {
   const router = useRouter();
@@ -145,6 +141,8 @@ export default function Signup() {
                   className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
                   type="password"
                   name="password"
+                  minlength="6"
+                  maxlength="12"
                   placeHolder="비밀번호를 입력하세요."
                   onChange={onChangePassword}
                   required
@@ -162,6 +160,8 @@ export default function Signup() {
                   className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
                   type="password"
                   name="passwordConfirmation"
+                  minlength="6"
+                  maxlength="12"
                   placeHolder="비밀번호를 다시 입력하세요."
                   onChange={onChangePasswordConfirmation}
                   required
