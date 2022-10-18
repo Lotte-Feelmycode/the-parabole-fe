@@ -6,7 +6,7 @@ import SellerLayout from '@components/seller/SellerLayout';
 import SiteHead from '@components/common/SiteHead';
 import Heading from '@components/input/Heading';
 import * as btn from '@components/input/Button';
-import { getTime } from '@utils/functions';
+import { getTime, getState } from '@utils/functions';
 import { EVENT_TYPE } from '@utils/constants/types';
 import EventParticipant from '@components/event/EventParticipantList';
 
@@ -36,7 +36,6 @@ export default function EventDetail() {
     e.preventDefault();
     DELETE(`/event/${eventId}`, {}).then((res) => {
       if (res && res.success == true && confirm('삭제하시겠습니까?')) {
-        //TODO: 수정필요
         alert('삭제 되었습니다. ');
         router.push({ pathname: `/seller/event/list` }, `/seller/event/list`);
       }
@@ -55,9 +54,7 @@ export default function EventDetail() {
           <br />
           <Heading title="이벤트 유형" type="h3" />
           <span>
-            {event.type && typeof event.type === 'string'
-              ? EVENT_TYPE.filter((value) => value.code === event.type)[0].name
-              : ''}
+            {getState(EVENT_TYPE, event.type)}
             &nbsp;이벤트
           </span>
           <br />
@@ -78,9 +75,9 @@ export default function EventDetail() {
           <br />
 
           {event.status === EVENT_BEFORE && (
-            // TODO: 수정
+            // TODO: 수정 (꼭 필요한지?)
             <DivHor>
-              <btn.LineBlue buttonText="수정하기" />
+              {/* <btn.LineBlue buttonText="수정하기" /> */}
               <btn.Blue
                 buttonText="삭제하기"
                 onClickFunc={deleteClickHandler}
@@ -92,10 +89,6 @@ export default function EventDetail() {
     </SellerLayout>
   );
 }
-
-const Test = styled.div`
-  backgroudn-color: black;
-`;
 
 const Divider = styled.hr`
   color: black;

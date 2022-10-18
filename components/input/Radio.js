@@ -16,22 +16,22 @@ const Radio = ({
     onChange && onChange(e);
   };
 
-  const radioList = items?.map(({ code, name }) => (
+  const radioList = items?.map(({ value, name }) => (
     <InputContainer
-      key={code}
+      key={value}
       style={style}
       className={`${radioDirection} ${className}`}
     >
       <Input
         type="radio"
-        id={(code, name)}
+        id={(value, name)}
         className={InputClassName}
         name={formName}
-        checked={inputStatus === code}
-        value={code}
+        checked={inputStatus === value}
+        value={value}
         onChange={(e) => handleRadiobutton(e)}
       />
-      <Label htmlFor={(code, name)}>{name}</Label>
+      <Label htmlFor={(value, name)}>{name}</Label>
     </InputContainer>
   ));
 

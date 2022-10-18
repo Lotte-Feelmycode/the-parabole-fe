@@ -1,6 +1,7 @@
 import CommerceLayout from '@components/common/CommerceLayout';
 import { useState } from 'react';
 import UserOrderList from '@components/order/UserOrderList';
+import EventApplyList from '@components/user/EventApplyList';
 import MyProfile from '@components/user/MyProfile';
 
 export default function () {
@@ -18,7 +19,7 @@ export default function () {
         </div>
       );
     } else if (input === 1) {
-      return <div>1</div>;
+      return <EventApplyList />;
     } else if (input === 2) {
       return (
         <div>
