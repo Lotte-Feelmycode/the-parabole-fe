@@ -4,7 +4,9 @@ export default function ProductList({ productList }) {
   return (
     <div>
       {productList &&
-        productList.map((product) => <Product product={product} />)}
+        productList.map((product) => (
+          <Product product={product} key={product.productId} />
+        ))}
     </div>
   );
 }
