@@ -19,7 +19,7 @@ export default function SellerHeader() {
                 }
               `}
             </style>
-            <span className="ml-3 text-xl">The Parabole Seller</span>
+            <span className="ml-3 text-xl text-bold">The Parabole Seller</span>
           </a>
           <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
             <Link href={linkSellerHome}>
