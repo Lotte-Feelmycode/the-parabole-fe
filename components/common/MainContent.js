@@ -36,7 +36,7 @@ export default function MainContent({ title, content }) {
 
   const onClick = (id) => {
     router.push({
-      pathname: `/user/event/${id}`,
+      pathname: `/event/${id}`,
     });
   };
 
