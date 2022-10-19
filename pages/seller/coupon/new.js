@@ -1,9 +1,5 @@
-import * as color from '@utils/constants/themeColor';
 import * as btn from '@components/input/Button';
 import SiteHead from '@components/common/SiteHead';
-import Heading from '@components/input/heading';
-import styled from '@emotion/styled';
-import Input from '@components/input/input';
 import { GET, POST_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -54,8 +50,8 @@ export default function CouponCreate() {
       userId: userId,
       type: type,
       discountValue: discountValue,
-      validAt: validAt + 'T' + validTime,
-      expiresAt: expiresAt + 'T' + expireTime,
+      validAt: validAt + 'T00:00:00',
+      expiresAt: expiresAt + 'T23:59:59',
       maxDiscountAmount: maxDiscountAmount,
       minPaymentAmount: minPaymentAmount,
       detail: detail,
@@ -87,145 +83,163 @@ export default function CouponCreate() {
     return (
       <SellerLayout>
         <SiteHead title="쿠폰 등록" />
-        <Divider />
-        <Heading title="쿠폰 등록" type="h1" />
-        <br />
 
-        <Div>
-          <Heading title="쿠폰명" type="h3" />
-          <Input
-            type="string"
-            onChange={onChangeName}
-            value={name}
-            placeHolder="쿠폰명을 입력하세요."
-          />
-          <Heading title="쿠폰 유형" type="h3" />
-          <Input
-            type="string"
-            onChange={onChangeType}
-            value={type}
-            placeHolder="쿠폰 유형을 선택하세요."
-          />
-
-          {/* TODO: 쿠폰 유형 선택하는 Input 을 Dropdown UI 로 수정 작업
-        TODO: Input 받을때 쿠폰 만료일은 유효 시작일 이후로 설정되어야함. Validation 추가 작업 */}
-
-          {/* <label>쿠폰 유형을 선택하세요.</label>
-        <select
-        id="type-select"
-        name="type"
-        onchange={changeTypeSelect()}
-        className="w-full p-2.5 text-gray-500 bg-white border shadow-sm outline-none appearance-none"
-        >
-        <options>
-        <option value="" selected disabled>
-        쿠폰 타입을 선택
-        </option>
-        <option value={1}>할인 비율 쿠폰</option>
-        <option value={2}>할인 금액 쿠폰</option>
-        </options>
-      </select> */}
-
-          <Heading title="쿠폰 할인율/금액" type="h3" />
-          <Input
-            type="number"
-            onChange={onChangeDiscountValue}
-            value={discountValue}
-            placeHolder="등록할 쿠폰의 할인율 또는 할인액수을 입력하세요."
-          />
-          <Heading title="쿠폰 유효 시작일" type="h3" />
-          <Input
-            type="date"
-            onChange={onChangeValidAt}
-            value={validAt}
-            placeHolder="쿠폰 사용 가능 시작일을 입력하세요."
-          />
-          <Input
-            type="time"
-            onChange={onChangeValidTime}
-            value={validTime}
-            placeHolder="쿠폰 사용 가능 시작 시간을 입력하세요."
-          />
-          <Heading title="쿠폰 만료일" type="h3" />
-          <Input
-            type="date"
-            onChange={onChangeExpiresAt}
-            value={expiresAt.toI}
-            placeHolder="쿠폰 만료일을 입력하세요."
-          />
-          <Input
-            type="time"
-            onChange={onChangeExpireTime}
-            value={expireTime}
-            placeHolder="쿠폰 사용 가능 시작 시간을 입력하세요."
-          />
-          <Heading title="최대 할인 금액" type="h3" />
-          <Input
-            type="number"
-            onChange={onChangeMaxDiscountAmount}
-            value={maxDiscountAmount}
-            placeHolder="쿠폰을 사용할 시 최대 할인 가능 금액을 입력하세요."
-          />
-          <Heading title="최소 결제 금액" type="h3" />
-          <Input
-            type="number"
-            onChange={onChangeMinPaymentAmount}
-            value={minPaymentAmount}
-            placeHolder="쿠폰을 사용할 시 최소 결제해야 하는 금액을 입력하세요."
-          />
-          <Heading title="쿠폰 상세 설명" type="h3"></Heading>
-          <Input
-            type="string"
-            onChange={onChangeDetail}
-            value={detail}
-            placeHolder="쿠폰 상세 설명을 입력하세요."
-          />
-          <Heading title="쿠폰 발행 수량" type="h3"></Heading>
-          <Input
-            type="number"
-            onChange={onChangeCnt}
-            value={cnt}
-            placeHolder="해당 쿠폰을 발행할 수량을 입력하세요."
-          />
-          <btn.Pink
-            buttonText="쿠폰 등록하기"
-            onClickFunc={submitFormHandler}
-            css={{ width: '40%' }}
-          />
-        </Div>
+        <div className="bg-white py-6 sm:py-8 lg:py-12">
+          <div className="max-w-screen-2xl px-4 md:px-8 mx-auto">
+            <h2 className="text-gray-800 text-2xl lg:text-3xl font-bold text-center mb-4 md:mb-8">
+              쿠폰 등록
+            </h2>
+            <form className="max-w-lg border rounded-lg mx-auto" method="post">
+              <div className="flex flex-col gap-4 p-4 md:p-8">
+                <div>
+                  <label
+                    for="name"
+                    className="inline-block text-gray-800 text-sm sm:text-base mb-2"
+                  >
+                    쿠폰명
+                  </label>
+                  <input
+                    className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                    type="text"
+                    name="name"
+                    placeHolder="쿠폰명을 입력하세요."
+                    onChange={onChangeName}
+                    required
+                  />
+                </div>
+                <form>
+                  <label for="type">쿠폰 유형 </label>
+                  <select
+                    className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                    name="type"
+                    id="cars"
+                  >
+                    <option value="RATE">할인율</option>
+                    <option value="AMOUNT">할인 금액</option>
+                  </select>
+                </form>
+                <div>
+                  <label
+                    for="discountValue"
+                    className="inline-block text-gray-800 text-sm sm:text-base mb-2"
+                  >
+                    쿠폰 할인율/금액
+                  </label>
+                  <input
+                    className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                    type="number"
+                    name="discountValue"
+                    placeHolder="할인율/금액을 입력하세요."
+                    onChange={onChangeDiscountValue}
+                    required
+                  />
+                </div>
+                <div>
+                  <label
+                    for="validAt"
+                    className="inline-block text-gray-800 text-sm sm:text-base mb-2"
+                  >
+                    쿠폰 유효 시작일
+                  </label>
+                  <input
+                    className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                    type="date"
+                    name="validAt"
+                    placeHolder="유효 시작일을 입력하세요."
+                    onChange={onChangeValidAt}
+                    required
+                  />
+                </div>
+                <div>
+                  <label
+                    for="expiresAt"
+                    className="inline-block text-gray-800 text-sm sm:text-base mb-2"
+                  >
+                    쿠폰 만료일
+                  </label>
+                  <input
+                    className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                    type="date"
+                    name="expiresAt"
+                    placeHolder="만료일을 입력하세요."
+                    onChange={onChangeExpiresAt}
+                    required
+                  />
+                </div>
+                <div>
+                  <label
+                    for="maxDiscountAmount"
+                    className="inline-block text-gray-800 text-sm sm:text-base mb-2"
+                  >
+                    최대 할인 금액
+                  </label>
+                  <input
+                    className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                    type="number"
+                    name="maxDiscountAmount"
+                    placeHolder="최대 할인 금액을 입력하세요."
+                    onChange={onChangeMaxDiscountAmount}
+                    required
+                  />
+                </div>
+                <div>
+                  <label
+                    for="minPaymentAmount"
+                    className="inline-block text-gray-800 text-sm sm:text-base mb-2"
+                  >
+                    최대 할인 금액
+                  </label>
+                  <input
+                    className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                    type="number"
+                    name="minPaymentAmount"
+                    placeHolder="최소 결제 금액을 입력하세요."
+                    onChange={onChangeMinPaymentAmount}
+                    required
+                  />
+                </div>
+                <div>
+                  <label
+                    for="detail"
+                    className="inline-block text-gray-800 text-sm sm:text-base mb-2"
+                  >
+                    쿠폰 상세 설명
+                  </label>
+                  <input
+                    className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                    type="text"
+                    name="detail"
+                    placeHolder="쿠폰 상세 설명을 입력하세요."
+                    onChange={onChangeDetail}
+                    required
+                  />
+                </div>
+                <div>
+                  <label
+                    for="cnt"
+                    className="inline-block text-gray-800 text-sm sm:text-base mb-2"
+                  >
+                    쿠폰 발행 수량
+                  </label>
+                  <input
+                    className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                    type="number"
+                    name="cnt"
+                    placeHolder="쿠폰 상세 설명을 입력하세요."
+                    onChange={onChangeCnt}
+                    required
+                  />
+                </div>
+                <div />
+                <btn.Pink
+                  buttonText="쿠폰 등록하기"
+                  onClickFunc={submitFormHandler}
+                />
+              </div>
+            </form>
+          </div>
+        </div>
       </SellerLayout>
     );
   }
 }
-
-const BtnSection = styled.div`
-  width: '50%';
-`;
-
-const Div = styled.div`
-  display: flex;
-  margin-left: 40px;
-  flex-direction: column;
-  margin-bottom: 20px;
-`;
-
-const FormTemplate = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Divider = styled.hr`
-  color: black;
-  margin-bottom: 20px;
-`;
-
-const InputSection = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin: 10px 0;
-  padding: 10px;
-  background-color: ${color.ThemeColor1_1};
-  border-radius: 0.25rem;
-`;
