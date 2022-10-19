@@ -1,13 +1,11 @@
-import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead.js';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-import { useState, useEffect } from 'react';
-import { GET } from '@apis/defaultApi';
-import { numberToMonetary } from '@utils/moneyUtil';
+import { useState } from 'react';
 import Input from '@components/input/Input';
 import ImageUploader from '@components/input/ImageUploader';
 import * as Button from '@components/input/Button';
+import SellerLayout from '@components/seller/SellerLayout';
 
 export default function ProductDetail() {
   // TODO: userId를 가져올 때 저장되어있는 걸(cookie, localstorage)로 가져오게 변경
@@ -20,13 +18,6 @@ export default function ProductDetail() {
   const [price, setPrice] = useState();
   const [thumbnailImg, setThumbnailImg] = useState();
   const [detailImg, setDetailImg] = useState([]);
-
-  function setProduct() {
-    {
-      name, category, remain, price;
-    }
-    console.log(name, category, remain, price);
-  }
 
   // const buttonProperties = {
   //   buttonText: '상품 등록',
@@ -64,7 +55,7 @@ export default function ProductDetail() {
 
   return (
     <>
-      <CommerceLayout>
+      <SellerLayout>
         <SiteHead title="상품 등록" />
         <Div>
           상품명
@@ -92,10 +83,10 @@ export default function ProductDetail() {
           <Button.Blue
             buttonText="상품 등록"
             name="setProduct"
-            onClickFunc={setProduct}
+            // onClickFunc={setProduct}
           ></Button.Blue>
         </Div>
-      </CommerceLayout>
+      </SellerLayout>
     </>
   );
 }
