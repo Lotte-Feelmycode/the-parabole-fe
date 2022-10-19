@@ -1,5 +1,5 @@
 import SiteHead from '@components/common/SiteHead.js';
-import { GET, POST } from '@apis/defaultApi';
+import { GET, POST, POST_DATA } from '@apis/defaultApi';
 import { useEffect, useState } from 'react';
 import CouponListRadio from '@components/coupon/CouponListRadio';
 import styled from '@emotion/styled';
@@ -20,7 +20,13 @@ export default function CouponAssign() {
   const [sellerId, setSellerId] = useState();
 
   const [couponParentId, setCouponParentId] = useState(0);
-  const [userParentList, setUserParentList] = useState([]);
+
+  var userParentList = [];
+  function setUserParentList(list) {
+    userParentList = list;
+  }
+
+  // const [userParentList, setUserParentList] = useState([]);
 
   useEffect(() => {
     GET(`/user/role`, { userId }).then((res) => {
@@ -46,7 +52,8 @@ export default function CouponAssign() {
     POST(`/coupon/assign`, reqBody)
       .then((res) => {
         console.log(res);
-        if (res.status === 200) {
+        if (res.success) {
+          console.log('쿠폰 정상 지급');
           alert('선택한 사용자에게 쿠폰이 정상적으로 지급되었습니다.');
         }
         router.reload();

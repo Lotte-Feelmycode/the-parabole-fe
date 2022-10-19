@@ -1,5 +1,5 @@
 import { GET_DATA } from '@apis/defaultApi';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import * as btn from '@components/input/Button';
 import useInput from '@hooks/useInput';
 import Input from '@components/input/Input';
@@ -43,11 +43,13 @@ function UserSearchBar({ setUserParentList }) {
 
   function handleChkChange(e) {
     if (e.target.checked) {
+      console.log(e.target.value);
       checkedUsers.push(e.target.value);
     } else if (!e.target.checked) {
+      console.log(e.target.value);
       checkedUsers = arrayRemove(checkedUsers, e.target.value);
     }
-    alert(checkedUsers);
+    // alert(checkedUsers);
     setUserParentList(checkedUsers);
   }
 
