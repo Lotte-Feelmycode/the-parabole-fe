@@ -3,7 +3,7 @@ import CommerceLayout from '@components/common/CommerceLayout';
 import styled from '@emotion/styled';
 import { createContext, useEffect, useState } from 'react';
 import Input from '@components/input/Input';
-import ProductList from '@components/order/ProductList';
+import ProductList from '@components/product/OrderProductList';
 import PayList from '@components/order/PayList';
 import { POST, GET } from '@apis/defaultApi';
 import { ThemeGray2 } from '@utils/constants/themeColor';
@@ -201,7 +201,9 @@ export default function OrderAndPayment() {
                     <Input
                       css={input}
                       value={receiveAddress}
-                      onChange={setReceiveAddress}
+                      onChange={(event) => {
+                        setReceiveAddress(event.target.value);
+                      }}
                     />
                   </Td>
                 </tr>
@@ -211,7 +213,9 @@ export default function OrderAndPayment() {
                     <Input
                       css={input}
                       value={receiveMemo}
-                      onChange={setReceiveMemo}
+                      onChange={(event) => {
+                        setReceiveMemo(event.target.value);
+                      }}
                     />
                   </Td>
                 </tr>
