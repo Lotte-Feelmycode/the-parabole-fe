@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 const Links = {
   LINK_MAIN: '/',
+  LINK_PRODUCT: '/product',
   LINK_EVENT: '/event',
   LINK_SELLER_MAIN: '/seller/main',
   LINK_CART: '/user/cart',
@@ -27,7 +28,7 @@ export default function CommerceHeader() {
               </a>
             </Link>
             <nav className="md:mr-auto md:ml-10 flex flex-wrap items-center text-base justify-center">
-              <Link href={Links.LINK_MAIN}>
+              <Link href={Links.LINK_PRODUCT}>
                 <a className="mr-10 text-xl font-semibold hover:font-semibold hover:text-secondblue">
                   스토어
                 </a>
