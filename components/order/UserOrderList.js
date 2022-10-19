@@ -7,7 +7,7 @@ export default function OrderList({ userId }) {
   const [orderList, setOrderList] = useState([]);
 
   useEffect(() => {
-    GET_DATA(`/orderinfo`, { userId }).then((res) => {
+    GET_DATA(`/order`, { userId }).then((res) => {
       if (res) {
         setOrderList(res);
       }
@@ -24,9 +24,6 @@ export default function OrderList({ userId }) {
             </td>
             <td scope="col" className="py-1">
               주문상품
-            </td>
-            <td scope="col" className="py-1">
-              할인가격
             </td>
             <td scope="col" className="py-1">
               가격
