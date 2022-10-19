@@ -1,25 +1,42 @@
-import SiteHead from '@components/common/SiteHead.js';
-import CommerceLayout from '@components/common/CommerceLayout';
 import styled from '@emotion/styled';
+import CommerceLayout from '@components/common/CommerceLayout';
+import SiteHead from '@components/common/SiteHead.js';
+import { useRouter } from 'next/router';
 import ProductList from '@components/product/ProductList';
+import CustomSwiper from '@components/common/CustomSwiper';
 
-export default function Product() {
+export default function Products({}) {
+  const router = useRouter();
+  const inputSearchValue = router.query.searchValue;
+  const productListProps = {
+    size: 6,
+    page: 0,
+    productName: inputSearchValue,
+  };
+
   return (
     <>
       <CommerceLayout>
-        <SiteHead title="EventList" />
-        <section className="flex min-h-screen flex-col text-gray-600 body-font">
-          <div className="container px-5 py-24 mx-auto">
-            <ProductList />
-          </div>
-        </section>
+        <SiteHead title="Home" />
+        <div className="container px-5 py-12 mx-auto">
+          <CustomSwiper></CustomSwiper>
+          <Row>
+            <ProductList {...productListProps} />
+          </Row>
+        </div>
       </CommerceLayout>
     </>
   );
 }
 
-const H1 = styled.h1`
-  font-size: 30px;
-  margin-bottom: 30px;
-  font-family: 'SansBold';
+
+const Row = styled.div`
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  margin-right: -10px;
+  margin-left: -10px;
+  align-items: stretch;
+  margin-bottom: 40px;
 `;
