@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { numberToMonetary } from '@utils/moneyUtil';
+import { numberToMonetary } from '@utils/functions';
 
 export default function NewProduct({ product }) {
   const router = useRouter();

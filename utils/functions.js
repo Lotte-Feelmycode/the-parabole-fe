@@ -38,20 +38,6 @@ export function getState(state, prop) {
 }
 
 /**
- * 주문 금액 총합 리턴하는 함수
- * @param {*} orders
- * @returns
- */
-export function getOrderTotal(orders) {
-  if (!orders) return;
-  let total = 0;
-  orders.map((order) => {
-    total += order.productPrice;
-  });
-  return total;
-}
-
-/**
  * 일시 데이터를 '00-00-00 00:00:00'으로 리턴하는 함수
  * @param {*} str
  * @returns
@@ -79,3 +65,10 @@ export var isEmpty = function (value) {
     return false;
   }
 };
+
+export function numberToMonetary(number) {
+  if (!number) return;
+  const numCheck = /^[0-9,]/.test(number);
+  if (!numCheck && number) return;
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}

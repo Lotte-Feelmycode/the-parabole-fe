@@ -8,7 +8,7 @@ import styled from '@emotion/styled';
 export default function Home() {
   const router = useRouter();
 
-  const userId = 2;
+  const userId = 1;
   const [sellerId, setSellerId] = useState(router.query.id);
 
   useEffect(() => {

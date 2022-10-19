@@ -1,13 +1,12 @@
 import styled from '@emotion/styled';
-
 import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead.js';
 import { useRouter } from 'next/router';
 import ProductList from '@components/product/ProductList';
 import CustomSwiper from '@components/common/CustomSwiper';
+
 export default function Products({}) {
   const router = useRouter();
-
   const inputSearchValue = router.query.searchValue;
   const productListProps = {
     size: 6,
@@ -29,6 +28,7 @@ export default function Products({}) {
     </>
   );
 }
+
 
 const Row = styled.div`
   display: flex;

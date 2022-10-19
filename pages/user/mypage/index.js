@@ -6,7 +6,7 @@ import MyProfile from '@components/user/MyProfile';
 
 export default function () {
   // TODO: userId 집어넣기
-  const userId = 1;
+  const userId = 3;
 
   const [nowState, setNowState] = useState(0);
   const mypageStateList = ['나의 주문', '나의 이벤트', '나의 프로필'];

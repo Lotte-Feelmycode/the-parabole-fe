@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { numberToMonetary } from '@utils/moneyUtil';
+import { numberToMonetary } from '@utils/functions';
 import { useState, useEffect } from 'react';
 import { SmallWhite } from '@components/input/Button';
 import Input from '@components/input/Input';

@@ -1,14 +1,10 @@
 import { ORDER_PAY } from '@utils/constants/types';
 import Pay from '@components/order/Pay';
-import { useEffect, useState } from 'react';
-import OrderList from './SellerOrderList';
+import { useState } from 'react';
 import styled from '@emotion/styled';
 
-export default function PayList() {
+export default function PayList({ index, setIndex }) {
   const [count, setCount] = useState(0);
-  const [index, setIndex] = useState(-1);
-
-  useEffect(() => {}, [index]);
 
   const btnCss = {
     width: '12rem',
@@ -47,7 +43,7 @@ export default function PayList() {
   return (
     <>
       {ORDER_PAY.map((order) => (
-        <a onClick={() => {}}>
+        <a onClick={() => {}} key={order.value}>
           <Div>{selectPay(order.name, order.index)}</Div>
         </a>
       ))}
