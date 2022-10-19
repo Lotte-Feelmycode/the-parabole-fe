@@ -1,7 +1,7 @@
 import SiteHead from '@components/common/SiteHead.js';
-import { GET } from '@apis/defaultApi';
+import { GET, POST, POST_DATA } from '@apis/defaultApi';
 import { useEffect, useState } from 'react';
-import CouponListChk from '@components/coupon/CouponListChk';
+import CouponListRadio from '@components/coupon/CouponListRadio';
 import styled from '@emotion/styled';
 import UserSearchBar from '@components/coupon/UserSearchBar';
 import { useRouter } from 'next/router';
@@ -19,6 +19,15 @@ export default function CouponAssign() {
   const [userId, setUserId] = useState(uidFromStorage);
   const [sellerId, setSellerId] = useState();
 
+  const [couponParentId, setCouponParentId] = useState(0);
+
+  var userParentList = [];
+  function setUserParentList(list) {
+    userParentList = list;
+  }
+
+  // const [userParentList, setUserParentList] = useState([]);
+
   useEffect(() => {
     GET(`/user/role`, { userId }).then((res) => {
       if (res.message === 'ROLE_USER') {
@@ -34,6 +43,27 @@ export default function CouponAssign() {
     });
   }, []);
 
+  function assignCoupon(e) {
+    const reqBody = {
+      couponId: couponParentId,
+      userIdList: userParentList,
+    };
+
+    POST(`/coupon/assign`, reqBody)
+      .then((res) => {
+        console.log(res);
+        if (res.success) {
+          console.log('쿠폰 정상 지급');
+          alert('선택한 사용자에게 쿠폰이 정상적으로 지급되었습니다.');
+        }
+        router.reload();
+      })
+      .catch(function (error) {
+        console.log(error);
+        return {};
+      });
+  }
+
   const sellerProps = {
     sellerId: sellerId,
   };
@@ -45,15 +75,16 @@ export default function CouponAssign() {
         <Heading title="쿠폰 배정" type="h1" />
         <PageContainer>
           <Split>
-            <CouponListChk {...sellerProps}></CouponListChk>
+            <CouponListRadio
+              {...sellerProps}
+              setCouponParentId={setCouponParentId}
+            ></CouponListRadio>
           </Split>
           <Split>
-            <UserSearchBar></UserSearchBar>
-            <btn.SmallPink
-              buttonText="쿠폰 배정"
-              onClickFunc={() => router.push('./assignAf')}
-              css
-            />
+            <UserSearchBar
+              setUserParentList={setUserParentList}
+            ></UserSearchBar>
+            <btn.SmallPink buttonText="쿠폰 배정" onClickFunc={assignCoupon} />
           </Split>
         </PageContainer>
       </SellerLayout>
