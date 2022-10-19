@@ -55,7 +55,7 @@ function UserSearchBar({ setUserParentList }) {
       <Heading title="쿠폰 배정할 사용자 검색창" type="h2" />
       <Input
         type="text"
-        placeHolder="사용자명을 입력하세요"
+        attr={{ placeholder: '사용자명을 입력하세요' }}
         onChange={onChangeUserName}
         css={{ width: '49%', marginRight: '1.5%' }}
       ></Input>
