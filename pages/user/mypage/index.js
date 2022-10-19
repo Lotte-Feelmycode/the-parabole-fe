@@ -45,7 +45,7 @@ export default function () {
                 {nowState === index && (
                   <span className="ml-3 text-l text-blue-500">{state}</span>
                 )}
-                {nowState != index && (
+                {nowState !== index && (
                   <span className="ml-3 text-l hover:text-blue-500">
                     {state}
                   </span>
