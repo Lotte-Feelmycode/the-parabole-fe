@@ -40,29 +40,6 @@ export default function OrderAndPayment() {
     });
   }, []);
 
-  useEffect(() => {
-    if (orderInfoResponseDto && orderInfoResponseDto.length > 0) {
-      orderInfoResponseDto.forEach((dto) => {
-        setProduct([
-          ...product,
-          {
-            orderInfoId: dto.id,
-            orderinfoState: dto.state,
-            userId: dto.userId,
-            userEmail: dto.userEmail,
-            productId: dto.productId,
-            productName: dto.productName,
-            productCnt: dto.productCnt,
-            productRemain: dto.productRemain,
-            productPrice: dto.productPrice,
-            productDiscountPrice: dto.productDiscountPrice,
-            productThumbnailImg: dto.productThumbnailImg,
-          },
-        ]);
-      });
-    }
-  }, [orderInfoResponseDto]);
-
   function goToPayment() {
     if (payState === -1) {
       alert('결제수단을 선택해서 결제를 진행해주세요');
@@ -219,14 +196,16 @@ export default function OrderAndPayment() {
             <hr />
             <br />
             <H2>상품 정보</H2>
-            <ProductList productList={product} />
+            <ProductList productList={orderInfoResponseDto} />
             <br />
             <hr />
             <br />
             <div>
               <H2>쿠폰 / 할인</H2>
               <>총 금액 </>
-              <Total>{numberToMonetary(getProductTotalPrice(product))}원</Total>
+              <Total>
+                {numberToMonetary(getProductTotalPrice(orderInfoResponseDto))}원
+              </Total>
             </div>
             <br />
             <hr />
@@ -247,7 +226,10 @@ export default function OrderAndPayment() {
                   <PayIndex>
                     <PayLable>총 상품금액</PayLable>
                     <PayPrice marginLeft="auto">
-                      {numberToMonetary(getProductTotalPrice(product)) || 0}원
+                      {numberToMonetary(
+                        getProductTotalPrice(orderInfoResponseDto),
+                      ) || 0}
+                      원
                     </PayPrice>
                   </PayIndex>
                   <PayIndex>
@@ -261,14 +243,17 @@ export default function OrderAndPayment() {
                   <PayLargeIndex borderColor={ThemeGray2}>
                     <PayLargeLable>최종 결제 금액</PayLargeLable>
                     <PayLargePrice>
-                      {numberToMonetary(getProductTotalPrice(product)) || 0}원
+                      {numberToMonetary(
+                        getProductTotalPrice(orderInfoResponseDto),
+                      ) || 0}
+                      원
                     </PayLargePrice>
                   </PayLargeIndex>
                 </TotalProductPriceSection>
               </PayResultSection>
               <Blue
                 buttonText={
-                  numberToMonetary(getProductTotalPrice(product)) +
+                  numberToMonetary(getProductTotalPrice(orderInfoResponseDto)) +
                   '원 결제하기'
                 }
                 onClickFunc={goToPayment}
