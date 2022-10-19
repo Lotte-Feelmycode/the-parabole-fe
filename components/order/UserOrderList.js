@@ -35,9 +35,6 @@ export default function OrderList({ userId }) {
               주문수량
             </td>
             <td scope="col" className="py-1">
-              재고
-            </td>
-            <td scope="col" className="py-1">
               주문 상태
             </td>
             <td scope="col" className="py-1">
@@ -46,7 +43,10 @@ export default function OrderList({ userId }) {
           </tr>
         </thead>
         <tbody>
-          {orderList && orderList.map((order) => <UserOrder order={order} />)}
+          {orderList &&
+            orderList.map((order) => (
+              <UserOrder order={order} key={'order' + order.id} />
+            ))}
         </tbody>
       </table>
     </>

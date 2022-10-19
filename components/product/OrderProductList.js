@@ -26,30 +26,36 @@ function Product({ product }) {
             </TdImg>
             <td>
               <InfoController>
-                <TdTitle>상품명</TdTitle>
-                <Td>
+                <InfoTitle>상품명</InfoTitle>
+                <InfoData>
                   <span>{product.productName}</span>
-                </Td>
+                </InfoData>
               </InfoController>
             </td>
           </tr>
           <tr>
-            <InfoController>
-              <TdTitle>쿠폰</TdTitle>
-              <Td>쿠폰정보넣을예정</Td>
-            </InfoController>
+            <td>
+              <InfoController>
+                <InfoTitle>쿠폰</InfoTitle>
+                <InfoData>쿠폰정보넣을예정</InfoData>
+              </InfoController>
+            </td>
           </tr>
           <tr>
-            <InfoController>
-              <TdTitle>상품 개수</TdTitle>
-              <Td>{product.productCnt}</Td>
-            </InfoController>
+            <td>
+              <InfoController>
+                <InfoTitle>상품 개수</InfoTitle>
+                <InfoData>{product.productCnt}</InfoData>
+              </InfoController>
+            </td>
           </tr>
           <tr>
-            <InfoController>
-              <TdTitle>가격</TdTitle>
-              <Td>{product.productPrice}</Td>
-            </InfoController>
+            <td>
+              <InfoController>
+                <InfoTitle>가격</InfoTitle>
+                <InfoData>{product.productPrice * product.productCnt}</InfoData>
+              </InfoController>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -77,14 +83,14 @@ const InfoController = styled.div`
   width: 100%;
 `;
 
-const TdTitle = styled.span`
+const InfoTitle = styled.span`
   text-align: left;
   font-weight: bold;
   font-size: 1.1rem;
   margin: 0;
 `;
 
-const Td = styled.span`
+const InfoData = styled.span`
   text-align: left;
   margin-left: auto;
 `;

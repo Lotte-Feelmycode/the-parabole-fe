@@ -9,21 +9,18 @@ export default function Order({ order }) {
   return (
     <tr>
       <Td>
-        <img src={order.productThumbnailImg} />
+        <img src={order.productThumbnailImg} width="100px" margin="0" />
       </Td>
       <Td>{order.productName}</Td>
       <Td>{order.productDiscountPrice}</Td>
       <Td>{order.productPrice}</Td>
       <Td>{order.productCnt}</Td>
-      <Td>{order.productRemain}</Td>
       <Td>{getState(ORDER_STATE, order.state)}</Td>
       <Td>{getState(ORDER_PAY_STATE, order.payState)}</Td>
-      <Td></Td>
     </tr>
   );
 }
 
 const Td = styled.td`
-  padding: 30px;
   font-family: 'SansLight';
 `;
