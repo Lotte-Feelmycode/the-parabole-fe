@@ -1,21 +1,32 @@
 import styled from '@emotion/styled';
 import { ICON_SEARCH_MAGNIFY } from '@utils/constants/icons';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
+
 const SearchBar = ({ placeholder, onKeyUp, onChange, onInput }) => {
   const [searchValue, setSearchValue] = useState('');
+  const router = useRouter();
 
-  const onClickHandler = (e) => {
+  const onClickHandler = () => {
+    router.push({ pathname: '/product', query: { searchValue: searchValue } });
+  };
+
+  const handleOnKeyPress = (e) => {
     e.preventDefault();
+    if (e.key === 'Enter') {
+      onClickHandler();
+    }
   };
 
   return (
     <Bar>
       <InputDiv>
         <input
-          className="hover:bg-gray-100"
+          className="w-full hover:bg-gray-100"
           type="text"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
+          onKeyUp={handleOnKeyPress}
           placeholder={placeholder}
         />
       </InputDiv>
@@ -38,9 +49,15 @@ const Bar = styled.div`
   padding: 10px 16px;
   height: 38px;
   //margin-left: 10px;
-  margin-right: 3px;
+  margin: auto;
   @media (max-width: 1024px) {
     display: none;
+  }
+  @media (min-width: 1024px) {
+    min-width: 200px;
+  }
+  @media (min-width: 1260px) {
+    min-width: 400px;
   }
 `;
 
@@ -54,17 +71,6 @@ const IconSpan = styled.span`
   display: block;
   width: 20px;
   height: 20px;
-`;
-
-const Input = styled.input`
-  background-color: rgba(0, 0, 0, 0);
-  border-width: 0px;
-  border-radius: 2px;
-  outline-style: none;
-  color: #a2a2a2;
-  width: 100%;
-  height: 100%;
-  font-size: 14px;
 `;
 
 export default SearchBar;

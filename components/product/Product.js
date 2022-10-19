@@ -1,11 +1,10 @@
-import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { numberToMonetary } from '@utils/moneyUtil';
+import { numberToMonetary } from '@utils/functions';
 
-export default function Product({ product }) {
-  // console.log('product props : ' + JSON.stringify(product));
+export default function NewProduct({ product }) {
   const router = useRouter();
   const onClick = (id) => {
+    console.log('id', id);
     router.push({
       pathname: `/product/${id}`,
     });
@@ -13,47 +12,34 @@ export default function Product({ product }) {
 
   return (
     <>
-      <div className="product">
-        <ProductSection onClick={() => onClick(product.productId || 0)}>
-          <ProductImageSection>
-            <ProductImage
-              className="product-img"
-              src={product.productThumbnailImg}
-              alt="천연 순면 마스크팩 시트 4종 100매 티트리 쉐어버터 로얄제리젤리 알로에"
-            />
-          </ProductImageSection>
-          <div className="product-body">
-            <div className="srchProductInfoColumn">
-              <div className="srchProductUnitTitle">{product.productName}</div>
-            </div>
-            <div className="srchProductInfoColumn">
-              <div className="s-product-price">
-                <strong className="s-product-price-final">
-                  <span className="s-product-price-number">
-                    {numberToMonetary(product.productPrice)}
-                  </span>
-                  원
-                </strong>
-              </div>
-            </div>
-            <div className="srchProductInfoColumn"></div>
+      <div className="product" onClick={() => onClick(product.productId || 0)}>
+        <a
+          href="#"
+          className="group h-80 block bg-gray-100 rounded-lg overflow-hidden relative mb-2 lg:mb-3"
+        >
+          <img
+            src={product.productThumbnailImg}
+            loading="lazy"
+            alt={product.descript}
+            className="product-img w-full h-full object-cover object-center group-hover:scale-110 transition duration-200"
+          />
+        </a>
+
+        <div className="product-body">
+          <a
+            href="#"
+            className="srchProductUnitTitle text-gray-500 hover:gray-800 lg:text-lg transition duration-100 mb-1"
+          >
+            {product.productName}
+          </a>
+
+          <div className="flex items-end gap-2">
+            <span className="s-product-price text-gray-800 lg:text-lg font-bold">
+              {numberToMonetary(product.productPrice)}원
+            </span>
           </div>
-        </ProductSection>
+        </div>
       </div>
     </>
   );
 }
-
-const ProductSection = styled.a`
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const ProductImageSection = styled.div`
-  text-align: center;
-`;
-
-const ProductImage = styled.img`
-  width: 330px;
-`;

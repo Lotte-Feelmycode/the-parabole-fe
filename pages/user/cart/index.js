@@ -8,9 +8,9 @@ import {
   ThemeWhite,
 } from '@utils/constants/themeColor';
 import { useRouter } from 'next/router';
-import { GET, DELETE } from '@apis/defaultApi';
+import { GET, DELETE, POST } from '@apis/defaultApi';
 import CartProduct from '@components/product/CartProduct';
-import { numberToMonetary } from '@utils/moneyUtil';
+import { numberToMonetary } from '@utils/functions';
 
 export default function Cart() {
   const router = useRouter();
@@ -133,6 +133,33 @@ export default function Cart() {
     }
     setNumberOfChekced(checkCount);
     setTotalPrice(calcTotalPrice);
+  }
+
+  function GoToOrder() {
+    if (itemList && numberOfChekced > 0) {
+      var orderInfoDto = [];
+      itemList.forEach((item) => {
+        if (checkBoxStates.get(item.cartItemId) === true) {
+          orderInfoDto.push({
+            productId: item.product.productId,
+            productCnt: item.count,
+          });
+        }
+      });
+      POST(`/orderinfo`, {
+        userId: userId,
+        orderInfoDto: orderInfoDto,
+      }).then((res) => {
+        if (res && res.success) {
+          router.push({ pathname: `/user/order` });
+        } else {
+          alert('다시 시도해주세요');
+          console.log(res);
+        }
+      });
+    } else {
+      alert('주문할 상품을 선택해주세요');
+    }
   }
 
   function CheckEmptyList({ count }) {
@@ -504,6 +531,7 @@ export default function Cart() {
             <Blue
               buttonText={numberOfChekced + '개 상품 구매하기'}
               css={{ width: '100%' }}
+              onClickFunc={GoToOrder}
             />
           </StickyChild>
         </StickyContainer>

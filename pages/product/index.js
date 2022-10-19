@@ -1,33 +1,34 @@
 import styled from '@emotion/styled';
-
 import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead.js';
-
-import MainContent from '@components/common/MainContent';
-import IconList from '@components/common/IconList';
+import { useRouter } from 'next/router';
 import ProductList from '@components/product/ProductList';
+import CustomSwiper from '@components/common/CustomSwiper';
 
-export default function Home() {
+export default function Products({}) {
+  const router = useRouter();
+  const inputSearchValue = router.query.searchValue;
   const productListProps = {
     size: 6,
     page: 0,
+    productName: inputSearchValue,
   };
 
   return (
-    <CommerceLayout>
-      <SiteHead title="Home" />
+    <>
+      <CommerceLayout>
+        <SiteHead title="Home" />
         <div className="container px-5 py-12 mx-auto">
-          <MainContent title="파라볼래" content="셀러가 직접 등록하는 다양한 이벤트에 참여해보세요!"/>
-          <Row>
-            <IconList></IconList>
-          </Row>
+          <CustomSwiper></CustomSwiper>
           <Row>
             <ProductList {...productListProps} />
           </Row>
         </div>
-    </CommerceLayout>
+      </CommerceLayout>
+    </>
   );
 }
+
 
 const Row = styled.div`
   display: flex;

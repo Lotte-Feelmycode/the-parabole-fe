@@ -3,15 +3,15 @@ import SiteHead from '@components/common/SiteHead.js';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { useState, useEffect } from 'react';
-import { GET_DATA, GET, POST, POST_DATA } from '@apis/defaultApi';
-import { numberToMonetary } from '@utils/moneyUtil';
+import { GET_DATA, POST } from '@apis/defaultApi';
+import { numberToMonetary } from '@utils/functions';
 import * as color from '@utils/constants/themeColor';
 import * as btn from '@components/input/Button';
 import Input from '@components/input/Input';
 
 export default function ProductDetail() {
   // TODO : userID
-  const userId = 1;
+  const userId = 3;
 
   const router = useRouter();
   const [productId, setProductId] = useState(router.query.id);
@@ -87,38 +87,13 @@ export default function ProductDetail() {
   }
 
   function directOrder() {
-    function DoOrderInfo(flag) {
-      if (!flag) return;
-      POST(`/orderinfo`, {
-        OrderInfoListDto: [
-          {
-            userId: userId,
-            productName: product.productName,
-            productCnt: count,
-            productPrice: product.productPrice,
-            productDiscoutPrice: product.productPrice,
-          },
-        ],
-      }).then((res) => {
-        if (res && res.success) {
-          router.push({ pathname: `/order` });
-        } else {
-          console.log(res);
-        }
-      });
-    }
-
-    // TODO : order 구현 후 동작 연결 예정
-    if (!isCountValid()) {
-      return;
-    }
-    GET(`/order`, {
+    const orderInfoDto = [{ productId: productId, productCnt: count }];
+    POST(`/orderinfo`, {
       userId: userId,
+      orderInfoDto: orderInfoDto,
     }).then((res) => {
-      if (res && res.success === true) {
-        DoOrderInfo();
-      } else {
-        console.log(res);
+      if (res && res.success) {
+        router.push(`/user/order`);
       }
     });
   }

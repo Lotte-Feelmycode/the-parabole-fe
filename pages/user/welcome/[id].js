@@ -1,11 +1,10 @@
-import { GET, GET_DATA } from '@apis/defaultApi';
+import { GET_DATA } from '@apis/defaultApi';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import styled from '@emotion/styled';
 import SiteHead from '@components/common/SiteHead';
 import CommerceLayout from '@components/common/CommerceLayout';
-import Heading from '@components/input/Heading';
 import * as btn from '@components/input/Button';
+import Link from 'next/link';
 
 export default function SignupConfirm() {
   const router = useRouter();
@@ -24,65 +23,35 @@ export default function SignupConfirm() {
   return (
     <CommerceLayout>
       <SiteHead title="회원가입 완료" />
-      <Div>
-        <div className="py-6" />
-        <Heading title="회원가입 완료" type="h1" />
-        <br />
-        <p>THE PARABOLE 회원 가입을 축하합니다 :) </p>
-        <p>{userInfo.username} 님의 가입 정보는 아래와 같습니다.</p>
-        <br />
-        <ul>
-          계정 이메일 :
-          <HighlightInfo className="email"> {userInfo.email}</HighlightInfo>
-          <li className="nickname">닉네임 : {userInfo.nickname}</li>
-          <li className="role">역할 : {userInfo.role}</li>
-          <li className="phone">번호 : {userInfo.phone}</li>
-        </ul>
-        <div className="py-5" />
-        <P> 🎉🎉🎉 즐거운 쇼핑 하세요 🎉🎉🎉 </P>
-        <div className="py-4" />
+      <div className="bg-white py-6 sm:py-8 lg:py-12">
+        <div className="max-w-screen-2xl px-4 md:px-8 mx-auto font-semibold">
+          <h2 className="text-gray-800 text-2xl lg:text-3xl font-bold text-center mb-4 md:mb-8">
+            회원가입 완료🎉
+          </h2>
+          <div className="max-w-lg border rounded-lg mx-auto bg-blue-200">
+            <div className="flex flex-col items-center gap-4 p-4 md:p-8 mt-5">
+              <span className="text-black-400 text-lg relative px-4 ">
+                {userInfo.username} 님 😊 <br /> THE PARABOLE 회원 가입을
+                축하합니다 :)
+              </span>
+            </div>
 
-        <BtnSection>
-          <div>
-            <btn.LineBlue
-              buttonText="홈으로"
-              css={{ marginRight: '20px', marginLeft: '30px' }}
-              onClickFunc={() => router.push('/')}
-            />
+            <div className="flex justify-center items-center p-4 mb-7">
+              <Link href="/">
+                <a>
+                  <btn.Blue buttonText="홈으로" />
+                </a>
+              </Link>
+              <div className="px-3" />
+              <Link href="/user/signin">
+                <a>
+                  <btn.Blue buttonText="로그인하기" />
+                </a>
+              </Link>
+            </div>
           </div>
-          <div>
-            <btn.Blue
-              buttonText="로그인하기"
-              css={{ marginRight: '20px' }}
-              onClickFunc={() => router.push('/user/signin')}
-            />
-          </div>
-        </BtnSection>
-      </Div>
+        </div>
+      </div>
     </CommerceLayout>
   );
 }
-
-const HighlightInfo = styled.span`
-  font-weight: bold;
-`;
-
-const Div = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 10% 30%;
-  justify-content: center;
-  align-items: center;
-  background-color: #a7cdfc;
-  border-radius: 5%;
-`;
-
-const BtnSection = styled.div`
-  margin-bottom: 40px;
-  display: inline-flex;
-`;
-
-const P = styled.p`
-  font-size: large;
-  font-weight: bold;
-`;

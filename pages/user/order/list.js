@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 export default function Home() {
-  const getUserId = 1;
+  const getUserId = 3;
 
   const [userId, setUserId] = useState(getUserId);
 

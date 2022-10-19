@@ -7,15 +7,8 @@ export default function UserSearchResult({ user }) {
 
   return (
     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-      {/* <th
-        scope="row"
-        className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-      >
-        {user.userId}
-      </th> */}
-      {/* <input type="checkbox" /> */}
       <td className="py-4 px-6">
-        <Chk type="checkbox" />
+        <input type="checkbox" />
         {user.username}
       </td>
       <td className="py-4 px-6">{user.email}</td>
@@ -23,7 +16,3 @@ export default function UserSearchResult({ user }) {
     </tr>
   );
 }
-
-const Chk = styled.input`
-  margin-right: 8px;
-`;

@@ -18,6 +18,8 @@ const ImageUploader = () => {
   };
 
   const onClickFileBtn = (e) => {
+    e.preventDefault();
+
     imgRef.current.click();
   };
 
