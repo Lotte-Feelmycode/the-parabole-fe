@@ -64,8 +64,6 @@ export default function OrderAndPayment() {
   }, [orderInfoResponseDto]);
 
   function goToPayment() {
-    const orderState = '주문 확정';
-
     if (payState === -1) {
       alert('결제수단을 선택해서 결제를 진행해주세요');
       return;
@@ -83,7 +81,7 @@ export default function OrderAndPayment() {
       return;
     }
 
-    POST(`/order`, { userId, orderState }).then((res) => {
+    POST(`/order`, { userId, orderPayState: payState }).then((res) => {
       console.log(res);
       if (res) {
         if (res.success) {
@@ -99,7 +97,7 @@ export default function OrderAndPayment() {
     if (!products) return;
     let total = 0;
     products.map((products) => {
-      total += products.productPrice;
+      total += products.productPrice * products.productCnt;
     });
     return total;
   }

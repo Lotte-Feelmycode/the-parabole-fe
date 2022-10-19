@@ -48,7 +48,7 @@ function Product({ product }) {
           <tr>
             <InfoController>
               <TdTitle>가격</TdTitle>
-              <Td>{product.productPrice}</Td>
+              <Td>{product.productPrice * product.productCnt}</Td>
             </InfoController>
           </tr>
         </tbody>
