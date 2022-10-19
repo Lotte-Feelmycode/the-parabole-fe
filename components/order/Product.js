@@ -1,19 +1,19 @@
 import styled from '@emotion/styled';
+import { ThemeGray2 } from '@utils/constants/themeColor';
 
 export default function Product({ product }) {
   return (
-    <Div>
-      <br />
+    <Div borderColor={ThemeGray2}>
       <table className="w-full text-m text-center">
         <tbody>
           <tr>
-            <TdTitle rowSpan={5}>
+            <TdImg rowSpan={5}>
               <img src={product.productThumbnailImg} />
-            </TdTitle>
-          </tr>
-          <tr>
+            </TdImg>
             <TdTitle>상품명</TdTitle>
-            <Td>{product.productName}</Td>
+            <Td>
+              <span>{product.productName}</span>
+            </Td>
           </tr>
           <tr>
             <TdTitle>쿠폰</TdTitle>
@@ -35,15 +35,22 @@ export default function Product({ product }) {
 
 const Div = styled.div`
   margin-bottom: 1rem;
-  font-size: 1.3rem;
+  font-size: 1rem;
+  border: 1px solid ${(props) => props.borderColor};
+  border-radius: 5px;
+  margin-bottom: 10px;
 `;
 
-const TdTitle = styled.div`
+const TdImg = styled.td`
+  width: 20%;
+  padding: 10px;
+`;
+
+const TdTitle = styled.td`
   text-align: left;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   margin: 0;
-  width: 11rem;
 `;
 
 const Td = styled.td`
