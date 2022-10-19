@@ -9,7 +9,7 @@ export default function EventPrize({ event, eventId }) {
   const [couponInfo, setCouponInfo] = useState([event]);
   const [state, setState] = useState();
   //TODO 나중에 userId 제대로
-  const userId = 1;
+  const userId = 3;
   const router = useRouter();
   useEffect(() => {
     setCouponInfo(event);

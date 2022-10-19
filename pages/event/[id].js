@@ -30,8 +30,11 @@ export default function EventDetail() {
     <CommerceLayout>
       <section className="flex min-h-screen flex-col text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">
-          <div className="event-detail-img">
-            <img src={eventImage.eventDetailImg} style={{ width: '100%' }} />
+          <div
+            className="event-detail-startAt"
+            style={{ fontSize: 'xx-large', padding: '10px' }}
+          >
+            {eventInfo && eventInfo.title}
           </div>
           <div
             className="event-detail-startAt"
@@ -39,11 +42,8 @@ export default function EventDetail() {
           >
             응모 기간 {getTime(eventInfo.startAt)} ~ {getTime(eventInfo.endAt)}
           </div>
-          <div
-            className="event-detail-descript"
-            style={{ fontSize: 'x-large', padding: '24px' }}
-          >
-            {eventInfo.descript}
+          <div className="event-detail-img" style={{ marginBottom: '100px' }}>
+            <img src={eventImage.eventDetailImg} style={{ width: '100%' }} />
           </div>
 
           <div
