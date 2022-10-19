@@ -15,7 +15,7 @@ import { numberToMonetary } from '@utils/functions';
 export default function Cart() {
   const router = useRouter();
   // TODO: userId 집어넣기
-  const userId = 1;
+  const userId = 3;
 
   const [cartItemCount, setCartItemCount] = useState(1);
   const [cartId, setCartId] = useState(userId);
