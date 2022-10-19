@@ -7,7 +7,7 @@ export default function OrderList({ userId }) {
   const [orderList, setOrderList] = useState([]);
 
   useEffect(() => {
-    GET_DATA(`/orderinfo`, { userId }).then((res) => {
+    GET_DATA(`/order`, { userId }).then((res) => {
       if (res) {
         setOrderList(res);
       }
