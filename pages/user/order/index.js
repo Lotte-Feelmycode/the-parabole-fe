@@ -18,7 +18,6 @@ export default function OrderAndPayment() {
   const router = useRouter();
 
   const [userId, setUserId] = useState(getUserId);
-  const [product, setProduct] = useState([]);
   const [orderInfoResponseDto, setOrderInfoResponseDto] = useState([]);
   const [payState, setPayState] = useState(-1);
 
