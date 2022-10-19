@@ -26,9 +26,6 @@ export default function OrderList({ userId }) {
               주문상품
             </td>
             <td scope="col" className="py-1">
-              할인가격
-            </td>
-            <td scope="col" className="py-1">
               가격
             </td>
             <td scope="col" className="py-1">
