@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { useState, useEffect } from 'react';
 import { GET_DATA, POST } from '@apis/defaultApi';
-import { numberToMonetary } from '@utils/moneyUtil';
+import { numberToMonetary } from '@utils/functions';
 import * as color from '@utils/constants/themeColor';
 import * as btn from '@components/input/Button';
 import Input from '@components/input/Input';
