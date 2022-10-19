@@ -4,8 +4,6 @@ export const ICON_CART_BLUE = require('@assets/cart-blue.svg').default.src;
 export const ICON_CART_TRANS = require('@assets/cart-transparent.svg').default
   .src;
 export const ICON_CART_BLACK = require('@assets/cart-black.svg').default.src;
-export const ICON_CART_BLACK_ITEM = require('@assets/cart-black-item.svg')
-  .default.src;
 
 export const ICON_POST = require('@assets/icon-post.svg').default.src;
 export const ICON_LIST = require('@assets/icon-list.svg').default.src;
