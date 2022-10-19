@@ -3,8 +3,6 @@ import SiteHead from '@components/common/SiteHead.js';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { useState, useEffect } from 'react';
-import { GET } from '@apis/defaultApi';
-import { numberToMonetary } from '@utils/moneyUtil';
 import Input from '@components/input/Input';
 import ImageUploader from '@components/input/ImageUploader';
 import * as btn from '@components/input/Button';

@@ -3,7 +3,7 @@ import CommerceLayout from '@components/common/CommerceLayout';
 import styled from '@emotion/styled';
 import { createContext, useEffect, useState } from 'react';
 import Input from '@components/input/Input';
-import ProductList from '@components/order/ProductList';
+import ProductList from '@components/product/OrderProductList';
 import PayList from '@components/order/PayList';
 import { POST, GET } from '@apis/defaultApi';
 import { ThemeGray2 } from '@utils/constants/themeColor';
@@ -117,7 +117,7 @@ export default function OrderAndPayment() {
     borderRadius: '0.2rem',
     border: 'solid 1px ' + ThemeGray2,
     fontSize: '1rem',
-    margin: '10px auto',
+    margin: 0,
   };
 
   return (
@@ -128,32 +128,30 @@ export default function OrderAndPayment() {
           <OrderSection className="order-section">
             <H1>주문/결제</H1>
             <H2>주문자</H2>
-            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <tbody>
-                <tr>
-                  <TdTitle>주문자</TdTitle>
-                  <Td>
-                    <Input
-                      // TODO : user 정보 넣기
-                      css={input}
-                      attr={{ readOnly: true }}
-                      value={'userId.name'}
-                    />
-                  </Td>
-                </tr>
-                <tr>
-                  <TdTitle>휴대전화</TdTitle>
-                  <Td>
-                    <Input
-                      // TODO : user 정보 넣기
-                      css={input}
-                      attr={{ readOnly: true }}
-                      value={'userId.phone'}
-                    />
-                  </Td>
-                </tr>
-              </tbody>
-            </table>
+            <div>
+              <InputContainer>
+                <InputLable>주문자</InputLable>
+                <Inputpart>
+                  <Input
+                    // TODO : user 정보 넣기
+                    css={input}
+                    attr={{ readOnly: true }}
+                    value={'userId.name'}
+                  />
+                </Inputpart>
+              </InputContainer>
+              <InputContainer>
+                <InputLable>휴대전화</InputLable>
+                <Inputpart>
+                  <Input
+                    // TODO : user 정보 넣기
+                    css={input}
+                    attr={{ readOnly: true }}
+                    value={'userId.phone'}
+                  />
+                </Inputpart>
+              </InputContainer>
+            </div>
             <br />
             <hr />
             <br />
@@ -167,56 +165,58 @@ export default function OrderAndPayment() {
               />
               <span> 주문자 정보와 동일</span>
             </SameAsUserSection>
-            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <tbody>
-                <tr>
-                  <TdTitle>수령인</TdTitle>
-                  <Td>
-                    <Input
-                      type="text"
-                      css={input}
-                      value={receiverName}
-                      onChange={(event) => {
-                        setReceiverName(event.target.value);
-                      }}
-                    />
-                  </Td>
-                </tr>
-                <tr>
-                  <TdTitle>휴대전화</TdTitle>
-                  <Td>
-                    <Input
-                      type="text"
-                      css={input}
-                      value={receivePhone}
-                      onChange={(event) => {
-                        setReceivePhone(event.target.value);
-                      }}
-                    />
-                  </Td>
-                </tr>
-                <tr>
-                  <TdTitle>배송지 주소</TdTitle>
-                  <Td>
-                    <Input
-                      css={input}
-                      value={receiveAddress}
-                      onChange={setReceiveAddress}
-                    />
-                  </Td>
-                </tr>
-                <tr>
-                  <TdTitle>배송 메모</TdTitle>
-                  <Td>
-                    <Input
-                      css={input}
-                      value={receiveMemo}
-                      onChange={setReceiveMemo}
-                    />
-                  </Td>
-                </tr>
-              </tbody>
-            </table>
+            <div>
+              <InputContainer>
+                <InputLable>수령인</InputLable>
+                <Inputpart>
+                  <Input
+                    type="text"
+                    css={input}
+                    value={receiverName}
+                    onChange={(event) => {
+                      setReceiverName(event.target.value);
+                    }}
+                  />
+                </Inputpart>
+              </InputContainer>
+              <InputContainer>
+                <InputLable>휴대전화</InputLable>
+                <Inputpart>
+                  <Input
+                    type="text"
+                    css={input}
+                    value={receivePhone}
+                    onChange={(event) => {
+                      setReceivePhone(event.target.value);
+                    }}
+                  />
+                </Inputpart>
+              </InputContainer>
+              <InputContainer>
+                <InputLable>배송지 주소</InputLable>
+                <Inputpart>
+                  <Input
+                    css={input}
+                    value={receiveAddress}
+                    onChange={(event) => {
+                      setReceiveAddress(event.target.value);
+                    }}
+                  />
+                </Inputpart>
+              </InputContainer>
+              <InputContainer>
+                <InputLable>배송 메모</InputLable>
+                <Inputpart>
+                  <Input
+                    css={input}
+                    value={receiveMemo}
+                    onChange={(event) => {
+                      setReceiveMemo(event.target.value);
+                    }}
+                  />
+                </Inputpart>
+              </InputContainer>
+            </div>
             <br />
             <hr />
             <br />
@@ -388,4 +388,17 @@ const H1 = styled.h1`
 const H2 = styled.p`
   font-size: 2rem;
   margin-bottom: 20px;
+`;
+
+const InputContainer = styled.div`
+  display: inline-flex;
+  width: 100%;
+  margin: 10px 0;
+`;
+
+const InputLable = styled.span``;
+
+const Inputpart = styled.div`
+  margin: 0;
+  margin-left: auto;
 `;
