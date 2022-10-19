@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import SiteHead from '@components/common/SiteHead';
 import CommerceLayout from '@components/common/CommerceLayout';
 import * as btn from '@components/input/Button';
+import Link from 'next/link';
 
 export default function SignupConfirm() {
   const router = useRouter();
@@ -36,15 +37,17 @@ export default function SignupConfirm() {
             </div>
 
             <div className="flex justify-center items-center p-4 mb-7">
-              <btn.Blue
-                buttonText="홈으로"
-                onClickFunc={() => router.push('/')}
-              />
+              <Link href="/">
+                <a>
+                  <btn.Blue buttonText="홈으로" />
+                </a>
+              </Link>
               <div className="px-3" />
-              <btn.Blue
-                buttonText="로그인하기"
-                onClickFunc={() => router.push('/user/signin')}
-              />
+              <Link href="/user/signin">
+                <a>
+                  <btn.Blue buttonText="로그인하기" />
+                </a>
+              </Link>
             </div>
           </div>
         </div>

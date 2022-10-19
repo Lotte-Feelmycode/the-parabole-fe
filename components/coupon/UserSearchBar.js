@@ -14,7 +14,7 @@ function UserSearchBar({ setUserParentList }) {
 
   var checkedUsers = [];
 
-  function submitFormHandler(e) {
+  function onSearchUserHandler(e) {
     e.preventDefault();
 
     if (!userName) {
@@ -43,13 +43,10 @@ function UserSearchBar({ setUserParentList }) {
 
   function handleChkChange(e) {
     if (e.target.checked) {
-      console.log(e.target.value);
       checkedUsers.push(e.target.value);
     } else if (!e.target.checked) {
-      console.log(e.target.value);
       checkedUsers = arrayRemove(checkedUsers, e.target.value);
     }
-    // alert(checkedUsers);
     setUserParentList(checkedUsers);
   }
 
@@ -62,7 +59,7 @@ function UserSearchBar({ setUserParentList }) {
         onChange={onChangeUserName}
         css={{ width: '49%', marginRight: '1.5%' }}
       ></Input>
-      <btn.SmallPink buttonText="검색" onClickFunc={submitFormHandler} />
+      <btn.SmallPink buttonText="검색" onClickFunc={onSearchUserHandler} />
 
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
