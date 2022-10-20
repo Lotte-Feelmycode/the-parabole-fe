@@ -67,7 +67,13 @@ export default function ProductList() {
         </table>
 
         <Div>
-          <btn.SmallBlue buttonText="등록하기" name="btnPost" />
+          <btn.SmallPink
+            buttonText="등록하기"
+            name="btnPost"
+            onClickFunc={() => {
+              router.push('/seller/product/index');
+            }}
+          />
         </Div>
       </SellerLayout>
     </>

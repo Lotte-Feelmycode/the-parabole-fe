@@ -78,10 +78,10 @@ export default function EventDetail() {
             // TODO: 수정 (꼭 필요한지?)
             <DivHor>
               {/* <btn.LineBlue buttonText="수정하기" /> */}
-              <btn.Blue
+              <btn.Pink
                 buttonText="삭제하기"
                 onClickFunc={deleteClickHandler}
-              ></btn.Blue>
+              ></btn.Pink>
             </DivHor>
           )}
         </div>
