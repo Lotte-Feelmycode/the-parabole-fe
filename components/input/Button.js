@@ -226,7 +226,7 @@ const ButtonStyled = styled.button`
 
   &:disabled {
     color: ${color.ThemeGray1};
-    background: ${color.ThemeGray2};
+    background: ${color.ThemeGray4};
     border: none !important;
     transform: none;
     cursor: default;
@@ -251,7 +251,7 @@ const OutLineButtonStyled = styled.button`
 
   &:disabled {
     color: ${color.ThemeGray1};
-    background: ${color.ThemeGray2};
+    background: ${color.ThemeGray4};
     border: none !important;
     transform: none;
     cursor: default;

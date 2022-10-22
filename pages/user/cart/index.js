@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Blue, SmallLineWhite } from '@components/input/Button';
 import {
   ThemeGray1,
-  ThemeGray2,
+  ThemeGray4,
   ThemeWhite,
 } from '@utils/constants/themeColor';
 import { useRouter } from 'next/router';
@@ -543,9 +543,9 @@ export default function Cart() {
     <CommerceLayout className="commerce-layout">
       <CartPage
         className="flex min-h-screen flex-col body-font"
-        color={ThemeGray2}
+        color={ThemeGray4}
       >
-        <div className="container px-5 py-24 mx-auto" color={ThemeGray2}>
+        <div className="container px-5 py-24 mx-auto" color={ThemeGray4}>
           <CheckEmptyList count={cartItemCount} />
         </div>
       </CartPage>

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { ThemeGray2 } from '@utils/constants/themeColor';
+import { ThemeGray4 } from '@utils/constants/themeColor';
 
 export default function OrderProductList({ productList }) {
   return (
@@ -16,7 +16,7 @@ function Product({ product }) {
   return (
     <ProductInfoContainer
       className="productInfoContainer"
-      borderColor={ThemeGray2}
+      borderColor={ThemeGray4}
     >
       <table className="w-full text-m text-center">
         <tbody>
