@@ -1,7 +1,7 @@
 import { GET_DATA } from '@apis/defaultApi';
-import Heading from '@components/input/Heading';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import { LargeInput } from '@components/input/Input';
 
 export default function MyProfile({ userId }) {
   const [userInfo, setUserInfo] = useState([]);
@@ -14,42 +14,118 @@ export default function MyProfile({ userId }) {
     });
   }, [userId]);
 
+  function GetEmail({ email }) {
+    if (email && email.split('@')[1]) {
+      return (
+        <>
+          <LargeInput
+            type="text"
+            attr={{ readOnly: 'true' }}
+            css={{ width: '100%' }}
+            value={email.split('@')[0]}
+          />
+          <span className="py-1 px-1">@</span>
+          <LargeInput
+            type="text"
+            attr={{ readOnly: 'true' }}
+            css={{ width: '100%' }}
+            value={email.split('@')[1]}
+          />
+        </>
+      );
+    } else {
+      return (
+        <LargeInput
+          type="text"
+          attr={{ readOnly: 'true' }}
+          css={{ width: '100%' }}
+          value={email}
+        />
+      );
+    }
+  }
+
   return (
     <>
-      <Heading title="My Profile" type="h1" styled={{ float: 'right' }} />
-      <BgDiv>
-        <div className="py-7" />
-        <Heading title="사용자 이름" type="h2" />
-        <P>{userInfo.username}</P>
-        <Heading title="닉네임" type="h2" />
-        <p>{userInfo.nickname}</p>
-        <Heading title="이메일" type="h2" />
-        <p>{userInfo.email}</p>
-        <Heading title="계정 역할" type="h2" />
-        <p>{userInfo.role}</p>
-        <Heading title="연락처" type="h2" />
-        <p>{userInfo.phone}</p>
-        <div className="py-5" />
+      <BgDiv className="py-7">
+        <LabelSection>
+          <LabelTitle>사용자 이름</LabelTitle>
+          <LabelInputSection>
+            <LargeInput
+              type="text"
+              attr={{ readOnly: 'true' }}
+              css={{ width: '100%' }}
+              value={userInfo.username}
+            />
+          </LabelInputSection>
+        </LabelSection>
+        <LabelSection>
+          <LabelTitle>닉네임</LabelTitle>
+          <LabelInputSection>
+            <LargeInput
+              type="text"
+              attr={{ readOnly: 'true' }}
+              css={{ width: '100%' }}
+              value={userInfo.nickname}
+            />
+          </LabelInputSection>
+        </LabelSection>
+        <LabelSection>
+          <LabelTitle>이메일</LabelTitle>
+          <LabelInputSection>
+            <GetEmail email={userInfo.email} />
+          </LabelInputSection>
+        </LabelSection>
+        <LabelSection>
+          <LabelTitle>계정 역할</LabelTitle>
+          <LabelInputSection>
+            <LargeInput
+              type="text"
+              attr={{ readOnly: 'true' }}
+              css={{ width: '100%' }}
+              value={userInfo.role}
+            />
+          </LabelInputSection>
+        </LabelSection>
+        <LabelSection>
+          <LabelTitle>연락처</LabelTitle>
+          <LabelInputSection>
+            <LargeInput
+              type="text"
+              attr={{ readOnly: 'true' }}
+              css={{ width: '100%' }}
+              value={userInfo.phone}
+            />
+          </LabelInputSection>
+        </LabelSection>
       </BgDiv>
     </>
   );
 }
 
-const BgDiv = styled.div`
+const BgDiv = styled.form`
   display: flex;
   flex-direction: column;
-  margin: 4% 30%;
+  width: 100%;
+  padding: 20px 10%;
   align-items: center;
-  background-color: #a7cdfc;
   border-radius: 7%;
-
-  p {
-    margin-bottom: 10px;
-    padding: 8px;
-  }
 `;
 
-const P = styled.p`
-  margin-bottom: 20px;
-  font-size: large;
+const LabelSection = styled.div`
+  display: flex;
+  width: 90%;
+  margin: 20px;
+`;
+
+const LabelTitle = styled.span`
+  margin: auto;
+  font-size: 1.2rem;
+  font-weight: bold;
+  width: 30%;
+`;
+
+const LabelInputSection = styled.span`
+  display: inline-flex;
+  width: 70%;
 `;
