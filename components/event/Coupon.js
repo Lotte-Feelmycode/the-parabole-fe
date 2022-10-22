@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import Head from 'next/head';
 import * as COLOR from '@utils/constants/themeColor';
-import { getTime } from '@utils/functions';
+import { getDateTime } from '@utils/functions';
 export default function Coupon({ couponInfo }) {
   return (
     <>
@@ -10,7 +10,7 @@ export default function Coupon({ couponInfo }) {
           <h3></h3>
           <h3>{couponInfo.couponDetail}</h3>
           <br />
-          <p>유효 기간: {getTime(couponInfo.expiresAt)}</p>
+          <p>유효 기간: {getDateTime(couponInfo.expiresAt)}</p>
           <Circle1 />
           <Circle2 />
         </CouponCard>

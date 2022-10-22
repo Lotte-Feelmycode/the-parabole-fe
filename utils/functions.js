@@ -1,17 +1,17 @@
 /**
- * 일시 데이터를 '00년 00월 00일 오후/오전 00시 00분'으로 리턴하는 함수
+ * 일시 데이터를 '0000년 00월 00일 오후/오전 00시 00분'으로 리턴하는 함수
  * @param {*} str
  * @returns
  */
-export function getTime(str) {
+export function getDateTime(str) {
   if (str) {
-    const getDate = str.split('T')[0];
+    const getDateData = str.split('T')[0];
     const date =
-      str.split('T')[0].split('-')[0] +
+      getDateData.split('-')[0] +
       '년 ' +
-      getDate.split('-')[1] +
+      getDateData.split('-')[1] +
       '월 ' +
-      getDate.split('-')[2] +
+      getDateData.split('-')[2] +
       '일 ';
 
     const getTime = str.split('T')[1];
@@ -22,6 +22,51 @@ export function getTime(str) {
 
     return date + time;
   }
+  return str;
+}
+
+/**
+ * 일시 데이터를 '0000-00-00 00:00'으로 리턴하는 함수
+ * @param {*} str
+ * @returns
+ */
+export function getDateTimeShort(str) {
+  if (str && str.split('T')[1]) {
+    return str.split('T')[0] + ' ' + str.split('T')[1];
+  }
+  return str;
+}
+
+/**
+ * 일시 데이터를 '0000년 00월 00일'로 리턴하는 함수
+ * @param {*} str
+ * @returns
+ */
+export function getDate(str) {
+  if (str) {
+    const getDateData = str.split('T')[0];
+    return (
+      getDateData.split('-')[0] +
+      '년 ' +
+      getDateData.split('-')[1] +
+      '월 ' +
+      getDateData.split('-')[2] +
+      '일 '
+    );
+  }
+  return str;
+}
+
+/**
+ * 일시 데이터를 '0000-00-00'로 리턴하는 함수
+ * @param {*} str
+ * @returns
+ */
+export function getDateShort(str) {
+  if (str) {
+    return str.split('T')[0];
+  }
+  return str;
 }
 
 /**
@@ -42,7 +87,7 @@ export function getState(state, prop) {
  * @param {*} str
  * @returns
  */
-export function getTimeNotKor(str) {
+export function getDateTimeNotKor(str) {
   if (str) {
     return str.split('T')[0] + ' ' + str.split('T')[1];
   }
@@ -66,6 +111,11 @@ export var isEmpty = function (value) {
   }
 };
 
+/**
+ * 숫자를 3자리씩 분리하여 ','를 붙여주는 함수
+ * @param {*} value
+ * @returns
+ */
 export function numberToMonetary(number) {
   if (!number) return;
   const numCheck = /^[0-9,]/.test(number);

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import Heading from '@components/input/Heading';
 import styled from '@emotion/styled';
-import { getTime, getState } from '@utils/functions';
+import { getDateTime, getState } from '@utils/functions';
 import * as btn from '@components/input/Button';
 import { EVENT_TYPE, EVENT_STATUS } from '@utils/constants/types';
 
@@ -85,8 +85,8 @@ export default function EventList() {
                   <td>{event.title}</td>
                   <td>{event.descript}</td>
                   <td>{getState(EVENT_STATUS, event.status)}</td>
-                  <td>{getTime(event.startAt)}</td>
-                  <td>{getTime(event.endAt)}</td>
+                  <td>{getDateTime(event.startAt)}</td>
+                  <td>{getDateTime(event.endAt)}</td>
                 </tr>
               ))
             ) : (

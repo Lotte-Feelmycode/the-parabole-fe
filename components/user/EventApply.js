@@ -1,4 +1,4 @@
-import { getTime } from '@utils/functions';
+import { getDateTime } from '@utils/functions';
 import styled from '@emotion/styled';
 import { APPLY_TYPE } from '@utils/constants/types';
 
@@ -69,8 +69,8 @@ export default function EventApply({ applyInfo }) {
             )}
           </div>
           <div style={{ paddingBottom: '1rem' }}>
-            {getTime(applyInfo.startAt)} ~<br />
-            {getTime(applyInfo.endAt)}
+            {getDateTime(applyInfo.startAt)} ~<br />
+            {getDateTime(applyInfo.endAt)}
           </div>
           <div></div>
         </div>
