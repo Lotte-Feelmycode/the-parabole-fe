@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { getState } from '@utils/functions';
+import { getState, numberToMonetary } from '@utils/functions';
 import { ORDER_PAY_STATE, ORDER_STATE } from '@utils/constants/types';
 
 export default function Order({ order }) {
@@ -9,13 +9,13 @@ export default function Order({ order }) {
   return (
     <tr>
       <Td>
-        <img src={order.productThumbnailImg} width="100px" margin="0" />
+        <img src={order.productThumbnailImg} width="100%" margin="0" />
       </Td>
       <Td>{order.productName}</Td>
-      <Td>{order.productDiscountPrice}</Td>
-      <Td>{order.productPrice}</Td>
-      <Td>{order.productCnt}</Td>
+      <Td>{order.productCnt}개</Td>
+      <Td>{numberToMonetary(order.productPrice * order.productCnt)}원</Td>
       <Td>{getState(ORDER_STATE, order.state)}</Td>
+
       <Td>{getState(ORDER_PAY_STATE, order.payState)}</Td>
     </tr>
   );
@@ -23,4 +23,5 @@ export default function Order({ order }) {
 
 const Td = styled.td`
   font-family: 'SansLight';
+  padding: 5px;
 `;

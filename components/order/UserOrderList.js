@@ -19,23 +19,26 @@ export default function OrderList({ userId }) {
       <table className="w-full text-m text-center">
         <thead className="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr className="h-12">
-            <td scope="col" className="py-1">
+            <ImageSection scope="col" className="p-1">
               이미지
-            </td>
-            <td scope="col" className="py-1">
+            </ImageSection>
+            <ProductNameSection scope="col" className="p-1">
               주문상품
-            </td>
-            <td scope="col" className="py-1">
-              가격
-            </td>
-            <td scope="col" className="py-1">
+            </ProductNameSection>
+            <td scope="col" className="p-1">
               주문수량
             </td>
-            <td scope="col" className="py-1">
+            <td scope="col" className="p-1">
+              가격
+            </td>
+            <td scope="col" className="p-1">
               주문 상태
             </td>
-            <td scope="col" className="py-1">
+            <td scope="col" className="p-1">
               결제 수단
+            </td>
+            <td scope="col" className="p-1">
+              주문 일자
             </td>
           </tr>
         </thead>
@@ -49,7 +52,9 @@ export default function OrderList({ userId }) {
     </>
   );
 }
-
-const Li = styled.li`
-  margin-bottom: 30px;
+const ImageSection = styled.td`
+  width: 15%;
+`;
+const ProductNameSection = styled.td`
+  width: 30%;
 `;
