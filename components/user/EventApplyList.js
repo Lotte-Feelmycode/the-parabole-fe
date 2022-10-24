@@ -8,7 +8,7 @@ import { APPLY_TYPE } from '@utils/constants/types';
 import Heading from '@components/input/Heading';
 
 export default function EventApplyList() {
-  const userId = 2;
+  const userId = 3;
   const [applyInfo, setApplyInfo] = useState([]);
   const [total, setTotal] = useState([]);
 

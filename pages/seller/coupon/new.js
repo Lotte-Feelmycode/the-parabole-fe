@@ -187,7 +187,7 @@ export default function CouponCreate() {
                     for="minPaymentAmount"
                     className="inline-block text-gray-800 text-sm sm:text-base mb-2"
                   >
-                    최대 할인 금액
+                    최소 결제 금액
                   </label>
                   <input
                     className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"

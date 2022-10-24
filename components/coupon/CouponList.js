@@ -83,10 +83,21 @@ function CouponList({ sellerId }) {
         <p>총 쿠폰 수량 : {totalElementCnt}</p>
       </strong>
       <btn.Pink
-        onClickFunc={() => router.push('./new')}
+        onClickFunc={() => router.push('/seller/coupon/assign')}
+        buttonText="쿠폰 배정하기"
+        css={{
+          width: '20%',
+          float: 'right',
+          marginLeft: '3%',
+        }}
+      />
+      <btn.Pink
+        onClickFunc={() => {
+          router.push('./new');
+        }}
         buttonText="쿠폰 등록하기"
         css={{
-          width: '30%',
+          width: '20%',
           float: 'right',
           marginLeft: '3%',
         }}

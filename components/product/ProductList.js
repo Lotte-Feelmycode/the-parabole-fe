@@ -69,7 +69,7 @@ export default function ProductList({
           {productList &&
             productList.map((product) => (
               // <ProductItem key={product.productId}>
-              <Product product={product} />
+              <Product product={product} key={product.productId} />
               // </ProductItem>
             ))}
         </div>
