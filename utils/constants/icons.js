@@ -20,6 +20,8 @@ export const ICON_ONLINE_SHOPPING = require('@assets/icon-online-shopping.svg')
   .default.src;
 export const ICON_ONLINE_SHOPPING_2 =
   require('@assets/icon-online-shopping-2.svg').default.src;
+  export const ICON_WARNING_SIGN=
+  require('@assets/icon-warning-sign.svg').default.src;
 
 export const LOGO_PARABOLE = require('@public/parabole.svg').default.src;
 export const LOGO_PARABOLE_PINK = require('@public/parabole_pink.svg').default
