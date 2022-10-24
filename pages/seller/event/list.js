@@ -1,4 +1,4 @@
-import { GET_DATA } from '@apis/defaultApi';
+import { GET_DATA, POST_DATA } from '@apis/defaultApi';
 import SellerLayout from '@components/seller/SellerLayout';
 import { useRouter } from 'next/router';
 import useInput from '@hooks/useInput';
@@ -29,8 +29,21 @@ export default function EventList() {
     });
   }, []);
 
-  const onClickHandler = () => {
-    alert('검색어 : ', searchValue);
+  useEffect(() => {
+    const params = {
+      eventTitle : searchValue
+    }
+
+    POST_DATA('/event/list', params).then((res) => {
+      if (res) {
+        setEventList(res);
+      }
+    });
+  }, [searchValue]);
+
+  const onClickHandler = (e) => {
+    e.preventDefault();
+    setSearchValue(e.target.value);
   };
 
   const handleOnKeyPress = (e) => {
@@ -74,7 +87,7 @@ export default function EventList() {
               value={searchValue}
               onChange={onSearchValue}
               onKeyUp={handleOnKeyPress}
-              placeholder="이벤트 제목 또는 설명을 검색하세요."
+              placeholder="이벤트 제목을 검색하세요."
               className="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             ></input>
             {/* <input type="text" id="table-search" className="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items"> */}
