@@ -4,9 +4,12 @@ import { useState } from 'react';
 
 import { GET, POST } from '@apis/defaultApi';
 import useInput from '@hooks/useInput';
+import useCheck from '@hooks/useCheck';
+
 import Heading from '@components/input/Heading';
 import Input from '@components/input/Input';
 import Radio from '@components/input/Radio';
+import Checkbox from '@components/input/Checkbox';
 import * as btn from '@components/input/Button';
 import ImageUploader from '@components/input/ImageUploader';
 import SellerLayout from '@components/seller/SellerLayout';
@@ -29,6 +32,7 @@ export default function Event() {
   const [title, onChangeTitle] = useInput('');
   const [descript, onChangeDescript] = useInput('');
   const [eventType, onEventType] = useInput('');
+  const [chatOpen, onChatOpen] = useCheck(true);
   const [startAt, onStartAt] = useInput();
   const [endAt, onEndAt] = useInput();
   const [stockList, setStockList] = useState([]);
@@ -398,6 +402,9 @@ export default function Event() {
       copyArr[i] = { ...copyArr[i], stock: stockList.at(i).stock };
     }
 
+    // TODO : 이벤트 채팅 여부 추가
+    // console.log('이벤트 채팅 여부 : ', chatOpen);
+
     const eventParams = {
       //userId: localStorage.getItem("ID"),
       userId: 1,
@@ -407,6 +414,7 @@ export default function Event() {
       endAt: endAt + ':00',
       title: title,
       descript: descript,
+      // chatOpen : chatOpen,
       eventImage: {
         eventBannerImg: 'dummyimage',
         EventDetailImg: 'dummydetail',
@@ -469,6 +477,12 @@ export default function Event() {
             onChange={onEventType}
             value={eventType}
           />
+        </Div>
+        <Divider />
+
+        <Heading title="이벤트 채팅 생성 여부" type="h2" />
+        <Div>
+          <Checkbox text="생성" onChange={onChatOpen} value={chatOpen} />
         </Div>
         <Divider />
 
