@@ -34,13 +34,14 @@ export default function Event() {
   const [descript, onChangeDescript] = useInput('');
   const [eventType, onEventType] = useInput('');
   const [chatOpen, onChatOpen] = useCheck(true);
-  const [startAt, onStartAt] = useInput();
-  const [endAt, onEndAt] = useInput();
+  const [startAt, setStartAt] = useState();
+  const [endAt, setEndAt] = useState();
   const [stockList, setStockList] = useState([]);
 
   const [isProductSelect, setProductSelect] = useState(false);
   const [isCouponSelect, setCouponSelect] = useState(false);
 
+  // 선착순 이벤트 체크
   function checkFcfsPrize() {
     if (eventType === 'FCFS' && prizeList.length > 0) {
       alert('선착순 이벤트는 한 가지 경품만 추가할 수 있습니다.');
@@ -48,6 +49,7 @@ export default function Event() {
     }
     return true;
   }
+
   // 이벤트 등록 validation check
   function validation(inputParams) {
     if (isEmpty(inputParams.title)) {
@@ -353,6 +355,41 @@ export default function Event() {
     );
   }
 
+  const startAtChangeHandler = (e) => {
+    e.preventDefault();
+
+    let fromDTM = e.target.value;
+    setStartAt(fromDTM);
+
+    console.log(fromDTM);
+    // let date = new Date(fromDTM.sp, 0, 1);
+    // date객체 리턴후 계산 필요
+
+    const params = {
+      eventStatus : 1,
+      dateDiv : 0,
+      fromDateTime : startAt + ':00',
+      toDateTime : (startAt.substring(0,13)) + ':50:00',
+    }
+
+    
+    if (eventType === 'FCFS') {
+      POST('/event/list', params).then((res) => {
+        if (res && res.data && res.data.length > 0) {
+          alert("이미 같은 시간대 등록된 이벤트가 있습니다. 다른 시간을 선택해주세요");
+          setStartAt('');
+          setEndAt('');
+        }
+      });
+    }
+  }
+
+  const endAtChangeHandler = (e) => {
+    e.preventDefault();
+
+    setEndAt(e.target.value);
+  }
+
   //경품 삭제 핸들러
   const removePrize = (e, index) => {
     e.preventDefault();
@@ -437,7 +474,6 @@ export default function Event() {
       sellerId: 1,
     };
     GET(`/product/list`, params).then((res) => {
-      console.log(res);
       setProductList(res.data.content);
       setProductSelect(true);
       setCouponSelect(false);
@@ -454,7 +490,6 @@ export default function Event() {
       sellerId: 1,
     };
     GET(`/coupon/seller/list`, params).then((res) => {
-      console.log(res);
       setCouponList(res.data.content);
       setCouponSelect(true);
       setProductSelect(false);
@@ -574,7 +609,7 @@ export default function Event() {
           <Heading title="시작 일시" type="h3" />
           <Input
             type="datetime-local"
-            onChange={onStartAt}
+            onChange={startAtChangeHandler}
             value={startAt}
             css={{
               border: '0.1px solid #52525224',
@@ -583,7 +618,7 @@ export default function Event() {
           <Heading title="종료 일시" type="h3" />
           <Input
             type="datetime-local"
-            onChange={onEndAt}
+            onChange={endAtChangeHandler}
             value={endAt}
             css={{
               border: '0.1px solid #52525224',
