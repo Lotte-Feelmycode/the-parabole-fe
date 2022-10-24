@@ -20,16 +20,16 @@ export default function MyProfile({ userId }) {
         <>
           <LargeInput
             type="text"
-            attr={{ readOnly: 'true' }}
+            attr={{ readOnly: true }}
             css={{ width: '100%' }}
-            value={email.split('@')[0]}
+            value={email.split('@')[0] || ''}
           />
           <span className="py-1 px-1">@</span>
           <LargeInput
             type="text"
-            attr={{ readOnly: 'true' }}
+            attr={{ readOnly: true }}
             css={{ width: '100%' }}
-            value={email.split('@')[1]}
+            value={email.split('@')[1] || ''}
           />
         </>
       );
@@ -37,9 +37,9 @@ export default function MyProfile({ userId }) {
       return (
         <LargeInput
           type="text"
-          attr={{ readOnly: 'true' }}
+          attr={{ readOnly: true }}
           css={{ width: '100%' }}
-          value={email}
+          value={email || ''}
         />
       );
     }
@@ -53,9 +53,9 @@ export default function MyProfile({ userId }) {
           <LabelInputSection>
             <LargeInput
               type="text"
-              attr={{ readOnly: 'true' }}
+              attr={{ readOnly: true }}
               css={{ width: '100%' }}
-              value={userInfo.username}
+              value={userInfo.username || ''}
             />
           </LabelInputSection>
         </LabelSection>
@@ -64,9 +64,9 @@ export default function MyProfile({ userId }) {
           <LabelInputSection>
             <LargeInput
               type="text"
-              attr={{ readOnly: 'true' }}
+              attr={{ readOnly: true }}
               css={{ width: '100%' }}
-              value={userInfo.nickname}
+              value={userInfo.nickname || ''}
             />
           </LabelInputSection>
         </LabelSection>
@@ -81,9 +81,9 @@ export default function MyProfile({ userId }) {
           <LabelInputSection>
             <LargeInput
               type="text"
-              attr={{ readOnly: 'true' }}
+              attr={{ readOnly: true }}
               css={{ width: '100%' }}
-              value={userInfo.role}
+              value={userInfo.role || ''}
             />
           </LabelInputSection>
         </LabelSection>
@@ -92,9 +92,9 @@ export default function MyProfile({ userId }) {
           <LabelInputSection>
             <LargeInput
               type="text"
-              attr={{ readOnly: 'true' }}
+              attr={{ readOnly: true }}
               css={{ width: '100%' }}
-              value={userInfo.phone}
+              value={userInfo.phone || ''}
             />
           </LabelInputSection>
         </LabelSection>
@@ -103,7 +103,7 @@ export default function MyProfile({ userId }) {
   );
 }
 
-const BgDiv = styled.form`
+const BgDiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
