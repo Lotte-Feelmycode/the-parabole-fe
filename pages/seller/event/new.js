@@ -36,6 +36,14 @@ export default function Event() {
   const [endAt, onEndAt] = useInput();
   const [stockList, setStockList] = useState([]);
 
+  function checkFcfsPrize() {
+    if (eventType === 'FCFS' && prizeList.length > 0) {
+      console.log(eventType);
+      alert('선착순 이벤트는 한 가지 경품만 추가할 수 있습니다.');
+      return false;
+    }
+    return true;
+  }
   // 이벤트 등록 validation check
   function validation(inputParams) {
     if (isEmpty(inputParams.title)) {
@@ -78,6 +86,7 @@ export default function Event() {
       alert(EVENT_ERROR.NO_EVENT_DETAIL_IMAGE);
       return;
     }
+    if (checkFcfsPrize()) return;
     return true;
   }
 
@@ -341,6 +350,8 @@ export default function Event() {
       return;
     }
 
+    if (!checkFcfsPrize()) return;
+
     const tmpobj = {
       type: 'PRODUCT',
       id: productList[e.target.value].productId,
@@ -369,6 +380,8 @@ export default function Event() {
       alert('이미 같은 쿠폰을 등록했습니다');
       return;
     }
+
+    if (!checkFcfsPrize()) return;
 
     const tmpobj = {
       type: 'COUPON',
@@ -564,7 +577,7 @@ export default function Event() {
           <p>상품 또는 쿠폰 목록을 조회해서 경품을 등록하세요.</p>
         </div>
         <div className="flex grid grid-flow-row-dense grid-cols-3">
-          <div className="flex col-span-2 bg-gray-100">
+          <div className="flex col-span-2 bg-gray-100 overflow-y-auto h-96">
             <ProductList inputProductList={productList} />
             <CouponList inputCouponList={couponList} />
           </div>
@@ -573,6 +586,7 @@ export default function Event() {
           </div>
         </div>
 
+        <Divider />
         <Divider />
         {/* TODO: 이미지 업로드 추후 수정 */}
         <Heading title="이벤트 배너 이미지" type="h2" />
