@@ -129,7 +129,7 @@ export default function Event() {
     return (
       <>
       {isProductSelect && (<>
-        {productList && productList.length > 0 && couponList.length < 1? (
+        {productList && productList.length > 0 ? (
           <table className="w-full text-m text-center px-4 pb-8">
             <thead className="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr className="h-14">
@@ -154,7 +154,7 @@ export default function Event() {
             <tbody>
               {productList &&
                 productList.map((product, index) => (
-                  <tr className="h-24 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <tr key={product.productId} className="h-24 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td className="p-4 w-32">
                       <img src={product.productThumbnailImg} alt="상품"></img>
                     </td>
@@ -224,8 +224,7 @@ export default function Event() {
             <tbody>
               {couponList &&
                 couponList.map((coupon, index) => (
-                  <>
-                    <tr className="h-12 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <tr key={coupon.couponId}  className="h-12 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                       <td className="py-4 px-8 w-40">{coupon.name}</td>
                       <td className="py-4 px-10 w-20">
                         {coupon.type === '1'
@@ -257,7 +256,6 @@ export default function Event() {
                         </div>
                       </td>
                     </tr>
-                  </>
                 ))}
             </tbody>
           </table>
@@ -298,7 +296,7 @@ export default function Event() {
               </thead>
               <tbody>
                 {inputList.map((prize, index) => (
-                  <tr className="h-12 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <tr key={prize.prizeId} className="h-12 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <input type={'hidden'} value={prize.prizeId} />
 
                     <td className="py-4 px-8 w-28">
@@ -439,6 +437,7 @@ export default function Event() {
       sellerId: 1,
     };
     GET(`/product/list`, params).then((res) => {
+      console.log(res);
       setProductList(res.data.content);
       setProductSelect(true);
       setCouponSelect(false);
@@ -455,6 +454,7 @@ export default function Event() {
       sellerId: 1,
     };
     GET(`/coupon/seller/list`, params).then((res) => {
+      console.log(res);
       setCouponList(res.data.content);
       setCouponSelect(true);
       setProductSelect(false);
