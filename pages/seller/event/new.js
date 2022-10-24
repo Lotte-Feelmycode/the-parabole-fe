@@ -10,6 +10,7 @@ import Input from '@components/input/Input';
 import Radio from '@components/input/Radio';
 import Checkbox from '@components/input/Checkbox';
 import * as btn from '@components/input/Button';
+import CloseButton from '@components/input/CloseButton';
 import ImageUploader from '@components/input/ImageUploader';
 import SellerLayout from '@components/seller/SellerLayout';
 import {
@@ -20,7 +21,6 @@ import {
 } from '@utils/functions';
 import { EVENT_TYPE, PRIZE_TYPE } from '@utils/constants/types';
 import { EVENT_ERROR } from '@utils/constants/errors';
-
 export default function Event() {
   const router = useRouter();
 
@@ -38,7 +38,6 @@ export default function Event() {
 
   function checkFcfsPrize() {
     if (eventType === 'FCFS' && prizeList.length > 0) {
-      console.log(eventType);
       alert('선착순 이벤트는 한 가지 경품만 추가할 수 있습니다.');
       return false;
     }
@@ -270,15 +269,16 @@ export default function Event() {
             <table className="w-full text-m text-center">
               <thead className="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr className="h-12">
-                  <th scope="col" className="py-3 px-6 w-32">
+                  <th scope="col" className="py-3 px-6 w-28">
                     경품 유형
                   </th>
-                  <th scope="col" className="py-3 px-6 w-40">
+                  <th scope="col" className="py-3 px-6 w-48">
                     상품 또는 쿠폰명
                   </th>
-                  <th scope="col" className="py-3 px-6 w-24">
+                  <th scope="col" className="py-3 px-6 w-20">
                     재고
                   </th>
+                  <th scope="col" className="py-3 px-6"></th>
                 </tr>
               </thead>
               <tbody>
@@ -286,11 +286,11 @@ export default function Event() {
                   <tr className="h-12 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <input type={'hidden'} value={prize.prizeId} />
 
-                    <td className="py-4 px-8 w-32">
+                    <td className="py-4 px-8 w-28">
                       {getState(PRIZE_TYPE, prize.type)}
                     </td>
-                    <td className="py-4 px-8 w-40">{prize.name}</td>
-                    <td className="py-4 px-8 w-24">
+                    <td className="py-4 px-8 w-48">{prize.name}</td>
+                    <td className="py-4 px-8 w-20">
                       <OptionInputSection>
                         <btn.SmallWhite
                           buttonText="-"
@@ -305,7 +305,7 @@ export default function Event() {
                           value={stockList[index].stock}
                           css={{
                             textAlign: 'right',
-                            maxWidth: '80px',
+                            maxWidth: '60px',
                             height: '30px',
                             margin: '0',
                           }}
@@ -319,6 +319,11 @@ export default function Event() {
                           }}
                         />
                       </OptionInputSection>
+                    </td>
+                    <td>
+                      <CloseButton
+                        onClickFunc={(event) => removePrize(event, index)}
+                      />
                     </td>
                   </tr>
                 ))}
@@ -334,6 +339,16 @@ export default function Event() {
       </>
     );
   }
+
+  //경품 삭제 핸들러
+  const removePrize = (e, index) => {
+    e.preventDefault();
+    if (!confirm('경품을 삭제하시겠습니까?')) return;
+
+    let copyArray = [...prizeList];
+    copyArray.splice(index, 1);
+    setprizeList(copyArray);
+  };
 
   // 경품 (상품) 선택 핸들러
   const onAddProductPrizeHandler = (e) => {
@@ -472,7 +487,6 @@ export default function Event() {
       eventPrizeCreateRequestDtos: prizeList,
     };
 
-    console.log(prizeList);
     if (validation(eventParams)) {
       POST('/event', eventParams).then((res) => {
         if (res && res.data && confirm('이벤트를 등록하시겠습니까?') > 0) {
@@ -581,7 +595,7 @@ export default function Event() {
             <ProductList inputProductList={productList} />
             <CouponList inputCouponList={couponList} />
           </div>
-          <div className="flex align-middle bg-gray-100 border-l border-pink-200">
+          <div className="flex align-middle bg-gray-100 border-l border-pink-200 overflow-y-auto">
             <EventPrizes inputList={prizeList} />
           </div>
         </div>
