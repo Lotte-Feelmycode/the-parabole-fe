@@ -21,6 +21,8 @@ import {
 } from '@utils/functions';
 import { EVENT_TYPE, PRIZE_TYPE } from '@utils/constants/types';
 import { EVENT_ERROR } from '@utils/constants/errors';
+import { ICON_WARNING_SIGN } from '@utils/constants/icons';
+
 export default function Event() {
   const router = useRouter();
 
@@ -35,6 +37,9 @@ export default function Event() {
   const [startAt, onStartAt] = useInput();
   const [endAt, onEndAt] = useInput();
   const [stockList, setStockList] = useState([]);
+
+  const [isProductSelect, setProductSelect] = useState(false);
+  const [isCouponSelect, setCouponSelect] = useState(false);
 
   function checkFcfsPrize() {
     if (eventType === 'FCFS' && prizeList.length > 0) {
@@ -123,7 +128,8 @@ export default function Event() {
   function ProductList({ inputProductList }) {
     return (
       <>
-        {productList && productList.length > 0 && (
+      {isProductSelect && (<>
+        {productList && productList.length > 0 && couponList.length < 1? (
           <table className="w-full text-m text-center px-4 pb-8">
             <thead className="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr className="h-14">
@@ -179,7 +185,11 @@ export default function Event() {
                 ))}
             </tbody>
           </table>
-        )}
+        ) : <div className="w-full flex flex-col flex-wrap content-center justify-center">
+              <div className="place-self-center mb-2"><img className="w-12" src={ICON_WARNING_SIGN}></img></div>
+              <div className="text-center text-xl font-semibold">등록된 상품이 없습니다. </div>
+            </div>
+          }</>)}
       </>
     );
   }
@@ -188,7 +198,8 @@ export default function Event() {
   function CouponList({ inputCouponList }) {
     return (
       <>
-        {couponList && couponList.length > 0 && (
+      {isCouponSelect && (<>
+        {couponList && couponList.length > 0 ? (
           <table className="w-full text-m text-center px-4 py-16">
             <thead className="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr className="h-14">
@@ -250,7 +261,11 @@ export default function Event() {
                 ))}
             </tbody>
           </table>
-        )}
+        ) : <div className="w-full flex flex-col flex-wrap content-center justify-center">
+              <div className="place-self-center mb-2"><img className="w-12" src={ICON_WARNING_SIGN}></img></div>
+              <div className="text-center text-xl font-semibold">등록된 쿠폰이 없습니다. </div>
+            </div>}
+          </>)}
       </>
     );
   }
@@ -425,7 +440,8 @@ export default function Event() {
     };
     GET(`/product/list`, params).then((res) => {
       setProductList(res.data.content);
-      setCouponList([]);
+      setProductSelect(true);
+      setCouponSelect(false);
     });
   };
 
@@ -440,11 +456,13 @@ export default function Event() {
     };
     GET(`/coupon/seller/list`, params).then((res) => {
       setCouponList(res.data.content);
-      setProductList([]);
+      setCouponSelect(true);
+      setProductSelect(false);
     });
   };
 
-  const onCancleHandler = (e) => {
+
+  const onCancelHandler = (e) => {
     e.preventDefault();
 
     if (
@@ -552,7 +570,7 @@ export default function Event() {
         <Divider />
 
         <Heading title="이벤트 진행 일시" type="h2" />
-        <CalendarContainer>
+        <div className='w-full mb-4'>
           <Heading title="시작 일시" type="h3" />
           <Input
             type="datetime-local"
@@ -571,7 +589,7 @@ export default function Event() {
               border: '0.1px solid #52525224',
             }}
           />
-        </CalendarContainer>
+        </div>
         <Divider />
 
         <div className="flex">
@@ -622,7 +640,7 @@ export default function Event() {
           <btn.LinePink
             buttonText="취소하기"
             name="btnCancel"
-            onClickFunc={onCancleHandler}
+            onClickFunc={onCancelHandler}
             css={{ margin: '10px;' }}
           />
         </Div>
@@ -644,11 +662,6 @@ const Divider = styled.hr`
 const Div = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
-`;
-
-const CalendarContainer = styled.div`
-  width: 100%;
   margin-bottom: 20px;
 `;
 
