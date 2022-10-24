@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
 import { GET, POST } from '@apis/defaultApi';
 import useInput from '@hooks/useInput';
 import useCheck from '@hooks/useCheck';
@@ -87,6 +86,10 @@ export default function Event() {
     e.preventDefault();
 
     let newVal = stockList[index].stock - 1;
+    if (newVal < 1) {
+      alert('경품 수량은 한 개 이상 선택해야 합니다.');
+      return;
+    }
     let copyArray = [...stockList];
 
     copyArray[index] = { ...copyArray[index], stock: newVal };
@@ -99,6 +102,10 @@ export default function Event() {
 
     let newVal = stockList[index].stock + 1;
     let copyArray = [...stockList];
+    if (newVal < 1) {
+      alert('경품 수량은 한 개 이상 선택해야 합니다.');
+      return;
+    }
 
     copyArray[index] = { ...copyArray[index], stock: newVal };
     setStockList(copyArray);
@@ -246,7 +253,7 @@ export default function Event() {
       <>
         <div className="w-full">
           <div className="">
-            <p className="text-lg text-pink-600 font-bold pl-2 pt-4 pb-2">
+            <p className="text-lg bg-pink-100 text-pink-600 font-bold pl-2 pt-4 pb-2">
               선택 경품 목록
             </p>
           </div>
@@ -409,6 +416,18 @@ export default function Event() {
     });
   };
 
+  const onCancleHandler = (e) => {
+    e.preventDefault();
+
+    if (
+      confirm(
+        '페이지를 벗어나면 작성 내용을 잃게됩니다. \n 작성을 중단하시겠습니까?',
+      )
+    ) {
+      router.back();
+    }
+  };
+
   // 이벤트 등록 버튼 핸들러
   // TODO : 이미지 업로더 수정
   const onSubmitHandler = (e) => {
@@ -440,6 +459,7 @@ export default function Event() {
       eventPrizeCreateRequestDtos: prizeList,
     };
 
+    console.log(prizeList);
     if (validation(eventParams)) {
       POST('/event', eventParams).then((res) => {
         if (res && res.data && confirm('이벤트를 등록하시겠습니까?') > 0) {
@@ -527,7 +547,7 @@ export default function Event() {
         </CalendarContainer>
         <Divider />
 
-        <Div>
+        <div className="flex">
           <Heading title="이벤트 경품 선택" type="h2" />
           &nbsp;&nbsp;
           <btn.SmallPink
@@ -539,8 +559,10 @@ export default function Event() {
             buttonText="쿠폰"
             onClickFunc={onSearchCouponsHandler}
           />
-        </Div>
-
+        </div>
+        <div className="mb-8">
+          <p>상품 또는 쿠폰 목록을 조회해서 경품을 등록하세요.</p>
+        </div>
         <div className="flex grid grid-flow-row-dense grid-cols-3">
           <div className="flex col-span-2 bg-gray-100">
             <ProductList inputProductList={productList} />
@@ -568,6 +590,12 @@ export default function Event() {
             buttonText="등록하기"
             name="btnPost"
             onClickFunc={onSubmitHandler}
+          />
+          <btn.LinePink
+            buttonText="취소하기"
+            name="btnCancel"
+            onClickFunc={onCancleHandler}
+            css={{ margin: '10px;' }}
           />
         </Div>
       </FormTemplate>
