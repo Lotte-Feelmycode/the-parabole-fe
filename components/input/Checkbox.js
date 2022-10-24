@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { MainPink } from '@utils/constants/themeColor';
-import { useState } from 'react';
 
 function Checkbox({ text, onChange }) {
   const switchChecked = (e) => {

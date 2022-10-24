@@ -107,198 +107,215 @@ export default function Event() {
   // 이벤트 경품 조회 컴포넌트
   function ProductList({ inputProductList }) {
     return (
-      <table className="w-full text-m text-center px-4 pb-8">
-        <thead className="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr className="h-14">
-            <th scope="col" className="p-4 w-32">
-              <span className="sr-only">Image</span>
-            </th>
-            <th scope="col" className="py-3 px-12 w-40">
-              상품명
-            </th>
-            <th scope="col" className="py-3 px-10 w-40">
-              카테고리
-            </th>
-            <th scope="col" className="py-3 px-10 w-40 ">
-              가격
-            </th>
-            <th scope="col" className="py-3 px-6  w-40">
-              재고
-            </th>
-            <th scope="col" className="py-3 px-6"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {productList &&
-            productList.map((product, index) => (
-              <tr className="h-24 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <td className="p-4 w-32">
-                  <img src={product.productThumbnailImg} alt="상품"></img>
-                </td>
-                <td className="py-4 px-10 w-40">{product.productName}</td>
-                <td className="py-4 px-10 w-40">{product.productCategory}</td>
-                <td className="py-4 px-10 w-40">
-                  {numberToMonetary(product.productPrice)} 원
-                </td>
-                <td className="py-4 px-10 w-40">{product.productRemains}</td>
-                <td className="p-4 w-30">
-                  <btn.LinePink
-                    buttonText="등록"
-                    name="btnPost"
-                    css={{
-                      fontSize: '14px',
-                    }}
-                    attr={{
-                      value: index,
-                    }}
-                    onClickFunc={onAddProductPrizeHandler}
-                  />
-                </td>
+      <>
+        {productList && productList.length > 0 && (
+          <table className="w-full text-m text-center px-4 pb-8">
+            <thead className="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr className="h-14">
+                <th scope="col" className="p-4 w-32">
+                  <span className="sr-only">Image</span>
+                </th>
+                <th scope="col" className="py-3 px-12 w-40">
+                  상품명
+                </th>
+                <th scope="col" className="py-3 px-10 w-40">
+                  카테고리
+                </th>
+                <th scope="col" className="py-3 px-10 w-40 ">
+                  가격
+                </th>
+                <th scope="col" className="py-3 px-6  w-40">
+                  재고
+                </th>
+                <th scope="col" className="py-3 px-6"></th>
               </tr>
-            ))}
-        </tbody>
-      </table>
-    );
-  }
-
-  // 이벤트 쿠폰 조회 컴포넌트
-  function CouponList({ inputCouponList }) {
-    return (
-      <table className="w-full text-m text-center px-4 py-16">
-        <thead className="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr className="h-14">
-            <th scope="col" className="py-2 px-4">
-              쿠폰명
-            </th>
-            <th scope="col" className="py-2 px-4">
-              할인율/금액
-            </th>
-            <th scope="col" className="py-2 px-4">
-              최소금액
-            </th>
-            <th scope="col" className="py-2 px-4">
-              최대금액
-            </th>
-            <th scope="col" className="py-2 px-4">
-              유효기간
-            </th>
-            <th scope="col" className="py-2 px-4"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {couponList &&
-            couponList.map((coupon, index) => (
-              <>
-                <tr className="h-12 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <td className="py-4 px-8 w-40">{coupon.name}</td>
-                  <td className="py-4 px-10 w-20">
-                    {coupon.type === '1'
-                      ? coupon.discountValue + '%'
-                      : numberToMonetary(coupon.discountValue) + '원'}
-                  </td>
-                  <td className="py-4 px-10 w-20">
-                    {numberToMonetary(coupon.maxDiscountAmount)}원
-                  </td>
-                  <td className="py-4 px-10 w-20">
-                    {numberToMonetary(coupon.minPaymentAmount)}원
-                  </td>
-                  <td className="py-4 w-40">
-                    {getTimeNotKor(coupon.validAt)} ~{' '}
-                    {getTimeNotKor(coupon.expiresAt)}
-                  </td>
-
-                  <td className="p-4 w-10">
-                    <div className="flex items-center">
+            </thead>
+            <tbody>
+              {productList &&
+                productList.map((product, index) => (
+                  <tr className="h-24 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td className="p-4 w-32">
+                      <img src={product.productThumbnailImg} alt="상품"></img>
+                    </td>
+                    <td className="py-4 px-10 w-40">{product.productName}</td>
+                    <td className="py-4 px-10 w-40">
+                      {product.productCategory}
+                    </td>
+                    <td className="py-4 px-10 w-40">
+                      {numberToMonetary(product.productPrice)} 원
+                    </td>
+                    <td className="py-4 px-10 w-40">
+                      {product.productRemains}
+                    </td>
+                    <td className="p-4 w-30">
                       <btn.LinePink
                         buttonText="등록"
                         name="btnPost"
                         css={{
                           fontSize: '14px',
                         }}
-                        attr={{ value: index }}
-                        onClickFunc={onAddCouponPrizeHandler}
+                        attr={{
+                          value: index,
+                        }}
+                        onClickFunc={onAddProductPrizeHandler}
                       />
-                    </div>
-                  </td>
-                </tr>
-              </>
-            ))}
-        </tbody>
-      </table>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        )}
+      </>
+    );
+  }
+
+  // 이벤트 쿠폰 조회 컴포넌트
+  function CouponList({ inputCouponList }) {
+    return (
+      <>
+        {couponList && couponList.length > 0 && (
+          <table className="w-full text-m text-center px-4 py-16">
+            <thead className="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr className="h-14">
+                <th scope="col" className="py-2 px-4">
+                  쿠폰명
+                </th>
+                <th scope="col" className="py-2 px-4">
+                  할인율/금액
+                </th>
+                <th scope="col" className="py-2 px-4">
+                  최소금액
+                </th>
+                <th scope="col" className="py-2 px-4">
+                  최대금액
+                </th>
+                <th scope="col" className="py-2 px-4">
+                  유효기간
+                </th>
+                <th scope="col" className="py-2 px-4"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {couponList &&
+                couponList.map((coupon, index) => (
+                  <>
+                    <tr className="h-12 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      <td className="py-4 px-8 w-40">{coupon.name}</td>
+                      <td className="py-4 px-10 w-20">
+                        {coupon.type === '1'
+                          ? coupon.discountValue + '%'
+                          : numberToMonetary(coupon.discountValue) + '원'}
+                      </td>
+                      <td className="py-4 px-10 w-20">
+                        {numberToMonetary(coupon.maxDiscountAmount)}원
+                      </td>
+                      <td className="py-4 px-10 w-20">
+                        {numberToMonetary(coupon.minPaymentAmount)}원
+                      </td>
+                      <td className="py-4 w-40">
+                        {getTimeNotKor(coupon.validAt)} ~{' '}
+                        {getTimeNotKor(coupon.expiresAt)}
+                      </td>
+
+                      <td className="p-4 w-10">
+                        <div className="flex items-center">
+                          <btn.LinePink
+                            buttonText="등록"
+                            name="btnPost"
+                            css={{
+                              fontSize: '14px',
+                            }}
+                            attr={{ value: index }}
+                            onClickFunc={onAddCouponPrizeHandler}
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  </>
+                ))}
+            </tbody>
+          </table>
+        )}
+      </>
     );
   }
 
   // 선택 경품 목록 컴포넌트
   function EventPrizes({ inputList }) {
     return (
-      <div className="w-full">
-        <div className="">
-          <p className="text-lg text-pink-600 font-bold pl-2 pt-4 pb-2">
-            선택 경품 목록
-          </p>
-        </div>
-        {inputList && Array.isArray(inputList) ? (
-          <table className="w-full text-m text-center">
-            <thead className="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr className="h-12">
-                <th scope="col" className="py-3 px-6 w-32">
-                  경품 유형
-                </th>
-                <th scope="col" className="py-3 px-6 w-40">
-                  상품 또는 쿠폰명
-                </th>
-                <th scope="col" className="py-3 px-6 w-24">
-                  재고
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {inputList.map((prize, index) => (
-                <tr className="h-12 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <input type={'hidden'} value={prize.prizeId} />
-
-                  <td className="py-4 px-8 w-32">
-                    {getState(PRIZE_TYPE, prize.type)}
-                  </td>
-                  <td className="py-4 px-8 w-40">{prize.name}</td>
-                  <td className="py-4 px-8 w-24">
-                    <OptionInputSection>
-                      <btn.SmallWhite
-                        buttonText="-"
-                        onClickFunc={(event) => minusBtnClick(event, index)}
-                        css={{
-                          borderBottomRightRadius: '0',
-                          borderTopRightRadius: '0',
-                        }}
-                      />
-                      <Input
-                        type="number"
-                        value={stockList[index].stock}
-                        css={{
-                          textAlign: 'right',
-                          maxWidth: '80px',
-                          height: '30px',
-                          margin: '0',
-                        }}
-                      />
-                      <btn.SmallWhite
-                        buttonText="+"
-                        onClickFunc={(event) => plusBtnClick(event, index)}
-                        css={{
-                          borderBottomLeftRadius: '0 !important ',
-                          borderTopLeftRadius: '0',
-                        }}
-                      />
-                    </OptionInputSection>
-                  </td>
+      <>
+        <div className="w-full">
+          <div className="">
+            <p className="text-lg text-pink-600 font-bold pl-2 pt-4 pb-2">
+              선택 경품 목록
+            </p>
+          </div>
+          {inputList && Array.isArray(inputList) && inputList.length > 0 ? (
+            <table className="w-full text-m text-center">
+              <thead className="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr className="h-12">
+                  <th scope="col" className="py-3 px-6 w-32">
+                    경품 유형
+                  </th>
+                  <th scope="col" className="py-3 px-6 w-40">
+                    상품 또는 쿠폰명
+                  </th>
+                  <th scope="col" className="py-3 px-6 w-24">
+                    재고
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <div>선택된 경품이 없습니다. 상품 또는 쿠폰을 선택해주세요.</div>
-        )}
-      </div>
+              </thead>
+              <tbody>
+                {inputList.map((prize, index) => (
+                  <tr className="h-12 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <input type={'hidden'} value={prize.prizeId} />
+
+                    <td className="py-4 px-8 w-32">
+                      {getState(PRIZE_TYPE, prize.type)}
+                    </td>
+                    <td className="py-4 px-8 w-40">{prize.name}</td>
+                    <td className="py-4 px-8 w-24">
+                      <OptionInputSection>
+                        <btn.SmallWhite
+                          buttonText="-"
+                          onClickFunc={(event) => minusBtnClick(event, index)}
+                          css={{
+                            borderBottomRightRadius: '0',
+                            borderTopRightRadius: '0',
+                          }}
+                        />
+                        <Input
+                          type="number"
+                          value={stockList[index].stock}
+                          css={{
+                            textAlign: 'right',
+                            maxWidth: '80px',
+                            height: '30px',
+                            margin: '0',
+                          }}
+                        />
+                        <btn.SmallWhite
+                          buttonText="+"
+                          onClickFunc={(event) => plusBtnClick(event, index)}
+                          css={{
+                            borderBottomLeftRadius: '0 !important ',
+                            borderTopLeftRadius: '0',
+                          }}
+                        />
+                      </OptionInputSection>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div className="text-center py-4">
+              선택된 경품이 없습니다. <b>상품</b> 또는 <b>쿠폰</b>을
+              선택해주세요.
+            </div>
+          )}
+        </div>
+      </>
     );
   }
 
@@ -373,6 +390,7 @@ export default function Event() {
     };
     GET(`/product/list`, params).then((res) => {
       setProductList(res.data.content);
+      setCouponList([]);
     });
   };
 
@@ -386,8 +404,8 @@ export default function Event() {
       sellerId: 1,
     };
     GET(`/coupon/seller/list`, params).then((res) => {
-      console.log(res.data.content);
       setCouponList(res.data.content);
+      setProductList([]);
     });
   };
 
@@ -449,7 +467,7 @@ export default function Event() {
           css={{
             border: '0.1px solid #52525224',
           }}
-        ></Input>
+        />
         <Divider />
         <Heading title="이벤트 설명" type="h2" />
         <Input
@@ -463,7 +481,7 @@ export default function Event() {
           css={{
             border: '0.1px solid #52525224',
           }}
-        ></Input>
+        />
         <Divider />
 
         <Heading title="이벤트 타입" type="h2" />
@@ -515,23 +533,21 @@ export default function Event() {
           <btn.SmallPink
             buttonText="상품"
             onClickFunc={onSearchProductsHandler}
-          ></btn.SmallPink>
+          />
           &nbsp;
           <btn.SmallPink
             buttonText="쿠폰"
             onClickFunc={onSearchCouponsHandler}
-          ></btn.SmallPink>
+          />
         </Div>
 
-        <div className="flex grid grid-flow-row-dense grid-cols-3 grid-rows-2">
-          <div className="flex col-span-2">
+        <div className="flex grid grid-flow-row-dense grid-cols-3">
+          <div className="flex col-span-2 bg-gray-100">
             <ProductList inputProductList={productList} />
-          </div>
-          <div className="flex row-span-2  bg-gray-100">
-            <EventPrizes inputList={prizeList} />
-          </div>
-          <div className="flex col-span-2">
             <CouponList inputCouponList={couponList} />
+          </div>
+          <div className="flex align-middle bg-gray-100 border-l border-pink-200">
+            <EventPrizes inputList={prizeList} />
           </div>
         </div>
 
