@@ -41,7 +41,7 @@ export default function () {
       >
         <ul className="contents list-none text-center whitespace-nowrap">
           {mypageStateList.map((state, index) => (
-            <li className="float-left">
+            <li className="float-left" key={index}>
               <a
                 key={index}
                 onClick={() => {
