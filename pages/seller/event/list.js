@@ -10,9 +10,12 @@ import { getState, getTimeNotKor } from '@utils/functions';
 import * as btn from '@components/input/Button';
 import { EVENT_TYPE, EVENT_STATUS } from '@utils/constants/types';
 import { ICON_SEARCH_MAGNIFY } from '@utils/constants/icons';
+import Selectbox from '@components/input/Selectbox';
 
 export default function EventList() {
   const [searchValue, onSearchValue] = useInput('');
+  const [searchStatus, onSearchStatus] = useInput();
+  const [searchType, onSearchType] = useInput();
 
   const router = useRouter();
   const [eventList, setEventList] = useState([]);
@@ -31,27 +34,29 @@ export default function EventList() {
 
   useEffect(() => {
     const params = {
-      eventTitle : searchValue
-    }
+      eventType: searchType,
+      eventStatus: searchStatus,
+      eventTitle: searchValue,
+    };
 
     POST_DATA('/event/list', params).then((res) => {
       if (res) {
         setEventList(res);
       }
     });
-  }, [searchValue]);
+  }, [searchValue, searchStatus, searchType]);
 
-  const onClickHandler = (e) => {
-    e.preventDefault();
-    setSearchValue(e.target.value);
-  };
+  // const onClickHandler = (e) => {
+  //   e.preventDefault();
+  //   setSearchValue(e.target.value);
+  // };
 
-  const handleOnKeyPress = (e) => {
-    e.preventDefault();
-    if (e.key === 'Enter') {
-      onClickHandler();
-    }
-  };
+  // const handleOnKeyPress = (e) => {
+  //   e.preventDefault();
+  //   if (e.key === 'Enter') {
+  //     onClickHandler();
+  //   }
+  // };
 
   const rowClickHandler = (row) => {
     const eventId = row.id;
@@ -72,13 +77,26 @@ export default function EventList() {
       <SellerLayout>
         <Heading title="이벤트 목록" type="h1" />
         <Divider />
+        <Selectbox
+          props={EVENT_STATUS}
+          value={searchStatus}
+          onChange={onSearchStatus}
+          categoryName="진행 상태"
+        />
+        <Selectbox
+          props={EVENT_TYPE}
+          value={searchType}
+          onChange={onSearchType}
+          categoryName="이벤트 타입"
+        />
+
         <div className="pb-4 bg-white dark:bg-gray-900">
           <label for="table-search" className="sr-only">
             Search
           </label>
           <div className="relative mt-1">
             <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-              <button onClick={onClickHandler}>
+              <button>
                 <img src={ICON_SEARCH_MAGNIFY} />
               </button>
             </div>
@@ -86,7 +104,7 @@ export default function EventList() {
               type="text"
               value={searchValue}
               onChange={onSearchValue}
-              onKeyUp={handleOnKeyPress}
+              // onKeyUp={handleOnKeyPress}
               placeholder="이벤트 제목을 검색하세요."
               className="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             ></input>
