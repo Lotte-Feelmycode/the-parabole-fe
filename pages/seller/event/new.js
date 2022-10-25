@@ -14,7 +14,8 @@ import CloseButton from '@components/input/CloseButton';
 import ImageUploader from '@components/input/ImageUploader';
 import SellerLayout from '@components/seller/SellerLayout';
 import {
-  getTimeNotKor,
+  getDateTimeNotKor,
+  getDate,
   getState,
   isEmpty,
   numberToMonetary,
@@ -226,16 +227,13 @@ export default function Event() {
                       쿠폰명
                     </th>
                     <th scope="col" className="py-2 px-2">
-                      할인율/금액
+                      혜택
                     </th>
                     <th scope="col" className="py-2 px-2">
-                      최소금액
+                      쿠폰 시작일
                     </th>
                     <th scope="col" className="py-2 px-2">
-                      최대금액
-                    </th>
-                    <th scope="col" className="py-2 px-2">
-                      유효기간
+                      쿠폰 만료일
                     </th>
                     <th scope="col" className="py-2 px-2">
                       재고
@@ -250,24 +248,27 @@ export default function Event() {
                         key={coupon.couponId}
                         className="h-12 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       >
-                        <td className="py-4 px-8 w-40">{coupon.name}</td>
-                        <td className="py-4 px-10 w-16">
-                          {coupon.type === '1'
+                        <td className="py-4 px-8 w-36">{coupon.name}</td>
+                        <td className="py-4 px-4 w-16">
+                          {coupon.type === 1
                             ? coupon.discountValue + '%'
                             : numberToMonetary(coupon.discountValue) + '원'}
                         </td>
-                        <td className="py-4 px-10 w-16">
-                          {numberToMonetary(coupon.maxDiscountAmount)}원
+                        <td className="py-4 w-20">{getDate(coupon.validAt)}</td>
+                        <td className="py-4 w-20">
+                          {getDate(coupon.expiresAt)}
                         </td>
-                        <td className="py-4 px-10 w-16">
-                          {numberToMonetary(coupon.minPaymentAmount)}원
+
+                        <td className="py-4 w-12">
+                          {coupon.remains < 1 ? (
+                            <p className="text-red-400 font-semibold">
+                              {coupon.remains}
+                            </p>
+                          ) : (
+                            <p>{coupon.remains}</p>
+                          )}
                         </td>
-                        <td className="py-4 w-40">
-                          {getTimeNotKor(coupon.validAt)} ~{' '}
-                          {getTimeNotKor(coupon.expiresAt)}
-                        </td>
-                        <td className="py-4 w-12">{coupon.remains}</td>
-                        <td className="px-2 w-12">
+                        <td className="px-6 w-12">
                           <div className="flex items-center">
                             <btn.SmallLinePink
                               buttonText="등록"
