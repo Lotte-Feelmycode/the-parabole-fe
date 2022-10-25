@@ -26,13 +26,25 @@ export function getDateTime(str) {
 }
 
 /**
- * 일시 데이터를 '0000-00-00 00:00'으로 리턴하는 함수
+ * 일시 데이터를 '00-00-00 00:00'으로 리턴하는 함수
  * @param {*} str
  * @returns
  */
 export function getDateTimeShort(str) {
   if (str && str.split('T')[1]) {
-    return str.split('T')[0] + ' ' + str.split('T')[1];
+    const getDate = str.split('T')[0];
+    const getTime = str.split('T')[1];
+    var date = getDate;
+    var time = getTime;
+    if (date.length >= 6) {
+      date = date.substr(2);
+    }
+
+    if (getTime && getTime.split(':')[1]) {
+      time = getTime.split(':')[0] + ':' + getTime.split(':')[1];
+    }
+
+    return date + ' ' + time;
   }
   return str;
 }
@@ -70,6 +82,18 @@ export function getDateShort(str) {
 }
 
 /**
+ * 일시 데이터를 '0000-00-00 00:00:00'으로 리턴하는 함수
+ * @param {*} str
+ * @returns
+ */
+export function getDateTimeNotKor(str) {
+  if (str) {
+    return str.split('T')[0] + ' ' + str.split('T')[1];
+  }
+  return str;
+}
+
+/**
  * 딕셔너리 객체 입력시 name 리턴하는 함수
  * @param {*} state
  * @param {*} prop
@@ -79,18 +103,7 @@ export function getState(state, prop) {
   const resultState = state.map((state) => {
     if (state.value === prop) return state.name;
   });
-  return resultState;
-}
-
-/**
- * 일시 데이터를 '00-00-00 00:00:00'으로 리턴하는 함수
- * @param {*} str
- * @returns
- */
-export function getDateTimeNotKor(str) {
-  if (str) {
-    return str.split('T')[0] + ' ' + str.split('T')[1];
-  }
+  return resultState || prop;
 }
 
 /**
@@ -100,10 +113,10 @@ export function getDateTimeNotKor(str) {
  */
 export var isEmpty = function (value) {
   if (
-    value == '' ||
-    value == null ||
-    value == undefined ||
-    (value != null && typeof value == 'object' && !Object.keys(value).length)
+    value === '' ||
+    value === null ||
+    value === undefined ||
+    (value !== null && typeof value === 'object' && !Object.keys(value).length)
   ) {
     return true;
   } else {
