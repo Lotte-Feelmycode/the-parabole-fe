@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { MainPink } from '@utils/constants/themeColor';
 import { useState } from 'react';
 
 const Radio = ({
@@ -61,7 +62,7 @@ const Input = styled.input`
     props.checked &&
     `
       &:checked {
-        border: 0.35em solid tomato;  
+        border: 0.35em solid ${MainPink};  
       }   
     `}
 `;
