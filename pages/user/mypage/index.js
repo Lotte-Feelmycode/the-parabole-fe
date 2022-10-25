@@ -5,7 +5,7 @@ import EventApplyList from '@components/user/EventApplyList';
 import MyProfile from '@components/user/MyProfile';
 import SiteHead from '@components/common/SiteHead.js';
 import styled from '@emotion/styled';
-import { ThemeBlueWhite } from '@utils/constants/themeColor';
+import { ThemeBlueWhite, MainBlue } from '@utils/constants/themeColor';
 import UserCouponList from '@components/coupon/UserCouponList';
 
 export default function () {
@@ -42,22 +42,30 @@ export default function () {
         <ul className="contents list-none text-center whitespace-nowrap">
           {mypageStateList.map((state, index) => (
             <li className="float-left" key={index}>
-              <a
-                key={index}
-                onClick={() => {
-                  setNowState(index);
-                }}
-                className="flex title-font text-lg font-semibold items-center p-5 text-gray-900  cursor-pointer"
-              >
-                {nowState === index && (
+              {nowState === index && (
+                <SelectedNav
+                  key={index}
+                  onClick={() => {
+                    setNowState(index);
+                  }}
+                  className="flex title-font text-lg font-semibold items-center p-5 text-gray-900  cursor-pointer"
+                >
                   <span className="ml-3 text-l text-blue-500">{state}</span>
-                )}
-                {nowState !== index && (
+                </SelectedNav>
+              )}
+              {nowState !== index && (
+                <a
+                  key={index}
+                  onClick={() => {
+                    setNowState(index);
+                  }}
+                  className="flex title-font text-lg font-semibold items-center p-5 text-gray-900  cursor-pointer"
+                >
                   <span className="ml-3 text-l hover:text-blue-500">
                     {state}
                   </span>
-                )}
-              </a>
+                </a>
+              )}
             </li>
           ))}
         </ul>
@@ -69,4 +77,9 @@ export default function () {
 
 const NavSection = styled.nav`
   background-color: ${(props) => props.color};
+`;
+
+const SelectedNav = styled.a`
+  color: ${MainBlue};
+  border-bottom: 1px solid ${MainBlue};
 `;
