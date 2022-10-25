@@ -6,7 +6,7 @@ import SellerLayout from '@components/seller/SellerLayout';
 import SiteHead from '@components/common/SiteHead';
 import Heading from '@components/input/Heading';
 import * as btn from '@components/input/Button';
-import { getTime, getState } from '@utils/functions';
+import { getDateTime, getState } from '@utils/functions';
 import { EVENT_TYPE } from '@utils/constants/types';
 import EventParticipant from '@components/event/EventParticipantList';
 
@@ -61,10 +61,12 @@ export default function EventDetail() {
           <br />
           <Heading title="이벤트 일시" type="h3" />
           <span>
-            이벤트 시작일시 : {event.startAt && getTime(event.startAt)}
+            이벤트 시작일시 : {event.startAt && getDateTime(event.startAt)}
           </span>
           <br />
-          <span>이벤트 종료일시 : {event.endAt && getTime(event.endAt)}</span>
+          <span>
+            이벤트 종료일시 : {event.endAt && getDateTime(event.endAt)}
+          </span>
           <br />
 
           <br />

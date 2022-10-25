@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import * as color from '@utils/constants/themeColor';
 
-const Input = ({ type, value, onChange, onInput, attr, css }) => {
+export default function Input({ type, value, onChange, onInput, attr, css }) {
   return (
     <InputCSS
       type={type}
@@ -12,7 +12,7 @@ const Input = ({ type, value, onChange, onInput, attr, css }) => {
       css={css}
     />
   );
-};
+}
 
 const InputCSS = styled.input`
   max-width: 100%;
@@ -25,4 +25,34 @@ const InputCSS = styled.input`
   ${(props) => props.css};
 `;
 
-export default Input;
+export function LargeInput({ type, value, onChange, onInput, attr, css }) {
+  return (
+    <LargeInputCSS
+      type={type}
+      value={value}
+      onChange={onChange}
+      onInput={onInput}
+      {...attr}
+      css={css}
+    />
+  );
+}
+
+const LargeInputCSS = styled.input`
+  padding: 0 10px;
+  max-width: 100%;
+  height: 40px;
+  color: black;
+  border: 1px solid ${color.ThemeGray2};
+  border-radius: 5px;
+  font-size: 1rem;
+  ${(props) => props.css};
+
+  &:hover {
+    background: ${color.ThemeGray5};
+  }
+
+  &:focus {
+    background: ${color.ThemeGray5};
+  }
+`;

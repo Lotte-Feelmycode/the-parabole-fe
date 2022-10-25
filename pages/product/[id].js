@@ -259,7 +259,7 @@ const InputSection = styled.div`
   flex-wrap: wrap;
   margin: 10px 0;
   padding: 10px;
-  background-color: ${color.ThemeGray2};
+  background-color: ${color.ThemeGray4};
   border-radius: 0.25rem;
 `;
 

@@ -1,9 +1,9 @@
-export const APPLY_TYPE = {
-  eventBegin: 0,
-  eventProceeding: 1,
-  eventEnd: 2,
-  eventTotal: 3,
-};
+export const APPLY_TYPE = [
+  { value: 'EVENT_TOTAL', name: '전체 이벤트', index: 3 },
+  { value: 'EVENT_END', name: '종료된 이벤트', index: 2 },
+  { value: 'EVENT_PROCEEDING', name: '진행중인 이벤트', index: 1 },
+  { value: 'EVENT_BEGIN', name: '시작전 이벤트', index: 0 },
+];
 
 export const EVENT_TYPE = [
   {
@@ -36,7 +36,7 @@ export const PRIZE_TYPE = [
   { value: 'COUPON', name: '쿠폰' },
 ];
 export const ORDER_STATE = [
-  { value: 'BEFORE_PAY', name: '입금전' },
+  { value: 'BEFORE_ORDER', name: '입금전' },
   { value: 'PAY_COMPLETE', name: '결제완료' },
   { value: 'BEFORE_DELIVERY', name: '배송준비' },
   { value: 'DELIVERY', name: '배송중' },
