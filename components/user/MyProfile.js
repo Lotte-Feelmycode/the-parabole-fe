@@ -49,7 +49,7 @@ export default function MyProfile({ userId }) {
     <>
       <BgDiv className="py-7">
         <LabelSection>
-          <LabelTitle>사용자 이름</LabelTitle>
+          <LabelTitle>이름</LabelTitle>
           <LabelInputSection>
             <LargeInput
               type="text"
@@ -76,17 +76,7 @@ export default function MyProfile({ userId }) {
             <GetEmail email={userInfo.email} />
           </LabelInputSection>
         </LabelSection>
-        <LabelSection>
-          <LabelTitle>계정 역할</LabelTitle>
-          <LabelInputSection>
-            <LargeInput
-              type="text"
-              attr={{ readOnly: true }}
-              css={{ width: '100%' }}
-              value={userInfo.role || ''}
-            />
-          </LabelInputSection>
-        </LabelSection>
+
         <LabelSection>
           <LabelTitle>연락처</LabelTitle>
           <LabelInputSection>
@@ -95,6 +85,17 @@ export default function MyProfile({ userId }) {
               attr={{ readOnly: true }}
               css={{ width: '100%' }}
               value={userInfo.phone || ''}
+            />
+          </LabelInputSection>
+        </LabelSection>
+        <LabelSection>
+          <LabelTitle>계정정보</LabelTitle>
+          <LabelInputSection>
+            <LargeInput
+              type="text"
+              attr={{ readOnly: true }}
+              css={{ width: '100%' }}
+              value={userInfo.role || ''}
             />
           </LabelInputSection>
         </LabelSection>
