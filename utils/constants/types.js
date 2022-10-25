@@ -36,7 +36,7 @@ export const PRIZE_TYPE = [
   { value: 'COUPON', name: '쿠폰' },
 ];
 export const ORDER_STATE = [
-  { value: 'BEFORE_PAY', name: '입금전' },
+  { value: 'BEFORE_ORDER', name: '입금전' },
   { value: 'PAY_COMPLETE', name: '결제완료' },
   { value: 'BEFORE_DELIVERY', name: '배송준비' },
   { value: 'DELIVERY', name: '배송중' },
