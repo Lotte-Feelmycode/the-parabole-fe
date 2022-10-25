@@ -1,8 +1,8 @@
 import CommerceLayout from '@components/common/CommerceLayout';
 import { useState } from 'react';
-import UserOrderList from '@components/order/UserOrderList';
-import EventApplyList from '@components/user/EventApplyList';
-import MyProfile from '@components/user/MyProfile';
+import UserOrderList from '@components/mypage/UserOrderList';
+import EventApplyList from '@components/mypage/EventApplyList';
+import MyProfile from '@components/mypage/MyProfile';
 import SiteHead from '@components/common/SiteHead.js';
 import styled from '@emotion/styled';
 import { ThemeBlueWhite, MainBlue } from '@utils/constants/themeColor';

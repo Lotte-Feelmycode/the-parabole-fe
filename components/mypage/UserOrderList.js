@@ -1,5 +1,5 @@
 import { GET_DATA } from '@apis/defaultApi';
-import UserOrder from '@components/order/UserOrder';
+import UserOrder from '@components/mypage/UserOrder';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
