@@ -1,93 +1,186 @@
-import { GET_DATA } from '@apis/defaultApi';
 import { useState, useEffect } from 'react';
-import EventApply from '@components/user/EventApply';
-import styles from '@styles/Home.module.scss';
-import * as btn from '@components/input/Button';
 import styled from '@emotion/styled';
+import { GET_DATA } from '@apis/defaultApi';
+import { ThemeGray4, ThemeGray1, MainBlue } from '@utils/constants/themeColor';
 import { APPLY_TYPE } from '@utils/constants/types';
-import Heading from '@components/input/Heading';
+import { getDateTimeShort } from '@utils/functions';
 
-export default function EventApplyList() {
-  const userId = 2;
-  const [applyInfo, setApplyInfo] = useState([]);
+export default function EventApplyList({ userId }) {
   const [total, setTotal] = useState([]);
+  const [nowState, setNowState] = useState(3);
 
   useEffect(() => {
     GET_DATA(`/event/user/participant/${userId}`).then((res) => {
       if (res) {
-        setApplyInfo(res);
         setTotal(res);
       }
     });
   }, [userId]);
 
-  function ApplyFunc(list, status) {
-    list = total;
+  function EventApply({ applyInfo }) {
+    function EventStatus({ status }) {
+      var statusString = status;
+      if (1 === status) statusString = '진행중';
+      else if (2 === status) statusString = '종료';
 
-    if (status === APPLY_TYPE.eventProceeding) {
-      list.map((event) => {
-        if (event.status === APPLY_TYPE.eventProceeding) {
-          setApplyInfo([event]);
-        }
-      });
-    } else if (status == APPLY_TYPE.eventEnd) {
-      list.map((event) => {
-        if (event.status === APPLY_TYPE.eventEnd) {
-          setApplyInfo([event]);
-        }
-      });
-    } else {
-      setApplyInfo(total);
+      return (
+        <>
+          <EventApplySection>{statusString}</EventApplySection>
+        </>
+      );
     }
+
+    const EventApplySection = styled.div`
+      border-radius: 2rem;
+      color: ${MainBlue};
+      display: initial;
+      font-weight: 700;
+    `;
+
+    return (
+      <EventSection className="col-12 col-md-10 offset-md-1 col-lg-6 offset-lg-0">
+        <EventImgSection className="img-section">
+          <EventImg loading="lazy" src={applyInfo.eventImg} />
+        </EventImgSection>
+        <EventStatusSection className="status-section">
+          <EventTitleSection className="title-section">
+            {applyInfo.eventTitle}
+          </EventTitleSection>
+          <EventDetailSection>
+            <EventStatus status={applyInfo.status} />
+            <ApplyTime>
+              {getDateTimeShort(applyInfo.startAt)}
+              {' ~ '}
+              {getDateTimeShort(applyInfo.endAt)}
+            </ApplyTime>
+          </EventDetailSection>
+        </EventStatusSection>
+      </EventSection>
+    );
+  }
+
+  const EventSection = styled.li`
+    margin: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    border: 1px solid ${ThemeGray4};
+    border-radius: 10px;
+    width: 100%;
+  `;
+
+  const EventImgSection = styled.div`
+    overflow: hidden;
+    border-radius: 6px;
+    width: 300px;
+    padding: 10px;
+    flex: 1 1 auto;
+    text-align: center;
+  `;
+
+  const EventImg = styled.img`
+    overflow: hidden;
+    max-width: 100%;
+    min-width: 300px;
+    object-fit: cover;
+    object-position: center;
+    aspect-ratio: 500 / 200;
+    border-radius: 6px;
+    margin: auto;
+    box-shadow: 0 5px 18px -7px ${ThemeGray1};
+  `;
+
+  const EventStatusSection = styled.div`
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    min-width: 300px;
+    padding: 10px;
+    flex: 1 1 0;
+  `;
+
+  const EventDetailSection = styled.div`
+    display: inline-flex;
+    align-items: center;
+  `;
+
+  const EventTitleSection = styled.div`
+    margin-bottom: 10px;
+    font-size: x-large;
+    font-weight: 700;
+    text-align: left;
+  `;
+
+  const ApplyTime = styled.div`
+    font-size: 13px;
+    margin-left: auto;
+    padding-right: 10px;
+    color: ${ThemeGray1};
+  `;
+
+  function PrintEventTable() {
+    return (
+      <ul className="flex flex-wrap row">
+        {total &&
+          total.map((event) => {
+            if (nowState === 3) {
+              return <EventApply applyInfo={event} key={event.eventId} />;
+            } else if (nowState === event.status)
+              return <EventApply applyInfo={event} key={event.eventId} />;
+          })}
+      </ul>
+    );
   }
 
   return (
-    <section>
-      <div className="container px-5 py-24 mx-auto">
-        <Heading title={'사용자 이벤트 목록'} type="h1" />
-        <div style={{ paddingBottom: '2rem' }}>
-          <SpanMargin>
-            <btn.LineWhite
-              buttonText={'전체'}
-              onClickFunc={() => ApplyFunc(applyInfo, APPLY_TYPE.eventTotal)}
-            />
-          </SpanMargin>
-          <SpanMargin>
-            <btn.LineWhite
-              buttonText={'진행중'}
-              onClickFunc={() =>
-                ApplyFunc(applyInfo, APPLY_TYPE.eventProceeding)
-              }
-            />
-          </SpanMargin>
-          <SpanMargin>
-            <btn.LineWhite
-              buttonText={'종료'}
-              onClickFunc={() => ApplyFunc(applyInfo, APPLY_TYPE.eventEnd)}
-            />
-          </SpanMargin>
-          {/* TODO: 당첨 미당첨 구현 */}
-          <SpanMargin>
-            <btn.LineWhite buttonText={'미당첨'} />
-          </SpanMargin>
-        </div>
-        <div style={{ paddingBottom: '2rem' }}></div>
-
-        <h2 className={styles.section} style={{ fontSize: 'x-large' }}>
-          나의 이벤트 참여 횟수: {applyInfo && applyInfo.length}
-        </h2>
-        <div className="flex flex-wrap -m-4" style={{ marginRight: '-4rem' }}>
-          {applyInfo &&
-            applyInfo.map((apply) => (
-              <div classkey={apply.eventId} className="xl:w-1/2">
-                <EventApply applyInfo={apply} />
-              </div>
-            ))}
-        </div>
-      </div>
-    </section>
+    <>
+      <NavSection className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center border-b">
+        <ul className="contents list-none text-center whitespace-nowrap">
+          {APPLY_TYPE.map((state) => {
+            if (state.value === 'EVENT_BEGIN') return;
+            return (
+              <li className="float-left" key={state.index}>
+                {nowState === state.index && (
+                  <SelectedNav
+                    className="flex title-font text-middle font-semibold items-center p-4 text-gray-900  cursor-pointer"
+                    key={state.index}
+                    onClick={() => {
+                      setNowState(state.index);
+                    }}
+                  >
+                    <div className="selected-nav">{state.name}</div>
+                  </SelectedNav>
+                )}
+                {nowState !== state.index && (
+                  <a
+                    className="flex title-font text-middle font-semibold items-center p-4 text-gray-900  cursor-pointer"
+                    key={state.index}
+                    onClick={() => {
+                      setNowState(state.index);
+                    }}
+                  >
+                    <span className="ml-3 text-l hover:text-blue-500">
+                      {state.name}
+                    </span>
+                  </a>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </NavSection>
+      <PrintEventTable />
+    </>
   );
 }
-const SpanMargin = styled.span`
-  margin-right: 9px;
+
+const SelectedNav = styled.a`
+  margin-left: 0.75rem;
+  color: ${MainBlue};
+`;
+
+const NavSection = styled.nav`
+  background-color: ${ThemeGray4};
+  font-size: large;
+  margin-bottom: 10px;
 `;
