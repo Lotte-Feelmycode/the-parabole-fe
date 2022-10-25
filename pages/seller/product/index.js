@@ -80,11 +80,11 @@ export default function ProductDetail() {
           <br />
           <ImageUploader></ImageUploader>
           <br />
-          <Button.Blue
+          <Button.Pink
             buttonText="상품 등록"
             name="setProduct"
             // onClickFunc={setProduct}
-          ></Button.Blue>
+          ></Button.Pink>
         </Div>
       </SellerLayout>
     </>
