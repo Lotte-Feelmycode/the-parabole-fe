@@ -21,6 +21,5 @@ export default function Order({ order }) {
 }
 
 const Td = styled.td`
-  font-family: 'SansLight';
   padding: 5px;
 `;
