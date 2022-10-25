@@ -29,7 +29,10 @@ function CouponList({ sellerId }) {
   const [totalElementCnt, setTotalElementCnt] = useState(0);
 
   useEffect(() => {
-    GET_DATA(`/coupon/seller/list`, { sellerId }).then((res) => {
+    GET_DATA(
+      `/coupon/list`,
+      // { sellerId }
+    ).then((res) => {
       if (res) {
         console.log(res);
         if (res.numberOfElements === 0) {

@@ -31,7 +31,10 @@ function UserCouponList({ userId }) {
   const [totalElementCnt, setTotalElementCnt] = useState(0);
 
   useEffect(() => {
-    GET_DATA(`/coupon/user/list`, { userId }).then((res) => {
+    GET_DATA(
+      `/coupon/list`,
+      //  { userId }
+    ).then((res) => {
       if (res) {
         console.log(res);
         if (res.numberOfElements === 0) {

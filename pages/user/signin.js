@@ -2,14 +2,15 @@ import useInput from '@hooks/useInput';
 import { useRouter } from 'next/router';
 import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead';
-import { POST } from '@apis/defaultApi';
+import { POST, POST_DATA_WITHOUT_BEARER } from '@apis/defaultApi';
+import { API_BASE_URL } from '@apis/api-config';
 
 export default function Signin() {
   const router = useRouter();
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
 
-  function submitFormHandler(e) {
+  function handleSubmit(e) {
     e.preventDefault();
 
     const reqBody = {
@@ -17,23 +18,34 @@ export default function Signin() {
       password: password,
     };
 
-    POST(`/user/signin`, reqBody)
+    POST_DATA_WITHOUT_BEARER(`/auth/signin`, reqBody)
       .then((res) => {
         console.log(res);
-
-        sessionStorage.setItem('userId', res.data);
-        if (res.message === '판매자 로그인 성공') {
-          router.push('/seller/main');
-        } else if (res.message === '사용자 로그인 성공') {
+        if (res.token) {
+          localStorage.setItem('ACCESS_TOKEN', res.token);
+          alert('로그인 성공');
           router.push('/');
         }
-        alert(res.message);
       })
       .catch(function (error) {
         console.log(error + ' : 로그인 실패');
         alert('로그인 실패');
       });
   }
+
+  const handleSocialLogin = (provider) => {
+    // const frontendUrl = window.location.protocol + '//' + window.location.host;
+    const frontendUrl = 'http://localhost:3000';
+    const remains = API_BASE_URL.indexOf('/api/v1');
+
+    router.push(
+      API_BASE_URL.slice(0, remains) +
+        '/auth/authorize/' +
+        provider +
+        '?redirect_url=' +
+        frontendUrl,
+    );
+  };
 
   return (
     <CommerceLayout>
@@ -84,7 +96,7 @@ export default function Signin() {
 
               <button
                 className="block bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 mt-4 px-8 py-4"
-                onClick={submitFormHandler}
+                onClick={handleSubmit}
               >
                 로그인하기
               </button>
@@ -96,7 +108,10 @@ export default function Signin() {
                 </span>
               </div>
 
-              <button className="flex justify-center items-center bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3">
+              <button
+                onClick={() => handleSocialLogin('facebook')}
+                className="flex justify-center items-center bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3"
+              >
                 <svg
                   className="w-5 h-5 shrink-0"
                   width="24"
@@ -113,7 +128,10 @@ export default function Signin() {
                 Continue with Facebook
               </button>
 
-              <button className="flex justify-center items-center bg-white hover:bg-gray-100 active:bg-gray-200 border border-gray-300 focus-visible:ring ring-gray-300 text-gray-800 text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3">
+              <button
+                onClick={() => handleSocialLogin('google')}
+                className="flex justify-center items-center bg-white hover:bg-gray-100 active:bg-gray-200 border border-gray-300 focus-visible:ring ring-gray-300 text-gray-800 text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3"
+              >
                 <svg
                   className="w-5 h-5 shrink-0"
                   width="24"

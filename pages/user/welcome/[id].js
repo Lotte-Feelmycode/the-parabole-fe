@@ -6,14 +6,14 @@ import CommerceLayout from '@components/common/CommerceLayout';
 import * as btn from '@components/input/Button';
 import Link from 'next/link';
 
-export default function SignupConfirm() {
+export default function Welcome() {
   const router = useRouter();
   const [userInfo, setUserInfo] = useState([]);
 
   useEffect(() => {
     const userId = router.query.id;
     console.log(router.query.id);
-    GET_DATA(`/user/${userId}`).then((res) => {
+    GET_DATA(`/user/welcome`).then((res) => {
       if (res) {
         setUserInfo(res);
       }

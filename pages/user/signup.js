@@ -1,7 +1,7 @@
 import SiteHead from '@components/common/SiteHead';
 import useInput from '@hooks/useInput';
 import CommerceLayout from '@components/common/CommerceLayout';
-import { POST_DATA } from '@apis/defaultApi';
+import { POST_DATA, POST_DATA_WITHOUT_BEARER } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
 
 export default function Signup() {
@@ -13,7 +13,7 @@ export default function Signup() {
   const [password, onChangePassword] = useInput('');
   const [passwordConfirmation, onChangePasswordConfirmation] = useInput('');
 
-  function submitFormHandler(e) {
+  function handleSubmit(e) {
     e.preventDefault();
 
     const reqBody = {
@@ -37,12 +37,14 @@ export default function Signup() {
       return;
     }
 
-    POST_DATA(`/user/signup`, reqBody)
-      .then((id) => {
-        console.log(id);
+    POST_DATA_WITHOUT_BEARER(`/auth/signup`, reqBody)
+      .then((res) => {
+        console.log(res);
+        // console.log(res.id);
+        // console.log(res.token);
 
         router.push({
-          pathname: `./welcome/${id}`,
+          // pathname: `./welcome/${res.id}`,
         });
       })
       .catch(function (error) {
@@ -172,7 +174,7 @@ export default function Signup() {
                 type="button"
                 className="block bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 mt-3 mb-2 px-8 py-6"
                 buttonText="회원가입하기"
-                onClick={submitFormHandler}
+                onClick={handleSubmit}
               >
                 회원가입하기
               </button>

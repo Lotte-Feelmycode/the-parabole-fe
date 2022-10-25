@@ -28,20 +28,20 @@ export default function CouponAssign() {
 
   // const [userParentList, setUserParentList] = useState([]);
 
-  useEffect(() => {
-    GET(`/user/role`, { userId }).then((res) => {
-      if (res.message === 'ROLE_USER') {
-        alert('잘못된 접근입니다.');
-        router.push('/');
-      } else if (res.message === 'ROLE_SELLER') {
-        setRole('SELLER');
-        setSellerId(res.data);
-      } else {
-        alert('로그인 후에 사용 가능합니다.');
-        router.push('/user/signin');
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   GET(`/user/role`, { userId }).then((res) => {
+  //     if (res.message === 'ROLE_USER') {
+  //       alert('잘못된 접근입니다.');
+  //       router.push('/');
+  //     } else if (res.message === 'ROLE_SELLER') {
+  //       setRole('SELLER');
+  //       setSellerId(res.data);
+  //     } else {
+  //       alert('로그인 후에 사용 가능합니다.');
+  //       router.push('/user/signin');
+  //     }
+  //   });
+  // }, []);
 
   function assignCoupon(e) {
     const reqBody = {
@@ -68,8 +68,9 @@ export default function CouponAssign() {
     sellerId: sellerId,
   };
 
-  if (role === 'SELLER') {
-    return (
+  // if (role === 'SELLER') {
+  return (
+    <>
       <SellerLayout>
         <SiteHead title="Seller's Coupon List" />
         <Heading title="쿠폰 배정" type="h1" />
@@ -88,8 +89,9 @@ export default function CouponAssign() {
           </Split>
         </PageContainer>
       </SellerLayout>
-    );
-  }
+    </>
+  );
+  // }
 }
 
 const PageContainer = styled.div`
