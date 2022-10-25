@@ -130,68 +130,84 @@ export default function Event() {
   function ProductList({ inputProductList }) {
     return (
       <>
-      {isProductSelect && (<>
-        {productList && productList.length > 0 ? (
-          <table className="w-full text-m text-center px-4 pb-8">
-            <thead className="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr className="h-14">
-                <th scope="col" className="p-4 w-32">
-                  <span className="sr-only">Image</span>
-                </th>
-                <th scope="col" className="py-3 px-12 w-40">
-                  상품명
-                </th>
-                <th scope="col" className="py-3 px-10 w-40">
-                  카테고리
-                </th>
-                <th scope="col" className="py-3 px-10 w-40 ">
-                  가격
-                </th>
-                <th scope="col" className="py-3 px-6  w-40">
-                  재고
-                </th>
-                <th scope="col" className="py-3 px-6"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {productList &&
-                productList.map((product, index) => (
-                  <tr key={product.productId} className="h-24 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td className="p-4 w-32">
-                      <img src={product.productThumbnailImg} alt="상품"></img>
-                    </td>
-                    <td className="py-4 px-10 w-40">{product.productName}</td>
-                    <td className="py-4 px-10 w-40">
-                      {product.productCategory}
-                    </td>
-                    <td className="py-4 px-10 w-40">
-                      {numberToMonetary(product.productPrice)} 원
-                    </td>
-                    <td className="py-4 px-10 w-40">
-                      {product.productRemains}
-                    </td>
-                    <td className="p-4 w-30">
-                      <btn.LinePink
-                        buttonText="등록"
-                        name="btnPost"
-                        css={{
-                          fontSize: '14px',
-                        }}
-                        attr={{
-                          value: index,
-                        }}
-                        onClickFunc={onAddProductPrizeHandler}
-                      />
-                    </td>
+        {isProductSelect && (
+          <>
+            {productList && productList.length > 0 ? (
+              <table className="w-full text-m text-center px-4 pb-8">
+                <thead className="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <tr className="h-14">
+                    <th scope="col" className="p-4 w-32">
+                      <span className="sr-only">Image</span>
+                    </th>
+                    <th scope="col" className="py-3 px-12 w-40">
+                      상품명
+                    </th>
+                    <th scope="col" className="py-3 px-10 w-40">
+                      카테고리
+                    </th>
+                    <th scope="col" className="py-3 px-10 w-40 ">
+                      가격
+                    </th>
+                    <th scope="col" className="py-3 px-6  w-40">
+                      재고
+                    </th>
+                    <th scope="col" className="py-3 px-6"></th>
                   </tr>
-                ))}
-            </tbody>
-          </table>
-        ) : <div className="w-full flex flex-col flex-wrap content-center justify-center">
-              <div className="place-self-center mb-2"><img className="w-12" src={ICON_WARNING_SIGN}></img></div>
-              <div className="text-center text-xl font-semibold">등록된 상품이 없습니다. </div>
-            </div>
-          }</>)}
+                </thead>
+                <tbody>
+                  {productList &&
+                    productList.map((product, index) => (
+                      <tr
+                        key={product.productId}
+                        className="h-24 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                      >
+                        <td className="p-4 w-32">
+                          <img
+                            src={product.productThumbnailImg}
+                            alt="상품"
+                          ></img>
+                        </td>
+                        <td className="py-4 px-10 w-40">
+                          {product.productName}
+                        </td>
+                        <td className="py-4 px-10 w-40">
+                          {product.productCategory}
+                        </td>
+                        <td className="py-4 px-10 w-40">
+                          {numberToMonetary(product.productPrice)} 원
+                        </td>
+                        <td className="py-4 px-10 w-40">
+                          {product.productRemains}
+                        </td>
+                        <td className="p-4 w-30">
+                          <btn.LinePink
+                            buttonText="등록"
+                            name="btnPost"
+                            css={{
+                              fontSize: '14px',
+                            }}
+                            attr={{
+                              value: index,
+                            }}
+                            onClickFunc={onAddProductPrizeHandler}
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            ) : (
+              <div className="w-full flex flex-col flex-wrap content-center justify-center">
+                <div className="place-self-center mb-2">
+                  <img className="w-12" src={ICON_WARNING_SIGN}></img>
+                </div>
+                <div className="text-center text-xl font-semibold">
+                  등록된 상품이 없습니다.{' '}
+                </div>
+              </div>
+            )}
+          </>
+        )}
       </>
     );
   }
@@ -200,72 +216,83 @@ export default function Event() {
   function CouponList({ inputCouponList }) {
     return (
       <>
-      {isCouponSelect && (<>
-        {couponList && couponList.length > 0 ? (
-          <table className="w-full text-m text-center px-4 py-16">
-            <thead className="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr className="h-14">
-                <th scope="col" className="py-2 px-4">
-                  쿠폰명
-                </th>
-                <th scope="col" className="py-2 px-4">
-                  할인율/금액
-                </th>
-                <th scope="col" className="py-2 px-4">
-                  최소금액
-                </th>
-                <th scope="col" className="py-2 px-4">
-                  최대금액
-                </th>
-                <th scope="col" className="py-2 px-4">
-                  유효기간
-                </th>
-                <th scope="col" className="py-2 px-4"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {couponList &&
-                couponList.map((coupon, index) => (
-                    <tr key={coupon.couponId}  className="h-12 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                      <td className="py-4 px-8 w-40">{coupon.name}</td>
-                      <td className="py-4 px-10 w-20">
-                        {coupon.type === '1'
-                          ? coupon.discountValue + '%'
-                          : numberToMonetary(coupon.discountValue) + '원'}
-                      </td>
-                      <td className="py-4 px-10 w-20">
-                        {numberToMonetary(coupon.maxDiscountAmount)}원
-                      </td>
-                      <td className="py-4 px-10 w-20">
-                        {numberToMonetary(coupon.minPaymentAmount)}원
-                      </td>
-                      <td className="py-4 w-40">
-                        {getTimeNotKor(coupon.validAt)} ~{' '}
-                        {getTimeNotKor(coupon.expiresAt)}
-                      </td>
+        {isCouponSelect && (
+          <>
+            {couponList && couponList.length > 0 ? (
+              <table className="w-full text-m text-center px-4 py-16">
+                <thead className="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <tr className="h-14">
+                    <th scope="col" className="py-2 px-4">
+                      쿠폰명
+                    </th>
+                    <th scope="col" className="py-2 px-4">
+                      할인율/금액
+                    </th>
+                    <th scope="col" className="py-2 px-4">
+                      최소금액
+                    </th>
+                    <th scope="col" className="py-2 px-4">
+                      최대금액
+                    </th>
+                    <th scope="col" className="py-2 px-4">
+                      유효기간
+                    </th>
+                    <th scope="col" className="py-2 px-4"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {couponList &&
+                    couponList.map((coupon, index) => (
+                      <tr
+                        key={coupon.couponId}
+                        className="h-12 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                      >
+                        <td className="py-4 px-8 w-40">{coupon.name}</td>
+                        <td className="py-4 px-10 w-20">
+                          {coupon.type === '1'
+                            ? coupon.discountValue + '%'
+                            : numberToMonetary(coupon.discountValue) + '원'}
+                        </td>
+                        <td className="py-4 px-10 w-20">
+                          {numberToMonetary(coupon.maxDiscountAmount)}원
+                        </td>
+                        <td className="py-4 px-10 w-20">
+                          {numberToMonetary(coupon.minPaymentAmount)}원
+                        </td>
+                        <td className="py-4 w-40">
+                          {getTimeNotKor(coupon.validAt)} ~{' '}
+                          {getTimeNotKor(coupon.expiresAt)}
+                        </td>
 
-                      <td className="p-4 w-10">
-                        <div className="flex items-center">
-                          <btn.LinePink
-                            buttonText="등록"
-                            name="btnPost"
-                            css={{
-                              fontSize: '14px',
-                            }}
-                            attr={{ value: index }}
-                            onClickFunc={onAddCouponPrizeHandler}
-                          />
-                        </div>
-                      </td>
-                    </tr>
-                ))}
-            </tbody>
-          </table>
-        ) : <div className="w-full flex flex-col flex-wrap content-center justify-center">
-              <div className="place-self-center mb-2"><img className="w-12" src={ICON_WARNING_SIGN}></img></div>
-              <div className="text-center text-xl font-semibold">등록된 쿠폰이 없습니다. </div>
-            </div>}
-          </>)}
+                        <td className="p-4 w-10">
+                          <div className="flex items-center">
+                            <btn.LinePink
+                              buttonText="등록"
+                              name="btnPost"
+                              css={{
+                                fontSize: '14px',
+                              }}
+                              attr={{ value: index }}
+                              onClickFunc={onAddCouponPrizeHandler}
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            ) : (
+              <div className="w-full flex flex-col flex-wrap content-center justify-center">
+                <div className="place-self-center mb-2">
+                  <img className="w-12" src={ICON_WARNING_SIGN}></img>
+                </div>
+                <div className="text-center text-xl font-semibold">
+                  등록된 쿠폰이 없습니다.{' '}
+                </div>
+              </div>
+            )}
+          </>
+        )}
       </>
     );
   }
@@ -298,7 +325,10 @@ export default function Event() {
               </thead>
               <tbody>
                 {inputList.map((prize, index) => (
-                  <tr key={prize.prizeId} className="h-12 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <tr
+                    key={prize.prizeId}
+                    className="h-12 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  >
                     <input type={'hidden'} value={prize.prizeId} />
 
                     <td className="py-4 px-8 w-28">
@@ -358,37 +388,38 @@ export default function Event() {
   const startAtChangeHandler = (e) => {
     e.preventDefault();
 
-    let fromDTM = e.target.value;
-    setStartAt(fromDTM);
+    // let fromDTM = e.target.value;
+    // setStartAt(fromDTM);
 
-    console.log(fromDTM);
-    // let date = new Date(fromDTM.sp, 0, 1);
-    // date객체 리턴후 계산 필요
+    // console.log(fromDTM);
+    // // let date = new Date(fromDTM.sp, 0, 1);
+    // // date객체 리턴후 계산 필요
 
-    const params = {
-      eventStatus : 1,
-      dateDiv : 0,
-      fromDateTime : startAt + ':00',
-      toDateTime : (startAt.substring(0,13)) + ':50:00',
-    }
+    // const params = {
+    //   eventStatus: 1,
+    //   dateDiv: 0,
+    //   fromDateTime: startAt + ':00',
+    //   toDateTime: startAt.substring(0, 13) + ':50:00',
+    // };
 
-    
-    if (eventType === 'FCFS') {
-      POST('/event/list', params).then((res) => {
-        if (res && res.data && res.data.length > 0) {
-          alert("이미 같은 시간대 등록된 이벤트가 있습니다. 다른 시간을 선택해주세요");
-          setStartAt('');
-          setEndAt('');
-        }
-      });
-    }
-  }
+    // if (eventType === 'FCFS') {
+    //   POST('/event/list', params).then((res) => {
+    //     if (res && res.data && res.data.length > 0) {
+    //       alert(
+    //         '이미 같은 시간대 등록된 이벤트가 있습니다. 다른 시간을 선택해주세요',
+    //       );
+    //       setStartAt('');
+    //       setEndAt('');
+    //     }
+    //   });
+    // }
+  };
 
   const endAtChangeHandler = (e) => {
     e.preventDefault();
 
     setEndAt(e.target.value);
-  }
+  };
 
   //경품 삭제 핸들러
   const removePrize = (e, index) => {
@@ -410,7 +441,7 @@ export default function Event() {
       (e) => e.id == productList[idx].productId,
     );
 
-    if (arrIdx > -1) {
+    if (arrIdx > -1 && prizeList[arrIdx].type === 'PRODUCT') {
       alert('이미 같은 상품을 등록했습니다');
       return;
     }
@@ -441,7 +472,7 @@ export default function Event() {
 
     const arrIdx = prizeList.findIndex((e) => e.id == couponList[idx].couponId);
 
-    if (arrIdx > -1) {
+    if (arrIdx > -1 && prizeList[arrIdx].type === 'COUPON') {
       alert('이미 같은 쿠폰을 등록했습니다');
       return;
     }
@@ -495,7 +526,6 @@ export default function Event() {
       setProductSelect(false);
     });
   };
-
 
   const onCancelHandler = (e) => {
     e.preventDefault();
@@ -605,7 +635,7 @@ export default function Event() {
         <Divider />
 
         <Heading title="이벤트 진행 일시" type="h2" />
-        <div className='w-full mb-4'>
+        <div className="w-full mb-4">
           <Heading title="시작 일시" type="h3" />
           <Input
             type="datetime-local"
