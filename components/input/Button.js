@@ -113,6 +113,21 @@ export const LinePink = ({ buttonText, onClickFunc, attr, css }) => {
   );
 };
 
+export const SmallLinePink = ({ buttonText, onClickFunc, attr, css }) => {
+  const theme = PinkTheme;
+  const size = SmallSize;
+  return (
+    <OutlineButtonComp
+      buttonText={buttonText}
+      onClickFunc={onClickFunc}
+      theme={theme}
+      size={size}
+      attr={attr}
+      css={css}
+    />
+  );
+};
+
 export const White = ({ buttonText, onClickFunc, attr, css }) => {
   const theme = whiteTheme;
   const size = OriginSize;
