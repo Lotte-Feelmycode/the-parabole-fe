@@ -97,7 +97,7 @@ export default function Event() {
   }
 
   // 경품 수량 (-) 버튼 클릭 이벤트
-  const minusBtnClick = (e, index) => {
+  const minusBtnClick = (e, index, prize) => {
     e.preventDefault();
 
     let newVal = stockList[index].stock - 1;
@@ -112,16 +112,16 @@ export default function Event() {
   };
 
   // 경품 수량 (+) 버튼 클릭 이벤트
-  const plusBtnClick = (e, index) => {
+  const plusBtnClick = (e, index, prize) => {
     e.preventDefault();
 
     let newVal = stockList[index].stock + 1;
     let copyArray = [...stockList];
-    if (newVal < 1) {
-      alert('경품 수량은 한 개 이상 선택해야 합니다.');
+
+    if (prizeList[index].stock < newVal) {
+      alert('등록 가능한 경품 수량을 초과했습니다.');
       return;
     }
-
     copyArray[index] = { ...copyArray[index], stock: newVal };
     setStockList(copyArray);
   };
@@ -222,20 +222,23 @@ export default function Event() {
               <table className="w-full text-m text-center px-4 py-16">
                 <thead className="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr className="h-14">
-                    <th scope="col" className="py-2 px-4">
+                    <th scope="col" className="py-2 px-2">
                       쿠폰명
                     </th>
-                    <th scope="col" className="py-2 px-4">
+                    <th scope="col" className="py-2 px-2">
                       할인율/금액
                     </th>
-                    <th scope="col" className="py-2 px-4">
+                    <th scope="col" className="py-2 px-2">
                       최소금액
                     </th>
-                    <th scope="col" className="py-2 px-4">
+                    <th scope="col" className="py-2 px-2">
                       최대금액
                     </th>
-                    <th scope="col" className="py-2 px-4">
+                    <th scope="col" className="py-2 px-2">
                       유효기간
+                    </th>
+                    <th scope="col" className="py-2 px-2">
+                      재고
                     </th>
                     <th scope="col" className="py-2 px-4"></th>
                   </tr>
@@ -248,25 +251,25 @@ export default function Event() {
                         className="h-12 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       >
                         <td className="py-4 px-8 w-40">{coupon.name}</td>
-                        <td className="py-4 px-10 w-20">
+                        <td className="py-4 px-10 w-16">
                           {coupon.type === '1'
                             ? coupon.discountValue + '%'
                             : numberToMonetary(coupon.discountValue) + '원'}
                         </td>
-                        <td className="py-4 px-10 w-20">
+                        <td className="py-4 px-10 w-16">
                           {numberToMonetary(coupon.maxDiscountAmount)}원
                         </td>
-                        <td className="py-4 px-10 w-20">
+                        <td className="py-4 px-10 w-16">
                           {numberToMonetary(coupon.minPaymentAmount)}원
                         </td>
                         <td className="py-4 w-40">
                           {getTimeNotKor(coupon.validAt)} ~{' '}
                           {getTimeNotKor(coupon.expiresAt)}
                         </td>
-
-                        <td className="p-4 w-10">
+                        <td className="py-4 w-12">{coupon.remains}</td>
+                        <td className="px-2 w-12">
                           <div className="flex items-center">
-                            <btn.LinePink
+                            <btn.SmallLinePink
                               buttonText="등록"
                               name="btnPost"
                               css={{
@@ -339,7 +342,9 @@ export default function Event() {
                       <OptionInputSection>
                         <btn.SmallWhite
                           buttonText="-"
-                          onClickFunc={(event) => minusBtnClick(event, index)}
+                          onClickFunc={(event) =>
+                            minusBtnClick(event, index, prize)
+                          }
                           css={{
                             borderBottomRightRadius: '0',
                             borderTopRightRadius: '0',
@@ -357,7 +362,9 @@ export default function Event() {
                         />
                         <btn.SmallWhite
                           buttonText="+"
-                          onClickFunc={(event) => plusBtnClick(event, index)}
+                          onClickFunc={(event) =>
+                            plusBtnClick(event, index, prize)
+                          }
                           css={{
                             borderBottomLeftRadius: '0 !important ',
                             borderTopLeftRadius: '0',
@@ -448,11 +455,16 @@ export default function Event() {
 
     if (!checkFcfsPrize()) return;
 
+    if (productList[e.target.value].remains < 1) {
+      alert('경품으로 지급가능한 상품 재고가 부족합니다.');
+      return;
+    }
+
     const tmpobj = {
       type: 'PRODUCT',
       id: productList[e.target.value].productId,
       name: productList[e.target.value].productName,
-      stock: 30,
+      stock: productList[e.target.value].productRemains,
     };
 
     const stockObj = {
@@ -479,11 +491,16 @@ export default function Event() {
 
     if (!checkFcfsPrize()) return;
 
+    if (couponList[e.target.value].remains < 1) {
+      alert('발행가능한 쿠폰 수량이 부족합니다.');
+      return;
+    }
+
     const tmpobj = {
       type: 'COUPON',
       id: couponList[e.target.value].couponId,
       name: couponList[e.target.value].name,
-      stock: 30,
+      stock: couponList[e.target.value].remains,
     };
 
     const stockObj = {
