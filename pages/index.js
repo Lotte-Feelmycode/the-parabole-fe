@@ -9,22 +9,26 @@ import ProductList from '@components/product/ProductList';
 
 export default function Home() {
   const productListProps = {
-    size: 6,
+    size: 12,
     page: 0,
+    sort: 'id.desc',
   };
 
   return (
     <CommerceLayout>
       <SiteHead title="Home" />
-        <div className="container px-5 py-12 mx-auto">
-          <MainContent title="파라볼래" content="셀러가 직접 등록하는 다양한 이벤트에 참여해보세요!"/>
-          <Row>
-            <IconList></IconList>
-          </Row>
-          <Row>
-            <ProductList {...productListProps} />
-          </Row>
-        </div>
+      <div className="container px-5 py-12 mx-auto">
+        <MainContent
+          title="파라볼래"
+          content="셀러가 직접 등록하는 다양한 이벤트에 참여해보세요!"
+        />
+        <Row>
+          <IconList></IconList>
+        </Row>
+        <Row>
+          <ProductList {...productListProps} />
+        </Row>
+      </div>
     </CommerceLayout>
   );
 }
