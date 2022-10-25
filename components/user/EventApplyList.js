@@ -34,7 +34,8 @@ export default function EventApplyList({ userId }) {
       border-radius: 2rem;
       color: ${MainBlue};
       display: initial;
-      font-weight: 700;
+      font-weight: bolder;
+      font-size: 16px;
     `;
 
     return (
