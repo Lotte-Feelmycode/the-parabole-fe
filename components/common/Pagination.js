@@ -52,10 +52,10 @@ const Nav = styled.nav`
 
 const Button = styled.button`
   align-items: center;
-  border: 1px solid ${color.ThemeGray2};
+  border: 1px solid ${color.ThemeGray4};
   padding: 0 10px;
   margin: 0.5%;
-  color: ${color.ThemeGray2};
+  color: ${color.ThemeGray4};
   font-size: 1rem;
   border-radius: 16px;
   width: 32px;

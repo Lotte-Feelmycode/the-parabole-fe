@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import EventPrize from '@components/event/EventPrize';
 import CommerceLayout from '@components/common/CommerceLayout';
-import { getTime } from '@utils/functions';
+import { getDateTime } from '@utils/functions';
 
 export default function EventDetail() {
   const [eventInfo, setEventInfo] = useState([]);
@@ -40,7 +40,8 @@ export default function EventDetail() {
             className="event-detail-startAt"
             style={{ fontSize: 'xx-large', padding: '10px' }}
           >
-            응모 기간 {getTime(eventInfo.startAt)} ~ {getTime(eventInfo.endAt)}
+            응모 기간 {getDateTime(eventInfo.startAt)} ~{' '}
+            {getDateTime(eventInfo.endAt)}
           </div>
           <div className="event-detail-img" style={{ marginBottom: '100px' }}>
             <img src={eventImage.eventDetailImg} style={{ width: '100%' }} />

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { EVENT_TYPE } from '@utils/constants/types';
-import { getTime, getState } from '@utils/functions';
+import { getDateTime, getState } from '@utils/functions';
 
 export default function Event({ event }) {
   const router = useRouter();
@@ -30,7 +30,7 @@ export default function Event({ event }) {
             <br />
             <Title>{event.title}</Title>
             <Time>
-              {getTime(event.startAt)} ~<br /> {getTime(event.endAt)}
+              {getDateTime(event.startAt)} ~<br /> {getDateTime(event.endAt)}
             </Time>
           </Content>
         </a>
