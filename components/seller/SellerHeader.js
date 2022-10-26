@@ -1,13 +1,7 @@
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 
 export default function SellerHeader() {
   const linkSellerHome = '/seller/main';
-  const [token, setToken] = useState();
-
-  useEffect(() => {
-    setToken(localStorage.getItem('ACCESS_TOKEN'));
-  }, []);
 
   return (
     <>
@@ -37,22 +31,19 @@ export default function SellerHeader() {
             <Link href="/">
               <a className="mr-5 hover:text-gray-900">마켓</a>
             </Link>
-            {token ? (
-              <div>
-                <Link href="/user/signout">
-                  <a className="mr-5 hover:text-gray-900">로그아웃</a>
-                </Link>
-              </div>
-            ) : (
-              <div>
-                <Link href="/user/signin">
-                  <a className="mr-5 hover:text-gray-900">로그인</a>
-                </Link>
-                <Link href="/user/signup">
-                  <a className="mr-5 hover:text-gray-900">회원가입</a>
-                </Link>
-              </div>
-            )}
+            <div>
+              <Link href="/user/signout">
+                <a className="mr-5 hover:text-gray-900">로그아웃</a>
+              </Link>
+            </div>
+            <div>
+              <Link href="/user/signin">
+                <a className="mr-5 hover:text-gray-900">로그인</a>
+              </Link>
+              <Link href="/user/signup">
+                <a className="mr-5 hover:text-gray-900">회원가입</a>
+              </Link>
+            </div>
           </nav>
         </div>
       </header>

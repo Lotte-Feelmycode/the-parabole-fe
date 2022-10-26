@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-function Sociallogin({}) {
+export default function Sociallogin({}) {
   const router = useRouter();
 
   useEffect(() => {
@@ -20,5 +20,3 @@ function Sociallogin({}) {
   }, []);
   return;
 }
-
-export default Sociallogin;

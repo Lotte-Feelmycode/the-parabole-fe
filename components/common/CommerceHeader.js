@@ -1,7 +1,6 @@
 import SearchBar from '@components/input/SearchBar';
 import { ICON_CART_BLACK } from '@utils/constants/icons';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 
 const Links = {
   LINK_MAIN: '/',
@@ -16,12 +15,6 @@ const Links = {
 };
 
 export default function CommerceHeader() {
-  const [token, setToken] = useState();
-
-  useEffect(() => {
-    setToken(localStorage.getItem('ACCESS_TOKEN'));
-  }, []);
-
   return (
     <>
       <header className="body-font flex flex-col">
@@ -65,33 +58,28 @@ export default function CommerceHeader() {
             </nav>
 
             <nav className="md:ml-auto mt-l flex flex-wrap items-center text-base text-gray-500 justify-center">
-              {token ? (
-                <div>
-                  <Link href={Links.LINK_MYPAGE}>
-                    <a className="px-5 font-medium hover:text-gray-700">
-                      마이페이지
-                    </a>
-                  </Link>
-                  <Link href={Links.LINK_SIGNOUT}>
-                    <a className="px-5 font-medium hover:text-gray-700">
-                      로그아웃
-                    </a>
-                  </Link>
-                </div>
-              ) : (
-                <div>
-                  <Link href={Links.LINK_SIGNIN}>
-                    <a className="px-5 font-medium hover:text-gray-700">
-                      로그인
-                    </a>
-                  </Link>
-                  <Link href={Links.LINK_SINGUP}>
-                    <a className="px-5 font-medium hover:text-gray-700 border-l border-r">
-                      회원가입
-                    </a>
-                  </Link>
-                </div>
-              )}
+              <div>
+                <Link href={Links.LINK_MYPAGE}>
+                  <a className="px-5 font-medium hover:text-gray-700">
+                    마이페이지
+                  </a>
+                </Link>
+                <Link href={Links.LINK_SIGNOUT}>
+                  <a className="px-5 font-medium hover:text-gray-700">
+                    로그아웃
+                  </a>
+                </Link>
+              </div>
+              <div>
+                <Link href={Links.LINK_SIGNIN}>
+                  <a className="px-5 font-medium hover:text-gray-700">로그인</a>
+                </Link>
+                <Link href={Links.LINK_SINGUP}>
+                  <a className="px-5 font-medium hover:text-gray-700 border-l border-r">
+                    회원가입
+                  </a>
+                </Link>
+              </div>
             </nav>
           </div>
         </div>
