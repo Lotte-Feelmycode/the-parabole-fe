@@ -68,12 +68,9 @@ export default function ProductList({
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-8">
           {productList &&
             productList.map((product) => (
-              // <ProductItem key={product.productId}>
               <Product product={product} key={product.productId} />
-              // </ProductItem>
             ))}
         </div>
-        <p className="pt-4">총 상품 갯수 : {totalElementCnt}</p>
       </div>
 
       <PaginationSection>
@@ -84,6 +81,7 @@ export default function ProductList({
           theme={color.BlueTheme}
         />
       </PaginationSection>
+      <p className="pt-4 text-right">총 상품 갯수 : {totalElementCnt}</p>
     </div>
   );
 }
@@ -96,20 +94,6 @@ ProductList.defaultProps = {
   size: INIT_SIZENUM,
   page: INIT_PAGENUM,
 };
-
-const ProductListMain = styled.div``;
-
-const ProductListSection = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  padding: 5px;
-`;
-
-const ProductItem = styled.li`
-  flex: auto;
-  margin: 5px;
-  min-width: 200px;
-`;
 
 const PaginationSection = styled.div`
   text-align: center;
