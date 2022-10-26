@@ -20,12 +20,9 @@ export const GET = async (url, params) => {
   if (accessToken && accessToken !== null) {
     bearerToken += accessToken;
   }
-  let options = {
-    headers: { Authorization: bearerToken },
-  };
 
   const { data } = await axios
-    .get(apiUrl, { params: params }, { headers: options.headers })
+    .get(apiUrl, { params: params, headers: { Authorization: bearerToken } })
     .then((res) => {
       console.log(res);
       return res;
@@ -50,9 +47,6 @@ export const POST = async (url, body) => {
   if (accessToken && accessToken !== null) {
     bearerToken += accessToken;
   }
-  let options = {
-    headers: { Authorization: bearerToken },
-  };
 
   const { data } = await axios
     .post(apiUrl, JSON.stringify(body), {
@@ -74,15 +68,16 @@ export const POST = async (url, body) => {
 
 export const PATCH = async (url, body) => {
   let apiUrl = API_BASE_URL + url;
-  let bearerToken = 'Bearer ';
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
-  if (accessToken && accessToken !== null) {
-    bearerToken += accessToken;
-  }
 
   if (!(url && body)) {
     console.error(DEV_ERROR.INVALID_ARGS);
     return;
+  }
+
+  let bearerToken = 'Bearer ';
+  const accessToken = localStorage.getItem('ACCESS_TOKEN');
+  if (accessToken && accessToken !== null) {
+    bearerToken += accessToken;
   }
 
   const { data } = await axios
@@ -111,8 +106,14 @@ export const DELETE = async (url, params) => {
     return;
   }
 
+  let bearerToken = 'Bearer ';
+  const accessToken = localStorage.getItem('ACCESS_TOKEN');
+  if (accessToken && accessToken !== null) {
+    bearerToken += accessToken;
+  }
+
   const { data } = await axios
-    .delete(apiUrl, { params: params })
+    .delete(apiUrl, { params: params, headers: { Authorization: bearerToken } })
     .then((res) => {
       console.log(res);
       return res;
@@ -131,21 +132,14 @@ export const GET_DATA = async (url, params) => {
     console.error(DEV_ERROR.INVALID_ARGS);
     return;
   }
-
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
   let bearerToken = 'Bearer ';
+  const accessToken = localStorage.getItem('ACCESS_TOKEN');
   if (accessToken && accessToken !== null) {
     bearerToken += accessToken;
   }
-  let options = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: bearerToken,
-    },
-  };
 
   const { data } = await axios
-    .get(apiUrl, { params: params }, { headers: options.headers })
+    .get(apiUrl, { params: params, headers: { Authorization: bearerToken } })
     .then((res) => {
       console.log(res);
       if (res.data) return res.data;
@@ -160,15 +154,16 @@ export const GET_DATA = async (url, params) => {
 
 export const POST_DATA = async (url, body) => {
   let apiUrl = API_BASE_URL + url;
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
-  let bearerToken = 'Bearer ';
-  if (accessToken && accessToken !== null) {
-    bearerToken += accessToken;
-  }
 
   if (!(url && body)) {
     console.error(DEV_ERROR.INVALID_ARGS);
     return;
+  }
+
+  let bearerToken = 'Bearer ';
+  const accessToken = localStorage.getItem('ACCESS_TOKEN');
+  if (accessToken && accessToken !== null) {
+    bearerToken += accessToken;
   }
 
   const { data } = await axios
@@ -192,15 +187,16 @@ export const POST_DATA = async (url, body) => {
 
 export const PATCH_DATA = async (url, body) => {
   let apiUrl = API_BASE_URL + url;
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
-  let bearerToken = 'Bearer ';
-  if (accessToken && accessToken !== null) {
-    bearerToken += accessToken;
-  }
 
   if (!(url && body)) {
     console.error(DEV_ERROR.INVALID_ARGS);
     return;
+  }
+
+  let bearerToken = 'Bearer ';
+  const accessToken = localStorage.getItem('ACCESS_TOKEN');
+  if (accessToken && accessToken !== null) {
+    bearerToken += accessToken;
   }
 
   const { data } = await axios
@@ -224,19 +220,20 @@ export const PATCH_DATA = async (url, body) => {
 
 export const DELETE_DATA = async (url, params) => {
   let apiUrl = API_BASE_URL + url;
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
-  let bearerToken = 'Bearer ';
-  if (accessToken && accessToken !== null) {
-    bearerToken += accessToken;
-  }
 
   if (!(url && params)) {
     console.error(DEV_ERROR.INVALID_ARGS);
     return;
   }
 
+  let bearerToken = 'Bearer ';
+  const accessToken = localStorage.getItem('ACCESS_TOKEN');
+  if (accessToken && accessToken !== null) {
+    bearerToken += accessToken;
+  }
+
   const { data } = await axios
-    .delete(apiUrl, { params: params, Authorization: bearerToken })
+    .delete(apiUrl, { params: params, headers: { Authorization: bearerToken } })
     .then((res) => {
       console.log(res);
       if (res.data) return res.data;
