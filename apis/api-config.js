@@ -1,7 +1,7 @@
 let backendHost;
 
 //const hostname = window && window.location && window.location.hostname;
-const hostname = 'prod';
+const hostname = 'dev';
 
 if (hostname === 'prod') {
   backendHost = 'http://localhost:8080';
