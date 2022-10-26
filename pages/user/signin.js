@@ -2,7 +2,7 @@ import useInput from '@hooks/useInput';
 import { useRouter } from 'next/router';
 import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead';
-import { POST, POST_DATA_WITHOUT_BEARER } from '@apis/defaultApi';
+import { POST_DATA } from '@apis/defaultApi';
 import { API_BASE_URL } from '@apis/api-config';
 
 export default function Signin() {
@@ -18,12 +18,13 @@ export default function Signin() {
       password: password,
     };
 
-    POST_DATA_WITHOUT_BEARER(`/auth/signin`, reqBody)
+    POST_DATA(`/auth/signin`, reqBody)
       .then((res) => {
         console.log(res);
         if (res.token) {
           localStorage.setItem('ACCESS_TOKEN', res.token);
           alert('로그인 성공');
+          // 구글 로그인시에는 마이페이지로 ping 때려서 토큰 뿐만 아니라 사용자 정보 localStorage에 저장하기
           router.push('/');
         }
       })

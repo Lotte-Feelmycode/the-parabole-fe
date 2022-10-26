@@ -1,7 +1,7 @@
 import SiteHead from '@components/common/SiteHead';
 import useInput from '@hooks/useInput';
 import CommerceLayout from '@components/common/CommerceLayout';
-import { POST_DATA, POST_DATA_WITHOUT_BEARER } from '@apis/defaultApi';
+import { POST_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
 
 export default function Signup() {
@@ -37,15 +37,15 @@ export default function Signup() {
       return;
     }
 
-    POST_DATA_WITHOUT_BEARER(`/auth/signup`, reqBody)
+    POST(`/auth/signup`, reqBody)
       .then((res) => {
-        console.log(res);
-        // console.log(res.id);
-        // console.log(res.token);
-
-        router.push({
-          // pathname: `./welcome/${res.id}`,
-        });
+        if (res.status === 200) {
+          router.push({
+            pathname: `./welcome/${res.data.id}`,
+          });
+        } else {
+          alert('회원가입 실패');
+        }
       })
       .catch(function (error) {
         console.log(error);
