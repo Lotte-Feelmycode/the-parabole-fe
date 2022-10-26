@@ -87,11 +87,16 @@ export default function EventPrize({ event, eventId }) {
             <Coupon couponInfo={couponInfo} />
           </div>
         </div>
+
         <div
           style={{ float: 'right', paddingRight: '106px', fontSize: 'large' }}
         >
-          <strong>{event.couponDiscountValue}원 할인 쿠폰</strong> {event.stock}
-          개
+          {event.type === 'AMOUNT' ? (
+            <strong>{event.couponDiscountValue}원 할인 쿠폰</strong>
+          ) : (
+            <strong>{event.couponDiscountValue}% 할인 쿠폰</strong>
+          )}
+          {event.stock}개
         </div>
         <br />
         <br />
