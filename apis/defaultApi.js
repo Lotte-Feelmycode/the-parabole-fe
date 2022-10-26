@@ -7,6 +7,20 @@ const CONTENT_TYPE = 'application/json';
 //axios.defaults.baseurl = API_BASE_URL;
 axios.defaults.headers.post['Content-Type'] = CONTENT_TYPE;
 
+let bearerToken = 'Bearer ';
+let accessToken;
+if (typeof window !== 'undefined' && typeof window !== undefined) {
+  accessToken = localStorage.getItem('ACCESS_TOKEN');
+}
+if (accessToken && accessToken !== null && accessToken !== undefined) {
+  bearerToken += accessToken;
+}
+
+let headers = {
+  'Content-Type': `application/json`,
+  Authorization: bearerToken,
+};
+
 export const GET = async (url, params) => {
   let apiUrl = API_BASE_URL + url;
 
@@ -15,14 +29,8 @@ export const GET = async (url, params) => {
     return;
   }
 
-  let bearerToken = 'Bearer ';
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
-  if (accessToken && accessToken !== null) {
-    bearerToken += accessToken;
-  }
-
   const { data } = await axios
-    .get(apiUrl, { params: params, headers: { Authorization: bearerToken } })
+    .get(apiUrl, { params: params, headers: headers })
     .then((res) => {
       console.log(res);
       return res;
@@ -42,18 +50,9 @@ export const POST = async (url, body) => {
     return;
   }
 
-  let bearerToken = 'Bearer ';
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
-  if (accessToken && accessToken !== null) {
-    bearerToken += accessToken;
-  }
-
   const { data } = await axios
     .post(apiUrl, JSON.stringify(body), {
-      headers: {
-        'Content-Type': `application/json`,
-        Authorization: bearerToken,
-      },
+      headers: headers,
     })
     .then((res) => {
       console.log(res);
@@ -74,18 +73,9 @@ export const PATCH = async (url, body) => {
     return;
   }
 
-  let bearerToken = 'Bearer ';
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
-  if (accessToken && accessToken !== null) {
-    bearerToken += accessToken;
-  }
-
   const { data } = await axios
     .patch(apiUrl, JSON.stringify(body), {
-      headers: {
-        'Content-Type': `application/json`,
-        Authorization: bearerToken,
-      },
+      headers: headers,
     })
     .then((res) => {
       console.log(res);
@@ -106,14 +96,8 @@ export const DELETE = async (url, params) => {
     return;
   }
 
-  let bearerToken = 'Bearer ';
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
-  if (accessToken && accessToken !== null) {
-    bearerToken += accessToken;
-  }
-
   const { data } = await axios
-    .delete(apiUrl, { params: params, headers: { Authorization: bearerToken } })
+    .delete(apiUrl, { params: params, headers: headers })
     .then((res) => {
       console.log(res);
       return res;
@@ -132,14 +116,9 @@ export const GET_DATA = async (url, params) => {
     console.error(DEV_ERROR.INVALID_ARGS);
     return;
   }
-  let bearerToken = 'Bearer ';
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
-  if (accessToken && accessToken !== null) {
-    bearerToken += accessToken;
-  }
 
   const { data } = await axios
-    .get(apiUrl, { params: params, headers: { Authorization: bearerToken } })
+    .get(apiUrl, { params: params, headers: headers })
     .then((res) => {
       console.log(res);
       if (res.data) return res.data;
@@ -160,18 +139,9 @@ export const POST_DATA = async (url, body) => {
     return;
   }
 
-  let bearerToken = 'Bearer ';
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
-  if (accessToken && accessToken !== null) {
-    bearerToken += accessToken;
-  }
-
   const { data } = await axios
     .post(apiUrl, JSON.stringify(body), {
-      headers: {
-        'Content-Type': `application/json`,
-        Authorization: bearerToken,
-      },
+      headers: headers,
     })
     .then((res) => {
       console.log(res);
@@ -193,18 +163,9 @@ export const PATCH_DATA = async (url, body) => {
     return;
   }
 
-  let bearerToken = 'Bearer ';
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
-  if (accessToken && accessToken !== null) {
-    bearerToken += accessToken;
-  }
-
   const { data } = await axios
     .patch(apiUrl, JSON.stringify(body), {
-      headers: {
-        'Content-Type': `application/json`,
-        Authorization: bearerToken,
-      },
+      headers: headers,
     })
     .then((res) => {
       console.log(res);
@@ -226,14 +187,8 @@ export const DELETE_DATA = async (url, params) => {
     return;
   }
 
-  let bearerToken = 'Bearer ';
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
-  if (accessToken && accessToken !== null) {
-    bearerToken += accessToken;
-  }
-
   const { data } = await axios
-    .delete(apiUrl, { params: params, headers: { Authorization: bearerToken } })
+    .delete(apiUrl, { params: params, headers: headers })
     .then((res) => {
       console.log(res);
       if (res.data) return res.data;
