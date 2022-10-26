@@ -5,10 +5,11 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper';
+import styled from '@emotion/styled';
 
 export default function CustomSwiper() {
   return (
-    <>
+    <SwiperSection className="swiper-section">
       <Swiper
         cssMode={true}
         navigation={true}
@@ -34,6 +35,16 @@ export default function CustomSwiper() {
           <img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/store/banners/store_home_banners/166573981678744789.png?gif=1&w=2560&q=100"></img>
         </SwiperSlide>
       </Swiper>
-    </>
+    </SwiperSection>
   );
 }
+
+const SwiperSection = styled.div`
+  @media (min-width: 768px) {
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
