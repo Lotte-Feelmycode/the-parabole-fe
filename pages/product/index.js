@@ -9,7 +9,7 @@ export default function Products({}) {
   const router = useRouter();
   const inputSearchValue = router.query.searchValue;
   const productListProps = {
-    size: 6,
+    size: 12,
     page: 0,
     productName: inputSearchValue,
   };
@@ -18,8 +18,8 @@ export default function Products({}) {
     <>
       <CommerceLayout>
         <SiteHead title="Home" />
-        <div className="container px-5 py-12 mx-auto">
-          <CustomSwiper></CustomSwiper>
+        <div className="container py-12">
+          <CustomSwiper />
           <Row>
             <ProductList {...productListProps} />
           </Row>
@@ -28,7 +28,6 @@ export default function Products({}) {
     </>
   );
 }
-
 
 const Row = styled.div`
   display: flex;
