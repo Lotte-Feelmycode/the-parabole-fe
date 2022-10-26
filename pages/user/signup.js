@@ -37,9 +37,25 @@ export default function Signup() {
       return;
     }
 
-    POST(`/auth/signup`, reqBody)
+    POST_DATA(`/auth/signup`, reqBody)
       .then((res) => {
         if (res.status === 200) {
+          GET_DATA(`/user/info`)
+            .then((res) => {
+              if (res.success) {
+                localStorage.setItem('currentUser', res.data);
+
+                router.push({
+                  pathname: `./welcome/${res.data.id}`,
+                });
+              } else {
+                alert('회원가입 실패');
+              }
+            })
+            .catch(function (error) {
+              console.log(error);
+              return {};
+            });
           router.push({
             pathname: `./welcome/${res.data.id}`,
           });

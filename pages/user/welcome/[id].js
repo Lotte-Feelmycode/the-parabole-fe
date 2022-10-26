@@ -13,7 +13,7 @@ export default function Welcome() {
   useEffect(() => {
     const userId = router.query.id;
     console.log(router.query.id);
-    GET_DATA(`/user/welcome`).then((res) => {
+    GET_DATA(`/user/info`).then((res) => {
       if (res) {
         setUserInfo(res);
       }

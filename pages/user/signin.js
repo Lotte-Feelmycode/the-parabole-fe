@@ -22,9 +22,13 @@ export default function Signin() {
       .then((res) => {
         console.log(res);
         if (res.token) {
+          localStorage.setItem('email', res.email);
+          localStorage.setItem('id', res.id);
+          localStorage.setItem('name', res.name);
+          localStorage.setItem('nickname', res.nickname);
+          localStorage.setItem('phone', res.phone);
           localStorage.setItem('ACCESS_TOKEN', res.token);
           alert('로그인 성공');
-          // 구글 로그인시에는 마이페이지로 ping 때려서 토큰 뿐만 아니라 사용자 정보 localStorage에 저장하기
           router.push('/');
         }
       })
