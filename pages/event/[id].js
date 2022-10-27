@@ -23,7 +23,6 @@ export default function EventDetail() {
 
     GET_DATA(`/event/${eventId}`).then((res) => {
       if (res) {
-        console.log('hello', res);
         setEventInfo(res);
         setEventImage(res.eventImage);
         setEventPrizes(res.eventPrizes);

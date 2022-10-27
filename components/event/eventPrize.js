@@ -36,7 +36,7 @@ export default function EventPrize({ prize, eventId, applyStatus }) {
           </ImgSection>
           <EventBodySection className="prize-body">
             <PrizeNameSection className="prize-name prize-name-coupon">
-              <p className="text-lg lg:text-xl font-bold p-2 mb-4">
+              <p className="text-lg lg:text-xl font-bold p-2">
                 {prize.couponDetail}
               </p>
               <CouponDiscountValue />
@@ -144,12 +144,12 @@ const EventPrizeProductImg = styled.img`
 `;
 
 const EventPrizeCouponImg = styled.img`
+  padding: 20px 0;
   overflow: hidden;
   object-fit: cover;
   object-position: center;
   min-width: 200px;
-  margin: 10px 0;
-  background-color: white;
+  /* background-color: white; */
   border-radius: 20px;
 `;
 
