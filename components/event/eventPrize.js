@@ -144,12 +144,11 @@ const EventPrizeProductImg = styled.img`
 `;
 
 const EventPrizeCouponImg = styled.img`
-  padding: 20px 0;
+  padding: 23px 0;
   overflow: hidden;
   object-fit: cover;
   object-position: center;
   min-width: 200px;
-  /* background-color: white; */
   border-radius: 20px;
 `;
 
