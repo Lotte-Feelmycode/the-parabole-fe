@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
-import { useState, useEffect } from 'react';
 import { Blue } from '@components/input/Button';
-import { POST_DATA, POST } from '@apis/defaultApi';
+import { POST } from '@apis/defaultApi';
 import { ICON_COUPON } from '@utils/constants/icons';
 import { ThemeGray4, ThemeGray5 } from '@utils/constants/themeColor';
 
@@ -68,7 +67,7 @@ export default function EventPrize({ prize, eventId, applyStatus }) {
         buttonText={'이벤트 응모'}
         onClickFunc={() => applyEvent(eventId, prize.eventPrizeId)}
         attr={{ disabled: applyStatus }}
-        css={{ marginTop: 'auto' }}
+        css={{ marginTop: 'auto', marginBottom: '10px' }}
       />
     );
   }
