@@ -27,9 +27,15 @@ export default function EventDetail() {
         setEventInfo(res);
         setEventImage(res.eventImage);
         setEventPrizes(res.eventPrizes);
+
+        if (res.status !== 1) {
+          setApplyStatus('disabled');
+        }
       }
     });
+  }, [router.query]);
 
+  useEffect(() => {
     POST_DATA('/event/participant/check', {
       userId,
       eventId,
@@ -38,7 +44,7 @@ export default function EventDetail() {
         setApplyStatus('disabled');
       }
     });
-  }, [router.query]);
+  }, []);
 
   return (
     <CommerceLayout>
