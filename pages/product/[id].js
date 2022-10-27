@@ -56,35 +56,33 @@ export default function ProductDetail() {
   function addCart() {
     if (!isCountValid()) {
       return;
-    }
-
-    if (count === 0) {
+    } else if (count <= 0) {
       alert('수량을 입력해주세요');
       return;
-    }
-
-    POST(`/cart/product/add`, {
-      userId: userId,
-      productId: productId,
-      cnt: count,
-    }).then((res) => {
-      if (res) {
-        if (res.success) {
-          const confirmMsg =
-            '장바구니에 성공적으로 담겼습니다. 장바구니페이지로 이동하시겠습니까?';
-          const confirmFlag = confirm(confirmMsg);
-          if (confirmFlag) {
-            router.push({ pathname: `/user/cart` });
+    } else {
+      POST(`/cart/product/add`, {
+        userId: userId,
+        productId: productId,
+        cnt: count,
+      }).then((res) => {
+        if (res) {
+          if (res.success) {
+            const confirmMsg =
+              '장바구니에 성공적으로 담겼습니다. 장바구니페이지로 이동하시겠습니까?';
+            const confirmFlag = confirm(confirmMsg);
+            if (confirmFlag) {
+              router.push({ pathname: `/user/cart` });
+            }
+          } else {
+            console.log(res);
+            alert(res.data.message);
           }
         } else {
-          console.log(res);
-          alert(res.data.message);
+          // TODO 장바구니 실패했을때 경우의 수 추가
+          alert('이미 추가된 상품입니다.');
         }
-      } else {
-        // TODO 장바구니 실패했을때 경우의 수 추가
-        alert('이미 추가된 상품입니다.');
-      }
-    });
+      });
+    }
   }
 
   function directOrder() {
