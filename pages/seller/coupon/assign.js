@@ -10,13 +10,7 @@ import * as btn from '@components/input/Button';
 import Heading from '@components/input/Heading';
 
 export default function CouponAssign() {
-  // TODO:
-  // setUserId(현재로그인되어있는userId-세션,쿠키 등에서 얻어올 것임);
-  const uidFromStorage = 4;
-
   const router = useRouter();
-  const [role, setRole] = useState();
-  const [userId, setUserId] = useState(uidFromStorage);
   const [sellerId, setSellerId] = useState();
 
   const [couponParentId, setCouponParentId] = useState(0);
@@ -25,23 +19,6 @@ export default function CouponAssign() {
   function setUserParentList(list) {
     userParentList = list;
   }
-
-  // const [userParentList, setUserParentList] = useState([]);
-
-  // useEffect(() => {
-  //   GET(`/user/role`, { userId }).then((res) => {
-  //     if (res.message === 'ROLE_USER') {
-  //       alert('잘못된 접근입니다.');
-  //       router.push('/');
-  //     } else if (res.message === 'ROLE_SELLER') {
-  //       setRole('SELLER');
-  //       setSellerId(res.data);
-  //     } else {
-  //       alert('로그인 후에 사용 가능합니다.');
-  //       router.push('/user/signin');
-  //     }
-  //   });
-  // }, []);
 
   function assignCoupon(e) {
     const reqBody = {
@@ -68,7 +45,6 @@ export default function CouponAssign() {
     sellerId: sellerId,
   };
 
-  // if (role === 'SELLER') {
   return (
     <>
       <SellerLayout>
@@ -91,7 +67,6 @@ export default function CouponAssign() {
       </SellerLayout>
     </>
   );
-  // }
 }
 
 const PageContainer = styled.div`

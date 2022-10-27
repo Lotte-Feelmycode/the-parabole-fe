@@ -16,24 +16,17 @@ function UserCoupon({ userCoupon }) {
       <td className="py-4 px-6">{userCoupon.type}</td>
       <td className="py-4 px-6">{userCoupon.RateOrAmount}</td>
       <td className="py-4 px-6">{userCoupon.useState}</td>
-      {/* <td className="py-4 px-6">{userCoupon.useDate}</td>
-      <td className="py-4 px-6">{getTime(userCoupon.acquiredDate)}</td>
-      <td className="py-4 px-6">{getTime(userCoupon.validAt)}</td> */}
       <td className="py-4 px-6">{getTime(userCoupon.expiresAt)}</td>
-      {/* <td className="py-4 px-6">{userCoupon.maxDiscountAmount}</td>
-      <td className="py-4 px-6">{userCoupon.minPaymentAmount}</td> */}
     </tr>
   );
 }
 
-function UserCouponList({ userId }) {
+function UserCouponList({}) {
   const [userCouponList, setUserCouponList] = useState([]);
   const [totalElementCnt, setTotalElementCnt] = useState(0);
 
   useEffect(() => {
-    GET_DATA(
-      `/coupon/list`,
-    ).then((res) => {
+    GET_DATA(`/coupon/list`).then((res) => {
       if (res) {
         console.log(res);
         if (res.numberOfElements === 0) {
@@ -72,24 +65,9 @@ function UserCouponList({ userId }) {
               <th scope="col" className="py-3 px-6">
                 사용 여부
               </th>
-              {/* <th scope="col" className="py-3 px-6">
-                사용 일자
-              </th>
-              <th scope="col" className="py-3 px-6">
-                획득 일자
-              </th>
-              <th scope="col" className="py-3 px-6">
-                유효 시작일
-              </th> */}
               <th scope="col" className="py-3 px-6">
                 쿠폰 만료일
               </th>
-              {/* <th scope="col" className="py-3 px-6">
-                최대할인금액
-              </th>
-              <th scope="col" className="py-3 px-6">
-                최소결제금액
-              </th> */}
             </tr>
           </thead>
           <tbody>
