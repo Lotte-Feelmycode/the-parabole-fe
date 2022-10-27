@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { getTime } from '@utils/functions';
+import { getDateTime } from '@utils/functions';
 
 export default function EventParticipant({ participant }) {
   const [user, setUser] = useState(participant.user);
@@ -12,7 +12,7 @@ export default function EventParticipant({ participant }) {
 
   return (
     <tr>
-      <Td>{getTime(participant.eventTimeStartAt)}</Td>
+      <Td>{getDateTime(participant.eventTimeStartAt)}</Td>
       <Td>{user.email}</Td>
       <Td>{user.name}</Td>
       <Td>{user.phone}</Td>

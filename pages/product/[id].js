@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { GET_DATA, POST } from '@apis/defaultApi';
 import { numberToMonetary } from '@utils/functions';
 import * as color from '@utils/constants/themeColor';
-import * as btn from '@components/input/Button';
+import { SmallLineWhite, LineBlue, Blue } from '@components/input/Button';
 import Input from '@components/input/Input';
 
 export default function ProductDetail() {
@@ -56,34 +56,33 @@ export default function ProductDetail() {
   function addCart() {
     if (!isCountValid()) {
       return;
-    }
-
-    if (count === 0) {
+    } else if (count <= 0) {
+      alert('수량을 입력해주세요');
       return;
-    }
-
-    POST(`/cart/product/add`, {
-      userId: userId,
-      productId: productId,
-      cnt: count,
-    }).then((res) => {
-      if (res) {
-        if (res.success) {
-          const confirmMsg =
-            '장바구니에 성공적으로 담겼습니다. 장바구니페이지로 이동하시겠습니까?';
-          const confirmFlag = confirm(confirmMsg);
-          if (confirmFlag) {
-            router.push({ pathname: `/user/cart` });
+    } else {
+      POST(`/cart/product/add`, {
+        userId: userId,
+        productId: productId,
+        cnt: count,
+      }).then((res) => {
+        if (res) {
+          if (res.success) {
+            const confirmMsg =
+              '장바구니에 성공적으로 담겼습니다. 장바구니페이지로 이동하시겠습니까?';
+            const confirmFlag = confirm(confirmMsg);
+            if (confirmFlag) {
+              router.push({ pathname: `/user/cart` });
+            }
+          } else {
+            console.log(res);
+            alert(res.data.message);
           }
         } else {
-          console.log(res);
-          alert(res.data.message);
+          // TODO 장바구니 실패했을때 경우의 수 추가
+          alert('이미 추가된 상품입니다.');
         }
-      } else {
-        // TODO 장바구니 실패했을때 경우의 수 추가
-        alert('이미 추가된 상품입니다.');
-      }
-    });
+      });
+    }
   }
 
   function directOrder() {
@@ -120,14 +119,14 @@ export default function ProductDetail() {
         <div className="container px-5 py-24 mx-auto">
           <span>상품 상세 화면</span>
           <ProductWrap>
-            <ProductTopSection>
-              <ProductThumbnailImgSection>
+            <ProductTopSection className="product-top-section">
+              <ProductThumbnailImgSection className="product-thumbnail-img-section">
                 <ProductThumbnailImg
                   className="product-thumbnail-img"
                   src={product.productThumbnailImg}
                 />
               </ProductThumbnailImgSection>
-              <ProductDetailTop>
+              <ProductDetailTop className="product-detail-top">
                 <div className="product-name-title">
                   <ProductName>{product.productName}</ProductName>
                 </div>
@@ -139,10 +138,10 @@ export default function ProductDetail() {
                 </div>
                 <StoreSection onClick={() => goToStore(product.sellerId)}>
                   <StoreNameSection>
-                    <span> {seller} </span>
+                    <span className="text-lg"> {seller} </span>
                   </StoreNameSection>
                   <StoreBtnSection>
-                    <btn.SmallLineWhite buttonText="브랜드홈 ▶" />
+                    <SmallLineWhite buttonText="브랜드홈 ▶" />
                   </StoreBtnSection>
                 </StoreSection>
                 <InputSection>
@@ -166,12 +165,12 @@ export default function ProductDetail() {
                   </TotalInputSection>
                 </InputSection>
                 <BtnSection>
-                  <btn.LineBlue
+                  <LineBlue
                     buttonText="장바구니"
                     onClickFunc={addCart}
                     css={{ width: '49%', marginRight: '1%' }}
                   />
-                  <btn.Blue
+                  <Blue
                     buttonText="바로구매"
                     onClickFunc={directOrder}
                     css={{ width: '49%', marginLeft: '1%' }}
@@ -213,23 +212,33 @@ const ProductName = styled.span`
 `;
 
 const ProductTopSection = styled.div`
-  display: inline-block;
-  position: relative;
+  display: flex;
+  flex-wrap: wrap;
   margin-bottom: 90px;
   width: 100%;
 `;
 
 const ProductThumbnailImgSection = styled.div`
-  position: relative;
-  float: left;
   margin: 10px 10px 10px 0;
-  width: 50%;
+  max-width: 100%;
+  min-width: 300px;
+
+  @media (min-width: 768px) {
+    width: 50%;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const ProductDetailTop = styled.div`
-  position: relative;
-  float: right;
-  width: 45%;
+  max-width: 100%;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  flex: 1 1 auto;
 `;
 
 const ProductPrice = styled.span`
@@ -259,7 +268,7 @@ const InputSection = styled.div`
   flex-wrap: wrap;
   margin: 10px 0;
   padding: 10px;
-  background-color: ${color.ThemeGray2};
+  background-color: ${color.ThemeGray4};
   border-radius: 0.25rem;
 `;
 

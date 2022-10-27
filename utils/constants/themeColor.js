@@ -10,7 +10,10 @@ export const ColorPink2 = '#FFC2DA';
 
 export const ThemeBlack = '#0D0709';
 export const ThemeGray1 = '#525252';
-export const ThemeGray2 = '#D6D6D6';
+export const ThemeGray2 = '#B8B8B8';
+export const ThemeGray3 = '#C2C2C2';
+export const ThemeGray4 = '#D6D6D6';
+export const ThemeGray5 = '#EBEBEB';
 export const ThemeWhite = '#F0F6F6';
 
 export const BlueTheme = {
@@ -31,5 +34,5 @@ export const WhiteTheme = {
   mainColor: ThemeGray1,
   white: ThemeWhite,
   color1: ThemeBlack,
-  color2: ThemeGray2,
+  color2: ThemeGray4,
 };

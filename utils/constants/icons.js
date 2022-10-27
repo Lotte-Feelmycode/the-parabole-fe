@@ -1,3 +1,9 @@
+// logo
+export const LOGO_PARABOLE = require('@public/parabole.svg').default.src;
+export const LOGO_PARABOLE_PINK = require('@public/parabole_pink.svg').default
+  .src;
+
+//
 export const ICON_SEARCH_MAGNIFY =
   require('@assets/search-magnifiying-glass.svg').default.src;
 export const ICON_CART_BLUE = require('@assets/cart-blue.svg').default.src;
@@ -20,7 +26,8 @@ export const ICON_ONLINE_SHOPPING = require('@assets/icon-online-shopping.svg')
   .default.src;
 export const ICON_ONLINE_SHOPPING_2 =
   require('@assets/icon-online-shopping-2.svg').default.src;
+export const ICON_WARNING_SIGN = require('@assets/icon-warning-sign.svg')
+  .default.src;
 
-export const LOGO_PARABOLE = require('@public/parabole.svg').default.src;
-export const LOGO_PARABOLE_PINK = require('@public/parabole_pink.svg').default
-  .src;
+// img
+export const ICON_COUPON = require('@assets/coupon.svg').default.src;

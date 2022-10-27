@@ -113,6 +113,21 @@ export const LinePink = ({ buttonText, onClickFunc, attr, css }) => {
   );
 };
 
+export const SmallLinePink = ({ buttonText, onClickFunc, attr, css }) => {
+  const theme = PinkTheme;
+  const size = SmallSize;
+  return (
+    <OutlineButtonComp
+      buttonText={buttonText}
+      onClickFunc={onClickFunc}
+      theme={theme}
+      size={size}
+      attr={attr}
+      css={css}
+    />
+  );
+};
+
 export const White = ({ buttonText, onClickFunc, attr, css }) => {
   const theme = whiteTheme;
   const size = OriginSize;
@@ -226,7 +241,7 @@ const ButtonStyled = styled.button`
 
   &:disabled {
     color: ${color.ThemeGray1};
-    background: ${color.ThemeGray2};
+    background: ${color.ThemeGray4};
     border: none !important;
     transform: none;
     cursor: default;
@@ -251,7 +266,7 @@ const OutLineButtonStyled = styled.button`
 
   &:disabled {
     color: ${color.ThemeGray1};
-    background: ${color.ThemeGray2};
+    background: ${color.ThemeGray4};
     border: none !important;
     transform: none;
     cursor: default;

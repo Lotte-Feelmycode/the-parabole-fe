@@ -1,6 +1,7 @@
 import { GET_DATA } from '@apis/defaultApi';
-import { getTime } from '@utils/functions';
+import { getDate, numberToMonetary } from '@utils/functions';
 import { useEffect, useState } from 'react';
+import styled from '@emotion/styled';
 
 function UserCoupon({ userCoupon }) {
   return (
@@ -21,7 +22,7 @@ function UserCoupon({ userCoupon }) {
   );
 }
 
-function UserCouponList({}) {
+export default function UserCouponList({ userId }) {
   const [userCouponList, setUserCouponList] = useState([]);
   const [totalElementCnt, setTotalElementCnt] = useState(0);
 
@@ -44,20 +45,20 @@ function UserCouponList({}) {
   return (
     <div>
       <div className="overflow-x-auto relative">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <table className="w-full text-sm text-center text-gray-500">
+          <thead className="text-gray-700 bg-gray-50">
             <tr>
-              <th scope="col" className="py-3 px-6">
+              <th scope="col" className="py-3 px-1">
                 쿠폰명
               </th>
-              <th scope="col" className="py-3 px-6">
+              <th scope="col" className="py-3 px-1">
                 SerialNo
               </th>
-              <th scope="col" className="py-3 px-6">
+              <th scope="col" className="py-3 px-1">
                 판매자 이름
               </th>
-              <th scope="col" className="py-3 px-6">
-                쿠폰 타입
+              <th scope="col" className="py-3 px-1">
+                혜택
               </th>
               <th scope="col" className="py-3 px-6">
                 할인율/할인액
@@ -65,7 +66,7 @@ function UserCouponList({}) {
               <th scope="col" className="py-3 px-6">
                 사용 여부
               </th>
-              <th scope="col" className="py-3 px-6">
+              <th scope="col" className="py-3 px-1">
                 쿠폰 만료일
               </th>
             </tr>
@@ -79,11 +80,60 @@ function UserCouponList({}) {
         </table>
       </div>
       <br />
-      <strong>
-        <p>총 쿠폰 수량 : {totalElementCnt}</p>
-      </strong>
+      <TotalCouponCountSection>
+        <strong>
+          <p>총 쿠폰 수량 : {totalElementCnt}</p>
+        </strong>
+      </TotalCouponCountSection>
     </div>
   );
 }
 
-export default UserCouponList;
+const TotalCouponCountSection = styled.div`
+  text-align: right;
+`;
+
+function UserCoupon({ userCoupon }) {
+  var benefitType = '';
+  var benefitAmount = '';
+
+  if (userCoupon.type === 'RATE') {
+    benefitType = '할인율';
+    benefitAmount = userCoupon.discountValue + '%';
+  } else {
+    benefitType = '할인금액';
+    benefitAmount = numberToMonetary(userCoupon.discountValue) + '원';
+  }
+  var couponState = '';
+  if (userCoupon.useState === 'NOT_USED') {
+    couponState = '사용가능';
+  } else {
+    couponState = '사용불가능';
+  }
+
+  return (
+    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+      <th
+        scope="row"
+        className="px-1 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+      >
+        {userCoupon.name}
+      </th>
+      <td className="px-1">{userCoupon.serialNo}</td>
+      <td className="px-1">{userCoupon.sellerName}</td>
+      <td className="py-1 px-1">
+        <BenefitSection>
+          <span>{benefitType}</span>
+          <span>{benefitAmount}</span>
+        </BenefitSection>
+      </td>
+      <td className="px-1">{getDate(userCoupon.validAt)}</td>
+    </tr>
+  );
+}
+
+const BenefitSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+`;

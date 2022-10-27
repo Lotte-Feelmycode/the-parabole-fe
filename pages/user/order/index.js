@@ -6,7 +6,7 @@ import Input from '@components/input/Input';
 import ProductList from '@components/product/OrderProductList';
 import PayList from '@components/order/PayList';
 import { POST, GET } from '@apis/defaultApi';
-import { ThemeGray2 } from '@utils/constants/themeColor';
+import { ThemeGray4 } from '@utils/constants/themeColor';
 import { Blue } from '@components/input/Button';
 import { useRouter } from 'next/router';
 import { isEmpty, numberToMonetary } from '@utils/functions';
@@ -81,15 +81,15 @@ export default function OrderAndPayment() {
   function sameAsUser(flag) {
     if (flag) {
       //TODO 사용자 정보 불러오기
-      setReceiverName('userId.userName');
-      setReceivePhone('userId.userPhone');
+      setReceiverName('더파라');
+      setReceivePhone('01082828585');
     }
   }
 
   const input = {
     width: '14rem',
     borderRadius: '0.2rem',
-    border: 'solid 1px ' + ThemeGray2,
+    border: 'solid 1px ' + ThemeGray4,
     fontSize: '1rem',
     margin: 0,
   };
@@ -110,7 +110,7 @@ export default function OrderAndPayment() {
                     // TODO : user 정보 넣기
                     css={input}
                     attr={{ readOnly: true }}
-                    value={'userId.name'}
+                    value={'더파라'}
                   />
                 </Inputpart>
               </InputContainer>
@@ -121,7 +121,7 @@ export default function OrderAndPayment() {
                     // TODO : user 정보 넣기
                     css={input}
                     attr={{ readOnly: true }}
-                    value={'userId.phone'}
+                    value={'01082828585'}
                   />
                 </Inputpart>
               </InputContainer>
@@ -218,7 +218,7 @@ export default function OrderAndPayment() {
             <StickyContainer>
               <PayResultSection
                 className="pay-result-section"
-                borderColor={ThemeGray2}
+                borderColor={ThemeGray4}
               >
                 <h3>결제금액</h3>
                 <TotalProductPriceSection>
@@ -239,7 +239,7 @@ export default function OrderAndPayment() {
                     <PayLable>배송비</PayLable>
                     <PayPrice marginLeft="auto">{0}원</PayPrice>
                   </PayIndex>
-                  <PayLargeIndex borderColor={ThemeGray2}>
+                  <PayLargeIndex borderColor={ThemeGray4}>
                     <PayLargeLable>최종 결제 금액</PayLargeLable>
                     <PayLargePrice>
                       {numberToMonetary(
