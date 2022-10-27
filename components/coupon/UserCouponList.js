@@ -33,7 +33,6 @@ function UserCouponList({ userId }) {
   useEffect(() => {
     GET_DATA(
       `/coupon/list`,
-      //  { userId }
     ).then((res) => {
       if (res) {
         console.log(res);

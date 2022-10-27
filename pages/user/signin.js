@@ -19,15 +19,15 @@ export default function Signin() {
     };
 
     POST_DATA(`/auth/signin`, reqBody)
-      .then((res) => {
-        console.log(res);
-        if (res.token) {
-          localStorage.setItem('email', res.email);
-          localStorage.setItem('id', res.id);
-          localStorage.setItem('name', res.name);
-          localStorage.setItem('nickname', res.nickname);
-          localStorage.setItem('phone', res.phone);
-          localStorage.setItem('ACCESS_TOKEN', res.token);
+      .then((user) => {
+        console.log(user);
+        if (user.token) {
+          localStorage.setItem('email', user.email);
+          localStorage.setItem('id', user.id);
+          localStorage.setItem('name', user.name);
+          localStorage.setItem('nickname', user.nickname);
+          localStorage.setItem('phone', user.phone);
+          localStorage.setItem('ACCESS_TOKEN', user.token);
           alert('로그인 성공');
           router.push('/');
         }

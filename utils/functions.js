@@ -1,20 +1,22 @@
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-
-export var getLoggedIn = function () {
-  const router = useRouter();
-  var arr;
-  arr.push(localStorage.getItem('ACCESS_TOKEN'));
-  arr.push(localStorage.getItem('email'));
-  arr.push(localStorage.getItem('id'));
-  arr.push(localStorage.getItem('name'));
-  arr.push(localStorage.getItem('nickname'));
-  arr.push(localStorage.getItem('phone'));
-  if (!arr) {
-    alert('접근할 권한이 없습니다.');
-    router.push('/');
+export var isLoggedIn = function () {
+  if (localStorage.getItem('ACCESS_TOKEN')) {
+    return true;
+  } else {
+    return false;
   }
-  return arr;
+};
+
+export var getLoggedInInfo = function () {
+  if (checkLoggedIn) {
+    var arr;
+    arr.push(localStorage.getItem('ACCESS_TOKEN'));
+    arr.push(localStorage.getItem('email'));
+    arr.push(localStorage.getItem('id'));
+    arr.push(localStorage.getItem('name'));
+    arr.push(localStorage.getItem('nickname'));
+    arr.push(localStorage.getItem('phone'));
+    return arr;
+  }
 };
 
 /**

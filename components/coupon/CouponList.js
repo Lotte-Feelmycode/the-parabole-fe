@@ -2,7 +2,6 @@ import { GET_DATA } from '@apis/defaultApi';
 import * as btn from '@components/input/Button';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { getTime } from '@utils/functions';
 
 function Coupon({ coupon }) {
   return (
@@ -23,16 +22,13 @@ function Coupon({ coupon }) {
   );
 }
 
-function CouponList({ sellerId }) {
+function CouponList() {
   const router = useRouter();
   const [couponList, setCouponList] = useState([]);
   const [totalElementCnt, setTotalElementCnt] = useState(0);
 
   useEffect(() => {
-    GET_DATA(
-      `/coupon/list`,
-      // { sellerId }
-    ).then((res) => {
+    GET_DATA(`/coupon/list`).then((res) => {
       if (res) {
         console.log(res);
         if (res.numberOfElements === 0) {
