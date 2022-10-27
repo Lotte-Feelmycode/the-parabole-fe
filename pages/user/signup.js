@@ -3,6 +3,7 @@ import useInput from '@hooks/useInput';
 import CommerceLayout from '@components/common/CommerceLayout';
 import { POST_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 export default function Signup() {
   const router = useRouter();
@@ -12,6 +13,7 @@ export default function Signup() {
   const [phone, onChangePhone] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [passwordConfirmation, onChangePasswordConfirmation] = useInput('');
+  const [newname, setNewname] = useState();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -39,32 +41,19 @@ export default function Signup() {
 
     POST_DATA(`/auth/signup`, reqBody)
       .then((res) => {
-        if (res.status === 200) {
-          GET_DATA(`/user/info`)
-            .then((res) => {
-              if (res.success) {
-                localStorage.setItem('currentUser', res.data);
+        if (res.email) {
+          alert('회원가입 성공');
+          alert(re.nickname);
+          setNewname(res.nickname);
 
-                router.push({
-                  pathname: `./welcome/${res.data.id}`,
-                });
-              } else {
-                alert('회원가입 실패');
-              }
-            })
-            .catch(function (error) {
-              console.log(error);
-              return {};
-            });
           router.push({
-            pathname: `./welcome/${res.data.id}`,
+            pathname: `./welcome/${newname}`,
           });
-        } else {
-          alert('회원가입 실패');
         }
       })
       .catch(function (error) {
         console.log(error);
+        alert('회원가입 실패');
         return {};
       });
   }

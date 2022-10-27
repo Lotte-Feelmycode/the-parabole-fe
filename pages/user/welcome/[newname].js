@@ -1,4 +1,3 @@
-import { GET_DATA } from '@apis/defaultApi';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import SiteHead from '@components/common/SiteHead';
@@ -8,17 +7,11 @@ import Link from 'next/link';
 
 export default function Welcome() {
   const router = useRouter();
-  const [userInfo, setUserInfo] = useState([]);
+  const [newname, setNewname] = useState(router.query.newname);
 
   useEffect(() => {
-    const userId = router.query.id;
-    console.log(router.query.id);
-    GET_DATA(`/user/info`).then((res) => {
-      if (res) {
-        setUserInfo(res);
-      }
-    });
-  }, [router.query]);
+    setUsername(router.query.newname);
+  }, []);
 
   return (
     <CommerceLayout>
@@ -31,8 +24,7 @@ export default function Welcome() {
           <div className="max-w-lg border rounded-lg mx-auto bg-blue-200">
             <div className="flex flex-col items-center gap-4 p-4 md:p-8 mt-5">
               <span className="text-black-400 text-lg relative px-4 ">
-                {userInfo.username} 님 😊 <br /> THE PARABOLE 회원 가입을
-                축하합니다 :)
+                {newname} 님 😊 <br /> THE PARABOLE 회원 가입을 축하합니다 :)
               </span>
             </div>
 

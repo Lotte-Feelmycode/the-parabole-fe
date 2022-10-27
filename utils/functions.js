@@ -1,3 +1,22 @@
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+
+export var getLoggedIn = function () {
+  const router = useRouter();
+  var arr;
+  arr.push(localStorage.getItem('ACCESS_TOKEN'));
+  arr.push(localStorage.getItem('email'));
+  arr.push(localStorage.getItem('id'));
+  arr.push(localStorage.getItem('name'));
+  arr.push(localStorage.getItem('nickname'));
+  arr.push(localStorage.getItem('phone'));
+  if (!arr) {
+    alert('접근할 권한이 없습니다.');
+    router.push('/');
+  }
+  return arr;
+};
+
 /**
  * 일시 데이터를 '00년 00월 00일 오후/오전 00시 00분'으로 리턴하는 함수
  * @param {*} str

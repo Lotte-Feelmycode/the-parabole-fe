@@ -66,7 +66,7 @@ export default function Signin() {
             <div className="flex flex-col gap-4 p-4 md:p-8">
               <div>
                 <label
-                  for="email"
+                  htmlFor="email"
                   className="inline-block text-gray-800 text-sm sm:text-base mb-2"
                 >
                   이메일
@@ -74,7 +74,7 @@ export default function Signin() {
                 <input
                   type="email"
                   name="email"
-                  placeHolder="이메일을 입력하세요."
+                  placeholder="이메일을 입력하세요."
                   onChange={onChangeEmail}
                   className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
                 />
@@ -82,7 +82,7 @@ export default function Signin() {
 
               <div>
                 <label
-                  for="password"
+                  htmlFor="password"
                   className="inline-block text-gray-800 text-sm sm:text-base mb-2"
                 >
                   비밀번호
@@ -90,9 +90,9 @@ export default function Signin() {
                 <input
                   type="password"
                   name="password"
-                  minlength="6"
-                  maxlength="12"
-                  placeHolder="비밀번호를 입력하세요."
+                  minLength="6"
+                  maxLength="12"
+                  placeholder="비밀번호를 입력하세요."
                   onChange={onChangePassword}
                   required
                   className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
