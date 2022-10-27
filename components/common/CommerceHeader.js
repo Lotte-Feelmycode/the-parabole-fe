@@ -1,7 +1,7 @@
 import SearchBar from '@components/input/SearchBar';
 import { ICON_CART_BLACK } from '@utils/constants/icons';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Links = {
   LINK_MAIN: '/',
@@ -16,7 +16,11 @@ const Links = {
 };
 
 export default function CommerceHeader() {
-  const [token, setToken] = useState(localStorage.getItem('ACCESS_TOKEN'));
+  const [token, setToken] = useState();
+
+  useEffect(() => {
+    setToken(localStorage.getItem('ACCESS_TOKEN'));
+  });
 
   return (
     <>

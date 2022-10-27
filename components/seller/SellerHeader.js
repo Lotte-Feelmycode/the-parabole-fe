@@ -3,7 +3,11 @@ import { useState } from 'react';
 
 export default function SellerHeader() {
   const linkSellerHome = '/seller/main';
-  const [token, setToken] = useState(localStorage.getItem('ACCESS_TOKEN'));
+  const [token, setToken] = useState();
+
+  useEffect(() => {
+    setToken(localStorage.getItem('ACCESS_TOKEN'));
+  });
 
   return (
     <>
