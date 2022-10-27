@@ -6,6 +6,8 @@ export default function Signout() {
   localStorage.removeItem('ACCESS_TOKEN');
   localStorage.removeItem('email');
   localStorage.removeItem('name');
+  localStorage.removeItem('username');
+  localStorage.removeItem('role');
   localStorage.removeItem('id');
   localStorage.removeItem('nickname');
   localStorage.removeItem('phone');

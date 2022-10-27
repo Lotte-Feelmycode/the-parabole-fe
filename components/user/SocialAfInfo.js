@@ -4,32 +4,23 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 export default function SocialAfInfo({ token }) {
-  // 동작 안됌
   const router = useRouter();
-  let headers;
-
   useEffect(() => {
-    console.log(token);
-    headers = {
+    let headers = {
       'Content-Type': `application/json`,
       Authorization: 'Bearer ' + token,
     };
+    axios
+      .get(API_BASE_URL + `/user/info`, { params: '', headers: headers })
+      .then((res) => {
+        // localStorage.setItem('id', res.data.data.id);
+        localStorage.setItem('email', res.data.data.email);
+        localStorage.setItem('nickname', res.data.data.nickname);
+        localStorage.setItem('phone', res.data.data.phone);
+        localStorage.setItem('role', res.data.data.role);
+        localStorage.setItem('username', res.data.data.username);
+        router.push('/');
+        return res;
+      });
   }, []);
-
-  axios
-    .get(API_BASE_URL + `/user/info`, { params: '', headers: headers })
-    .then((res) => {
-      console.log(res);
-      localStorage.setItem(res.id);
-      alert('소셜정보 get 성공');
-      router.push('/');
-      return res;
-    })
-    .catch(function (error) {
-      console.log(error);
-      console.log(token);
-      alert('소셜정보 get 실패');
-      router.push('/user/signin');
-      return {};
-    });
 }
