@@ -2,34 +2,7 @@ import { GET_DATA } from '@apis/defaultApi';
 import * as btn from '@components/input/Button';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { getTime } from '@utils/functions';
 import styled from '@emotion/styled';
-
-// function CouponChk({ coupon }) {
-//   return (
-//     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-//       <th
-//         scope="row"
-//         className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-//       >
-//         {/* <Chk type="checkbox" /> */}
-//         <input
-//           id="list-radio-license"
-//           type="radio"
-//           value=""
-//           name="list-radio"
-//           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-//         />
-//         {coupon.name}
-//       </th>
-//       <td className="py-4 px-6">{coupon.type}</td>
-//       <td className="py-4 px-6">{coupon.discountValue}</td>
-
-//       <td className="py-4 px-6">{coupon.detail}</td>
-//       <td className="py-4 px-6">{coupon.cnt}</td>
-//     </tr>
-//   );
-// }
 
 function CouponListRadio({ sellerId, setCouponParentId }) {
   const router = useRouter();

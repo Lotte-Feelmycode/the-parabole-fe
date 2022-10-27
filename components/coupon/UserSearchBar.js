@@ -5,10 +5,8 @@ import useInput from '@hooks/useInput';
 import Input from '@components/input/Input';
 import Heading from '@components/input/Heading';
 import React from 'react';
-import { useRouter } from 'next/router';
 
 function UserSearchBar({ setUserParentList }) {
-  const router = useRouter();
   const [userName, onChangeUserName] = useInput('');
   const [userList, setUserList] = useState([]);
 
@@ -29,10 +27,6 @@ function UserSearchBar({ setUserParentList }) {
       }
       setUserList(res);
     });
-    // .catch(function (error) {
-    //   console.log(error);
-    //   return;
-    // });
   }
 
   function arrayRemove(arr, value) {
