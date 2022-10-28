@@ -11,7 +11,7 @@ export default function Home() {
   const productListProps = {
     size: 12,
     page: 0,
-    sort: 'id.desc',
+    sort: 'id,desc',
   };
 
   return (

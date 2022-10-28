@@ -17,6 +17,7 @@ export default function ProductList({
   productName,
   page,
   size,
+  sort,
 }) {
   const [productList, setProductList] = useState([]);
   const [totalElementCnt, setTotalElementCnt] = useState(0);
@@ -33,6 +34,7 @@ export default function ProductList({
       productName: productName,
       size: size,
       page: nowPage,
+      sort: sort,
     }).then((res) => {
       if (res) {
         console.log(res);

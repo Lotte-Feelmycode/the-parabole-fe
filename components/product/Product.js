@@ -4,10 +4,7 @@ import { numberToMonetary } from '@utils/functions';
 export default function NewProduct({ product }) {
   const router = useRouter();
   const onClick = (id) => {
-    console.log('id', id);
-    router.push({
-      pathname: `/product/${id}`,
-    });
+    router.push({ pathname: `/product/${id}` });
   };
 
   return (
