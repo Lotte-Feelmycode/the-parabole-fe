@@ -8,8 +8,6 @@ export default function Googlelogin({}) {
 
   useEffect(() => {
     const returnUrl = router.asPath;
-    console.log(router.asPath);
-
     if (returnUrl.includes('token')) {
       localStorage.setItem('ACCESS_TOKEN', token);
       alert('소셜 로그인 성공');
