@@ -22,15 +22,14 @@ function Coupon({ coupon }) {
   );
 }
 
-function CouponList({ sellerId }) {
+function CouponList() {
   const router = useRouter();
   const [couponList, setCouponList] = useState([]);
   const [totalElementCnt, setTotalElementCnt] = useState(0);
 
   useEffect(() => {
-    GET_DATA(`/coupon/seller/list`, { sellerId }).then((res) => {
+    GET_DATA(`/coupon/list`).then((res) => {
       if (res) {
-        console.log(res);
         if (res.numberOfElements === 0) {
           alert('판매자가 등록한 쿠폰이 없습니다.');
         } else if (res.content) {
