@@ -46,9 +46,9 @@ export default function Event() {
   function checkFcfsPrize() {
     if (eventType === 'FCFS' && prizeList.length > 0) {
       alert('선착순 이벤트는 한 가지 경품만 추가할 수 있습니다.');
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
   // 이벤트 등록 validation check
@@ -396,8 +396,8 @@ export default function Event() {
   const startAtChangeHandler = (e) => {
     e.preventDefault();
 
-    // let fromDTM = e.target.value;
-    // setStartAt(fromDTM);
+    let fromDTM = e.target.value;
+    setStartAt(fromDTM);
 
     // console.log(fromDTM);
     // // let date = new Date(fromDTM.sp, 0, 1);
@@ -454,7 +454,7 @@ export default function Event() {
       return;
     }
 
-    if (!checkFcfsPrize()) return;
+    if (checkFcfsPrize()) return;
 
     if (productList[e.target.value].remains < 1) {
       alert('경품으로 지급가능한 상품 재고가 부족합니다.');
@@ -490,7 +490,7 @@ export default function Event() {
       return;
     }
 
-    if (!checkFcfsPrize()) return;
+    if (checkFcfsPrize()) return;
 
     if (couponList[e.target.value].remains < 1) {
       alert('발행가능한 쿠폰 수량이 부족합니다.');
@@ -585,7 +585,7 @@ export default function Event() {
         eventBannerImg: 'dummyimage',
         EventDetailImg: 'dummydetail',
       },
-      eventPrizeCreateRequestDtos: prizeList,
+      eventPrizeCreateRequestDtos: copyArr,
     };
 
     if (validation(eventParams)) {
