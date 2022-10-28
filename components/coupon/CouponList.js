@@ -30,7 +30,6 @@ function CouponList() {
   useEffect(() => {
     GET_DATA(`/coupon/list`).then((res) => {
       if (res) {
-        console.log(res);
         if (res.numberOfElements === 0) {
           alert('판매자가 등록한 쿠폰이 없습니다.');
         } else if (res.content) {
