@@ -2,6 +2,7 @@ import { GET_DATA } from '@apis/defaultApi';
 import { getDate, numberToMonetary } from '@utils/functions';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 
 // function UserCoupon({ userCoupon }) {
 //   return (
@@ -64,20 +65,26 @@ function UserCoupon({ userCoupon }) {
 export default function UserCouponList({ userId }) {
   const [userCouponList, setUserCouponList] = useState([]);
   const [totalElementCnt, setTotalElementCnt] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
-    GET_DATA(`/coupon/list`).then((res) => {
-      if (res) {
-        if (res.numberOfElements === 0) {
-          alert('보유한 쿠폰이 없습니다.');
-        } else if (res.content) {
-          setUserCouponList(res.content);
-          setTotalElementCnt(res.numberOfElements);
+    GET_DATA(`/coupon/list`)
+      .then((res) => {
+        if (res) {
+          if (res.numberOfElements === 0) {
+            alert('보유한 쿠폰이 없습니다.');
+          } else if (res.content) {
+            setUserCouponList(res.content);
+            setTotalElementCnt(res.numberOfElements);
+          }
+        } else {
+          alert('사용자의 쿠폰을 조회하지 못했습니다. 다시 시도해주세요.');
         }
-      } else {
-        alert('사용자의 쿠폰을 조회하지 못했습니다. 다시 시도해주세요.');
-      }
-    });
+      })
+      .catch((error) => {
+        alert('권한이 없어 접근할 수 없습니다. 로그인 해주세요.');
+        router.push('/');
+      });
   }, []);
 
   return (

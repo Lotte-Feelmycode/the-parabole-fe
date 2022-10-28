@@ -5,11 +5,17 @@ import SiteHead from '@components/common/SiteHead';
 import { POST_DATA } from '@apis/defaultApi';
 import { API_BASE_URL } from '@apis/api-config';
 import Link from 'next/link';
+import { Blue } from '@components/input/Button';
 
 export default function Signin() {
   const router = useRouter();
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
+
+  // const REST_API_KEY = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
+  const REST_API_KEY = '213e01ad46d7ee3b93536da26b965819';
+  const REDIRECT_URI = 'http://localhost:3000/oauthkakao';
+  const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -98,12 +104,7 @@ export default function Signin() {
                 />
               </div>
 
-              <button
-                className="block bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 mt-4 px-8 py-4"
-                onClick={handleSubmit}
-              >
-                로그인하기
-              </button>
+              <Blue buttonText="로그인하기" onClickFunc={handleSubmit} />
 
               <div className="flex justify-center items-center relative">
                 <span className="h-px bg-gray-300 absolute inset-x-0"></span>
@@ -211,12 +212,11 @@ export default function Signin() {
 
             <div className="flex justify-center items-center bg-gray-100 p-4">
               <p className="text-gray-500 text-sm text-center">
-                가입만 해도 즉시 3000원 적립{' '}
                 <a
                   href="/user/signup"
                   className="text-indigo-500 hover:text-indigo-600 active:text-indigo-700 transition duration-100"
                 >
-                  회원가입
+                  회원가입하기
                 </a>
               </p>
             </div>
