@@ -7,12 +7,6 @@ import Link from 'next/link';
 
 export default function Welcome() {
   const router = useRouter();
-  const [newname, setNewname] = useState(router.query.newname);
-
-  useEffect(() => {
-    setUsername(router.query.newname);
-  }, []);
-
   return (
     <CommerceLayout>
       <SiteHead title="회원가입 완료" />
@@ -24,7 +18,8 @@ export default function Welcome() {
           <div className="max-w-lg border rounded-lg mx-auto bg-blue-200">
             <div className="flex flex-col items-center gap-4 p-4 md:p-8 mt-5">
               <span className="text-black-400 text-lg relative px-4 ">
-                {newname} 님 😊 <br /> THE PARABOLE 회원 가입을 축하합니다 :)
+                {router.query.id} 님 😊 <br /> THE PARABOLE 회원 가입을
+                축하합니다 :)
               </span>
             </div>
 

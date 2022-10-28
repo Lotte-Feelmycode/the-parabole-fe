@@ -149,7 +149,7 @@ export default function Signin() {
                 Continue with Naver
               </button>
 
-              <Link href={KAKAO_AUTH_URI}>
+              {/* <Link href={KAKAO_AUTH_URI}>
                 <button
                   // onClick={() => handleSocialLogin('kakao')}
                   className="flex justify-center items-center bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-700 focus-visible:ring ring-yellow-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3"
@@ -170,7 +170,7 @@ export default function Signin() {
                   </a>
                   Continue with Kakao
                 </button>
-              </Link>
+              </Link> */}
 
               <button
                 onClick={() => handleSocialLogin('google')}

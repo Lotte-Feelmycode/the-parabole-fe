@@ -17,7 +17,7 @@ export default function Oauthkakao({}) {
         Authorization: bearerToken,
       };
 
-      export const GET = async (url, params) => {
+      const GET = async (url, params) => {
         let apiUrl = API_BASE_URL + url;
 
         if (!url) {

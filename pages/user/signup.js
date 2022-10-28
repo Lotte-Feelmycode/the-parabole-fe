@@ -14,8 +14,6 @@ export default function Signup() {
   const [phone, onChangePhone] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [passwordConfirmation, onChangePasswordConfirmation] = useInput('');
-  const [newname, setNewname] = useState();
-
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -44,11 +42,8 @@ export default function Signup() {
       .then((res) => {
         if (res.email) {
           alert('회원가입 성공');
-          alert(re.nickname);
-          setNewname(res.nickname);
-
           router.push({
-            pathname: `./welcome/${newname}`,
+            pathname: `./welcome/${res.id}`,
           });
         }
       })
