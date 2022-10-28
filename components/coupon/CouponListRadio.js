@@ -14,7 +14,6 @@ function CouponListRadio({ sellerId, setCouponParentId }) {
   useEffect(() => {
     GET_DATA(`/coupon/seller/list`, { sellerId }).then((res) => {
       if (res) {
-        console.log(res);
         if (res.numberOfElements === 0) {
           alert('판매자가 등록한 쿠폰이 없습니다.');
         } else if (res.content) {
@@ -28,8 +27,6 @@ function CouponListRadio({ sellerId, setCouponParentId }) {
   }, []);
 
   function handleRadioChange(e) {
-    console.log('------radio button clicked-----');
-    console.log(`선택한 값 : ${e.target.value}`);
     setRadioValue(e.target.value);
     setCouponParentId(e.target.value);
   }
