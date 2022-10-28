@@ -68,7 +68,6 @@ export default function UserCouponList({ userId }) {
   useEffect(() => {
     GET_DATA(`/coupon/list`).then((res) => {
       if (res) {
-        console.log(res);
         if (res.numberOfElements === 0) {
           alert('보유한 쿠폰이 없습니다.');
         } else if (res.content) {
