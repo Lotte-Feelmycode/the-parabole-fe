@@ -94,6 +94,17 @@ export function getDateTimeNotKor(str) {
 }
 
 /**
+ * 현재 날짜를 '0000-00-00'으로 리턴하는 함수
+ * @returns
+ */
+export function getTodayDateShort() {
+  let date = new Date();
+  return (
+    date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+  );
+}
+
+/**
  * 딕셔너리 객체 입력시 name 리턴하는 함수
  * @param {*} state
  * @param {*} prop
