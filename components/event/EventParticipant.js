@@ -3,24 +3,19 @@ import { useEffect, useState } from 'react';
 import { getDateTime } from '@utils/functions';
 
 export default function EventParticipant({ participant }) {
-  const [user, setUser] = useState(participant.user);
+  const [partinfo, setPartinfo] = useState(participant);
 
   useEffect(() => {
-    console.log(participant.user);
-    setUser(participant.user);
+    setPartinfo(partinfo);
   }, [participant]);
 
   return (
-    <tr>
-      <Td>{getDateTime(participant.eventTimeStartAt)}</Td>
-      <Td>{user.email}</Td>
-      <Td>{user.name}</Td>
-      <Td>{user.phone}</Td>
+    <tr className="py-1">
+      <td>{getDateTime(partinfo.eventTimeStartAt)}</td>
+      <td>{partinfo.user.email}</td>
+      <td>{partinfo.user.name}</td>
+      <td>{partinfo.user.phone}</td>
+      <td>{partinfo.eventPrizes[0].productName}</td>
     </tr>
   );
 }
-
-const Td = styled.td`
-  padding: 30px;
-  font-family: 'SansLight';
-`;
