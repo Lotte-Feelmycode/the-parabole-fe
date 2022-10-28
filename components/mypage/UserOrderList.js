@@ -1,7 +1,9 @@
-import { GET_DATA } from '@apis/defaultApi';
-import UserOrder from '@components/mypage/UserOrder';
-import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import styled from '@emotion/styled';
+import { GET_DATA } from '@apis/defaultApi';
+import { getState, numberToMonetary } from '@utils/functions';
+import { ORDER_PAY_STATE, ORDER_STATE } from '@utils/constants/types';
 
 export default function OrderList({ userId }) {
   const [orderList, setOrderList] = useState([]);
@@ -54,4 +56,34 @@ const ImageSection = styled.td`
 `;
 const ProductNameSection = styled.td`
   width: 30%;
+`;
+
+function UserOrder({ order }) {
+  const router = useRouter();
+
+  const goToProduct = (id) => {
+    router.push({ pathname: `/product/${id}` });
+  };
+
+  return (
+    <tr>
+      <Td>
+        <a
+          className="product"
+          onClick={() => goToProduct(order.productId || 0)}
+        >
+          <img src={order.productThumbnailImg} width="100%" margin="0" />
+        </a>
+      </Td>
+      <Td>{order.productName}</Td>
+      <Td>{order.productCnt}개</Td>
+      <Td>{numberToMonetary(order.productPrice * order.productCnt)}원</Td>
+      <Td>{getState(ORDER_STATE, order.state)}</Td>
+      <Td>{getState(ORDER_PAY_STATE, order.payState)}</Td>
+    </tr>
+  );
+}
+
+const Td = styled.td`
+  padding: 5px;
 `;
