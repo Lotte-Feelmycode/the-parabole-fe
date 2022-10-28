@@ -21,7 +21,6 @@ function UserSearchBar({ setUserParentList }) {
     }
 
     GET_DATA(`/user/list`, { userName }).then((res) => {
-      console.log(res);
       if (!res) {
         alert('조회되는 사용자가 존재하지 않습니다.');
       }

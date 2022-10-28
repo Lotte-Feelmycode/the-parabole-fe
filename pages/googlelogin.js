@@ -2,7 +2,7 @@ import SocialAfInfo from '@components/user/SocialAfInfo';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-export default function Sociallogin({}) {
+export default function Googlelogin({}) {
   const router = useRouter();
   const [token, setToken] = useState(router.asPath.slice(19));
 

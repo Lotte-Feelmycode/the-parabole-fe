@@ -28,15 +28,12 @@ export default function CouponAssign() {
 
     POST(`/coupon/assign`, reqBody)
       .then((res) => {
-        console.log(res);
         if (res.success) {
-          console.log('쿠폰 정상 지급');
           alert('선택한 사용자에게 쿠폰이 정상적으로 지급되었습니다.');
         }
         router.reload();
       })
       .catch(function (error) {
-        console.log(error);
         return {};
       });
   }

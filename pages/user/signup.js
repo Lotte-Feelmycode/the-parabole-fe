@@ -52,7 +52,6 @@ export default function Signup() {
         }
       })
       .catch(function (error) {
-        console.log(error);
         alert('회원가입 실패');
         return {};
       });

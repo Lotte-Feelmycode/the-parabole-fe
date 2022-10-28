@@ -2,9 +2,6 @@ import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead.js';
 import styles from '@styles/Home.module.scss';
 import UserCouponList from '@components/coupon/UserCouponList';
-import { GET } from '@apis/defaultApi';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 
 export default function UsersCouponList() {
   return (

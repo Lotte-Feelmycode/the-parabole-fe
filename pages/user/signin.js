@@ -4,6 +4,7 @@ import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead';
 import { POST_DATA } from '@apis/defaultApi';
 import { API_BASE_URL } from '@apis/api-config';
+import Link from 'next/link';
 
 export default function Signin() {
   const router = useRouter();
@@ -20,7 +21,6 @@ export default function Signin() {
 
     POST_DATA(`/auth/signin`, reqBody)
       .then((user) => {
-        console.log(user);
         if (user.token) {
           localStorage.setItem('email', user.email);
           localStorage.setItem('id', user.id);
@@ -33,7 +33,6 @@ export default function Signin() {
         }
       })
       .catch(function (error) {
-        console.log(error + ' : 로그인 실패');
         alert('로그인 실패');
       });
   }
@@ -132,6 +131,50 @@ export default function Signin() {
                 </svg>
                 Continue with Facebook
               </button>
+
+              <button
+                onClick={() => handleSocialLogin('naver')}
+                className="flex justify-center items-center bg-green-500 hover:bg-green-600 active:bg-green-700 focus-visible:ring ring-green-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3"
+              >
+                <a
+                  title="Gapo, Public domain, via Wikimedia Commons"
+                  href="https://commons.wikimedia.org/wiki/File:Naver_logo_initial.svg"
+                >
+                  <img
+                    className="w-5 h-5 shrink-0"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    alt="Naver logo initial"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Naver_logo_initial.svg/256px-Naver_logo_initial.svg.png"
+                  />
+                </a>{' '}
+                Continue with Naver
+              </button>
+
+              <Link href={KAKAO_AUTH_URI}>
+                <button
+                  // onClick={() => handleSocialLogin('kakao')}
+                  className="flex justify-center items-center bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-700 focus-visible:ring ring-yellow-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3"
+                >
+                  <a
+                    title="Kakao Corp., Public domain, via Wikimedia Commons"
+                    href="https://commons.wikimedia.org/wiki/File:KakaoTalk_logo.svg"
+                  >
+                    <img
+                      className="w-5 h-5 shrink-0"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      alt="KakaoTalk logo"
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/KakaoTalk_logo.svg/512px-KakaoTalk_logo.svg.png"
+                    />
+                  </a>
+                  Continue with Kakao
+                </button>
+              </Link>
 
               <button
                 onClick={() => handleSocialLogin('google')}
