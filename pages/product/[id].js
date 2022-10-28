@@ -219,12 +219,11 @@ const ProductTopSection = styled.div`
 `;
 
 const ProductThumbnailImgSection = styled.div`
-  margin: 10px 10px 10px 0;
-  max-width: 100%;
   min-width: 300px;
 
   @media (min-width: 768px) {
-    width: 50%;
+    margin: 10px 10px 10px 0;
+    width: 45%;
   }
 
   @media (max-width: 768px) {
@@ -239,6 +238,15 @@ const ProductDetailTop = styled.div`
   flex-direction: column;
   flex-wrap: nowrap;
   flex: 1 1 auto;
+
+  @media (min-width: 768px) {
+    margin-left: 3%;
+    width: 45%;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const ProductPrice = styled.span`
@@ -295,7 +303,13 @@ const BtnSection = styled.div`
 `;
 
 const DetailLayout = styled.div`
-  padding: 20px 24px;
+  @media (min-width: 768px) {
+    margin: 0 auto;
+    width: 80%;
+  }
+
+  @media (max-width: 768px) {
+  }
 `;
 
 const ProductThumbnailImg = styled.img`
