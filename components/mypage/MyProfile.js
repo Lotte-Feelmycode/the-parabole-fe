@@ -7,7 +7,7 @@ export default function MyProfile({ userId }) {
   const [userInfo, setUserInfo] = useState([]);
 
   useEffect(() => {
-    GET_DATA(`/user/${userId}`).then((res) => {
+    GET_DATA(`/user/info`).then((res) => {
       if (res) {
         setUserInfo(res);
       }

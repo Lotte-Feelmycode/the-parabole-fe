@@ -9,10 +9,10 @@ export default function Googlelogin({}) {
   useEffect(() => {
     const returnUrl = router.asPath;
     if (returnUrl.includes('token')) {
-      localStorage.setItem('ACCESS_TOKEN', token);
-      alert('소셜 로그인 성공');
+      localStorage.setItem('userToken', token);
+      alert('구글 로그인 성공');
     } else {
-      alert('소셜 로그인 실패');
+      alert('구글 로그인 실패');
     }
   }, []);
 

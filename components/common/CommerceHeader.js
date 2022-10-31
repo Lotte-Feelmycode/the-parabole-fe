@@ -19,7 +19,7 @@ export default function CommerceHeader() {
   const [token, setToken] = useState();
 
   useEffect(() => {
-    setToken(localStorage.getItem('ACCESS_TOKEN'));
+    setToken(localStorage.getItem('userToken'));
   });
 
   return (

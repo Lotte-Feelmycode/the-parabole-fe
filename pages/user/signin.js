@@ -2,8 +2,8 @@ import useInput from '@hooks/useInput';
 import { useRouter } from 'next/router';
 import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead';
-import { POST_DATA } from '@apis/defaultApi';
-import { API_BASE_URL } from '@apis/api-config';
+import { POST, POST_DATA } from '@apis/defaultApi';
+import { API_BASE_URL, FRONT_URL } from '@apis/api-config';
 import Link from 'next/link';
 import { Blue } from '@components/input/Button';
 
@@ -11,6 +11,9 @@ export default function Signin() {
   const router = useRouter();
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
+
+  const REDIRECT_URI = 'http://localhost:8080/oauth2/code/kakao';
+  const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -20,15 +23,15 @@ export default function Signin() {
       password: password,
     };
 
-    POST_DATA(`/auth/signin`, reqBody)
-      .then((user) => {
-        if (user.token) {
-          localStorage.setItem('email', user.email);
-          localStorage.setItem('id', user.id);
-          localStorage.setItem('name', user.name);
-          localStorage.setItem('nickname', user.nickname);
-          localStorage.setItem('phone', user.phone);
-          localStorage.setItem('ACCESS_TOKEN', user.token);
+    POST(`/auth/signin`, reqBody)
+      .then((res) => {
+        if (res.body.data) {
+          localStorage.setItem('email', res.body.data.email);
+          localStorage.setItem('id', res.body.data.id);
+          localStorage.setItem('name', res.body.data.name);
+          localStorage.setItem('nickname', res.body.data.nickname);
+          localStorage.setItem('phone', res.body.data.phone);
+          localStorage.setItem('userToken', res.body.data.token);
           alert('로그인 성공');
           router.push('/');
         }
@@ -39,16 +42,12 @@ export default function Signin() {
   }
 
   const handleSocialLogin = (provider) => {
-    // const frontendUrl = window.location.protocol + '//' + window.location.host;
-    const frontendUrl = 'http://localhost:3000';
-    const remains = API_BASE_URL.indexOf('/api/v1');
-
     router.push(
-      API_BASE_URL.slice(0, remains) +
+      API_BASE_URL.slice(0, API_BASE_URL.indexOf('/api/v1')) +
         '/auth/authorize/' +
         provider +
         '?redirect_url=' +
-        frontendUrl,
+        FRONT_URL,
     );
   };
 
@@ -109,26 +108,6 @@ export default function Signin() {
               </div>
 
               <button
-                onClick={() => handleSocialLogin('facebook')}
-                className="flex justify-center items-center bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3"
-              >
-                <svg
-                  className="w-5 h-5 shrink-0"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 0C5.37273 0 0 5.37273 0 12C0 18.0164 4.43182 22.9838 10.2065 23.8516V15.1805H7.23764V12.0262H10.2065V9.92727C10.2065 6.45218 11.8996 4.92655 14.7878 4.92655C16.1711 4.92655 16.9025 5.02909 17.2489 5.076V7.82945H15.2787C14.0525 7.82945 13.6244 8.99182 13.6244 10.302V12.0262H17.2178L16.7302 15.1805H13.6244V23.8773C19.4815 23.0825 24 18.0747 24 12C24 5.37273 18.6273 0 12 0Z"
-                    fill="white"
-                  />
-                </svg>
-                Continue with Facebook
-              </button>
-
-              <button
                 onClick={() => handleSocialLogin('naver')}
                 className="flex justify-center items-center bg-green-500 hover:bg-green-600 active:bg-green-700 focus-visible:ring ring-green-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3"
               >
@@ -149,11 +128,8 @@ export default function Signin() {
                 Continue with Naver
               </button>
 
-              {/* <Link href={KAKAO_AUTH_URI}>
-                <button
-                  // onClick={() => handleSocialLogin('kakao')}
-                  className="flex justify-center items-center bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-700 focus-visible:ring ring-yellow-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3"
-                >
+              <Link href={KAKAO_AUTH_URI}>
+                <button className="flex justify-center items-center bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-700 focus-visible:ring ring-yellow-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3">
                   <a
                     title="Kakao Corp., Public domain, via Wikimedia Commons"
                     href="https://commons.wikimedia.org/wiki/File:KakaoTalk_logo.svg"
@@ -170,7 +146,7 @@ export default function Signin() {
                   </a>
                   Continue with Kakao
                 </button>
-              </Link> */}
+              </Link>
 
               <button
                 onClick={() => handleSocialLogin('google')}
