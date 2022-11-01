@@ -1,10 +1,10 @@
-import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
-import { numberToMonetary } from '@utils/functions';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import styled from '@emotion/styled';
+import { PATCH } from '@apis/defaultApi';
+import { numberToMonetary } from '@utils/functions';
 import { SmallWhite } from '@components/input/Button';
 import Input from '@components/input/Input';
-import { PATCH } from '@apis/defaultApi';
 
 export default function CartProduct({
   userId,
@@ -13,12 +13,6 @@ export default function CartProduct({
   count,
   setCountFunc,
 }) {
-  // console.log(
-  //   'product props : ' +
-  //     JSON.stringify(product) +
-  //     ' / count : ' +
-  //     JSON.stringify(count),
-  // );
   const router = useRouter();
   const goToProductDetail = (id) => {
     router.push({
