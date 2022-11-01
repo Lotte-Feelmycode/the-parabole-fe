@@ -12,8 +12,11 @@ export default function Signin() {
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
 
-  const REDIRECT_URI = 'http://localhost:8080/oauth2/code/kakao';
-  const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const KAKAO_REDIRECT_URI = 'http://localhost:8080/oauth2/code/kakao';
+  const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
+
+  const NAVER_REDIRECT_URI = 'http://localhost:8080/oauth2/code/naver';
+  const NAVER_AUTH_URI = `https://nid.naver.com/oauth2.0/authorize?client_id=${process.env.NEXT_PUBLIC_NAVER_REST_API_KEY}&redirect_uri=${NAVER_REDIRECT_URI}&response_type=code&state=${process.env.NEXT_PUBLIC_NAVER_STATE}`;
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -107,26 +110,25 @@ export default function Signin() {
                 </span>
               </div>
 
-              <button
-                onClick={() => handleSocialLogin('naver')}
-                className="flex justify-center items-center bg-green-500 hover:bg-green-600 active:bg-green-700 focus-visible:ring ring-green-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3"
-              >
-                <a
-                  title="Gapo, Public domain, via Wikimedia Commons"
-                  href="https://commons.wikimedia.org/wiki/File:Naver_logo_initial.svg"
-                >
-                  <img
-                    className="w-5 h-5 shrink-0"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    alt="Naver logo initial"
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Naver_logo_initial.svg/256px-Naver_logo_initial.svg.png"
-                  />
-                </a>{' '}
-                Continue with Naver
-              </button>
+              <Link href={NAVER_AUTH_URI}>
+                <button className="flex justify-center items-center bg-green-500 hover:bg-green-600 active:bg-green-700 focus-visible:ring ring-green-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3">
+                  <a
+                    title="Gapo, Public domain, via Wikimedia Commons"
+                    href="https://commons.wikimedia.org/wiki/File:Naver_logo_initial.svg"
+                  >
+                    <img
+                      className="w-5 h-5 shrink-0"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      alt="Naver logo initial"
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Naver_logo_initial.svg/256px-Naver_logo_initial.svg.png"
+                    />
+                  </a>{' '}
+                  Continue with Naver
+                </button>
+              </Link>
 
               <Link href={KAKAO_AUTH_URI}>
                 <button className="flex justify-center items-center bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-700 focus-visible:ring ring-yellow-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3">
