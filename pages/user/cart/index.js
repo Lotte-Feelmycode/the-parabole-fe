@@ -223,28 +223,32 @@ export default function Cart() {
 
     const CommerceCart = styled.div`
       flex: 1 0 auto;
-      padding-right: 7.5px;
-      padding-left: 7.5px;
       position: relative;
       min-height: 1px;
 
       @media (max-width: 1024px) {
+        padding-right: 7.5px;
+        padding-left: 7.5px;
         width: 100%;
       }
       @media (min-width: 1024px) {
+        padding-right: 1rem;
+        padding-left: 1rem;
         width: 70%;
       }
     `;
 
     const CartSidebarSection = styled.div`
       flex: 1 0 auto;
-      padding-right: 7.5px;
-      padding-left: 7.5px;
       position: relative;
       @media (max-width: 1024px) {
+        padding-right: 7.5px;
+        padding-left: 7.5px;
         width: 100%;
       }
       @media (min-width: 1024px) {
+        padding-right: 1rem;
+        padding-left: 1rem;
         width: 30%;
       }
     `;
