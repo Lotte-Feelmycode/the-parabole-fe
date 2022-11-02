@@ -26,12 +26,17 @@ export default function CartContent({
             <CartContentHeader storeName={item.storeName} />
             <CartContentDetail
               userId={userId}
+              storeName={item.storeName}
               cartItemList={item.cartItemList}
               checkBoxStates={checkBoxStates}
               cartCheckBoxChange={cartCheckBoxChange}
               cartInfoChange={cartInfoChange}
             />
-            <CartContentFooter couponList={item.couponList} />
+            <CartContentFooter
+              couponList={item.couponList}
+              storeName={item.storeName}
+              cartItemList={item.cartItemList}
+            />
           </div>
         ))}
     </CommerceCartContentContainer>

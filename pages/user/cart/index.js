@@ -130,7 +130,6 @@ export default function Cart() {
       if (responseDtoList && cartItemCount > 0) {
         responseDtoList.forEach((dto) => {
           const cartItemList = dto.cartItemList;
-          console.log('cartItemList length', cartItemList.length);
           if (cartItemList && cartItemList.length > 0) {
             cartItemList.forEach((item) => {
               if (checkBoxStates.get(item.cartItemId) !== flag) {
