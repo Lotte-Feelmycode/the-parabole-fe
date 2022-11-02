@@ -261,6 +261,7 @@ export default function Cart() {
               <CartHeader
                 totalCheckBoxChange={totalCheckBoxChange}
                 cartBySellerDtoList={cartBySellerDtoList}
+                checkBoxStates={checkBoxStates}
                 numberOfChekced={numberOfChekced}
                 totalCheckBoxFlag={totalCheckBoxFlag}
                 userId={userId}

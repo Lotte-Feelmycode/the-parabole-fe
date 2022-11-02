@@ -1,10 +1,12 @@
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
+import { DELETE } from '@apis/defaultApi';
 import { SmallLineWhite } from '@components/input/Button';
 
 export default function CartHeader({
   totalCheckBoxChange,
   cartBySellerDtoList,
+  checkBoxStates,
   numberOfChekced,
   totalCheckBoxFlag,
   userId,
