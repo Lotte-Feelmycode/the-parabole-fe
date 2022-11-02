@@ -20,7 +20,7 @@ export default function Order({ order }) {
       <Td>{order.productCnt}개</Td>
       <Td>{numberToMonetary(order.productPrice * order.productCnt)}원</Td>
       <Td>{getState(ORDER_STATE, order.state)}</Td>
-      <Td>{getState(ORDER_PAY_STATE, order.payState)}</Td>
+      <Td>{order.updatedAt}</Td>
     </tr>
   );
 }
