@@ -17,7 +17,7 @@ export default function Cart() {
 
   const [cartItemCount, setCartItemCount] = useState(1);
   const [cartId, setCartId] = useState(userId);
-  const [responseDtoList, setResponseDtoList] = useState([]);
+  const [cartBySellerDtoList, setCartBySellerDtoList] = useState([]);
   const [checkBoxStates, setCheckBoxStates] = useState(new Map());
   const [numberOfChekced, setNumberOfChekced] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -42,7 +42,7 @@ export default function Cart() {
         if (res.success) {
           setCartId(res.data.cartId);
           setCartItemCount(res.data.cnt);
-          setResponseDtoList(res.data.cartWithCoupon);
+          setCartBySellerDtoList(res.data.cartBySellerDtoList);
         }
       } else {
         console.log('장바구니 오류', res);
@@ -54,18 +54,18 @@ export default function Cart() {
     clearCheckBoxStates();
     setNumberOfChekced(0);
     setTotalPrice(0);
-    if (cartItemCount > 0 && responseDtoList) {
-      responseDtoList.forEach((dto) => {
-        const cartItemList = dto.cartItemList;
+    if (cartItemCount > 0 && cartBySellerDtoList) {
+      cartBySellerDtoList.forEach((dto) => {
+        const cartItemDtoList = dto.cartItemDtoList;
         {
-          cartItemList.forEach((item) => {
+          cartItemDtoList.forEach((item) => {
             addCheckBoxStates(item.cartItemId, false);
           });
         }
       });
     }
     totalCheckBoxChange(true);
-  }, [responseDtoList]);
+  }, [cartBySellerDtoList]);
 
   useEffect(() => {
     if (cartItemCount < numberOfChekced) setNumberOfChekced(cartItemCount);
@@ -74,9 +74,9 @@ export default function Cart() {
   }, [numberOfChekced]);
 
   function cartInfoChange({ cartItemId, cnt }) {
-    responseDtoList.forEach((dto) => {
-      const cartItemList = dto.cartItemList;
-      cartItemList.forEach((item) => {
+    cartBySellerDtoList.forEach((dto) => {
+      const cartItemDtoList = dto.cartItemDtoList;
+      cartItemDtoList.forEach((item) => {
         if (item.cartItemId === cartItemId) {
           if (checkBoxStates.get(cartItemId)) {
             const changedPrice =
@@ -95,9 +95,9 @@ export default function Cart() {
     if (checkBoxStates.get(cartItemId) !== flag) {
       if (flag) {
         setNumberOfChekced(numberOfChekced + 1);
-        responseDtoList.forEach((dto) => {
-          const cartItemList = dto.cartItemList;
-          cartItemList.forEach((item) => {
+        cartBySellerDtoList.forEach((dto) => {
+          const cartItemDtoList = dto.cartItemDtoList;
+          cartItemDtoList.forEach((item) => {
             if (item.cartItemId === cartItemId) {
               setTotalPrice(
                 totalPrice + item.product.productPrice * item.count,
@@ -107,9 +107,9 @@ export default function Cart() {
         });
       } else {
         setNumberOfChekced(numberOfChekced - 1);
-        responseDtoList.forEach((dto) => {
-          const cartItemList = dto.cartItemList;
-          cartItemList.forEach((item) => {
+        cartBySellerDtoList.forEach((dto) => {
+          const cartItemDtoList = dto.cartItemDtoList;
+          cartItemDtoList.forEach((item) => {
             if (item.cartItemId === cartItemId) {
               setTotalPrice(
                 totalPrice - item.product.productPrice * item.count,
@@ -127,11 +127,11 @@ export default function Cart() {
     var checkCount = numberOfChekced;
 
     if (flag) {
-      if (responseDtoList && cartItemCount > 0) {
-        responseDtoList.forEach((dto) => {
-          const cartItemList = dto.cartItemList;
-          if (cartItemList && cartItemList.length > 0) {
-            cartItemList.forEach((item) => {
+      if (cartBySellerDtoList && cartItemCount > 0) {
+        cartBySellerDtoList.forEach((dto) => {
+          const cartItemDtoList = dto.cartItemDtoList;
+          if (cartItemDtoList && cartItemDtoList.length > 0) {
+            cartItemDtoList.forEach((item) => {
               if (checkBoxStates.get(item.cartItemId) !== flag) {
                 calcTotalPrice =
                   calcTotalPrice + item.product.productPrice * item.count;
@@ -143,11 +143,11 @@ export default function Cart() {
         });
       }
     } else {
-      if (responseDtoList && cartItemCount > 0) {
-        responseDtoList.forEach((dto) => {
-          const cartItemList = dto.cartItemList;
-          if (cartItemList && cartItemList.length > 0) {
-            cartItemList.forEach((item) => {
+      if (cartBySellerDtoList && cartItemCount > 0) {
+        cartBySellerDtoList.forEach((dto) => {
+          const cartItemDtoList = dto.cartItemDtoList;
+          if (cartItemDtoList && cartItemDtoList.length > 0) {
+            cartItemDtoList.forEach((item) => {
               if (checkBoxStates.get(item.cartItemId) !== flag) {
                 upsertCheckBoxStates(item.cartItemId, flag);
                 checkCount = checkCount - 1;
@@ -163,11 +163,11 @@ export default function Cart() {
   }
 
   function GoToOrder() {
-    if (responseDtoList && numberOfChekced > 0) {
+    if (cartBySellerDtoList && numberOfChekced > 0) {
       var orderInfoDto = [];
-      responseDtoList.forEach((dto) => {
-        const cartItemList = dto.cartItemList;
-        cartItemList.forEach((item) => {
+      cartBySellerDtoList.forEach((dto) => {
+        const cartItemDtoList = dto.cartItemDtoList;
+        cartItemDtoList.forEach((item) => {
           if (checkBoxStates.get(item.cartItemId) === true) {
             orderInfoDto.push({
               productId: item.product.productId,
@@ -244,7 +244,7 @@ export default function Cart() {
             <CommerceCart>
               <CartHeader
                 totalCheckBoxChange={totalCheckBoxChange}
-                responseDtoList={responseDtoList}
+                cartBySellerDtoList={cartBySellerDtoList}
                 numberOfChekced={numberOfChekced}
                 totalCheckBoxFlag={totalCheckBoxFlag}
                 userId={userId}
@@ -253,7 +253,7 @@ export default function Cart() {
                 cartInfoChange={cartInfoChange}
                 cartCheckBoxChange={cartCheckBoxChange}
                 userId={userId}
-                cartList={responseDtoList}
+                cartBySellerDtoList={cartBySellerDtoList}
                 checkBoxStates={checkBoxStates}
               />
               <CartFooter length={cartItemCount} />

@@ -4,7 +4,7 @@ import { SmallLineWhite } from '@components/input/Button';
 
 export default function CartHeader({
   totalCheckBoxChange,
-  responseDtoList,
+  cartBySellerDtoList,
   numberOfChekced,
   totalCheckBoxFlag,
   userId,
@@ -40,12 +40,12 @@ export default function CartHeader({
   const deleteCheckedItemBtn = () => {
     var deleteFlag = false;
     if (
-      responseDtoList &&
+      cartBySellerDtoList &&
       numberOfChekced !== 0 &&
       confirm('선택한 상품을 장바구니에서 삭제하시겠습니까?')
     ) {
-      responseDtoList.map((dto) => {
-        const cartItemList = dto.CartItemList;
+      cartBySellerDtoList.map((dto) => {
+        const cartItemList = dto.cartItemDtoList;
         cartItemList.map((item) => {
           if (checkBoxStates.get(item.cartItemId)) {
             const CartItemDeleteRequestDto = {

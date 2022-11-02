@@ -4,14 +4,14 @@ import { useState } from 'react';
 import CartCouponModal from './CartCouponModal';
 
 export default function CartContentFooter({
-  couponList,
-  cartItemList,
+  cartItemDtoList,
   storeName,
+  couponDto,
 }) {
   const [modalState, setModalState] = useState(false);
   var contentTotalPrice = 0;
-  if (cartItemList && cartItemList.length > 0) {
-    cartItemList.forEach((item) => {
+  if (cartItemDtoList && cartItemDtoList.length > 0) {
+    cartItemDtoList.forEach((item) => {
       contentTotalPrice =
         (contentTotalPrice + item.product.productPrice) * item.count;
     });
@@ -32,7 +32,7 @@ export default function CartContentFooter({
       {modalState && (
         <CartCouponModal
           setModalState={setModalState}
-          couponList={couponList}
+          couponDto={couponDto}
           contentTotalPrice={contentTotalPrice}
           storeName={storeName}
         />

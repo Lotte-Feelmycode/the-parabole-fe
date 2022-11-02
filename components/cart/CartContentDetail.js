@@ -6,7 +6,7 @@ import CartProduct from '@components/cart/CartProduct';
 
 export default function CartContentDetail({
   userId,
-  cartItemList,
+  cartItemDtoList,
   checkBoxStates,
   cartCheckBoxChange,
   cartInfoChange,
@@ -59,8 +59,8 @@ export default function CartContentDetail({
 
   return (
     <div>
-      {cartItemList &&
-        cartItemList.map((item) => (
+      {cartItemDtoList &&
+        cartItemDtoList.map((item) => (
           <CartDetailSection key={item.cartItemId}>
             <ProductCheckSection>
               <input

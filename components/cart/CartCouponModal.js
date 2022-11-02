@@ -9,7 +9,7 @@ import { numberToMonetary } from '@utils/functions';
 
 export default function CartCouponModal({
   setModalState,
-  couponList,
+  couponDto,
   contentTotalPrice,
   storeName,
 }) {
@@ -30,12 +30,12 @@ export default function CartCouponModal({
 
   useEffect(() => {
     if (
-      couponList.rateCoupon &&
-      couponList.amountCoupon &&
-      couponList.amountCoupon.length + couponList.rateCoupon.length > 0
+      couponDto.rateCoupon &&
+      couponDto.amountCoupon &&
+      couponDto.amountCoupon.length + couponDto.rateCoupon.length > 0
     ) {
-      const rateCouponList = couponList.rateCoupon;
-      const amountCouponList = couponList.amountCoupon;
+      const rateCouponList = couponDto.rateCoupon;
+      const amountCouponList = couponDto.amountCoupon;
 
       var rateIndex = 0;
       var amountIndex = 0;
@@ -133,7 +133,7 @@ export default function CartCouponModal({
         <ModalTitleSection>{storeName}에서 사용가능한 쿠폰</ModalTitleSection>
         <ModalTableSection>
           <ShowCouponTable
-            couponList={couponArray}
+            couponDto={couponArray}
             contentTotalPrice={contentTotalPrice}
           />
         </ModalTableSection>
@@ -142,8 +142,8 @@ export default function CartCouponModal({
   );
 }
 
-function ShowCouponTable({ couponList, contentTotalPrice }) {
-  if (couponList.length > 0) {
+function ShowCouponTable({ couponDto, contentTotalPrice }) {
+  if (couponDto.length > 0) {
     return (
       <CouponTable className="coupon-table">
         <thead className="text-m uppercase">
@@ -163,8 +163,8 @@ function ShowCouponTable({ couponList, contentTotalPrice }) {
           </tr>
         </thead>
         <tbody className="text-m">
-          {couponList &&
-            couponList.map((coupon) => (
+          {couponDto &&
+            couponDto.map((coupon) => (
               <CouponTableRow
                 key={coupon.couponName}
                 couponName={coupon.couponName}
