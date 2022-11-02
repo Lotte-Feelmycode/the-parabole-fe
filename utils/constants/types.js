@@ -69,5 +69,5 @@ export const ORDER_PAY_STATE = [
 
 export const CHAT_STATE = [
   { value: 'EVENT', name: '이벤트' },
-  { value: 'Q&A', name: '1:1문의' },
+  { value: 'QNA', name: '1:1문의' },
 ];
