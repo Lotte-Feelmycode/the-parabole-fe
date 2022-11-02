@@ -203,7 +203,6 @@ export default function Cart() {
   function ShowCart() {
     const CartSection = styled.div`
       display: flex;
-      padding: 5px;
     `;
 
     const CartContainer = styled.div`
@@ -228,6 +227,13 @@ export default function Cart() {
       padding-left: 7.5px;
       position: relative;
       min-height: 1px;
+
+      @media (max-width: 1024px) {
+        width: 100%;
+      }
+      @media (min-width: 1024px) {
+        width: 70%;
+      }
     `;
 
     const CartSidebarSection = styled.div`
@@ -235,13 +241,19 @@ export default function Cart() {
       padding-right: 7.5px;
       padding-left: 7.5px;
       position: relative;
+      @media (max-width: 1024px) {
+        width: 100%;
+      }
+      @media (min-width: 1024px) {
+        width: 30%;
+      }
     `;
 
     return (
       <CartSection className="cart-section">
         <CartContainer>
           <CartRow>
-            <CommerceCart>
+            <CommerceCart className="commerce-cart">
               <CartHeader
                 totalCheckBoxChange={totalCheckBoxChange}
                 cartBySellerDtoList={cartBySellerDtoList}
@@ -258,7 +270,7 @@ export default function Cart() {
               />
               <CartFooter length={cartItemCount} />
             </CommerceCart>
-            <CartSidebarSection>
+            <CartSidebarSection className="cart-sidebar-section">
               <CartSidebar
                 GoToOrder={GoToOrder}
                 totalPrice={totalPrice}
@@ -273,15 +285,16 @@ export default function Cart() {
 
   return (
     <CommerceLayout className="commerce-layout">
-      <CartPage className="flex min-h-screen flex-col body-font">
-        <div className="container px-5 py-24 mx-auto">
-          <CheckEmptyList count={cartItemCount} />
-        </div>
+      <CartPage>
+        <CheckEmptyList count={cartItemCount} />
       </CartPage>
     </CommerceLayout>
   );
 }
 
-const CartPage = styled.section`
+const CartPage = styled.div`
   background-color: ${ThemeGray5};
+  margin: 20px 0;
+  padding: 20px 0;
+  border-radius: 15px;
 `;

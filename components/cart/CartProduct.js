@@ -71,7 +71,10 @@ export default function CartProduct({
 
   return (
     <>
-      <ProductSection onClick={() => goToProductDetail(product.productId || 0)}>
+      <ProductSection
+        onClick={() => goToProductDetail(product.productId || 0)}
+        className="product-section"
+      >
         <ProductImageSection className="product-image-section">
           <ProductImage
             className="product-img"
@@ -94,17 +97,19 @@ export default function CartProduct({
               borderTopRightRadius: '0',
             }}
           />
-          <Input
-            type="number"
-            value={optionCount}
-            onChange={onOptionCountChange}
-            css={{
-              textAlign: 'right',
-              maxWidth: '80px',
-              height: '30px',
-              margin: '0',
-            }}
-          />
+          <InputNumberSection>
+            <Input
+              type="number"
+              value={optionCount}
+              onChange={onOptionCountChange}
+              css={{
+                textAlign: 'right',
+                height: '30px',
+                width: '100%',
+                margin: '0',
+              }}
+            />
+          </InputNumberSection>
           <SmallWhite
             buttonText="+"
             onClickFunc={plusBtnClick}
@@ -136,6 +141,13 @@ const ProductSection = styled.a`
   &:hover {
     cursor: pointer;
   }
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+  }
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
 `;
 
 const ProductImageSection = styled.div`
@@ -154,27 +166,52 @@ const ProductInfoSection = styled.div`
   display: flex;
 `;
 
-const ProductTitle = styled.h3`
-  overflow-wrap: break-all;
-  word-break: break-all;
-  transition: opacity 0.1s;
+const ProductTitle = styled.p`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
+  @media (min-width: 1024px) {
+    width: 100px;
+  }
 `;
 
 const CartOptionSection = styled.div`
   padding: 0 5px;
-  flex: 1 0 auto;
   display: flex;
-  flex-direction: column;
   align-items: flex-end;
+  flex-direction: column;
 `;
 
 const OptionInputSection = styled.div`
   display: flex;
   padding: 5px;
-  flex: 0 0 auto;
+  text-align: center;
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
+  @media (min-width: 1024px) {
+  }
+`;
+
+const InputNumberSection = styled.div`
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
+  @media (min-width: 1024px) {
+    max-width: 80px;
+  }
 `;
 
 const PriceSection = styled.div`
   text-align: right;
   flex: 0 0 auto;
+  padding: 10px;
+  @media (max-width: 1024px) {
+    margin-left: auto;
+  }
+  @media (min-width: 1024px) {
+  }
 `;

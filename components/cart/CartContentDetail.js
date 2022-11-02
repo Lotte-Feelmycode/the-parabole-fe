@@ -19,12 +19,21 @@ export default function CartContentDetail({
     flex: 0 0 auto;
     margin-right: 5px;
     padding: 5px;
+    width: 20px;
   `;
 
   const ProductDetailSection = styled.div`
     position: relative;
     display: flex;
     flex: 1 0 auto;
+
+    @media (max-width: 1024px) {
+      flex-direction: column;
+      width: min-content;
+    }
+    @media (min-width: 1024px) {
+      flex-direction: row;
+    }
   `;
 
   const ProductDeleteSection = styled.div`
@@ -33,6 +42,7 @@ export default function CartContentDetail({
     padding-left: 5px;
     display: block;
     margin-left: auto;
+    width: 20px;
 
     &:hover {
       cursor: pointer;
@@ -62,7 +72,7 @@ export default function CartContentDetail({
       {cartItemDtoList &&
         cartItemDtoList.map((item) => (
           <CartDetailSection key={item.cartItemId}>
-            <ProductCheckSection>
+            <ProductCheckSection className="product-check-section">
               <input
                 type="checkbox"
                 onChange={(event) =>
@@ -74,7 +84,7 @@ export default function CartContentDetail({
                 checked={checkBoxStates.get(item.cartItemId)}
               />
             </ProductCheckSection>
-            <ProductDetailSection>
+            <ProductDetailSection className="product-detail-section">
               <CartProduct
                 userId={userId}
                 cartItemId={item.cartItemId}
@@ -83,7 +93,7 @@ export default function CartContentDetail({
                 setCountFunc={cartInfoChange}
               />
             </ProductDetailSection>
-            <ProductDeleteSection>
+            <ProductDeleteSection className="product-delete-section">
               <button
                 onClick={() => deleteCartItem({ input: item.cartItemId })}
               >

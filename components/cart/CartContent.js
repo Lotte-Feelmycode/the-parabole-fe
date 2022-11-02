@@ -16,9 +16,15 @@ export default function CartContent({
   const CartStoreSection = styled.div`
     background-color: ${ThemeWhite};
     border-radius: 6px;
-    padding: 10px 20px;
-    margin: 0 10px;
     margin-bottom: 20px;
+
+    @media (max-width: 1024px) {
+      padding: 10px 10px;
+    }
+    @media (min-width: 1024px) {
+      padding: 10px 20px;
+      margin: 30px 0;
+    }
   `;
 
   return (
