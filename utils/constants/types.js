@@ -66,3 +66,8 @@ export const ORDER_PAY_STATE = [
   { value: 'WITHOUT_BANK', name: '무통장입금' },
   { value: 'NAVER_PAY', name: '네이버페이' },
 ];
+
+export const CHAT_STATE = [
+  { value: 'EVENT', name: '이벤트' },
+  { value: 'Q&A', name: '1:1문의' },
+];

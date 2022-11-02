@@ -14,19 +14,29 @@ export default function Selectbox({
   };
 
   return (
-    <select
-      defaultValue={defaultValue === undefined ? '' : props.defaultValue}
-      onChange={handleChange}
-      value={selectValue}
-    >
-      {defaultValue === undefined && categoryName !== undefined && (
-        <option>{categoryName}</option>
-      )}
-      {props.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.name}
-        </option>
-      ))}
-    </select>
+    <Div>
+      <select
+        defaultValue={defaultValue === undefined ? '' : props.defaultValue}
+        onChange={handleChange}
+        value={selectValue}
+      >
+        {defaultValue === undefined && categoryName !== undefined && (
+          <option>{categoryName}</option>
+        )}
+        {props.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.name}
+          </option>
+        ))}
+      </select>
+    </Div>
   );
 }
+
+const Div = styled.div`
+  font-size: 1.4rem;
+  display: inline-block;
+  border: 2px solid gray;
+  border-radius: 1rem;
+  padding: 0.2rem;
+`;
