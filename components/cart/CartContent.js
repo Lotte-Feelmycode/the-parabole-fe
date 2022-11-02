@@ -11,18 +11,21 @@ export default function CartContent({
   cartCheckBoxChange,
   cartInfoChange,
 }) {
-  const CommerceCartContentContainer = styled.div`
+  const CommerceCartContentContainer = styled.div``;
+
+  const CartStoreSection = styled.div`
     background-color: ${ThemeWhite};
     border-radius: 6px;
     padding: 10px 20px;
-    margin: 0px 10px;
+    margin: 0 10px;
+    margin-bottom: 20px;
   `;
 
   return (
     <CommerceCartContentContainer className="commerce-cart-content-container">
       {cartList &&
         cartList.map((item) => (
-          <div className="seller-section" key={item.sellerId}>
+          <CartStoreSection className="cart-store-section" key={item.sellerId}>
             <CartContentHeader storeName={item.storeName} />
             <CartContentDetail
               userId={userId}
@@ -37,7 +40,7 @@ export default function CartContent({
               storeName={item.storeName}
               cartItemList={item.cartItemList}
             />
-          </div>
+          </CartStoreSection>
         ))}
     </CommerceCartContentContainer>
   );
