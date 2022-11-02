@@ -10,11 +10,17 @@ export default function CartSidebar({
 }) {
   const CommerceCartSidebar = styled.div`
     display: block;
-    padding-top: 35px;
     position: relative;
     width: 100%;
     min-height: 1px;
     box-sizing: border-box;
+
+    @media (max-width: 1024px) {
+      padding-top: 10px;
+    }
+    @media (min-width: 1024px) {
+      padding-top: 55px;
+    }
   `;
 
   const StickyContainer = styled.div`
