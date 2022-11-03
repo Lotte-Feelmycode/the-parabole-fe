@@ -15,7 +15,7 @@ export default function Cart() {
   // TODO: userId 집어넣기
   const userId = 3;
 
-  const [cartItemCount, setCartItemCount] = useState(1);
+  const [cartItemCount, setCartItemCount] = useState(0);
   const [cartId, setCartId] = useState(userId);
   const [cartBySellerDtoList, setCartBySellerDtoList] = useState([]);
   const [checkBoxStates, setCheckBoxStates] = useState(new Map());
