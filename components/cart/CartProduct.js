@@ -161,9 +161,7 @@ const ProductImage = styled.img`
 `;
 
 const ProductInfoSection = styled.div`
-  flex: 1 0 0px;
   padding: 5px;
-  display: flex;
 `;
 
 const ProductTitle = styled.p`
@@ -174,7 +172,6 @@ const ProductTitle = styled.p`
     width: 100%;
   }
   @media (min-width: 1024px) {
-    width: 100px;
   }
 `;
 
