@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import { SmallLineBlue } from '@components/input/Button';
-import { useState } from 'react';
-import CartCouponModal from './CartCouponModal';
+import CartCouponModal from '@components/cart/CartCouponModal';
 
 export default function CartContentFooter({
   cartItemDtoList,
