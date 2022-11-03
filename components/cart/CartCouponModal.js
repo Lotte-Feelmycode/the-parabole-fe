@@ -13,8 +13,6 @@ export default function CartCouponModal({
   contentTotalPrice,
   storeName,
 }) {
-  // var couponArray = new Array();
-
   const [couponArray, setCouponArray] = useState([]);
 
   const addCouponArray = (parameter) => {
@@ -37,8 +35,8 @@ export default function CartCouponModal({
       const rateCouponList = couponDto.rateCoupon;
       const amountCouponList = couponDto.amountCoupon;
 
-      var rateIndex = 0;
-      var amountIndex = 0;
+      let rateIndex = 0;
+      let amountIndex = 0;
 
       for (
         ;
@@ -46,7 +44,7 @@ export default function CartCouponModal({
         rateCouponList.length + amountCouponList.length;
 
       ) {
-        var parameter = null;
+        let parameter = null;
 
         if (rateCouponList.length > rateIndex) {
           const nowCoupon = rateCouponList[rateIndex];
@@ -60,7 +58,7 @@ export default function CartCouponModal({
 
         if (amountCouponList.length > amountIndex) {
           const nowCoupon = amountCouponList[amountIndex];
-          var nowPrice =
+          let nowPrice =
             contentTotalPrice - nowCoupon.discountValue < 0
               ? 0
               : nowCoupon.discountValue;

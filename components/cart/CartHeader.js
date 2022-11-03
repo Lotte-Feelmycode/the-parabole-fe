@@ -40,7 +40,7 @@ export default function CartHeader({
   `;
 
   const deleteCheckedItemBtn = () => {
-    var deleteFlag = false;
+    let deleteFlag = false;
     if (
       cartBySellerDtoList &&
       numberOfChekced !== 0 &&

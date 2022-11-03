@@ -123,8 +123,8 @@ export default function Cart() {
   }
 
   function totalCheckBoxChange(flag) {
-    var calcTotalPrice = 0;
-    var checkCount = numberOfChekced;
+    let calcTotalPrice = 0;
+    let checkCount = numberOfChekced;
 
     if (flag) {
       if (cartBySellerDtoList && cartItemCount > 0) {
@@ -164,7 +164,7 @@ export default function Cart() {
 
   function GoToOrder() {
     if (cartBySellerDtoList && numberOfChekced > 0) {
-      var orderInfoDto = [];
+      let orderInfoDto = [];
       cartBySellerDtoList.forEach((dto) => {
         const cartItemDtoList = dto.cartItemDtoList;
         cartItemDtoList.forEach((item) => {

@@ -9,7 +9,7 @@ export default function CartContentFooter({
   couponDto,
 }) {
   const [modalState, setModalState] = useState(false);
-  var contentTotalPrice = 0;
+  let contentTotalPrice = 0;
   if (cartItemDtoList && cartItemDtoList.length > 0) {
     cartItemDtoList.forEach((item) => {
       contentTotalPrice =
