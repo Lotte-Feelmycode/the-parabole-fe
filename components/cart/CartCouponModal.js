@@ -252,4 +252,6 @@ const CouponTable = styled.table`
   width: 90%;
   text-align: center;
   border-radius: 10px;
+  max-height: 400px;
+  overflow: auto;
 `;
