@@ -10,7 +10,7 @@ import { CHAT_STATE } from '@utils/constants/types';
 import { getState } from '@utils/functions';
 import { useState } from 'react';
 
-export default function ChatList({ chats }) {
+export default function SellerChatList({ chats }) {
   const [title, setTitle] = useState('');
   const [message, setMessage] = useState('');
   const [type, setType] = useState('');

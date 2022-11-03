@@ -7,8 +7,8 @@ import {
   ThemeGray5,
 } from '@utils/constants/themeColor';
 import { CHAT_STATE } from '@utils/constants/types';
-import ChatList from '@components/chat/ChatList';
-import ChatSection from '@components/chat/ChatSection';
+import ChatList from '@components/chat/seller/ChatList';
+import ChatSection from '@components/chat/seller/ChatSection';
 
 export default function ChattingHome() {
   const chatQNA = {
@@ -46,7 +46,7 @@ const ChatListContent = styled.div`
   border-top: 1px solid ${ThemeGray2};
   background-color: ${ThemeGray4};
   height: 40.5rem;
-  border-radius: 0 0 0.3rem 0.3rem;
+  border-radius: 0rem 0rem 0.3rem 0.3rem;
 `;
 
 const ChatListTitle = styled.div`
@@ -68,7 +68,7 @@ const Title = styled.div`
 `;
 
 const ChatListSection = styled.div`
-  width: 22rem;
+  width: 23rem;
   height: 46.1rem;
   margin: 2rem 0rem 2rem 3rem;
   float: left;
@@ -81,6 +81,6 @@ const ChatBox = styled.div`
   background-color: ${ThemeGray5};
   float: left;
   height: 46rem;
-  width: 80%;
+  width: 70%;
   margin: 2rem 0rem 2rem 0rem;
 `;

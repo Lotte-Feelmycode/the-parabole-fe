@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { ThemeGray3 } from '@utils/constants/themeColor';
 import { useEffect, useState } from 'react';
 
-export default function Chat({ chats }) {
+export default function SellerChat({ chats }) {
   // 내 id였을 때 위치 지정용으로 임의 설정
   const myId = 1;
 

@@ -91,12 +91,12 @@ export default function Home() {
                       <p className="text-lg">주문 관리</p>
                     </a>
                   </Link>
-                  <Link href="/seller/order/detail">
+                  <Link href="/seller/chat">
                     <a className="flex flex-row">
                       <span className="w-6 h-6 mr-2 rounded-full inline-flex items-center justify-center">
                         <img src={ICON.ICON_CHECK}></img>
                       </span>
-                      <p className="text-lg">배송 관리</p>
+                      <p className="text-lg">문의 관리</p>
                     </a>
                   </Link>
                 </nav>

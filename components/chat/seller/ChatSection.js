@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { ThemeGray3, ThemeGray4 } from '@utils/constants/themeColor';
 import Chat from './Chat';
 
-export default function ChatSection() {
+export default function SellerChatSection() {
   const myChat = {
     userId: 1,
     nickname: '참여자닉네임',
@@ -25,11 +25,18 @@ export default function ChatSection() {
           <Chat chats={myChat} />
           <Chat chats={otherChat} />
         </div>
+        <Input>뭐야</Input>
       </Div>
     </>
   );
 }
 
+const Input = styled.div`
+  position: relative;
+  bottom: 10px;
+  height: 5rem;
+  background-color: red;
+`;
 const ChatSectionTitle = styled.div`
   border-bottom: 1px solid ${ThemeGray3};
   background-color: white;
