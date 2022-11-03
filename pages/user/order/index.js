@@ -3,7 +3,7 @@ import CommerceLayout from '@components/common/CommerceLayout';
 import styled from '@emotion/styled';
 import { createContext, useEffect, useState } from 'react';
 import Input from '@components/input/Input';
-import ProductList from '@components/product/OrderProductList';
+import ProductList from '@components/order/OrderProductList';
 import PayList from '@components/order/PayList';
 import { POST, GET } from '@apis/defaultApi';
 import { ThemeGray4 } from '@utils/constants/themeColor';
