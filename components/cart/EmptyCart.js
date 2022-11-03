@@ -1,8 +1,11 @@
 import styled from '@emotion/styled';
 import { ThemeWhite } from '@utils/constants/themeColor';
 import { Blue } from '@components/input/Button';
+import { useRouter } from 'next/router';
 
 export default function EmptyCart() {
+  const router = useRouter();
+
   const EmptySection = styled.div`
     display: flex;
     flex-direction: column;
