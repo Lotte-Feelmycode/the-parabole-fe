@@ -79,7 +79,7 @@ export default function Home() {
 
               <div className="p-4 lg:w-1/4 sm:w-1/2 w-full">
                 <h2 className="font-bold title-font tracking-widest text-gray-900 mb-4 text-xl text-center sm:text-left">
-                  🚚 주문 관리
+                  🚚 고객 관리
                 </h2>
 
                 <nav className="flex flex-col sm:items-start sm:text-left text-center items-center -mb-1 space-y-2.5">
