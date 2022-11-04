@@ -22,10 +22,9 @@ export default function SellerChat({ chats }) {
       return (
         <div
           style={{
-            float: 'right',
-            width: '25rem',
+            width: '40%',
             fontSize: '1rem',
-            margin: '1rem',
+            margin: '0 auto 0 1rem',
           }}
         >
           <ChatUser>{nickName}</ChatUser>
@@ -36,10 +35,9 @@ export default function SellerChat({ chats }) {
     return (
       <div
         style={{
-          float: 'left',
-          width: '25rem',
+          margin: '0 1rem 0 auto',
+          width: '40%',
           fontSize: '1rem',
-          margin: '1rem',
         }}
       >
         <ChatUser>{nickName}</ChatUser>
@@ -57,14 +55,14 @@ const ChatUser = styled.div`
 const MyChat = styled.div`
   width: 100%;
   background-color: white;
-  border-radius: 1rem 0rem 1rem 1rem;
+  border-radius: 0 1rem 1rem 1rem;
   padding: 1rem;
   border: 1px solid ${ThemeGray3};
 `;
 const OtherChat = styled.div`
   width: 100%;
   background-color: white;
-  border-radius: 0 1rem 1rem 1rem;
+  border-radius: 1rem 0rem 1rem 1rem;
   padding: 1rem;
   border: 1px solid ${ThemeGray3};
 `;

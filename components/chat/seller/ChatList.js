@@ -20,6 +20,7 @@ export default function SellerChatList({ chats }) {
       return (
         <div
           style={{
+            display: 'flex',
             fontWeight: 'bold',
             color: MainPink,
             display: 'inline-block',

@@ -21,28 +21,40 @@ export default function ChattingHome() {
     message: '오늘 자정까지입니다',
     type: 'EVENT',
   };
+
   return (
     <>
       <Title>채팅 목록</Title>
-      <ChatListSection>
-        <ChatListTitle>
-          채팅목록&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Selectbox props={CHAT_STATE} defaultValue="EVENT" />
-        </ChatListTitle>
-        <ChatListContent>
-          <ChatList chats={chatQNA} />
-          <ChatList chats={chatQNA} />
-          <ChatList chats={chatEVENT} />
-        </ChatListContent>
-      </ChatListSection>
-      <ChatBox>
-        <ChatSection />
-      </ChatBox>
+      <ChatHome>
+        <ChatListSection>
+          <ChatListTitle>
+            채팅목록&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <Selectbox props={CHAT_STATE} defaultValue="EVENT" />
+          </ChatListTitle>
+          <ChatListContent>
+            <ChatList chats={chatQNA} />
+            <ChatList chats={chatQNA} />
+            <ChatList chats={chatEVENT} />
+            <ChatList chats={chatQNA} />
+            <ChatList chats={chatQNA} />
+            <ChatList chats={chatEVENT} />
+            <ChatList chats={chatQNA} />
+            <ChatList chats={chatQNA} />
+            <ChatList chats={chatEVENT} />
+          </ChatListContent>
+        </ChatListSection>
+        <ChatBox>
+          <ChatSection />
+        </ChatBox>
+      </ChatHome>
     </>
   );
 }
-
+const ChatHome = styled.div`
+  display: flex;
+`;
 const ChatListContent = styled.div`
+  overflow: auto;
   border-top: 1px solid ${ThemeGray2};
   background-color: ${ThemeGray4};
   height: 40.5rem;
@@ -50,6 +62,7 @@ const ChatListContent = styled.div`
 `;
 
 const ChatListTitle = styled.div`
+  display: flex;
   width: 100%;
   height: 5.5rem;
   padding: 1.5rem;
@@ -59,6 +72,7 @@ const ChatListTitle = styled.div`
 `;
 
 const Title = styled.div`
+  display: flex;
   font-weight: bold;
   font-size: 3rem;
   color: ${ThemeBlack};
@@ -68,6 +82,8 @@ const Title = styled.div`
 `;
 
 const ChatListSection = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 23rem;
   height: 46.1rem;
   margin: 2rem 0rem 2rem 3rem;
@@ -77,6 +93,8 @@ const ChatListSection = styled.div`
 `;
 
 const ChatBox = styled.div`
+  display: flex;
+  flex-direction: column;
   border-radius: 0.3rem;
   background-color: ${ThemeGray5};
   float: left;
