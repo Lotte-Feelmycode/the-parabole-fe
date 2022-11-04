@@ -1,25 +1,23 @@
-import CommerceLayout from '@components/common/CommerceLayout';
-import styled from '@emotion/styled';
 import { useState, useEffect } from 'react';
-import { Blue, SmallLineWhite } from '@components/input/Button';
-import {
-  ThemeGray1,
-  ThemeGray4,
-  ThemeWhite,
-} from '@utils/constants/themeColor';
 import { useRouter } from 'next/router';
-import { GET, DELETE, POST } from '@apis/defaultApi';
-import CartProduct from '@components/product/CartProduct';
-import { numberToMonetary } from '@utils/functions';
+import styled from '@emotion/styled';
+import { GET, POST } from '@apis/defaultApi';
+import { ThemeGray5 } from '@utils/constants/themeColor';
+import CommerceLayout from '@components/common/CommerceLayout';
+import CartContent from '@components/cart/CartContent';
+import CartHeader from '@components/cart/CartHeader';
+import CartFooter from '@components/cart/CartFooter';
+import CartSidebar from '@components/cart/CartSidebar';
+import EmptyCart from '@components/cart/EmptyCart';
 
 export default function Cart() {
   const router = useRouter();
   // TODO: userId 집어넣기
   const userId = 3;
 
-  const [cartItemCount, setCartItemCount] = useState(1);
+  const [cartItemCount, setCartItemCount] = useState(0);
   const [cartId, setCartId] = useState(userId);
-  const [itemList, setItemList] = useState([]);
+  const [cartBySellerDtoList, setCartBySellerDtoList] = useState([]);
   const [checkBoxStates, setCheckBoxStates] = useState(new Map());
   const [numberOfChekced, setNumberOfChekced] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -43,8 +41,8 @@ export default function Cart() {
       if (res) {
         if (res.success) {
           setCartId(res.data.cartId);
-          setCartItemCount(res.data.itemCount);
-          setItemList(res.data.cartItemDto);
+          setCartItemCount(res.data.cnt);
+          setCartBySellerDtoList(res.data.cartBySellerDtoList);
         }
       } else {
         console.log('장바구니 오류', res);
@@ -56,13 +54,18 @@ export default function Cart() {
     clearCheckBoxStates();
     setNumberOfChekced(0);
     setTotalPrice(0);
-    if (cartItemCount > 0 && itemList) {
-      itemList.forEach((item) => {
-        addCheckBoxStates(item.cartItemId, false);
+    if (cartItemCount > 0 && cartBySellerDtoList) {
+      cartBySellerDtoList.forEach((dto) => {
+        const cartItemDtoList = dto.cartItemDtoList;
+        {
+          cartItemDtoList.forEach((item) => {
+            addCheckBoxStates(item.cartItemId, false);
+          });
+        }
       });
     }
-    TotalCheckBoxChange(true);
-  }, [itemList]);
+    totalCheckBoxChange(true);
+  }, [cartBySellerDtoList]);
 
   useEffect(() => {
     if (cartItemCount < numberOfChekced) setNumberOfChekced(cartItemCount);
@@ -71,17 +74,20 @@ export default function Cart() {
   }, [numberOfChekced]);
 
   function cartInfoChange({ cartItemId, cnt }) {
-    itemList.forEach((item) => {
-      if (item.cartItemId === cartItemId) {
-        if (checkBoxStates.get(cartItemId)) {
-          const changedPrice =
-            totalPrice -
-            item.product.productPrice * item.count +
-            item.product.productPrice * cnt;
-          setTotalPrice(changedPrice);
+    cartBySellerDtoList.forEach((dto) => {
+      const cartItemDtoList = dto.cartItemDtoList;
+      cartItemDtoList.forEach((item) => {
+        if (item.cartItemId === cartItemId) {
+          if (checkBoxStates.get(cartItemId)) {
+            const changedPrice =
+              totalPrice -
+              item.product.productPrice * item.count +
+              item.product.productPrice * cnt;
+            setTotalPrice(changedPrice);
+          }
+          item.count = cnt;
         }
-        item.count = cnt;
-      }
+      });
     });
   }
 
@@ -89,62 +95,86 @@ export default function Cart() {
     if (checkBoxStates.get(cartItemId) !== flag) {
       if (flag) {
         setNumberOfChekced(numberOfChekced + 1);
-        itemList.forEach((item) => {
-          if (item.cartItemId === cartItemId) {
-            setTotalPrice(totalPrice + item.product.productPrice * item.count);
-          }
+        cartBySellerDtoList.forEach((dto) => {
+          const cartItemDtoList = dto.cartItemDtoList;
+          cartItemDtoList.forEach((item) => {
+            if (item.cartItemId === cartItemId) {
+              setTotalPrice(
+                totalPrice + item.product.productPrice * item.count,
+              );
+            }
+          });
         });
       } else {
         setNumberOfChekced(numberOfChekced - 1);
-        itemList.forEach((item) => {
-          if (item.cartItemId === cartItemId) {
-            setTotalPrice(totalPrice - item.product.productPrice * item.count);
-          }
+        cartBySellerDtoList.forEach((dto) => {
+          const cartItemDtoList = dto.cartItemDtoList;
+          cartItemDtoList.forEach((item) => {
+            if (item.cartItemId === cartItemId) {
+              setTotalPrice(
+                totalPrice - item.product.productPrice * item.count,
+              );
+            }
+          });
         });
       }
       upsertCheckBoxStates(cartItemId, flag);
     }
   }
 
-  function TotalCheckBoxChange(flag) {
-    var calcTotalPrice = 0;
-    var checkCount = numberOfChekced;
+  function totalCheckBoxChange(flag) {
+    let calcTotalPrice = 0;
+    let checkCount = numberOfChekced;
 
     if (flag) {
-      if (itemList && cartItemCount > 0) {
-        itemList.forEach((item) => {
-          if (checkBoxStates.get(item.cartItemId) !== flag) {
-            calcTotalPrice =
-              calcTotalPrice + item.product.productPrice * item.count;
-            upsertCheckBoxStates(item.cartItemId, flag);
-            checkCount = checkCount + 1;
+      if (cartBySellerDtoList && cartItemCount > 0) {
+        cartBySellerDtoList.forEach((dto) => {
+          const cartItemDtoList = dto.cartItemDtoList;
+          if (cartItemDtoList && cartItemDtoList.length > 0) {
+            cartItemDtoList.forEach((item) => {
+              if (checkBoxStates.get(item.cartItemId) !== flag) {
+                calcTotalPrice =
+                  calcTotalPrice + item.product.productPrice * item.count;
+                upsertCheckBoxStates(item.cartItemId, flag);
+                checkCount = checkCount + 1;
+              }
+            });
           }
         });
       }
     } else {
-      if (itemList && cartItemCount > 0) {
-        itemList.forEach((item) => {
-          if (checkBoxStates.get(item.cartItemId) !== flag) {
-            upsertCheckBoxStates(item.cartItemId, flag);
-            checkCount = checkCount - 1;
+      if (cartBySellerDtoList && cartItemCount > 0) {
+        cartBySellerDtoList.forEach((dto) => {
+          const cartItemDtoList = dto.cartItemDtoList;
+          if (cartItemDtoList && cartItemDtoList.length > 0) {
+            cartItemDtoList.forEach((item) => {
+              if (checkBoxStates.get(item.cartItemId) !== flag) {
+                upsertCheckBoxStates(item.cartItemId, flag);
+                checkCount = checkCount - 1;
+              }
+            });
           }
         });
       }
     }
+
     setNumberOfChekced(checkCount);
     setTotalPrice(calcTotalPrice);
   }
 
   function GoToOrder() {
-    if (itemList && numberOfChekced > 0) {
-      var orderInfoDto = [];
-      itemList.forEach((item) => {
-        if (checkBoxStates.get(item.cartItemId) === true) {
-          orderInfoDto.push({
-            productId: item.product.productId,
-            productCnt: item.count,
-          });
-        }
+    if (cartBySellerDtoList && numberOfChekced > 0) {
+      let orderInfoDto = [];
+      cartBySellerDtoList.forEach((dto) => {
+        const cartItemDtoList = dto.cartItemDtoList;
+        cartItemDtoList.forEach((item) => {
+          if (checkBoxStates.get(item.cartItemId) === true) {
+            orderInfoDto.push({
+              productId: item.product.productId,
+              productCnt: item.count,
+            });
+          }
+        });
       });
       POST(`/orderinfo`, {
         userId: userId,
@@ -173,7 +203,6 @@ export default function Cart() {
   function ShowCart() {
     const CartSection = styled.div`
       display: flex;
-      padding: 5px;
     `;
 
     const CartContainer = styled.div`
@@ -194,30 +223,64 @@ export default function Cart() {
 
     const CommerceCart = styled.div`
       flex: 1 0 auto;
-      padding-right: 7.5px;
-      padding-left: 7.5px;
       position: relative;
       min-height: 1px;
+
+      @media (max-width: 1024px) {
+        padding-right: 7.5px;
+        padding-left: 7.5px;
+        width: 100%;
+      }
+      @media (min-width: 1024px) {
+        padding-right: 1rem;
+        padding-left: 1rem;
+        width: 70%;
+      }
     `;
 
     const CartSidebarSection = styled.div`
       flex: 1 0 auto;
-      padding-right: 7.5px;
-      padding-left: 7.5px;
       position: relative;
+      @media (max-width: 1024px) {
+        padding-right: 7.5px;
+        padding-left: 7.5px;
+        width: 100%;
+      }
+      @media (min-width: 1024px) {
+        padding-right: 1rem;
+        padding-left: 1rem;
+        width: 30%;
+      }
     `;
 
     return (
       <CartSection className="cart-section">
         <CartContainer>
           <CartRow>
-            <CommerceCart>
-              <CartHeader />
-              <CartContent />
-              <CartFooter />
+            <CommerceCart className="commerce-cart">
+              <CartHeader
+                totalCheckBoxChange={totalCheckBoxChange}
+                cartBySellerDtoList={cartBySellerDtoList}
+                checkBoxStates={checkBoxStates}
+                numberOfChekced={numberOfChekced}
+                totalCheckBoxFlag={totalCheckBoxFlag}
+                userId={userId}
+              />
+              <CartContent
+                cartInfoChange={cartInfoChange}
+                cartCheckBoxChange={cartCheckBoxChange}
+                userId={userId}
+                cartBySellerDtoList={cartBySellerDtoList}
+                checkBoxStates={checkBoxStates}
+              />
+              <CartFooter length={cartItemCount} />
             </CommerceCart>
-            <CartSidebarSection>
-              <CartSidebar />
+            <CartSidebarSection className="cart-sidebar-section">
+              <CartSidebar
+                GoToOrder={GoToOrder}
+                totalPrice={totalPrice}
+                numberOfChekced={numberOfChekced}
+              />
             </CartSidebarSection>
           </CartRow>
         </CartContainer>
@@ -225,334 +288,18 @@ export default function Cart() {
     );
   }
 
-  function EmptyCart() {
-    const EmptySection = styled.div`
-      display: flex;
-      flex-direction: column;
-      background-color: ${(props) => props.color};
-      border-radius: 10px;
-      padding: 10px;
-      justify-content: center;
-      align-content: center;
-    `;
-
-    const EmptyImageContainer = styled.div`
-      text-align: center;
-      display: flex;
-      justify-content: center;
-    `;
-
-    const EmptyImage = styled.img`
-      max-height: 350px;
-    `;
-
-    const EmptyButton = styled.div`
-      text-align: center;
-    `;
-    return (
-      <EmptySection color={ThemeWhite} className="empty-section">
-        <EmptyImageContainer>
-          <EmptyImage src="/parabole.svg" />
-        </EmptyImageContainer>
-        <EmptyButton>
-          <Blue
-            buttonText={'상품담으러가기'}
-            onClickFunc={() => {
-              router.push('/');
-            }}
-          />
-        </EmptyButton>
-      </EmptySection>
-    );
-  }
-
-  function CartHeader() {
-    const CommerceCartHeaderContainer = styled.div`
-      z-index: 100;
-      margin: 0;
-      padding: 0;
-    `;
-
-    const CommerceCartHeaderContainerChild = styled.div`
-      padding: 0 21px;
-      background: none;
-      border: none;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-sizing: border-box;
-      margin: 0 0 11px;
-      z-index: 100;
-    `;
-
-    const CommerceCartHeaderLeft = styled.span`
-      flex: 0 0 auto;
-      display: flex;
-    `;
-    const CommerceCartHeaderRight = styled.span`
-      flex: 0 0 auto;
-    `;
-
-    const deleteCheckedItemBtn = () => {
-      var deleteFlag = false;
-      if (
-        itemList &&
-        numberOfChekced !== 0 &&
-        confirm('선택한 상품을 장바구니에서 삭제하시겠습니까?')
-      ) {
-        itemList.map((item) => {
-          if (checkBoxStates.get(item.cartItemId)) {
-            const CartItemDeleteRequestDto = {
-              userId: userId,
-              cartItemId: item.cartItemId,
-            };
-            DELETE(`/cart/delete`, CartItemDeleteRequestDto);
-            deleteFlag = true;
-          }
-        });
-        if (deleteFlag) {
-          router.reload();
-        }
-      } else {
-        alert('상품을 선택해주세요');
-      }
-    };
-
-    return (
-      <CommerceCartHeaderContainer className="commerce-cart-header-container">
-        <CommerceCartHeaderContainerChild>
-          <CommerceCartHeaderLeft>
-            <div className="mx-2">
-              <input
-                type="checkbox"
-                onChange={(event) => TotalCheckBoxChange(event.target.checked)}
-                checked={totalCheckBoxFlag}
-              />
-            </div>
-            <span>모두 선택</span>
-          </CommerceCartHeaderLeft>
-          <CommerceCartHeaderRight>
-            <SmallLineWhite
-              buttonText="선택삭제"
-              onClickFunc={() => {
-                deleteCheckedItemBtn();
-              }}
-            />
-          </CommerceCartHeaderRight>
-        </CommerceCartHeaderContainerChild>
-      </CommerceCartHeaderContainer>
-    );
-  }
-
-  function CartContent() {
-    var storeId;
-
-    const CommerceCartContentContainer = styled.div`
-      background-color: ${(props) => props.color};
-      border-radius: 6px;
-      padding: 10px 20px;
-    `;
-
-    const CartDetailSection = styled.div`
-      padding-top: 5px;
-      border-top: 1px solid white;
-      border-bottom: 1px solid white;
-      display: flex;
-    `;
-
-    const ProductCheckSection = styled.div`
-      position: relative;
-      display: block;
-      flex: 0 0 auto;
-      margin-right: 5px;
-      padding: 5px;
-    `;
-    const ProductDetailSection = styled.div`
-      position: relative;
-      display: flex;
-      flex: 1 0 auto;
-    `;
-
-    const ProductDeleteSection = styled.div`
-      position: relative;
-      flex: 0 0 auto;
-      padding-left: 5px;
-      display: block;
-      margin-left: auto;
-
-      &:hover {
-        cursor: pointer;
-      }
-    `;
-
-    const deleteCartItem = ({ input }) => {
-      const CartItemDeleteRequestDto = {
-        userId: userId,
-        cartItemId: input,
-      };
-      if (confirm('장바구니에서 삭제하시겠습니까?')) {
-        DELETE(`/cart/delete`, CartItemDeleteRequestDto);
-        router.reload();
-      }
-    };
-
-    return (
-      <CommerceCartContentContainer
-        className="commerce-cart-content-container"
-        color={ThemeWhite}
-      >
-        {itemList &&
-          itemList.map((item) => (
-            <CartDetailSection key={item.cartItemId}>
-              <ProductCheckSection>
-                <input
-                  type="checkbox"
-                  onChange={(event) =>
-                    cartCheckBoxChange({
-                      cartItemId: item.cartItemId,
-                      flag: event.target.checked,
-                    })
-                  }
-                  checked={checkBoxStates.get(item.cartItemId)}
-                />
-              </ProductCheckSection>
-              <ProductDetailSection>
-                {/* <CartSellerInfo inputStoreId={item.product.sellerId} /> */}
-                <CartProduct
-                  userId={userId}
-                  cartItemId={item.cartItemId}
-                  product={item.product}
-                  count={item.count}
-                  setCountFunc={cartInfoChange}
-                />
-              </ProductDetailSection>
-              <ProductDeleteSection>
-                <button
-                  onClick={() => deleteCartItem({ input: item.cartItemId })}
-                >
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 12 12"
-                    fill={ThemeGray1}
-                    preserveAspectRatio="xMidYMid meet"
-                  >
-                    <path
-                      fillRule="nonzero"
-                      d="M6 4.6L10.3.3l1.4 1.4L7.4 6l4.3 4.3-1.4 1.4L6 7.4l-4.3 4.3-1.4-1.4L4.6 6 .3 1.7 1.7.3 6 4.6z"
-                    />
-                  </svg>
-                </button>
-              </ProductDeleteSection>
-            </CartDetailSection>
-          ))}
-      </CommerceCartContentContainer>
-    );
-  }
-
-  function CartFooter() {
-    return (
-      <div className="text-right">
-        <span>총 {itemList.length} 개</span>
-      </div>
-    );
-  }
-
-  function CartSidebar() {
-    const CommerceCartSidebar = styled.div`
-      display: block;
-      padding-top: 35px;
-      position: relative;
-      width: 100%;
-      min-height: 1px;
-      box-sizing: border-box;
-    `;
-
-    const StickyContainer = styled.div`
-      position: sticky;
-      top: 81px;
-      transition: top 0.1s ease 0s;
-      margin: 0;
-      padding: 0;
-    `;
-
-    const StickyChild = styled.div`
-      position: relative;
-      padding: 5px 0;
-    `;
-
-    const CommerceCartSummery = styled.div`
-      margin-bottom: 20px;
-      border-radius: 6px;
-      padding: 10px 20px;
-      background-color: ${(props) => props.color};
-      display: flex;
-    `;
-
-    const TotalPriceLabelSection = styled.div`
-      flex: 0 1 auto;
-      display: block;
-    `;
-
-    const TotalPriceLabel = styled.dt`
-      font-weight: 700;
-      font-size: 15px;
-    `;
-
-    const TotalPriceValueSection = styled.div`
-      flex: 0 0 auto;
-      margin-left: auto;
-      text-align: right;
-      display: block;
-    `;
-
-    const TotalPriceValue = styled.dd`
-      text-align: right;
-      font-size: 24px;
-      font-weight: 700;
-    `;
-
-    return (
-      <CommerceCartSidebar className="commerce-cart-sidebar">
-        <StickyContainer>
-          <StickyChild>
-            <CommerceCartSummery color={ThemeWhite}>
-              <TotalPriceLabelSection>
-                <TotalPriceLabel>
-                  <span>총 가격 : </span>
-                </TotalPriceLabel>
-              </TotalPriceLabelSection>
-              <TotalPriceValueSection>
-                <TotalPriceValue>
-                  <span>{numberToMonetary(totalPrice) || 0}</span>원
-                </TotalPriceValue>
-              </TotalPriceValueSection>
-            </CommerceCartSummery>
-            <Blue
-              buttonText={numberOfChekced + '개 상품 구매하기'}
-              css={{ width: '100%' }}
-              onClickFunc={GoToOrder}
-            />
-          </StickyChild>
-        </StickyContainer>
-      </CommerceCartSidebar>
-    );
-  }
-
   return (
     <CommerceLayout className="commerce-layout">
-      <CartPage
-        className="flex min-h-screen flex-col body-font"
-        color={ThemeGray4}
-      >
-        <div className="container px-5 py-24 mx-auto" color={ThemeGray4}>
-          <CheckEmptyList count={cartItemCount} />
-        </div>
+      <CartPage>
+        <CheckEmptyList count={cartItemCount} />
       </CartPage>
     </CommerceLayout>
   );
 }
 
-const CartPage = styled.section`
-  background-color: ${(props) => props.color};
+const CartPage = styled.div`
+  background-color: ${ThemeGray5};
+  margin: 20px 0;
+  padding: 20px 0;
+  border-radius: 15px;
 `;
