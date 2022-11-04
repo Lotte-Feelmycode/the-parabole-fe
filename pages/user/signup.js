@@ -1,7 +1,7 @@
 import SiteHead from '@components/common/SiteHead';
 import useInput from '@hooks/useInput';
 import CommerceLayout from '@components/common/CommerceLayout';
-import { POST_DATA } from '@apis/defaultApi';
+import { POST, POST_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Blue } from '@components/input/Button';
@@ -38,12 +38,13 @@ export default function Signup() {
       return;
     }
 
-    POST_DATA(`/auth/signup`, reqBody)
+    POST(`/auth/signup`, reqBody)
       .then((res) => {
-        if (res.email) {
+        console.log(res);
+        if (res.success) {
           alert('회원가입 성공');
           router.push({
-            pathname: `./welcome/${res.id}`,
+            pathname: `./welcome/${res.data.name}`,
           });
         }
       })

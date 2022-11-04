@@ -6,7 +6,7 @@ export default function SellerHeader() {
   const [token, setToken] = useState();
 
   useEffect(() => {
-    setToken(localStorage.getItem('userToken'));
+    setToken(localStorage.getItem('token'));
   });
 
   return (

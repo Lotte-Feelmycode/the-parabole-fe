@@ -2,21 +2,30 @@ import useInput from '@hooks/useInput';
 import { useRouter } from 'next/router';
 import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead';
-import { POST, POST_DATA } from '@apis/defaultApi';
-import { API_BASE_URL, FRONT_URL } from '@apis/api-config';
+import { GET, POST, POST_DATA } from '@apis/defaultApi';
+import {
+  API_BASE_URL,
+  backendHost,
+  BE_HOST,
+  FRONT_URL,
+} from '@apis/api-config';
 import Link from 'next/link';
 import { Blue } from '@components/input/Button';
+import { GET_DEFAULT, GET_OAUTH } from '@apis/customApi';
 
 export default function Signin() {
   const router = useRouter();
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
 
-  const KAKAO_REDIRECT_URI = 'http://localhost:8080/oauth2/code/kakao';
-  const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
+  const GOOGLE_REDIRECT_URI = BE_HOST + '/auth/google/callback';
+  const GOOGLE_AUTH_URI = `${process.env.NEXT_PUBLIC_GOOGLE_AUTH}?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code&scope=profile email openid`;
 
-  const NAVER_REDIRECT_URI = 'http://localhost:8080/oauth2/code/naver';
-  const NAVER_AUTH_URI = `https://nid.naver.com/oauth2.0/authorize?client_id=${process.env.NEXT_PUBLIC_NAVER_REST_API_KEY}&redirect_uri=${NAVER_REDIRECT_URI}&response_type=code&state=${process.env.NEXT_PUBLIC_NAVER_STATE}`;
+  const KAKAO_REDIRECT_URI = BE_HOST + '/oauth2/code/kakao';
+  const KAKAO_AUTH_URI = `${process.env.NEXT_PUBLIC_KAKAO_AUTH}?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
+
+  const NAVER_REDIRECT_URI = BE_HOST + '/oauth2/code/naver';
+  const NAVER_AUTH_URI = `${process.env.NEXT_PUBLIC_NAVER_AUTH}?client_id=${process.env.NEXT_PUBLIC_NAVER_REST_API_KEY}&redirect_uri=${NAVER_REDIRECT_URI}&response_type=code&state=${process.env.NEXT_PUBLIC_NAVER_STATE}`;
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -28,13 +37,13 @@ export default function Signin() {
 
     POST(`/auth/signin`, reqBody)
       .then((res) => {
-        if (res.body.data) {
-          localStorage.setItem('email', res.body.data.email);
-          localStorage.setItem('id', res.body.data.id);
-          localStorage.setItem('name', res.body.data.name);
-          localStorage.setItem('nickname', res.body.data.nickname);
-          localStorage.setItem('phone', res.body.data.phone);
-          localStorage.setItem('userToken', res.body.data.token);
+        console.log(res);
+        if (res.success) {
+          localStorage.setItem('id', res.data.id);
+          localStorage.setItem('email', res.data.email);
+          localStorage.setItem('role', res.data.role);
+          localStorage.setItem('token', res.data.token);
+          // ******  many more fields ****** //
           alert('로그인 성공');
           router.push('/');
         }
@@ -44,14 +53,20 @@ export default function Signin() {
       });
   }
 
-  const handleSocialLogin = (provider) => {
-    router.push(
-      API_BASE_URL.slice(0, API_BASE_URL.indexOf('/api/v1')) +
-        '/auth/authorize/' +
-        provider +
-        '?redirect_url=' +
-        FRONT_URL,
-    );
+  const SocialLogin = (provider) => {
+    GET(`/auth/${provider}`)
+      .then((res) => {
+        console.log(res);
+        if (res.success) {
+          localStorage.setItem('token', res.data.token);
+          alert('로그인 성공');
+          router.push('/');
+        }
+      })
+      .catch(function (error) {
+        alert('로그인 실패');
+      });
+    router.push(GOOGLE_AUTH_URI);
   };
 
   return (
@@ -110,48 +125,50 @@ export default function Signin() {
                 </span>
               </div>
 
-              <Link href={NAVER_AUTH_URI}>
-                <button className="flex justify-center items-center bg-green-500 hover:bg-green-600 active:bg-green-700 focus-visible:ring ring-green-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3">
-                  <a
-                    title="Gapo, Public domain, via Wikimedia Commons"
-                    href="https://commons.wikimedia.org/wiki/File:Naver_logo_initial.svg"
-                  >
-                    <img
-                      className="w-5 h-5 shrink-0"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      alt="Naver logo initial"
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Naver_logo_initial.svg/256px-Naver_logo_initial.svg.png"
-                    />
-                  </a>{' '}
-                  Continue with Naver
-                </button>
-              </Link>
-
-              <Link href={KAKAO_AUTH_URI}>
-                <button className="flex justify-center items-center bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-700 focus-visible:ring ring-yellow-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3">
-                  <a
-                    title="Kakao Corp., Public domain, via Wikimedia Commons"
-                    href="https://commons.wikimedia.org/wiki/File:KakaoTalk_logo.svg"
-                  >
-                    <img
-                      className="w-5 h-5 shrink-0"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      alt="KakaoTalk logo"
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/KakaoTalk_logo.svg/512px-KakaoTalk_logo.svg.png"
-                    />
-                  </a>
-                  Continue with Kakao
-                </button>
-              </Link>
+              <button
+                onClick={SocialLogin('naver')}
+                className="flex justify-center items-center bg-green-500 hover:bg-green-600 active:bg-green-700 focus-visible:ring ring-green-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3"
+              >
+                <a
+                  title="Gapo, Public domain, via Wikimedia Commons"
+                  href="https://commons.wikimedia.org/wiki/File:Naver_logo_initial.svg"
+                >
+                  <img
+                    className="w-5 h-5 shrink-0"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    alt="Naver logo initial"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Naver_logo_initial.svg/256px-Naver_logo_initial.svg.png"
+                  />
+                </a>{' '}
+                Continue with Naver
+              </button>
 
               <button
-                onClick={() => handleSocialLogin('google')}
+                onClick={SocialLogin('naver')}
+                className="flex justify-center items-center bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-700 focus-visible:ring ring-yellow-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3"
+              >
+                <a
+                  title="Kakao Corp., Public domain, via Wikimedia Commons"
+                  href="https://commons.wikimedia.org/wiki/File:KakaoTalk_logo.svg"
+                >
+                  <img
+                    className="w-5 h-5 shrink-0"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    alt="KakaoTalk logo"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/KakaoTalk_logo.svg/512px-KakaoTalk_logo.svg.png"
+                  />
+                </a>
+                Continue with Kakao
+              </button>
+
+              <button
+                onClick={() => 'google'}
                 className="flex justify-center items-center bg-white hover:bg-gray-100 active:bg-gray-200 border border-gray-300 focus-visible:ring ring-gray-300 text-gray-800 text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3"
               >
                 <svg
@@ -181,6 +198,7 @@ export default function Signin() {
                 </svg>
                 Continue with Google
               </button>
+              {/* </Link> */}
             </div>
 
             <div className="flex justify-center items-center bg-gray-100 p-4">

@@ -5,7 +5,10 @@ export default function Oauthnaver({}) {
   const router = useRouter();
   useEffect(() => {
     if (router.asPath.includes('token')) {
-      var userToken = router.asPath.slice(18);
+      var userInfo = router.asPath.slice(18);
+
+      console.log(userInfo);
+
       localStorage.setItem('userToken', userToken);
       console.log(userToken);
       alert('네이버 소셜 로그인 성공');
