@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { GET, POST } from '@apis/defaultApi';
+import { GET, GET_DATA, POST } from '@apis/defaultApi';
 import useInput from '@hooks/useInput';
 import useCheck from '@hooks/useCheck';
 
@@ -23,6 +23,7 @@ import {
 import { EVENT_TYPE, PRIZE_TYPE } from '@utils/constants/types';
 import { EVENT_ERROR } from '@utils/constants/errors';
 import { ICON_WARNING_SIGN } from '@utils/constants/icons';
+import EventScheduler from '@components/Scheduler/scheduler';
 
 export default function Event() {
   const router = useRouter();
@@ -30,6 +31,7 @@ export default function Event() {
   const [productList, setProductList] = useState([]);
   const [couponList, setCouponList] = useState([]);
   const [prizeList, setprizeList] = useState([]);
+  const [scheduleList, setScheduleList] = useState([]);
 
   const [title, onChangeTitle] = useInput('');
   const [descript, onChangeDescript] = useInput('');
@@ -41,6 +43,25 @@ export default function Event() {
 
   const [isProductSelect, setProductSelect] = useState(false);
   const [isCouponSelect, setCouponSelect] = useState(false);
+
+  useEffect(() => {
+    GET_DATA('/event/seller/scheduler').then((res) => {
+
+      let schedules = res.map(e => {
+        let newObj = {};
+        newObj['title'] = e.title;
+        newObj['startDate'] = new Date(e.startAt);
+        newObj['endDate'] = new Date(e.endAt);
+        return newObj;
+      });
+
+      console.log(schedules);
+      setScheduleList(schedules);
+
+    });
+  }, []);
+  
+
 
   // 선착순 이벤트 체크
   function checkFcfsPrize() {
@@ -368,7 +389,8 @@ export default function Event() {
                           }
                           css={{
                             borderBottomLeftRadius: '0 !important ',
-                            borderTopLeftRadius: '0',
+                            borderTopLeftRadius: '0'
+
                           }}
                         />
                       </OptionInputSection>
@@ -527,6 +549,7 @@ export default function Event() {
       setProductSelect(true);
       setCouponSelect(false);
     });
+
   };
 
   // 경품(쿠폰) 버튼 클릭시 조회 이벤트 핸들러
@@ -653,6 +676,10 @@ export default function Event() {
         <Divider />
 
         <Heading title="이벤트 진행 일시" type="h2" />
+        {/* TODO : 모달창 */}
+        <div className='mb-10'>
+          <EventScheduler input={scheduleList}/>
+        </div>
         <div className="w-full mb-4">
           <Heading title="시작 일시" type="h3" />
           <Input
