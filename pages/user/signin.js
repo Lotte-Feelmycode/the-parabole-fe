@@ -34,16 +34,15 @@ export default function Signin() {
       .then((res) => {
         console.log(res);
         if (res.success) {
-          localStorage.setItem('userId', res.data.id);
+          localStorage.setItem('userId', res.data.userId);
           localStorage.setItem('email', res.data.email);
-          localStorage.setItem('username', res.data.name);
+          localStorage.setItem('name', res.data.name);
           localStorage.setItem('nickname', res.data.nickname);
           localStorage.setItem('phone', res.data.phone);
           localStorage.setItem('imageUrl', res.data.imageUrl);
           localStorage.setItem('role', res.data.role);
           localStorage.setItem('authProvider', res.data.authProvider);
           localStorage.setItem('sellerId', res.data.sellerId);
-          localStorage.setItem('role', res.data.role);
           localStorage.setItem('token', res.data.token);
 
           alert('로그인 성공');

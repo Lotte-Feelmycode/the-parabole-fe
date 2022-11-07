@@ -14,7 +14,7 @@ export default function MyProfile({ userId }) {
   }, []);
 
   useEffect(() => {
-    GET_DATA_HEADER(`/user/info`, '', headers).then((res) => {
+    GET_DATA_HEADER(`/user`, '', headers).then((res) => {
       if (res) {
         setUserInfo(res);
       }
