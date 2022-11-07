@@ -5,10 +5,8 @@ import useInput from '@hooks/useInput';
 import Input from '@components/input/Input';
 import Heading from '@components/input/Heading';
 import React from 'react';
-import { useRouter } from 'next/router';
 
 function UserSearchBar({ setUserParentList }) {
-  const router = useRouter();
   const [userName, onChangeUserName] = useInput('');
   const [userList, setUserList] = useState([]);
 
@@ -23,16 +21,11 @@ function UserSearchBar({ setUserParentList }) {
     }
 
     GET_DATA(`/user/list`, { userName }).then((res) => {
-      console.log(res);
       if (!res) {
         alert('조회되는 사용자가 존재하지 않습니다.');
       }
       setUserList(res);
     });
-    // .catch(function (error) {
-    //   console.log(error);
-    //   return;
-    // });
   }
 
   function arrayRemove(arr, value) {

@@ -3,6 +3,8 @@ import useInput from '@hooks/useInput';
 import CommerceLayout from '@components/common/CommerceLayout';
 import { POST_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { Blue } from '@components/input/Button';
 
 export default function Signup() {
   const router = useRouter();
@@ -12,8 +14,9 @@ export default function Signup() {
   const [phone, onChangePhone] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [passwordConfirmation, onChangePasswordConfirmation] = useInput('');
+  const [newname, setNewname] = useState();
 
-  function submitFormHandler(e) {
+  function handleSubmit(e) {
     e.preventDefault();
 
     const reqBody = {
@@ -37,16 +40,20 @@ export default function Signup() {
       return;
     }
 
-    POST_DATA(`/user/signup`, reqBody)
-      .then((id) => {
-        console.log(id);
+    POST_DATA(`/auth/signup`, reqBody)
+      .then((res) => {
+        if (res.email) {
+          alert('회원가입 성공');
+          alert(re.nickname);
+          setNewname(res.nickname);
 
-        router.push({
-          pathname: `./welcome/${id}`,
-        });
+          router.push({
+            pathname: `./welcome/${newname}`,
+          });
+        }
       })
       .catch(function (error) {
-        console.log(error);
+        alert('회원가입 실패');
         return {};
       });
   }
@@ -167,15 +174,8 @@ export default function Signup() {
                   required
                 />
               </div>
-
-              <button
-                type="button"
-                className="block bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 mt-3 mb-2 px-8 py-6"
-                buttonText="회원가입하기"
-                onClick={submitFormHandler}
-              >
-                회원가입하기
-              </button>
+              <div className="py-1" />
+              <Blue buttonText="회원가입하기" onClickFunc={handleSubmit} />
             </div>
           </form>
         </div>

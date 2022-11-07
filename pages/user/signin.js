@@ -2,14 +2,17 @@ import useInput from '@hooks/useInput';
 import { useRouter } from 'next/router';
 import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead';
-import { POST } from '@apis/defaultApi';
+import { POST_DATA } from '@apis/defaultApi';
+import { API_BASE_URL } from '@apis/api-config';
+import Link from 'next/link';
+import { Blue } from '@components/input/Button';
 
 export default function Signin() {
   const router = useRouter();
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
 
-  function submitFormHandler(e) {
+  function handleSubmit(e) {
     e.preventDefault();
 
     const reqBody = {
@@ -17,23 +20,37 @@ export default function Signin() {
       password: password,
     };
 
-    POST(`/user/signin`, reqBody)
-      .then((res) => {
-        console.log(res);
-
-        sessionStorage.setItem('userId', res.data);
-        if (res.message === '판매자 로그인 성공') {
-          router.push('/seller/main');
-        } else if (res.message === '사용자 로그인 성공') {
+    POST_DATA(`/auth/signin`, reqBody)
+      .then((user) => {
+        if (user.token) {
+          localStorage.setItem('email', user.email);
+          localStorage.setItem('id', user.id);
+          localStorage.setItem('name', user.name);
+          localStorage.setItem('nickname', user.nickname);
+          localStorage.setItem('phone', user.phone);
+          localStorage.setItem('ACCESS_TOKEN', user.token);
+          alert('로그인 성공');
           router.push('/');
         }
-        alert(res.message);
       })
       .catch(function (error) {
-        console.log(error + ' : 로그인 실패');
         alert('로그인 실패');
       });
   }
+
+  const handleSocialLogin = (provider) => {
+    // const frontendUrl = window.location.protocol + '//' + window.location.host;
+    const frontendUrl = 'http://localhost:3000';
+    const remains = API_BASE_URL.indexOf('/api/v1');
+
+    router.push(
+      API_BASE_URL.slice(0, remains) +
+        '/auth/authorize/' +
+        provider +
+        '?redirect_url=' +
+        frontendUrl,
+    );
+  };
 
   return (
     <CommerceLayout>
@@ -49,7 +66,7 @@ export default function Signin() {
             <div className="flex flex-col gap-4 p-4 md:p-8">
               <div>
                 <label
-                  for="email"
+                  htmlFor="email"
                   className="inline-block text-gray-800 text-sm sm:text-base mb-2"
                 >
                   이메일
@@ -57,7 +74,7 @@ export default function Signin() {
                 <input
                   type="email"
                   name="email"
-                  placeHolder="이메일을 입력하세요."
+                  placeholder="이메일을 입력하세요."
                   onChange={onChangeEmail}
                   className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
                 />
@@ -65,7 +82,7 @@ export default function Signin() {
 
               <div>
                 <label
-                  for="password"
+                  htmlFor="password"
                   className="inline-block text-gray-800 text-sm sm:text-base mb-2"
                 >
                   비밀번호
@@ -73,21 +90,16 @@ export default function Signin() {
                 <input
                   type="password"
                   name="password"
-                  minlength="6"
-                  maxlength="12"
-                  placeHolder="비밀번호를 입력하세요."
+                  minLength="6"
+                  maxLength="12"
+                  placeholder="비밀번호를 입력하세요."
                   onChange={onChangePassword}
                   required
                   className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
                 />
               </div>
 
-              <button
-                className="block bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 mt-4 px-8 py-4"
-                onClick={submitFormHandler}
-              >
-                로그인하기
-              </button>
+              <Blue buttonText="로그인하기" onClickFunc={handleSubmit} />
 
               <div className="flex justify-center items-center relative">
                 <span className="h-px bg-gray-300 absolute inset-x-0"></span>
@@ -96,7 +108,10 @@ export default function Signin() {
                 </span>
               </div>
 
-              <button className="flex justify-center items-center bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3">
+              <button
+                onClick={() => handleSocialLogin('facebook')}
+                className="flex justify-center items-center bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3"
+              >
                 <svg
                   className="w-5 h-5 shrink-0"
                   width="24"
@@ -113,7 +128,54 @@ export default function Signin() {
                 Continue with Facebook
               </button>
 
-              <button className="flex justify-center items-center bg-white hover:bg-gray-100 active:bg-gray-200 border border-gray-300 focus-visible:ring ring-gray-300 text-gray-800 text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3">
+              <button
+                onClick={() => handleSocialLogin('naver')}
+                className="flex justify-center items-center bg-green-500 hover:bg-green-600 active:bg-green-700 focus-visible:ring ring-green-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3"
+              >
+                <a
+                  title="Gapo, Public domain, via Wikimedia Commons"
+                  href="https://commons.wikimedia.org/wiki/File:Naver_logo_initial.svg"
+                >
+                  <img
+                    className="w-5 h-5 shrink-0"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    alt="Naver logo initial"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Naver_logo_initial.svg/256px-Naver_logo_initial.svg.png"
+                  />
+                </a>{' '}
+                Continue with Naver
+              </button>
+
+              <Link href={KAKAO_AUTH_URI}>
+                <button
+                  // onClick={() => handleSocialLogin('kakao')}
+                  className="flex justify-center items-center bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-700 focus-visible:ring ring-yellow-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3"
+                >
+                  <a
+                    title="Kakao Corp., Public domain, via Wikimedia Commons"
+                    href="https://commons.wikimedia.org/wiki/File:KakaoTalk_logo.svg"
+                  >
+                    <img
+                      className="w-5 h-5 shrink-0"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      alt="KakaoTalk logo"
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/KakaoTalk_logo.svg/512px-KakaoTalk_logo.svg.png"
+                    />
+                  </a>
+                  Continue with Kakao
+                </button>
+              </Link>
+
+              <button
+                onClick={() => handleSocialLogin('google')}
+                className="flex justify-center items-center bg-white hover:bg-gray-100 active:bg-gray-200 border border-gray-300 focus-visible:ring ring-gray-300 text-gray-800 text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3"
+              >
                 <svg
                   className="w-5 h-5 shrink-0"
                   width="24"
@@ -145,12 +207,11 @@ export default function Signin() {
 
             <div className="flex justify-center items-center bg-gray-100 p-4">
               <p className="text-gray-500 text-sm text-center">
-                가입만 해도 즉시 3000원 적립{' '}
                 <a
                   href="/user/signup"
                   className="text-indigo-500 hover:text-indigo-600 active:text-indigo-700 transition duration-100"
                 >
-                  회원가입
+                  회원가입하기
                 </a>
               </p>
             </div>
