@@ -8,7 +8,7 @@ import Heading from '@components/input/Heading';
 import * as btn from '@components/input/Button';
 import { getDateTime, getState } from '@utils/functions';
 import { EVENT_TYPE } from '@utils/constants/types';
-import EventParticipant from '@components/event/EventParticipantList';
+import EventWinnerList from '@components/event/EventWinnerList';
 
 export default function EventDetail() {
   const router = useRouter();
@@ -59,6 +59,7 @@ export default function EventDetail() {
           </span>
           <br />
           <br />
+
           <Heading title="이벤트 일시" type="h3" />
           <span>
             이벤트 시작일시 : {event.startAt && getDateTime(event.startAt)}
@@ -68,7 +69,7 @@ export default function EventDetail() {
             이벤트 종료일시 : {event.endAt && getDateTime(event.endAt)}
           </span>
           <br />
-
+          <EventWinnerList eventId={eventId} />
           <br />
           <Heading title="이벤트 이미지" type="h3" />
           <Img src={event.eventImage && event.eventImage.eventBannerImg}></Img>
