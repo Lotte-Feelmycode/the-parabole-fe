@@ -23,7 +23,7 @@ import {
 import { EVENT_TYPE, PRIZE_TYPE } from '@utils/constants/types';
 import { EVENT_ERROR } from '@utils/constants/errors';
 import { ICON_WARNING_SIGN } from '@utils/constants/icons';
-import EventScheduler from '@components/Scheduler/scheduler';
+import ModalScheduler from '@components/event/ModalScheduler';
 
 export default function Event() {
   const router = useRouter();
@@ -40,6 +40,7 @@ export default function Event() {
   const [startAt, setStartAt] = useState();
   const [endAt, setEndAt] = useState();
   const [stockList, setStockList] = useState([]);
+  const [modalState, setModalState] = useState(false);
 
   const [isProductSelect, setProductSelect] = useState(false);
   const [isCouponSelect, setCouponSelect] = useState(false);
@@ -445,6 +446,12 @@ export default function Event() {
     // }
   };
 
+  const showModal = (e) => {
+    e.preventDefault();
+
+    setModalState(true);
+  };
+
   const endAtChangeHandler = (e) => {
     e.preventDefault();
 
@@ -676,9 +683,12 @@ export default function Event() {
         <Divider />
 
         <Heading title="이벤트 진행 일시" type="h2" />
-        {/* TODO : 모달창 */}
-        <div className='mb-10'>
-          <EventScheduler input={scheduleList}/>
+        <div>
+          <btn.SmallPink
+            buttonText="선착순 이벤트 스케쥴 조회"
+            onClickFunc={showModal}
+          />
+          {modalState && <ModalScheduler setModalState={setModalState} scheduleList={scheduleList}/>}
         </div>
         <div className="w-full mb-4">
           <Heading title="시작 일시" type="h3" />

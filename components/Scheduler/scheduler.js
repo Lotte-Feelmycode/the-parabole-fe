@@ -5,6 +5,7 @@ import {
   DayView,
   WeekView,
   Appointments,
+  AppointmentTooltip,
   Toolbar,
   ViewSwitcher,
 } from '@devexpress/dx-react-scheduler-material-ui';
@@ -22,6 +23,7 @@ export default function EventScheduler({
         ...style,
         backgroundColor: '#FFC107',
         borderRadius: '8px',
+        fontFamily: 'AppleSDGothicNeoM',
       }}
     >
       {children}
@@ -56,6 +58,9 @@ export default function EventScheduler({
           <Appointments>
             appointmentComponent={Appointment}
           </Appointments>
+          <AppointmentTooltip
+            showCloseButton
+          />
         </Scheduler>
       </Paper>
     )
