@@ -34,12 +34,16 @@ export default function EventList() {
 
   useEffect(() => {
     const params = {
-      eventType: searchType,
-      eventStatus: searchStatus,
+      eventType:
+        searchType == null || searchType == '이벤트 타입' ? '' : searchType,
+      eventStatus:
+        searchValue == null || searchStatus == '진행 상태' ? -1 : searchStatus,
       eventTitle: searchValue,
     };
 
-    POST_DATA('/event/list', params).then((res) => {
+    console.log('params', params);
+
+    GET_DATA('/event/list', params).then((res) => {
       if (res) {
         setEventList(res);
       }
