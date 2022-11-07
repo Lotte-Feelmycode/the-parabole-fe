@@ -3,22 +3,23 @@ import { useRouter } from 'next/router';
 import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead';
 import { POST } from '@apis/defaultApi';
-import { API_BASE_URL } from '@apis/api-config';
 import Link from 'next/link';
 import { Blue } from '@components/input/Button';
+import { FRONT_BASE_URL } from '@apis/api-config';
 
 export default function Signin() {
   const router = useRouter();
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
 
-  const GOOGLE_REDIRECT_URI = API_BASE_URL + '/auth/google/callback';
-  const GOOGLE_AUTH_URI = `${process.env.NEXT_PUBLIC_GOOGLE_AUTH}?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code&scope=profile email openid`;
+  // const GOOGLE_REDIRECT_URI = BE_HOST + '/auth/google/callback';
+  const GOOGLE_REDIRECT_URI = FRONT_BASE_URL + '/code/google';
+  const GOOGLE_AUTH_URI = `${process.env.NEXT_PUBLIC_GOOGLE_AUTH}?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code&scope=profile%20email%20openid`;
 
-  const KAKAO_REDIRECT_URI = API_BASE_URL + '/auth/kakao/callback';
+  const KAKAO_REDIRECT_URI = FRONT_BASE_URL + '/code/kakao';
   const KAKAO_AUTH_URI = `${process.env.NEXT_PUBLIC_KAKAO_AUTH}?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
 
-  const NAVER_REDIRECT_URI = API_BASE_URL + '/auth/naver/callback';
+  const NAVER_REDIRECT_URI = FRONT_BASE_URL + '/code/naver';
   const NAVER_AUTH_URI = `${process.env.NEXT_PUBLIC_NAVER_AUTH}?client_id=${process.env.NEXT_PUBLIC_NAVER_REST_API_KEY}&redirect_uri=${NAVER_REDIRECT_URI}&response_type=code&state=${process.env.NEXT_PUBLIC_NAVER_STATE}`;
 
   function handleSubmit(e) {
@@ -33,16 +34,17 @@ export default function Signin() {
       .then((res) => {
         console.log(res);
         if (res.success) {
-          localStorage.setItem('id', res.data.id);
+          localStorage.setItem('userId', res.data.id);
           localStorage.setItem('email', res.data.email);
-          localStorage.setItem('role', res.data.role);
-          localStorage.setItem('token', res.data.token);
-          localStorage.setItem('authProvider', res.data.authProvider);
-          localStorage.setItem('imageUrl', res.data.imageUrl);
-          localStorage.setItem('name', res.data.name);
+          localStorage.setItem('username', res.data.name);
           localStorage.setItem('nickname', res.data.nickname);
           localStorage.setItem('phone', res.data.phone);
+          localStorage.setItem('imageUrl', res.data.imageUrl);
+          localStorage.setItem('role', res.data.role);
+          localStorage.setItem('authProvider', res.data.authProvider);
           localStorage.setItem('sellerId', res.data.sellerId);
+          localStorage.setItem('role', res.data.role);
+          localStorage.setItem('token', res.data.token);
 
           alert('로그인 성공');
           router.push('/');
@@ -124,7 +126,7 @@ export default function Signin() {
                       alt="Naver logo initial"
                       src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Naver_logo_initial.svg/256px-Naver_logo_initial.svg.png"
                     />
-                  </a>
+                  </a>{' '}
                   Continue with Naver
                 </button>
               </Link>

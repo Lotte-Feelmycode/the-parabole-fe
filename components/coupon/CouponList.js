@@ -1,5 +1,7 @@
+import { GET_DATA_HEADER } from '@apis/customApi';
 import { GET_DATA } from '@apis/defaultApi';
 import * as btn from '@components/input/Button';
+import { useGetToken } from '@hooks/useGetToken';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -27,19 +29,27 @@ function CouponList() {
   const [couponList, setCouponList] = useState([]);
   const [totalElementCnt, setTotalElementCnt] = useState(0);
 
+  let headers;
   useEffect(() => {
-    GET_DATA(`/coupon/list`).then((res) => {
-      if (res) {
-        if (res.numberOfElements === 0) {
-          alert('판매자가 등록한 쿠폰이 없습니다.');
-        } else if (res.content) {
-          setCouponList(res.content);
-          setTotalElementCnt(res.numberOfElements);
+    headers = useGetToken();
+  }, []);
+
+  useEffect(() => {
+    GET_DATA_HEADER(`/coupon/list`, '', headers)
+      .then((res) => {
+        if (res) {
+          if (res.numberOfElements === 0) {
+            alert('판매자가 등록한 쿠폰이 없습니다.');
+          } else if (res.content) {
+            setCouponList(res.content);
+            setTotalElementCnt(res.numberOfElements);
+          }
         }
-      } else {
-        alert('판매자의 쿠폰을 조회하지 못했습니다. 다시 시도해주세요.');
-      }
-    });
+      })
+      .catch((error) => {
+        alert('권한이 없어 접근할 수 없습니다. 로그인 해주세요.');
+        router.push('/');
+      });
   }, []);
 
   return (

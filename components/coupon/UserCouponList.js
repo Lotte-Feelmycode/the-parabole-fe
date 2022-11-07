@@ -3,6 +3,8 @@ import { getDate, numberToMonetary } from '@utils/functions';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+import { GET_DATA_HEADER } from '@apis/customApi';
+import { useGetToken } from '@hooks/useGetToken';
 
 // function UserCoupon({ userCoupon }) {
 //   return (
@@ -67,8 +69,13 @@ export default function UserCouponList({ userId }) {
   const [totalElementCnt, setTotalElementCnt] = useState(0);
   const router = useRouter();
 
+  let headers;
   useEffect(() => {
-    GET_DATA(`/coupon/list`)
+    headers = useGetToken();
+  }, []);
+
+  useEffect(() => {
+    GET_DATA_HEADER(`/coupon/list`, '', headers)
       .then((res) => {
         if (res) {
           if (res.numberOfElements === 0) {
@@ -77,8 +84,6 @@ export default function UserCouponList({ userId }) {
             setUserCouponList(res.content);
             setTotalElementCnt(res.numberOfElements);
           }
-        } else {
-          alert('사용자의 쿠폰을 조회하지 못했습니다. 다시 시도해주세요.');
         }
       })
       .catch((error) => {

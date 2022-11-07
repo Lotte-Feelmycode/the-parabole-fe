@@ -10,7 +10,7 @@ axios.defaults.headers.post['Content-Type'] = CONTENT_TYPE;
 let bearerToken = 'Bearer ';
 let accessToken;
 if (typeof window !== 'undefined' && typeof window !== undefined) {
-  accessToken = localStorage.getItem('userToken');
+  accessToken = localStorage.getItem('token');
 }
 if (accessToken && accessToken !== null && accessToken !== undefined) {
   bearerToken += accessToken;
