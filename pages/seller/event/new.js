@@ -44,7 +44,7 @@ export default function Event() {
 
   // 선착순 이벤트 체크
   function checkFcfsPrize() {
-    if (eventType === 'FCFS' && prizeList.length > 0) {
+    if (eventType === 'FCFS' && prizeList.length > 1) {
       alert('선착순 이벤트는 한 가지 경품만 추가할 수 있습니다.');
       return true;
     }

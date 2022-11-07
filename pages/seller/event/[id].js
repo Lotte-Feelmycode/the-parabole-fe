@@ -26,7 +26,7 @@ export default function EventDetail() {
           setEvent(res.data);
         } else {
           alert('잘못된 요청입니다.');
-          router.push({ pathname: `/seller/event/list` });
+          router.replace(`/seller/event/list`);
         }
       });
     }
@@ -37,7 +37,7 @@ export default function EventDetail() {
     DELETE(`/event/${eventId}`, {}).then((res) => {
       if (res && res.success == true && confirm('삭제하시겠습니까?')) {
         alert('삭제 되었습니다. ');
-        router.push({ pathname: `/seller/event/list` }, `/seller/event/list`);
+        router.replace(`/seller/event/list`);
       }
     });
   };
@@ -73,7 +73,7 @@ export default function EventDetail() {
           <div className="mb-8">
             <Heading title="경품" type="h3" />
             <table className="w-2/3 text-m text-center px-4 pb-8">
-              <thead className="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <thead className="text-base text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                 <tr className="h-14">
                   <th scope="col" className="py-3 px-4 w-20">
                     경품 타입
@@ -89,29 +89,31 @@ export default function EventDetail() {
                   </th>
                 </tr>
               </thead>
-              {event.eventPrizes &&
-                event.eventPrizes.map((eventPrize, index) => (
-                  <>
-                    <tr
-                      key={eventPrize.id}
-                      className="h-12 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    >
-                      <td>{getState(PRIZE_TYPE, eventPrize.prizeType)}</td>
-                      {eventPrize.prizeType === 'PRODUCT' ? (
-                        <>
-                          <td>{eventPrize.productId}</td>
-                          <td>{eventPrize.productName}</td>
-                        </>
-                      ) : (
-                        <>
-                          <td>{eventPrize.couponId}</td>
-                          <td>{eventPrize.couponDetail}</td>
-                        </>
-                      )}
-                      <td>{eventPrize.stock}</td>
-                    </tr>
-                  </>
-                ))}
+              <tbody>
+                {event.eventPrizes &&
+                  event.eventPrizes.map((eventPrize, index) => (
+                    <>
+                      <tr
+                        key={eventPrize.id}
+                        className="h-12 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                      >
+                        <td>{getState(PRIZE_TYPE, eventPrize.prizeType)}</td>
+                        {eventPrize.prizeType === 'PRODUCT' ? (
+                          <>
+                            <td>{eventPrize.productId}</td>
+                            <td>{eventPrize.productName}</td>
+                          </>
+                        ) : (
+                          <>
+                            <td>{eventPrize.couponId}</td>
+                            <td>{eventPrize.couponDetail}</td>
+                          </>
+                        )}
+                        <td>{eventPrize.stock}</td>
+                      </tr>
+                    </>
+                  ))}
+              </tbody>
             </table>
           </div>
 
@@ -127,7 +129,6 @@ export default function EventDetail() {
           {event.status === EVENT_BEFORE && (
             // TODO: 수정 (꼭 필요한지?)
             <DivHor>
-              {/* <btn.LineBlue buttonText="수정하기" /> */}
               <btn.Pink
                 buttonText="삭제하기"
                 onClickFunc={deleteClickHandler}
