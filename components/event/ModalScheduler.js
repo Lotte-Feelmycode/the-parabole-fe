@@ -90,6 +90,9 @@ const ModalContainer = styled.div`
   border: 1px solid #CCCCCC;
   border-radius: 8px;
 
+  box-shadow: 0 3px 20px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+
   /* 모달창 크기 */
   @media (max-width: 1024px) {
     width: 90%;
@@ -109,4 +112,5 @@ const DetailSection = styled.div`
 
 const ModalTableSection = styled.div`
   margin-top: 0;
+  height: 60%;
 `;
