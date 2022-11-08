@@ -679,11 +679,11 @@ export default function Event() {
         </Div>
         <Divider />
 
-        <Heading title="이벤트 채팅 생성 여부" type="h2" />
+        {/* <Heading title="이벤트 채팅 생성 여부" type="h2" />
         <Div>
           <Checkbox text="생성" onChange={onChatOpen} value={chatOpen} />
         </Div>
-        <Divider />
+        <Divider /> */}
 
         <Heading title="이벤트 진행 일시" type="h2" />
         <div className="w-full mb-4">
