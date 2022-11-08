@@ -1,5 +1,5 @@
 export var isLoggedIn = function () {
-  if (localStorage.getItem('userToken')) {
+  if (localStorage.getItem('token')) {
     return true;
   } else {
     return false;
@@ -9,7 +9,7 @@ export var isLoggedIn = function () {
 export var getLoggedInInfo = function () {
   if (checkLoggedIn) {
     var arr;
-    arr.push(localStorage.getItem('userToken'));
+    arr.push(localStorage.getItem('token'));
     arr.push(localStorage.getItem('email'));
     arr.push(localStorage.getItem('id'));
     arr.push(localStorage.getItem('name'));
