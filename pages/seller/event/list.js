@@ -34,29 +34,19 @@ export default function EventList() {
 
   useEffect(() => {
     const params = {
-      eventType: searchType,
-      eventStatus: searchStatus,
+      eventType:
+        searchType == null || searchType == '이벤트 타입' ? '' : searchType,
+      eventStatus:
+        searchValue == null || searchStatus == '진행 상태' ? -1 : searchStatus,
       eventTitle: searchValue,
     };
 
-    POST_DATA('/event/list', params).then((res) => {
+    GET_DATA('/event/list', params).then((res) => {
       if (res) {
         setEventList(res);
       }
     });
   }, [searchValue, searchStatus, searchType]);
-
-  // const onClickHandler = (e) => {
-  //   e.preventDefault();
-  //   setSearchValue(e.target.value);
-  // };
-
-  // const handleOnKeyPress = (e) => {
-  //   e.preventDefault();
-  //   if (e.key === 'Enter') {
-  //     onClickHandler();
-  //   }
-  // };
 
   const rowClickHandler = (row) => {
     const eventId = row.id;
