@@ -1,24 +1,25 @@
 import SiteHead from '@components/common/SiteHead';
 import useInput from '@hooks/useInput';
 import CommerceLayout from '@components/common/CommerceLayout';
-import { POST_DATA } from '@apis/defaultApi';
+import { POST, POST_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { Blue } from '@components/input/Button';
 
 export default function Signup() {
   const router = useRouter();
   const [email, onChangeEmail] = useInput('');
-  const [username, onChangeUsername] = useInput('');
+  const [name, onChangeName] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
   const [phone, onChangePhone] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [passwordConfirmation, onChangePasswordConfirmation] = useInput('');
-
-  function submitFormHandler(e) {
+  function handleSubmit(e) {
     e.preventDefault();
 
     const reqBody = {
       email: email,
-      username: username,
+      name: name,
       nickname: nickname,
       phone: phone,
       password: password,
@@ -27,7 +28,7 @@ export default function Signup() {
 
     if (
       !reqBody.email ||
-      !reqBody.username ||
+      !reqBody.name ||
       !reqBody.nickname ||
       !reqBody.phone ||
       !reqBody.password ||
@@ -37,16 +38,18 @@ export default function Signup() {
       return;
     }
 
-    POST_DATA(`/user/signup`, reqBody)
-      .then((id) => {
-        console.log(id);
-
-        router.push({
-          pathname: `./welcome/${id}`,
-        });
+    POST(`/auth/signup`, reqBody)
+      .then((res) => {
+        console.log(res);
+        if (res.success) {
+          alert('회원가입 성공');
+          router.push({
+            pathname: `./welcome/${res.data.name}`,
+          });
+        }
       })
       .catch(function (error) {
-        console.log(error);
+        alert('회원가입 실패');
         return {};
       });
   }
@@ -81,7 +84,7 @@ export default function Signup() {
 
               <div>
                 <label
-                  for="username"
+                  for="name"
                   className="inline-block text-gray-800 text-sm sm:text-base mb-2"
                 >
                   사용자명
@@ -89,9 +92,9 @@ export default function Signup() {
                 <input
                   className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
                   type="text"
-                  name="username"
+                  name="name"
                   placeHolder="사용자 이름을 입력하세요."
-                  onChange={onChangeUsername}
+                  onChange={onChangeName}
                   required
                 />
               </div>
@@ -167,15 +170,8 @@ export default function Signup() {
                   required
                 />
               </div>
-
-              <button
-                type="button"
-                className="block bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 mt-3 mb-2 px-8 py-6"
-                buttonText="회원가입하기"
-                onClick={submitFormHandler}
-              >
-                회원가입하기
-              </button>
+              <div className="py-1" />
+              <Blue buttonText="회원가입하기" onClickFunc={handleSubmit} />
             </div>
           </form>
         </div>

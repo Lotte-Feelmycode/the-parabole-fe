@@ -1,19 +1,76 @@
 import styled from '@emotion/styled';
-import { useState, useEffect } from 'react';
-import Coupon from '@components/event/Coupon';
-import * as btn from '@components/input/Button';
-import { POST_DATA, POST } from '@apis/defaultApi';
-import { useRouter } from 'next/router';
+import { Blue } from '@components/input/Button';
+import { POST } from '@apis/defaultApi';
+import { ICON_COUPON } from '@utils/constants/icons';
+import { ThemeGray4, ThemeGray5 } from '@utils/constants/themeColor';
 
-export default function EventPrize({ event, eventId }) {
-  const [couponInfo, setCouponInfo] = useState([event]);
-  const [state, setState] = useState();
-  //TODO 나중에 userId 제대로
+export default function EventPrize({ prize, eventId, applyStatus }) {
+  //TODO userId 객체 받아오기
   const userId = 3;
-  const router = useRouter();
-  useEffect(() => {
-    setCouponInfo(event);
-  }, [event]);
+
+  function PrizeDetail() {
+    if (prize && prize.prizeType === 'PRODUCT') {
+      return (
+        <div className="prize-detail prize-product-detail">
+          <ImgSection>
+            <EventPrizeProductImg
+              className="prize-img"
+              src={prize.productImg}
+            />
+          </ImgSection>
+          <EventBodySection className="prize-body">
+            <PrizeNameSection className="prize-name">
+              <p className="text-lg lg:text-xl font-bold p-2">
+                {prize.productName}
+              </p>{' '}
+              <p>{prize.stock}개</p>
+            </PrizeNameSection>
+          </EventBodySection>
+        </div>
+      );
+    } else if (prize && prize.prizeType === 'COUPON') {
+      return (
+        <div className="prize-detail prize-coupon-detail">
+          <ImgSection>
+            <EventPrizeCouponImg className="prize-img" src={ICON_COUPON} />
+          </ImgSection>
+          <EventBodySection className="prize-body">
+            <PrizeNameSection className="prize-name prize-name-coupon">
+              <p className="text-lg lg:text-xl font-bold p-2">
+                {prize.couponDetail}
+              </p>
+              <CouponDiscountValue />
+              <p>
+                {prize.stock}
+                {'개'}
+              </p>
+            </PrizeNameSection>
+          </EventBodySection>
+        </div>
+      );
+    }
+  }
+
+  function CouponDiscountValue() {
+    if (prize.type === 'AMOUNT') {
+      return <p>{prize.couponDiscountValue}원 할인 쿠폰</p>;
+    } else if (prize.type === 'RATE') {
+      return <p>{prize.couponDiscountValue}% 할인 쿠폰</p>;
+    } else {
+      return <p>{prize.couponDiscountValue} 할인 쿠폰</p>;
+    }
+  }
+
+  function BtnSection() {
+    return (
+      <Blue
+        buttonText={'이벤트 응모'}
+        onClickFunc={() => applyEvent(eventId, prize.eventPrizeId)}
+        attr={{ disabled: applyStatus }}
+        css={{ marginTop: 'auto', marginBottom: '10px' }}
+      />
+    );
+  }
 
   function applyEvent(eventId, eventPrizeId) {
     //TODO: userID 나중에 받아와야함
@@ -33,81 +90,68 @@ export default function EventPrize({ event, eventId }) {
         alert('잠시후 다시 시도해주세요');
       }
     });
-
-    return;
   }
-  useEffect(() => {
-    POST_DATA('/event/participant/check', {
-      userId,
-      eventId,
-    }).then((res) => {
-      if (!res) {
-        setState('disabled');
-      }
-    });
-  });
 
-  if (event.prizeType === 'PRODUCT') {
-    return (
-      <div>
-        <div style={{ width: '300px', height: '300px', marginLeft: '35px' }}>
-          <EventPrizeImg className="prize-img" src={event.productImg} />
-        </div>
-        <div
-          className="prize-body"
-          style={{ float: 'right', paddingRight: '110px' }}
-        >
-          <br />
-          <div>
-            <div
-              className="prize-name"
-              style={{ textAlign: 'center', fontSize: 'large' }}
-            >
-              <strong>{event.productName}</strong> {event.stock}개
-            </div>
-          </div>
-
-          <div style={{ width: '153px', padding: '8px' }}>
-            <div>
-              <btn.Blue
-                buttonText={'이벤트 응모'}
-                onClickFunc={() => applyEvent(eventId, event.eventPrizeId)}
-                attr={{ disabled: state }}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  } else if (event.prizeType === 'COUPON') {
-    return (
-      <div style={{ marginLeft: '35px' }}>
-        <div style={{ width: '300px', height: '249px' }}>
-          <div>
-            <Coupon couponInfo={couponInfo} />
-          </div>
-        </div>
-        <div
-          style={{ float: 'right', paddingRight: '106px', fontSize: 'large' }}
-        >
-          <strong>{event.couponDiscountValue}원 할인 쿠폰</strong> {event.stock}
-          개
-        </div>
-        <br />
-        <br />
-        <div style={{ marginLeft: '82px' }}>
-          <btn.Blue
-            buttonText={'이벤트 응모'}
-            onClickFunc={() => applyEvent(eventId, event.eventPrizeId)}
-            attr={{ disabled: state }}
-          />
-        </div>
-      </div>
-    );
-  }
+  return (
+    <PrizeBackGround className="prize-back-ground">
+      <PrizeDetail />
+      <BtnSection />
+    </PrizeBackGround>
+  );
 }
 
-const EventPrizeImg = styled.img`
-  object-fit: fill;
-  border-radius: 9rem;
+const PrizeBackGround = styled.div`
+  border: 1px solid ${ThemeGray4};
+  border-radius: 2rem;
+  background-color: ${ThemeGray5};
+  margin: 10px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: 1024px) {
+    width: 31%;
+  }
+
+  @media (max-width: 1024px) {
+    width: 47%;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+const ImgSection = styled.div`
+  overflow: hidden;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+`;
+
+const EventBodySection = styled.div`
+  margin-bottom: 10px;
+`;
+
+const EventPrizeProductImg = styled.img`
+  overflow: hidden;
+  object-fit: cover;
+  object-position: center;
+  min-width: 200px;
+  aspect-ratio: 1 / 1;
+  border-radius: 20px;
+`;
+
+const EventPrizeCouponImg = styled.img`
+  padding: 23px 0;
+  overflow: hidden;
+  object-fit: cover;
+  object-position: center;
+  min-width: 200px;
+  border-radius: 20px;
+`;
+
+const PrizeNameSection = styled.div`
+  text-align: center;
 `;

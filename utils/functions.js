@@ -1,3 +1,24 @@
+export var isLoggedIn = function () {
+  if (localStorage.getItem('token')) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export var getLoggedInInfo = function () {
+  if (checkLoggedIn) {
+    var arr;
+    arr.push(localStorage.getItem('token'));
+    arr.push(localStorage.getItem('email'));
+    arr.push(localStorage.getItem('id'));
+    arr.push(localStorage.getItem('name'));
+    arr.push(localStorage.getItem('nickname'));
+    arr.push(localStorage.getItem('phone'));
+    return arr;
+  }
+};
+
 /**
  * 일시 데이터를 '0000년 00월 00일 오후/오전 00시 00분'으로 리턴하는 함수
  * @param {*} str
@@ -91,6 +112,17 @@ export function getDateTimeNotKor(str) {
     return str.split('T')[0] + ' ' + str.split('T')[1];
   }
   return str;
+}
+
+/**
+ * 현재 날짜를 '0000-00-00'으로 리턴하는 함수
+ * @returns
+ */
+export function getTodayDateShort() {
+  let date = new Date();
+  return (
+    date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+  );
 }
 
 /**

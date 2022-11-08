@@ -7,7 +7,7 @@ const CONTENT_TYPE = 'application/json';
 //axios.defaults.baseurl = API_BASE_URL;
 axios.defaults.headers.post['Content-Type'] = CONTENT_TYPE;
 
-export const GET = async (url, params) => {
+export const GET = async (url, params, headers) => {
   let apiUrl = API_BASE_URL + url;
 
   if (!url) {
@@ -16,7 +16,7 @@ export const GET = async (url, params) => {
   }
 
   const { data } = await axios
-    .get(apiUrl, { params: params })
+    .get(apiUrl, { params: params, headers: headers })
     .then((res) => {
       console.log(res);
       return res;
@@ -28,7 +28,7 @@ export const GET = async (url, params) => {
   return data;
 };
 
-export const POST = async (url, body) => {
+export const POST = async (url, body, headers) => {
   let apiUrl = API_BASE_URL + url;
 
   if (!(url && body)) {
@@ -38,7 +38,7 @@ export const POST = async (url, body) => {
 
   const { data } = await axios
     .post(apiUrl, JSON.stringify(body), {
-      headers: { 'Content-Type': `application/json` },
+      headers: headers,
     })
     .then((res) => {
       console.log(res);
@@ -51,7 +51,7 @@ export const POST = async (url, body) => {
   return data;
 };
 
-export const PATCH = async (url, body) => {
+export const PATCH = async (url, body, headers) => {
   let apiUrl = API_BASE_URL + url;
 
   if (!(url && body)) {
@@ -61,7 +61,7 @@ export const PATCH = async (url, body) => {
 
   const { data } = await axios
     .patch(apiUrl, JSON.stringify(body), {
-      headers: { 'Content-Type': `application/json` },
+      headers: headers,
     })
     .then((res) => {
       console.log(res);
@@ -74,7 +74,7 @@ export const PATCH = async (url, body) => {
   return data;
 };
 
-export const DELETE = async (url, params) => {
+export const DELETE = async (url, params, headers) => {
   let apiUrl = API_BASE_URL + url;
 
   if (!(url && params)) {
@@ -83,7 +83,7 @@ export const DELETE = async (url, params) => {
   }
 
   const { data } = await axios
-    .delete(apiUrl, { params: params })
+    .delete(apiUrl, { params: params, headers: headers })
     .then((res) => {
       console.log(res);
       return res;
@@ -95,7 +95,7 @@ export const DELETE = async (url, params) => {
   return data;
 };
 
-export const GET_DATA = async (url, params) => {
+export const GET_DATA = async (url, params, headers) => {
   let apiUrl = API_BASE_URL + url;
 
   if (!url) {
@@ -104,7 +104,7 @@ export const GET_DATA = async (url, params) => {
   }
 
   const { data } = await axios
-    .get(apiUrl, { params: params })
+    .get(apiUrl, { params: params, headers: headers })
     .then((res) => {
       console.log(res);
       if (res.data) return res.data;
@@ -117,7 +117,7 @@ export const GET_DATA = async (url, params) => {
   return data;
 };
 
-export const POST_DATA = async (url, body) => {
+export const POST_DATA = async (url, body, headers) => {
   let apiUrl = API_BASE_URL + url;
 
   if (!(url && body)) {
@@ -127,7 +127,7 @@ export const POST_DATA = async (url, body) => {
 
   const { data } = await axios
     .post(apiUrl, JSON.stringify(body), {
-      headers: { 'Content-Type': `application/json` },
+      headers: headers,
     })
     .then((res) => {
       console.log(res);
@@ -141,7 +141,7 @@ export const POST_DATA = async (url, body) => {
   return data;
 };
 
-export const PATCH_DATA = async (url, body) => {
+export const PATCH_DATA = async (url, body, headers) => {
   let apiUrl = API_BASE_URL + url;
 
   if (!(url && body)) {
@@ -151,7 +151,7 @@ export const PATCH_DATA = async (url, body) => {
 
   const { data } = await axios
     .patch(apiUrl, JSON.stringify(body), {
-      headers: { 'Content-Type': `application/json` },
+      headers: headers,
     })
     .then((res) => {
       console.log(res);
@@ -165,7 +165,7 @@ export const PATCH_DATA = async (url, body) => {
   return data;
 };
 
-export const DELETE_DATA = async (url, params) => {
+export const DELETE_DATA = async (url, params, headers) => {
   let apiUrl = API_BASE_URL + url;
 
   if (!(url && params)) {
@@ -174,7 +174,7 @@ export const DELETE_DATA = async (url, params) => {
   }
 
   const { data } = await axios
-    .delete(apiUrl, { params: params })
+    .delete(apiUrl, { params: params, headers: headers })
     .then((res) => {
       console.log(res);
       if (res.data) return res.data;

@@ -1,6 +1,8 @@
 import SearchBar from '@components/input/SearchBar';
 import { ICON_CART_BLACK } from '@utils/constants/icons';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 const Links = {
   LINK_MAIN: '/',
@@ -11,9 +13,23 @@ const Links = {
   LINK_SIGNIN: '/user/signin',
   LINK_SINGUP: '/user/signup',
   LINK_MYPAGE: '/user/mypage',
+  LINK_SIGNOUT: '/user/signout',
 };
 
 export default function CommerceHeader() {
+  const [token, setToken] = useState();
+  const router = useRouter();
+
+  useEffect(() => {
+    setToken(localStorage.getItem('token'));
+  });
+
+  const signout = () => {
+    localStorage.clear();
+    alert('로그아웃 완료');
+    router.push('/');
+  };
+
   return (
     <>
       <header className="body-font flex flex-col">
@@ -57,19 +73,33 @@ export default function CommerceHeader() {
             </nav>
 
             <nav className="md:ml-auto mt-l flex flex-wrap items-center text-base text-gray-500 justify-center">
-              <Link href={Links.LINK_SIGNIN}>
-                <a className="px-5 font-medium hover:text-gray-700">로그인</a>
-              </Link>
-              <Link href={Links.LINK_SINGUP}>
-                <a className="px-5 font-medium hover:text-gray-700 border-l border-r">
-                  회원가입
-                </a>
-              </Link>
-              <Link href={Links.LINK_MYPAGE}>
-                <a className="px-5 font-medium hover:text-gray-700">
-                  마이페이지
-                </a>
-              </Link>
+              {token ? (
+                <div>
+                  <Link href={Links.LINK_MYPAGE}>
+                    <a className="px-5 font-medium hover:text-gray-700">
+                      마이페이지
+                    </a>
+                  </Link>
+                  <button onClick={signout}>
+                    <a className="px-5 font-medium hover:text-gray-700">
+                      로그아웃
+                    </a>
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  <Link href={Links.LINK_SIGNIN}>
+                    <a className="px-5 font-medium hover:text-gray-700">
+                      로그인
+                    </a>
+                  </Link>
+                  <Link href={Links.LINK_SINGUP}>
+                    <a className="px-5 font-medium hover:text-gray-700 border-l border-r">
+                      회원가입
+                    </a>
+                  </Link>
+                </div>
+              )}
             </nav>
           </div>
         </div>
