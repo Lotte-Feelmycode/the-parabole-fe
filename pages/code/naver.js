@@ -16,7 +16,6 @@ export default function naverCode({}) {
       code: code,
       state: state,
     }).then((res) => {
-      console.log(res);
       if (res.success) {
         localStorage.setItem('userId', res.data.id);
         localStorage.setItem('email', res.data.email);
@@ -30,7 +29,6 @@ export default function naverCode({}) {
         localStorage.setItem('role', res.data.role);
         localStorage.setItem('token', res.data.token);
 
-        alert('Naver 로그인 성공');
         router.push('/');
       }
     });

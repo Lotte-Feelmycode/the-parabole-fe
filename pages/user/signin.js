@@ -12,7 +12,6 @@ export default function Signin() {
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
 
-  // const GOOGLE_REDIRECT_URI = BE_HOST + '/auth/google/callback';
   const GOOGLE_REDIRECT_URI = FRONT_BASE_URL + '/code/google';
   const GOOGLE_AUTH_URI = `${process.env.NEXT_PUBLIC_GOOGLE_AUTH}?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code&scope=profile%20email%20openid`;
 
@@ -32,7 +31,6 @@ export default function Signin() {
 
     POST(`/auth/signin`, reqBody)
       .then((res) => {
-        console.log(res);
         if (res.success) {
           localStorage.setItem('userId', res.data.userId);
           localStorage.setItem('email', res.data.email);
