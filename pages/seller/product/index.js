@@ -6,8 +6,11 @@ import * as Button from '@components/input/Button';
 import SellerLayout from '@components/seller/SellerLayout';
 import { POST_DATA } from '@apis/defaultApi';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 export default function ProductDetail() {
+  const router = useRouter();
+
   // TODO: userId를 가져올 때 저장되어있는 걸(cookie, localstorage)로 가져오게 변경
   const userId = 1;
 
@@ -66,10 +69,11 @@ export default function ProductDetail() {
   function setProduct() {
     const params = {
       userId: userId,
-      name: name,
-      category: category,
-      remain: remain,
-      price: price,
+      productName: name,
+      productCategory: category,
+      productRemains: remain,
+      productPrice: price,
+      productThumbnailImg: '',
     };
 
     POST_DATA('/product', params).then((res) => {
@@ -90,7 +94,9 @@ export default function ProductDetail() {
         { headers: { 'Content-Type': 'multipart/form-data' } }, // Content-Type을 반드시 이렇게 하여야 한다.
       )
       .then((res) => {
-        console.log(res);
+        router.push({
+          pathname: `/seller/product/list`,
+        });
       });
   }, [productId]);
 
