@@ -52,7 +52,7 @@ export default function EventDetail() {
     <CommerceLayout>
         <main className="flex-grow">
           <EventInfo eventInfo={eventInfo} eventImage={eventImage}/>
-          <EventPrizeContainer eventPrizes={eventPrizes}></EventPrizeContainer>
+          <EventPrizeContainer eventPrizes={eventPrizes} eventType={eventInfo.type}></EventPrizeContainer>
         </main>
     </CommerceLayout>
   );
