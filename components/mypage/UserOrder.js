@@ -1,12 +1,13 @@
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
-import { getState, numberToMonetary } from '@utils/functions';
-import { ORDER_PAY_STATE, ORDER_STATE } from '@utils/constants/types';
+import {
+  getDateTimeNotKor,
+  getState,
+  numberToMonetary,
+} from '@utils/functions';
+import { ORDER_STATE } from '@utils/constants/types';
 import Link from 'next/link';
 
 export default function Order({ order }) {
-  const router = useRouter();
-
   return (
     <tr>
       <LinkToProduct>
@@ -20,7 +21,7 @@ export default function Order({ order }) {
       <Td>{order.productCnt}개</Td>
       <Td>{numberToMonetary(order.productPrice * order.productCnt)}원</Td>
       <Td>{getState(ORDER_STATE, order.state)}</Td>
-      <Td>{order.updatedAt}</Td>
+      <Td>{getDateTimeNotKor(order.updatedAt)}</Td>
     </tr>
   );
 }
