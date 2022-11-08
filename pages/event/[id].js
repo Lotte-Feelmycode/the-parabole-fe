@@ -84,7 +84,7 @@ export default function EventDetail() {
               <div className="max-w-3xl mx-auto">
                 <p className="text-2xl text-gray-600 mb-8" data-aos="zoom-y-out" data-aos-delay="150">{eventInfo.storeName}에서 {getDateTime(eventInfo.startAt)} ~ {getDateTime(eventInfo.endAt)}동안 진행하는 이벤트!</p>
                 <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center" data-aos="zoom-y-out" data-aos-delay="300">
-                  <div>
+                  <div className='animate-pulse'>
                     <btn.Blue buttonText={"상품 더 보러가기"}/>
                   </div>
                 </div>
