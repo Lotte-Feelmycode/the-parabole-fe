@@ -3,7 +3,6 @@ import { getDate, numberToMonetary } from '@utils/functions';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { GET_DATA_HEADER } from '@apis/customApi';
 import { useGetToken } from '@hooks/useGetToken';
 
 // function UserCoupon({ userCoupon }) {
@@ -75,7 +74,7 @@ export default function UserCouponList({ userId }) {
   }, []);
 
   useEffect(() => {
-    GET_DATA_HEADER(`/coupon/list`, '', headers)
+    GET_DATA(`/coupon/list`, '', headers)
       .then((res) => {
         if (res) {
           if (res.numberOfElements === 0) {

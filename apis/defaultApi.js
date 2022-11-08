@@ -7,21 +7,7 @@ const CONTENT_TYPE = 'application/json';
 //axios.defaults.baseurl = API_BASE_URL;
 axios.defaults.headers.post['Content-Type'] = CONTENT_TYPE;
 
-let bearerToken = 'Bearer ';
-let accessToken;
-if (typeof window !== 'undefined' && typeof window !== undefined) {
-  accessToken = localStorage.getItem('token');
-}
-if (accessToken && accessToken !== null && accessToken !== undefined) {
-  bearerToken += accessToken;
-}
-
-let headers = {
-  'Content-Type': `application/json`,
-  Authorization: bearerToken,
-};
-
-export const GET = async (url, params) => {
+export const GET = async (url, params, headers) => {
   let apiUrl = API_BASE_URL + url;
 
   if (!url) {
@@ -42,7 +28,7 @@ export const GET = async (url, params) => {
   return data;
 };
 
-export const POST = async (url, body) => {
+export const POST = async (url, body, headers) => {
   let apiUrl = API_BASE_URL + url;
 
   if (!(url && body)) {
@@ -65,7 +51,7 @@ export const POST = async (url, body) => {
   return data;
 };
 
-export const PATCH = async (url, body) => {
+export const PATCH = async (url, body, headers) => {
   let apiUrl = API_BASE_URL + url;
 
   if (!(url && body)) {
@@ -88,7 +74,7 @@ export const PATCH = async (url, body) => {
   return data;
 };
 
-export const DELETE = async (url, params) => {
+export const DELETE = async (url, params, headers) => {
   let apiUrl = API_BASE_URL + url;
 
   if (!(url && params)) {
@@ -109,7 +95,7 @@ export const DELETE = async (url, params) => {
   return data;
 };
 
-export const GET_DATA = async (url, params) => {
+export const GET_DATA = async (url, params, headers) => {
   let apiUrl = API_BASE_URL + url;
 
   if (!url) {
@@ -131,7 +117,7 @@ export const GET_DATA = async (url, params) => {
   return data;
 };
 
-export const POST_DATA = async (url, body) => {
+export const POST_DATA = async (url, body, headers) => {
   let apiUrl = API_BASE_URL + url;
 
   if (!(url && body)) {
@@ -155,7 +141,7 @@ export const POST_DATA = async (url, body) => {
   return data;
 };
 
-export const PATCH_DATA = async (url, body) => {
+export const PATCH_DATA = async (url, body, headers) => {
   let apiUrl = API_BASE_URL + url;
 
   if (!(url && body)) {
@@ -179,7 +165,7 @@ export const PATCH_DATA = async (url, body) => {
   return data;
 };
 
-export const DELETE_DATA = async (url, params) => {
+export const DELETE_DATA = async (url, params, headers) => {
   let apiUrl = API_BASE_URL + url;
 
   if (!(url && params)) {

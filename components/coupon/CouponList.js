@@ -1,4 +1,3 @@
-import { GET_DATA_HEADER } from '@apis/customApi';
 import { GET_DATA } from '@apis/defaultApi';
 import * as btn from '@components/input/Button';
 import { useGetToken } from '@hooks/useGetToken';
@@ -35,7 +34,7 @@ function CouponList() {
   }, []);
 
   useEffect(() => {
-    GET_DATA_HEADER(`/coupon/list`, '', headers)
+    GET_DATA(`/coupon/list`, '', headers)
       .then((res) => {
         if (res) {
           if (res.numberOfElements === 0) {
