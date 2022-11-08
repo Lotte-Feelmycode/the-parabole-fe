@@ -1,6 +1,7 @@
 import SearchBar from '@components/input/SearchBar';
 import { ICON_CART_BLACK } from '@utils/constants/icons';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 const Links = {
@@ -17,10 +18,17 @@ const Links = {
 
 export default function CommerceHeader() {
   const [token, setToken] = useState();
+  const router = useRouter();
 
   useEffect(() => {
     setToken(localStorage.getItem('token'));
   });
+
+  const signout = () => {
+    localStorage.clear();
+    alert('로그아웃 완료');
+    router.push('/');
+  };
 
   return (
     <>
@@ -72,11 +80,11 @@ export default function CommerceHeader() {
                       마이페이지
                     </a>
                   </Link>
-                  <Link href={Links.LINK_SIGNOUT}>
+                  <button onClick={signout}>
                     <a className="px-5 font-medium hover:text-gray-700">
                       로그아웃
                     </a>
-                  </Link>
+                  </button>
                 </div>
               ) : (
                 <div>
