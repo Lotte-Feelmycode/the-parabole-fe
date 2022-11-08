@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 export default function SellerHeader() {
@@ -12,10 +13,17 @@ export default function SellerHeader() {
     LINK_SIGNOUT: '/user/signout',
   };
   const [token, setToken] = useState();
+  const router = useRouter();
 
   useEffect(() => {
-    setToken(localStorage.getItem('ACCESS_TOKEN'));
+    setToken(localStorage.getItem('token'));
   }, []);
+
+  const signout = () => {
+    localStorage.clear();
+    alert('로그아웃 완료');
+    router.push('/');
+  };
 
   return (
     <>
@@ -51,9 +59,9 @@ export default function SellerHeader() {
             </Link>
             {token ? (
               <div>
-                <Link href={Links.LINK_SIGNOUT}>
+                <button onClick={signout}>
                   <a className="mr-5 hover:text-gray-900">로그아웃</a>
-                </Link>
+                </button>
               </div>
             ) : (
               <div>
