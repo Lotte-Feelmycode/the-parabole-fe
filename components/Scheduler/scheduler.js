@@ -9,14 +9,10 @@ import {
   Toolbar,
   ViewSwitcher,
 } from '@devexpress/dx-react-scheduler-material-ui';
+import { getTodayDateShort } from '@utils/functions';
 
-export default function EventScheduler({
-  input
-}) {
-
-  const Appointment = ({
-    children, style, ...restProps
-  }) => (
+export default function EventScheduler({ input }) {
+  const Appointment = ({ children, style, ...restProps }) => (
     <Appointments.Appointment
       {...restProps}
       style={{
@@ -29,39 +25,23 @@ export default function EventScheduler({
       {children}
     </Appointments.Appointment>
   );
-  
-  return(
-      <Paper>
-        <Scheduler
-          data={input}
-          height={660}
-        >
-          <ViewState
-            // TODO : Today 날짜 
-            defaultCurrentDate="2022-11-07"
-            defaultCurrentViewName="Week"
-          />
 
-          <DayView
-            startDayHour={0}
-            endDayHour={23}
-            cellDuration={60}
-          />
-          <WeekView
-            startDayHour={0}
-            endDayHour={23}
-            cellDuration={60}
-          />
+  return (
+    <Paper>
+      <Scheduler data={input} height={520}>
+        <ViewState
+          defaultCurrentDate={getTodayDateShort()}
+          defaultCurrentViewName="Week"
+        />
 
-          <Toolbar />
-          <ViewSwitcher />
-          <Appointments>
-            appointmentComponent={Appointment}
-          </Appointments>
-          <AppointmentTooltip
-            showCloseButton
-          />
-        </Scheduler>
-      </Paper>
-    )
+        <DayView startDayHour={0} endDayHour={23} cellDuration={60} />
+        <WeekView startDayHour={0} endDayHour={23} cellDuration={60} />
+
+        <Toolbar />
+        <ViewSwitcher />
+        <Appointments>appointmentComponent={Appointment}</Appointments>
+        <AppointmentTooltip showCloseButton />
+      </Scheduler>
+    </Paper>
+  );
 }
