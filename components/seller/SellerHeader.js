@@ -10,7 +10,6 @@ export default function SellerHeader() {
     LINK_SELLER_PRODUCT: '/seller/product/list',
     LINK_SELLER_COUPON: '/seller/coupon/list',
     LINK_SELLER_EVENT: '/seller/event/list',
-    LINK_SIGNOUT: '/signout',
   };
   const [token, setToken] = useState();
   const router = useRouter();
