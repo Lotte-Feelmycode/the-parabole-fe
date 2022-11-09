@@ -10,7 +10,6 @@ import useCheck from '@hooks/useCheck';
 import Heading from '@components/input/Heading';
 import Input from '@components/input/Input';
 import Radio from '@components/input/Radio';
-import Checkbox from '@components/input/Checkbox';
 import * as btn from '@components/input/Button';
 import CloseButton from '@components/input/CloseButton';
 import SellerLayout from '@components/seller/SellerLayout';
@@ -20,7 +19,6 @@ import { EVENT_ERROR } from '@utils/constants/errors';
 import { ICON_WARNING_SIGN, ICON_CHECK } from '@utils/constants/icons';
 import ModalScheduler from '@components/event/ModalScheduler';
 import axios from 'axios';
-
 
 export default function Event() {
   const router = useRouter();
@@ -109,6 +107,7 @@ export default function Event() {
     if (isEmpty(inputParams.eventImage.EventDetailImg)) {
       alert(EVENT_ERROR.NO_EVENT_DETAIL_IMAGE);
       return false;
+    }
     if (fileList.length < 2) {
       alert(EVENT_ERROR.NO_IMAGE);
       return;
@@ -444,7 +443,6 @@ export default function Event() {
         }
       });
     }
-
   };
 
   const endAtChangeHandler = (e) => {
