@@ -29,7 +29,6 @@ export default function Home() {
                       <span className="w-6 h-6 mr-2 rounded-full inline-flex items-center justify-center">
                         <img src={ICON.ICON_LIST}></img>
                       </span>
-                      <p className="text-lg">상품 목록</p>
                     </a>
                   </Link>
 
