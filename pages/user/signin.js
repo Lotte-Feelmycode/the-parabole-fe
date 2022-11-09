@@ -6,6 +6,7 @@ import { POST } from '@apis/defaultApi';
 import Link from 'next/link';
 import { Blue } from '@components/input/Button';
 import { FRONT_BASE_URL } from '@apis/api-config';
+import { LINKS } from '@utils/constants/links';
 
 export default function Signin() {
   const router = useRouter();
@@ -138,7 +139,7 @@ export default function Signin() {
             <div className="flex justify-center items-center bg-gray-100 p-4">
               <p className="text-gray-500 text-sm text-center">
                 <a
-                  href="/user/signup"
+                  href={LINKS.SIGNOUT}
                   className="text-indigo-500 hover:text-indigo-600 active:text-indigo-700 transition duration-100"
                 >
                   회원가입하기
