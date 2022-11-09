@@ -81,6 +81,7 @@ export default function Event() {
     }
     if (fileList.length < 2) {
       alert(EVENT_ERROR.NO_IMAGE);
+      return;
     }
     if (checkFcfsPrize()) return;
     return true;
