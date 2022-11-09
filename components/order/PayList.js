@@ -1,56 +1,67 @@
-import { ORDER_PAY } from '@utils/constants/types';
-import Pay from '@components/order/Pay';
-import { useState } from 'react';
 import styled from '@emotion/styled';
+import { ORDER_PAY } from '@utils/constants/types';
+import { LineBlue, Blue } from '@components/input/Button';
 
 export default function PayList({ index, setIndex }) {
-  const [count, setCount] = useState(0);
-
-  const btnCss = {
-    width: '12rem',
-  };
-
-  function clicked(idx) {
-    setCount(count + 1);
-    setIndex(idx);
-  }
+  const btnCss = { width: '100%' };
 
   function selectPay(name, idx) {
     if (idx === index) {
       return (
-        <Pay
+        <Blue
           buttonText={name}
-          onClickFunc={() => clicked(idx)}
-          css={{
-            width: '12rem',
-            border: '2px solid #0084FF',
-          }}
+          onClickFunc={() => setIndex(idx)}
+          css={btnCss}
         />
       );
     } else {
       return (
-        <div>
-          <Pay
-            css={btnCss}
-            buttonText={name}
-            onClickFunc={() => clicked(idx)}
-          />
-        </div>
+        <LineBlue
+          css={btnCss}
+          buttonText={name}
+          onClickFunc={() => setIndex(idx)}
+        />
       );
     }
   }
 
   return (
-    <>
+    <SelectPaySection>
       {ORDER_PAY.map((order) => (
-        <a onClick={() => {}} key={order.value}>
-          <Div>{selectPay(order.name, order.index)}</Div>
-        </a>
+        <SelectPayBtnSection key={order.value}>
+          {order && selectPay(order.name, order.index)}
+        </SelectPayBtnSection>
       ))}
-    </>
+    </SelectPaySection>
   );
 }
 
-const Div = styled.div`
-  display: inline-block;
+const SelectPaySection = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+const SelectPayBtnSection = styled.a`
+  @media (min-width: 1287px) {
+    margin: 10px 1%;
+    width: 22%;
+  }
+
+  @media (max-width: 1287px) {
+    margin: 10px 1%;
+    width: 31%;
+  }
+
+  @media (max-width: 768px) {
+    margin: 10px 1%;
+    width: 48%;
+  }
+
+  @media (max-width: 548px) {
+    margin: 10px 0;
+    width: 100%;
+  }
 `;
