@@ -3,12 +3,25 @@ import UserOrderList from '@components/order/UserOrderList';
 import { useRouter } from 'next/router';
 import CommerceLayout from '@components/common/CommerceLayout';
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useGetToken } from '@hooks/useGetToken';
 
 export default function Home() {
   const getUserId = 3;
-
+  const router = useRouter();
   const [userId, setUserId] = useState(getUserId);
+
+  useEffect(() => {
+    let userId;
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      userId = localStorage.getItem('userId');
+    }
+    if (userId === 'undefined' || userId === undefined || userId === 'null') {
+      alert('로그인 해주세요.');
+      router.push('/signin');
+    }
+    useGetToken();
+  }, []);
 
   return (
     <>

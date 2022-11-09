@@ -4,10 +4,23 @@ import { useEffect, useState } from 'react';
 import CommerceLayout from '@components/common/CommerceLayout';
 import styled from '@emotion/styled';
 import EventList from '@components/event/EventList';
+import { useGetToken } from '@hooks/useGetToken';
 
 export default function Event() {
   const router = useRouter();
   const [userId, setUserId] = useState(router.query.id);
+
+  useEffect(() => {
+    let userId;
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      userId = localStorage.getItem('userId');
+    }
+    if (userId === 'undefined' || userId === undefined || userId === 'null') {
+      alert('로그인 해주세요.');
+      router.push('/signin');
+    }
+    useGetToken();
+  }, []);
 
   useEffect(() => {
     setUserId(router.query.id);

@@ -1,5 +1,5 @@
 import CommerceLayout from '@components/common/CommerceLayout';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import UserOrderList from '@components/mypage/UserOrderList';
 import EventApplyList from '@components/mypage/EventApplyList';
 import MyProfile from '@components/mypage/MyProfile';
@@ -7,10 +7,25 @@ import SiteHead from '@components/common/SiteHead.js';
 import styled from '@emotion/styled';
 import { ThemeBlueWhite, MainBlue } from '@utils/constants/themeColor';
 import UserCouponList from '@components/coupon/UserCouponList';
+import { useRouter } from 'next/router';
+import { useGetToken } from '@hooks/useGetToken';
 
 export default function () {
+  const router = useRouter();
   // TODO: userId 집어넣기
   const userId = 3;
+
+  useEffect(() => {
+    let userId;
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      userId = localStorage.getItem('userId');
+    }
+    if (userId === 'undefined' || userId === undefined || userId === 'null') {
+      alert('로그인 해주세요.');
+      router.push('/signin');
+    }
+    useGetToken();
+  }, []);
 
   const [nowState, setNowState] = useState(0);
   const mypageStateList = [

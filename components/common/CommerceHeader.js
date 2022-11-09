@@ -10,8 +10,8 @@ const Links = {
   LINK_EVENT: '/event',
   LINK_SELLER_MAIN: '/seller/main',
   LINK_CART: '/user/cart',
-  LINK_SIGNIN: '/user/signin',
-  LINK_SINGUP: '/user/signup',
+  LINK_SIGNIN: '/signin',
+  LINK_SINGUP: '/signup',
   LINK_MYPAGE: '/user/mypage',
   LINK_SIGNOUT: '/user/signout',
 };

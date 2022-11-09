@@ -4,9 +4,22 @@ import SiteHead from '@components/common/SiteHead';
 import CommerceLayout from '@components/common/CommerceLayout';
 import * as btn from '@components/input/Button';
 import Link from 'next/link';
+import { useGetToken } from '@hooks/useGetToken';
 
 export default function Welcome() {
   const router = useRouter();
+  useEffect(() => {
+    let userId;
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      userId = localStorage.getItem('userId');
+    }
+    if (userId === 'undefined' || userId === undefined || userId === 'null') {
+      alert('로그인 해주세요.');
+      router.push('/signin');
+    }
+    useGetToken();
+  }, []);
+
   return (
     <CommerceLayout>
       <SiteHead title="회원가입 완료" />

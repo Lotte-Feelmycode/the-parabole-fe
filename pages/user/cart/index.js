@@ -9,11 +9,24 @@ import CartHeader from '@components/cart/CartHeader';
 import CartFooter from '@components/cart/CartFooter';
 import CartSidebar from '@components/cart/CartSidebar';
 import EmptyCart from '@components/cart/EmptyCart';
+import { useGetToken } from '@hooks/useGetToken';
 
 export default function Cart() {
   const router = useRouter();
   // TODO: userId 집어넣기
   const userId = 3;
+
+  useEffect(() => {
+    let userId;
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      userId = localStorage.getItem('userId');
+    }
+    if (userId === 'undefined' || userId === undefined || userId === 'null') {
+      alert('로그인 해주세요.');
+      router.push('/signin');
+    }
+    useGetToken();
+  }, []);
 
   const [cartItemCount, setCartItemCount] = useState(0);
   const [cartId, setCartId] = useState(userId);

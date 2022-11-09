@@ -10,6 +10,7 @@ import { ThemeGray4 } from '@utils/constants/themeColor';
 import { Blue } from '@components/input/Button';
 import { useRouter } from 'next/router';
 import { isEmpty, numberToMonetary } from '@utils/functions';
+import { useGetToken } from '@hooks/useGetToken';
 
 export const AppContext = createContext();
 
@@ -28,6 +29,16 @@ export default function OrderAndPayment() {
   const [receiveMemo, setReceiveMemo] = useState('');
 
   useEffect(() => {
+    let userId;
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      userId = localStorage.getItem('userId');
+    }
+    if (userId === 'undefined' || userId === undefined || userId === 'null') {
+      alert('로그인 해주세요.');
+      router.push('/signin');
+    }
+    useGetToken();
+
     GET(`/orderinfo`, { userId }).then((res) => {
       console.log(res);
       if (res && res.data) {
