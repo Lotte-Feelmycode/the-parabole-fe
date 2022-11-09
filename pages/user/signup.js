@@ -1,7 +1,7 @@
 import SiteHead from '@components/common/SiteHead';
 import useInput from '@hooks/useInput';
 import CommerceLayout from '@components/common/CommerceLayout';
-import { POST_DATA } from '@apis/defaultApi';
+import { POST, POST_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Blue } from '@components/input/Button';
@@ -9,19 +9,17 @@ import { Blue } from '@components/input/Button';
 export default function Signup() {
   const router = useRouter();
   const [email, onChangeEmail] = useInput('');
-  const [username, onChangeUsername] = useInput('');
+  const [name, onChangeName] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
   const [phone, onChangePhone] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [passwordConfirmation, onChangePasswordConfirmation] = useInput('');
-  const [newname, setNewname] = useState();
-
   function handleSubmit(e) {
     e.preventDefault();
 
     const reqBody = {
       email: email,
-      username: username,
+      name: name,
       nickname: nickname,
       phone: phone,
       password: password,
@@ -30,7 +28,7 @@ export default function Signup() {
 
     if (
       !reqBody.email ||
-      !reqBody.username ||
+      !reqBody.name ||
       !reqBody.nickname ||
       !reqBody.phone ||
       !reqBody.password ||
@@ -40,15 +38,13 @@ export default function Signup() {
       return;
     }
 
-    POST_DATA(`/auth/signup`, reqBody)
+    POST(`/auth/signup`, reqBody)
       .then((res) => {
-        if (res.email) {
+        console.log(res);
+        if (res.success) {
           alert('회원가입 성공');
-          alert(re.nickname);
-          setNewname(res.nickname);
-
           router.push({
-            pathname: `./welcome/${newname}`,
+            pathname: `./welcome/${res.data.name}`,
           });
         }
       })
@@ -88,7 +84,7 @@ export default function Signup() {
 
               <div>
                 <label
-                  for="username"
+                  for="name"
                   className="inline-block text-gray-800 text-sm sm:text-base mb-2"
                 >
                   사용자명
@@ -96,9 +92,9 @@ export default function Signup() {
                 <input
                   className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
                   type="text"
-                  name="username"
+                  name="name"
                   placeHolder="사용자 이름을 입력하세요."
-                  onChange={onChangeUsername}
+                  onChange={onChangeName}
                   required
                 />
               </div>

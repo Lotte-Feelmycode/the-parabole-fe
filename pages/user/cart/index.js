@@ -15,7 +15,7 @@ export default function Cart() {
   // TODO: userId 집어넣기
   const userId = 3;
 
-  const [cartItemCount, setCartItemCount] = useState(1);
+  const [cartItemCount, setCartItemCount] = useState(0);
   const [cartId, setCartId] = useState(userId);
   const [cartBySellerDtoList, setCartBySellerDtoList] = useState([]);
   const [checkBoxStates, setCheckBoxStates] = useState(new Map());
@@ -123,8 +123,8 @@ export default function Cart() {
   }
 
   function totalCheckBoxChange(flag) {
-    var calcTotalPrice = 0;
-    var checkCount = numberOfChekced;
+    let calcTotalPrice = 0;
+    let checkCount = numberOfChekced;
 
     if (flag) {
       if (cartBySellerDtoList && cartItemCount > 0) {
@@ -164,7 +164,7 @@ export default function Cart() {
 
   function GoToOrder() {
     if (cartBySellerDtoList && numberOfChekced > 0) {
-      var orderInfoDto = [];
+      let orderInfoDto = [];
       cartBySellerDtoList.forEach((dto) => {
         const cartItemDtoList = dto.cartItemDtoList;
         cartItemDtoList.forEach((item) => {

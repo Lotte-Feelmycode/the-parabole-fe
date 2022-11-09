@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import Selectbox from '@components/input/SelectBox';
 import { getState } from '@utils/functions';
+import { ORDER_STATE } from '@utils/constants/types';
 
 export default function Order({ order }) {
   const router = useRouter();

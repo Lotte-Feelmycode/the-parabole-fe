@@ -13,8 +13,6 @@ export default function CartCouponModal({
   contentTotalPrice,
   storeName,
 }) {
-  // var couponArray = new Array();
-
   const [couponArray, setCouponArray] = useState([]);
 
   const addCouponArray = (parameter) => {
@@ -37,8 +35,8 @@ export default function CartCouponModal({
       const rateCouponList = couponDto.rateCoupon;
       const amountCouponList = couponDto.amountCoupon;
 
-      var rateIndex = 0;
-      var amountIndex = 0;
+      let rateIndex = 0;
+      let amountIndex = 0;
 
       for (
         ;
@@ -46,7 +44,7 @@ export default function CartCouponModal({
         rateCouponList.length + amountCouponList.length;
 
       ) {
-        var parameter = null;
+        let parameter = null;
 
         if (rateCouponList.length > rateIndex) {
           const nowCoupon = rateCouponList[rateIndex];
@@ -60,7 +58,7 @@ export default function CartCouponModal({
 
         if (amountCouponList.length > amountIndex) {
           const nowCoupon = amountCouponList[amountIndex];
-          var nowPrice =
+          let nowPrice =
             contentTotalPrice - nowCoupon.discountValue < 0
               ? 0
               : nowCoupon.discountValue;
@@ -206,24 +204,29 @@ function CouponTableRow({
 }
 
 const ModalContainer = styled.div`
-  /* 모달창 크기 */
-  width: 800px;
-
   /* 최상단 위치 */
   z-index: 999;
 
   /* 중앙 배치 */
   /* top, bottom, left, right 는 브라우저 기준으로 작동한다. */
   /* translate는 본인의 크기 기준으로 작동한다. */
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-30%, -50%);
+  transform: translate(-50%, -50%);
 
   /* 모달창 디자인 */
   background-color: ${ThemeGray5};
   border: 1px solid black;
   border-radius: 8px;
+
+  /* 모달창 크기 */
+  @media (max-width: 1024px) {
+    width: 90%;
+  }
+  @media (min-width: 1024px) {
+    width: 800px;
+  }
 `;
 
 const TopSection = styled.div`

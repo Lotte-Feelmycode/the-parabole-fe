@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import { SmallLineBlue } from '@components/input/Button';
-import { useState } from 'react';
-import CartCouponModal from './CartCouponModal';
+import CartCouponModal from '@components/cart/CartCouponModal';
 
 export default function CartContentFooter({
   cartItemDtoList,
@@ -9,7 +9,7 @@ export default function CartContentFooter({
   couponDto,
 }) {
   const [modalState, setModalState] = useState(false);
-  var contentTotalPrice = 0;
+  let contentTotalPrice = 0;
   if (cartItemDtoList && cartItemDtoList.length > 0) {
     cartItemDtoList.forEach((item) => {
       contentTotalPrice =

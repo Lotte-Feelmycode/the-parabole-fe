@@ -10,6 +10,7 @@ export const EVENT_ERROR = Object.freeze({
   INVALID_DATE: '이벤트 시작 및 종료일시를 확인해주세요',
   NO_EVENT_TITLE: '이벤트 제목을 입력해주세요.',
   NO_DESCRIPT: '이벤트 설명을 입력해주세요.',
+  NO_EVENT_IMAGE: '이벤트의 이미지를 등록해주세요',
   NO_EVENT_BANNER_IMAGE: '이벤트 배너이미지를 등록해주세요.',
   NO_EVENT_DETAIL_IMAGE: '이벤트 상세이미지를 등록해주세요.',
   NO_PRIZE_LIST:
