@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { GET, POST } from '@apis/defaultApi';
+import { GET } from '@apis/defaultApi';
 import useInput from '@hooks/useInput';
 import useCheck from '@hooks/useCheck';
 
@@ -11,18 +11,12 @@ import Radio from '@components/input/Radio';
 import Checkbox from '@components/input/Checkbox';
 import * as btn from '@components/input/Button';
 import CloseButton from '@components/input/CloseButton';
-import ImageUploader from '@components/input/ImageUploader';
 import SellerLayout from '@components/seller/SellerLayout';
-import {
-  getDateTimeNotKor,
-  getDate,
-  getState,
-  isEmpty,
-  numberToMonetary,
-} from '@utils/functions';
+import { getDate, getState, isEmpty, numberToMonetary } from '@utils/functions';
 import { EVENT_TYPE, PRIZE_TYPE } from '@utils/constants/types';
 import { EVENT_ERROR } from '@utils/constants/errors';
 import { ICON_WARNING_SIGN } from '@utils/constants/icons';
+import axios from 'axios';
 
 export default function Event() {
   const router = useRouter();
@@ -30,7 +24,7 @@ export default function Event() {
   const [productList, setProductList] = useState([]);
   const [couponList, setCouponList] = useState([]);
   const [prizeList, setprizeList] = useState([]);
-
+  const [fileList, setFileList] = useState([]); // 업로드한 파일들을 저장하는 배열
   const [title, onChangeTitle] = useInput('');
   const [descript, onChangeDescript] = useInput('');
   const [eventType, onEventType] = useInput('');
@@ -85,12 +79,8 @@ export default function Event() {
       alert(EVENT_ERROR.NO_PRIZE_LIST);
       return;
     }
-    if (isEmpty(inputParams.eventImage.eventBannerImg)) {
-      alert(EVENT_ERROR.NO_EVENT_BANNER_IMAGE);
-      return;
-    }
-    if (isEmpty(inputParams.eventImage.EventDetailImg)) {
-      alert(EVENT_ERROR.NO_EVENT_DETAIL_IMAGE);
+    if (fileList.length < 2) {
+      alert(EVENT_ERROR.NO_IMAGE);
       return;
     }
     if (checkFcfsPrize()) return;
@@ -513,6 +503,35 @@ export default function Event() {
     setprizeList([tmpobj, ...prizeList]);
   };
 
+  const css = {
+    width: '100%',
+    padding: '12px 20px',
+    margin: '8px 0',
+    boxSizing: 'border-box',
+  };
+
+  const onChangeBannerImg = (e) => {
+    const uploadFiles = e.target.files[0]; // 파일선택창에서 선택한 파일들
+    const files = [];
+    for (var i = 0; i < fileList.length; i++) {
+      files.push(fileList[i]);
+    }
+    files.push(uploadFiles);
+    setFileList(files);
+  };
+
+  const onChangeDetailImg = (e) => {
+    const uploadFiles = e.target.files; // 파일선택창에서 선택한 파일들
+    const files = [];
+    for (var i = 0; i < fileList.length; i++) {
+      files.push(fileList[i]);
+    }
+    for (var i = 0; i < uploadFiles.length; i++) {
+      files.push(uploadFiles[i]);
+    }
+    setFileList(files);
+  };
+
   // 경품(상품) 버튼 클릭시 조회 이벤트 핸들러
   const onSearchProductsHandler = (e) => {
     e.preventDefault();
@@ -571,6 +590,11 @@ export default function Event() {
     // TODO : 이벤트 채팅 여부 추가
     // console.log('이벤트 채팅 여부 : ', chatOpen);
 
+    const formData = new FormData();
+    for (var i = 0; i < fileList.length; i++) {
+      formData.append('images', fileList[i]);
+    }
+
     const eventParams = {
       //userId: localStorage.getItem("ID"),
       userId: 1,
@@ -581,20 +605,25 @@ export default function Event() {
       title: title,
       descript: descript,
       // chatOpen : chatOpen,
-      eventImage: {
-        eventBannerImg: 'dummyimage',
-        EventDetailImg: 'dummydetail',
-      },
       eventPrizeCreateRequestDtos: copyArr,
     };
 
+    const eventInfos = JSON.stringify(eventParams);
+    const blob = new Blob([eventInfos], { type: 'application/json' });
+    formData.append('eventDtos', blob);
     if (validation(eventParams)) {
-      POST('/event', eventParams).then((res) => {
-        if (res && res.data && confirm('이벤트를 등록하시겠습니까?') > 0) {
-          alert('이벤트가 등록되었습니다. ');
-          router.push({ pathname: `/seller/event/list` }, `/seller/event/list`);
-        }
-      });
+      axios
+        .post(`http://localhost:8080/api/v1/event`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        }) // Content-Type을 반드시 이렇게 하여야 한다.
+        .then((res) => {
+          if (res && res.data && confirm('이벤트를 등록하시겠습니까?') > 0) {
+            router.push(
+              { pathname: `/seller/event/list` },
+              `/seller/event/list`,
+            );
+          }
+        });
     }
   };
 
@@ -646,11 +675,11 @@ export default function Event() {
         </Div>
         <Divider />
 
-        <Heading title="이벤트 채팅 생성 여부" type="h2" />
+        {/* <Heading title="이벤트 채팅 생성 여부" type="h2" />
         <Div>
           <Checkbox text="생성" onChange={onChatOpen} value={chatOpen} />
         </Div>
-        <Divider />
+        <Divider /> */}
 
         <Heading title="이벤트 진행 일시" type="h2" />
         <div className="w-full mb-4">
@@ -706,12 +735,24 @@ export default function Event() {
         {/* TODO: 이미지 업로드 추후 수정 */}
         <Heading title="이벤트 배너 이미지" type="h2" />
         <Div>
-          <ImageUploader />
+          <input
+            css={css}
+            type="file"
+            accept="image/jpg, image/png, image/jpeg"
+            onChange={onChangeBannerImg}
+          />
+          {/* <ImageUploader /> */}
         </Div>
         <Divider />
         <Heading title="이벤트 상세 이미지" type="h2" />
         <Div>
-          <ImageUploader />
+          <input
+            css={css}
+            type="file"
+            accept="image/jpg, image/png, image/jpeg"
+            onChange={onChangeDetailImg}
+          />
+          {/* <ImageUploader /> */}
         </Div>
         <Divider />
         <Div>
