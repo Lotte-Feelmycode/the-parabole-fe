@@ -2,14 +2,12 @@ import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { GET_DATA, POST_DATA } from '@apis/defaultApi';
-import EventPrize from '@components/event/EventPrize';
 import CommerceLayout from '@components/common/CommerceLayout';
 
 import EventInfo from '@components/event/EvenInfo';
 import EventPrizeContainer from '@components/event/EventPrizeContainer';
 
 export default function EventDetail() {
-
   //TODO userId 객체 받아오기
   const userId = 3;
 
@@ -50,10 +48,13 @@ export default function EventDetail() {
 
   return (
     <CommerceLayout>
-        <main className="flex-grow">
-          <EventInfo eventInfo={eventInfo} eventImage={eventImage}/>
-          <EventPrizeContainer eventPrizes={eventPrizes} eventType={eventInfo.type}></EventPrizeContainer>
-        </main>
+      <main className="flex-grow">
+        <EventInfo eventInfo={eventInfo} eventImage={eventImage} />
+        <EventPrizeContainer
+          eventPrizes={eventPrizes}
+          eventType={eventInfo.type}
+        ></EventPrizeContainer>
+      </main>
     </CommerceLayout>
   );
 }
