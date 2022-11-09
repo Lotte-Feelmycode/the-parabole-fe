@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { POST_DATA } from '@apis/defaultApi';
+import { GET_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
 
 export default function MainContent({ title, content }) {
@@ -25,7 +25,7 @@ export default function MainContent({ title, content }) {
   const [eventList, setEventList] = useState([]);
 
   useEffect(() => {
-    POST_DATA(`/event/list`, { eventStatus: 1 }).then((res) => {
+    GET_DATA(`/event/list`, { eventStatus: 1 }).then((res) => {
       if (res && res.length > 1) {
         setEventList(res.slice(0, 2));
       } else {

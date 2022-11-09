@@ -2,12 +2,18 @@ import { GET_DATA } from '@apis/defaultApi';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { LargeInput } from '@components/input/Input';
+import { useGetToken } from '@hooks/useGetToken';
 
 export default function MyProfile({ userId }) {
   const [userInfo, setUserInfo] = useState([]);
 
+  let headers;
   useEffect(() => {
-    GET_DATA(`/user/${userId}`).then((res) => {
+    headers = useGetToken();
+  }, []);
+
+  useEffect(() => {
+    GET_DATA(`/user`, '', headers).then((res) => {
       if (res) {
         setUserInfo(res);
       }
