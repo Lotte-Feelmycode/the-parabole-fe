@@ -15,6 +15,7 @@ export const EVENT_ERROR = Object.freeze({
   NO_EVENT_DETAIL_IMAGE: '이벤트 상세이미지를 등록해주세요.',
   NO_PRIZE_LIST:
     '선택된 경품이 없습니다. 상품 또는 쿠폰을 하나 이상 선택해주세요.',
+  NO_IMAGE: '이미지를 등록해주세요.',
 });
 
 export const DEV_ERROR = Object.freeze({
