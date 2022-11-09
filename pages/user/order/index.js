@@ -28,7 +28,6 @@ export default function OrderAndPayment() {
   // TODO 초기값에 user정보 넣기
   const [getUserName, setUserName] = useState('');
   const [getUserPhone, setUserPhone] = useState('');
-  const [getUserEmail, setUserEmail] = useState('');
 
   // 주문시에 넣을 변수
   const [receiverName, setReceiverName] = useState('');
@@ -76,7 +75,7 @@ export default function OrderAndPayment() {
         throw new Error('invalid action type');
     }
   };
-  const [state, dispatch] = useReducer(couponReducer, new Array());
+  const [stateList, dispatch] = useReducer(couponReducer, new Array());
 
   // 결제 금액 변수
   const [productTotalPrice, setProductTotalPrice] = useState(0);
@@ -117,28 +116,52 @@ export default function OrderAndPayment() {
       alert('결제수단을 선택해서 결제를 진행해주세요');
       return;
     }
+
     if (isEmpty(receiverName)) {
       alert('수령인을 입력해주세요');
       return;
     }
+
     if (isEmpty(receiverPhone)) {
       alert('수령인 전화번호를 입력해주세요');
       return;
     }
+
     if (isEmpty(receiverSimpleAddress)) {
       alert('수령인 주소를 입력해주세요');
       return;
     }
-    var payStateString = '';
+
+    let payStateString = '';
     ORDER_PAY.forEach((state) => {
       if (state.index === payState) {
         payStateString = state.value;
+      }
+    });
+    let orderInfoRequestList = new Array();
+    stateList.forEach((state) => {
+      if (state.serialNo && state.serialNo !== '') {
+        let orderInfoIdList = new Array();
+        orderBySellerDtoList.forEach((orderBySellerDto) => {
+          if (orderBySellerDto.sellerId === state.key) {
+            orderBySellerDto.orderInfoResponseDtos.forEach(
+              (orderInfoResponseDto) => {
+                orderInfoIdList.push(orderInfoResponseDto.id);
+              },
+            );
+          }
+        });
+        orderInfoRequestList.push({
+          couponSerialNo: state.serialNo,
+          orderInfoIdList: orderInfoIdList,
+        });
       }
     });
 
     POST(`/order`, {
       userId,
       orderId,
+      orderInfoRequestList: orderInfoRequestList,
       receiverName: receiverName,
       receiverPhone: receiverPhone,
       addressSimple: receiverSimpleAddress,
@@ -180,7 +203,7 @@ export default function OrderAndPayment() {
   return (
     <CommerceLayout>
       <SiteHead title="Order/Payment" />
-      <CouponContext.Provider value={state}>
+      <CouponContext.Provider value={stateList}>
         <CouponDispatchContext.Provider value={dispatch}>
           <OrderContainer className="order-container">
             <OrderSection className="order-section">
