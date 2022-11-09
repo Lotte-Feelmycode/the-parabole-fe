@@ -10,10 +10,10 @@ import UserCouponList from '@components/coupon/UserCouponList';
 import { useRouter } from 'next/router';
 import { useGetToken } from '@hooks/useGetToken';
 
-export default function () {
+export default function Mypage() {
   const router = useRouter();
-  // TODO: userId 집어넣기
-  const userId = 3;
+
+  const [headers, setHeaders] = useState('');
 
   useEffect(() => {
     let userId;
@@ -24,7 +24,7 @@ export default function () {
       alert('로그인 해주세요.');
       router.push('/signin');
     }
-    useGetToken();
+    setHeaders(useGetToken());
   }, []);
 
   const [nowState, setNowState] = useState(0);
@@ -37,13 +37,13 @@ export default function () {
 
   function showMypageMainComp(input) {
     if (input === 0) {
-      return <UserOrderList userId={userId} />;
+      return <UserOrderList headers={headers} />;
     } else if (input === 1) {
-      return <EventApplyList userId={userId} />;
+      return <EventApplyList headers={headers} />;
     } else if (input === 2) {
-      return <UserCouponList userId={userId} />;
+      return <UserCouponList headers={headers} />;
     } else if (input === 3) {
-      return <MyProfile userId={userId} />;
+      return <MyProfile headers={headers} />;
     }
   }
 

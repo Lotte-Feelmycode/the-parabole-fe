@@ -3,14 +3,13 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 export default function SellerHeader() {
-
   const Links = {
     LINK_MAIN: '/',
     LINK_SELLER_MAIN: '/seller/main',
     LINK_SELLER_PRODUCT: '/seller/product/list',
     LINK_SELLER_COUPON: '/seller/coupon/list',
     LINK_SELLER_EVENT: '//seller/event/list',
-    LINK_SIGNOUT: '/user/signout',
+    LINK_SIGNOUT: '/signout',
   };
   const [token, setToken] = useState();
   const router = useRouter();
@@ -65,10 +64,10 @@ export default function SellerHeader() {
               </div>
             ) : (
               <div>
-                <Link href="/user/signin">
+                <Link href="/signin">
                   <a className="mr-5 hover:text-gray-900">로그인</a>
                 </Link>
-                <Link href="/user/signup">
+                <Link href="/signup">
                   <a className="mr-5 hover:text-gray-900">회원가입</a>
                 </Link>
               </div>
