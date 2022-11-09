@@ -1,4 +1,5 @@
 import { LinePink } from '@components/input/Button';
+import { LINKS } from '@utils/constants/links';
 import Link from 'next/link';
 export default function Footer() {
   return (
@@ -48,7 +49,7 @@ export default function Footer() {
             </div>
 
             <div className="md:w-1/4 w-full px-4">
-              <Link href="/seller/main">
+              <Link href={LINKS.SELLER_MAIN}>
                 <h2 className="title-font font-semibold tracking-widest mb-3">
                   <LinePink buttonText="판매자 센터"></LinePink>
                 </h2>
