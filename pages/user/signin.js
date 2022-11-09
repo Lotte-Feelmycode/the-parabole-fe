@@ -15,6 +15,12 @@ export default function Signin() {
   const GOOGLE_REDIRECT_URI = FRONT_BASE_URL + '/code/google';
   const GOOGLE_AUTH_URI = `${process.env.NEXT_PUBLIC_GOOGLE_AUTH}?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code&scope=profile%20email%20openid`;
 
+  const KAKAO_REDIRECT_URI = FRONT_BASE_URL + '/code/kakao';
+  const KAKAO_AUTH_URI = `${process.env.NEXT_PUBLIC_KAKAO_AUTH}?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
+
+  const NAVER_REDIRECT_URI = FRONT_BASE_URL + '/code/naver';
+  const NAVER_AUTH_URI = `${process.env.NEXT_PUBLIC_NAVER_AUTH}?client_id=${process.env.NEXT_PUBLIC_NAVER_REST_API_KEY}&redirect_uri=${NAVER_REDIRECT_URI}&response_type=code&state=${process.env.NEXT_PUBLIC_NAVER_STATE}`;
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -25,7 +31,6 @@ export default function Signin() {
 
     POST(`/auth/signin`, reqBody)
       .then((res) => {
-        console.log(res);
         if (res.success) {
           localStorage.setItem('userId', res.data.userId);
           localStorage.setItem('email', res.data.email);
@@ -102,6 +107,46 @@ export default function Signin() {
                   Log in with social
                 </span>
               </div>
+
+              <Link href={NAVER_AUTH_URI}>
+                <button className="flex justify-center items-center bg-green-500 hover:bg-green-600 active:bg-green-700 focus-visible:ring ring-green-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3">
+                  <a
+                    title="Gapo, Public domain, via Wikimedia Commons"
+                    href="https://commons.wikimedia.org/wiki/File:Naver_logo_initial.svg"
+                  >
+                    <img
+                      className="w-5 h-5 shrink-0"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      alt="Naver logo initial"
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Naver_logo_initial.svg/256px-Naver_logo_initial.svg.png"
+                    />
+                  </a>{' '}
+                  Continue with Naver
+                </button>
+              </Link>
+
+              <Link href={KAKAO_AUTH_URI}>
+                <button className="flex justify-center items-center bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-700 focus-visible:ring ring-yellow-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3">
+                  <a
+                    title="Kakao Corp., Public domain, via Wikimedia Commons"
+                    href="https://commons.wikimedia.org/wiki/File:KakaoTalk_logo.svg"
+                  >
+                    <img
+                      className="w-5 h-5 shrink-0"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      alt="KakaoTalk logo"
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/KakaoTalk_logo.svg/512px-KakaoTalk_logo.svg.png"
+                    />
+                  </a>
+                  Continue with Kakao
+                </button>
+              </Link>
 
               <Link href={GOOGLE_AUTH_URI}>
                 <button className="flex justify-center items-center bg-white hover:bg-gray-100 active:bg-gray-200 border border-gray-300 focus-visible:ring ring-gray-300 text-gray-800 text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3">

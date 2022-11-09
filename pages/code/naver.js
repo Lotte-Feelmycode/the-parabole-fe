@@ -2,20 +2,22 @@ import { GET } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-export default function googleCode({}) {
+export default function naverCode({}) {
   const router = useRouter();
   const code = router.query.code;
+  const state = `${process.env.NEXT_PUBLIC_NAVER_STATE}`;
 
   useEffect(() => {
     if (!router.isReady) {
       return;
     }
 
-    GET(`/auth/token/google`, {
+    GET(`/auth/token/naver`, {
       code: code,
+      state: state,
     }).then((res) => {
       if (res.success) {
-        localStorage.setItem('userId', res.data.userId);
+        localStorage.setItem('userId', res.data.id);
         localStorage.setItem('email', res.data.email);
         localStorage.setItem('username', res.data.name);
         localStorage.setItem('nickname', res.data.nickname);

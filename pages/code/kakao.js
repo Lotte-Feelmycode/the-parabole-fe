@@ -2,7 +2,7 @@ import { GET } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-export default function googleCode({}) {
+export default function kakaoCode({}) {
   const router = useRouter();
   const code = router.query.code;
 
@@ -11,7 +11,7 @@ export default function googleCode({}) {
       return;
     }
 
-    GET(`/auth/token/google`, {
+    GET(`/auth/token/kakao`, {
       code: code,
     }).then((res) => {
       if (res.success) {
