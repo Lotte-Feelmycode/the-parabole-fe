@@ -79,14 +79,9 @@ export default function Event() {
       alert(EVENT_ERROR.NO_PRIZE_LIST);
       return;
     }
-    // if (isEmpty(inputParams.eventImage.eventBannerImg)) {
-    //   alert(EVENT_ERROR.NO_EVENT_BANNER_IMAGE);
-    //   return;
-    // }
-    // if (isEmpty(inputParams.eventImage.EventDetailImg)) {
-    //   alert(EVENT_ERROR.NO_EVENT_DETAIL_IMAGE);
-    //   return;
-    // }
+    if (fileList.length < 2) {
+      alert(EVENT_ERROR.NO_IMAGE);
+    }
     if (checkFcfsPrize()) return;
     return true;
   }
