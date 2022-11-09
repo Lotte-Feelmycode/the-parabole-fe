@@ -63,39 +63,40 @@ export default function CommerceHeader() {
                 </Link>
               </div>
             </nav>
-
             <nav className="md:ml-auto mt-l flex flex-wrap items-center text-base text-gray-500 justify-center">
-              {token ? (
-                <div>
-                  <Link href={Links.LINK_MYPAGE}>
-                    <a className="px-5 font-medium hover:text-gray-700">
-                      마이페이지
-                    </a>
-                  </Link>
-                  <Link href={Links.LINK_SIGNOUT}>
-                    <a className="px-5 font-medium hover:text-gray-700">
-                      로그아웃
-                    </a>
-                  </Link>
-                </div>
-              ) : (
-                <div>
-                  <Link href={Links.LINK_SIGNIN}>
-                    <a className="px-5 font-medium hover:text-gray-700">
-                      로그인
-                    </a>
-                  </Link>
-                  <Link href={Links.LINK_SINGUP}>
-                    <a className="px-5 font-medium hover:text-gray-700 border-l border-r">
-                      회원가입
-                    </a>
-                  </Link>
-                </div>
-              )}
+              <CheckTocken token={token} />
             </nav>
           </div>
         </div>
       </header>
     </>
   );
+}
+
+function CheckTocken({ token }) {
+  if (token) {
+    return (
+      <div>
+        <Link href={Links.LINK_MYPAGE}>
+          <a className="px-5 font-medium hover:text-gray-700">마이페이지</a>
+        </Link>
+        <Link href={Links.LINK_SIGNOUT}>
+          <a className="px-5 font-medium hover:text-gray-700">로그아웃</a>
+        </Link>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <Link href={Links.LINK_SIGNIN}>
+          <a className="px-5 font-medium hover:text-gray-700">로그인</a>
+        </Link>
+        <Link href={Links.LINK_SINGUP}>
+          <a className="px-5 font-medium hover:text-gray-700 border-l border-r">
+            회원가입
+          </a>
+        </Link>
+      </div>
+    );
+  }
 }
