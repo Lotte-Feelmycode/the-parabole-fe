@@ -11,6 +11,7 @@ import * as btn from '@components/input/Button';
 import { EVENT_TYPE, EVENT_STATUS } from '@utils/constants/types';
 import { ICON_SEARCH_MAGNIFY } from '@utils/constants/icons';
 import Selectbox from '@components/input/Selectbox';
+import { useGetToken } from '@hooks/useGetToken';
 
 export default function EventList() {
   const [searchValue, onSearchValue] = useInput('');
@@ -25,6 +26,22 @@ export default function EventList() {
   const userId = 1;
 
   useEffect(() => {
+    let sellerId, role;
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      sellerId = localStorage.getItem('sellerId');
+      role = localStorage.getItem('role');
+    }
+    if (
+      sellerId === 'undefined' ||
+      sellerId === undefined ||
+      sellerId === 'null' ||
+      role === 'ROLE_USER'
+    ) {
+      alert('판매자 페이지입니다.');
+      router.push('/');
+    }
+    useGetToken();
+
     GET_DATA(`/event/seller/${userId}`).then((res) => {
       if (res) {
         setEventList(res);

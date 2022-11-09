@@ -1,7 +1,30 @@
 import SellerLayout from '@components/seller/SellerLayout';
 import Link from 'next/link';
 import * as ICON from '@utils/constants/icons';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useGetToken } from '@hooks/useGetToken';
 export default function Home() {
+  const router = useRouter();
+
+  useEffect(() => {
+    let sellerId, role;
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      sellerId = localStorage.getItem('sellerId');
+      role = localStorage.getItem('role');
+    }
+    if (
+      sellerId === 'undefined' ||
+      sellerId === undefined ||
+      sellerId === 'null' ||
+      role === 'ROLE_USER'
+    ) {
+      alert('판매자 페이지입니다.');
+      router.push('/');
+    }
+    useGetToken();
+  }, []);
+
   return (
     <SellerLayout>
       <div>

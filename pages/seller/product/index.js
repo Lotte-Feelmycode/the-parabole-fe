@@ -1,11 +1,12 @@
 import SiteHead from '@components/common/SiteHead.js';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Input from '@components/input/Input';
 import ImageUploader from '@components/input/ImageUploader';
 import * as Button from '@components/input/Button';
 import SellerLayout from '@components/seller/SellerLayout';
+import { useGetToken } from '@hooks/useGetToken';
 
 export default function ProductDetail() {
   // TODO: userId를 가져올 때 저장되어있는 걸(cookie, localstorage)로 가져오게 변경
@@ -18,6 +19,24 @@ export default function ProductDetail() {
   const [price, setPrice] = useState();
   const [thumbnailImg, setThumbnailImg] = useState();
   const [detailImg, setDetailImg] = useState([]);
+
+  useEffect(() => {
+    let sellerId, role;
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      sellerId = localStorage.getItem('sellerId');
+      role = localStorage.getItem('role');
+    }
+    if (
+      sellerId === 'undefined' ||
+      sellerId === undefined ||
+      sellerId === 'null' ||
+      role === 'ROLE_USER'
+    ) {
+      alert('판매자 페이지입니다.');
+      router.push('/');
+    }
+    useGetToken();
+  }, []);
 
   // const buttonProperties = {
   //   buttonText: '상품 등록',

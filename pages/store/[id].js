@@ -3,9 +3,28 @@ import { useEffect, useState } from 'react';
 import ProductList from '@components/product/ProductList';
 import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead.js';
+import { useGetToken } from '@hooks/useGetToken';
 
 export default function store() {
   const router = useRouter();
+
+  useEffect(() => {
+    let sellerId, role;
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      sellerId = localStorage.getItem('sellerId');
+      role = localStorage.getItem('role');
+    }
+    if (
+      sellerId === 'undefined' ||
+      sellerId === undefined ||
+      sellerId === 'null' ||
+      role === 'ROLE_USER'
+    ) {
+      alert('판매자 페이지입니다.');
+      router.push('/');
+    }
+    useGetToken();
+  }, []);
 
   const [productListProps, setProductListProps] = useState({
     size: 6,

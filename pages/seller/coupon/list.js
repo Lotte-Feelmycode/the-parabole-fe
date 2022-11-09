@@ -2,8 +2,31 @@ import SiteHead from '@components/common/SiteHead.js';
 import styles from '@styles/Home.module.scss';
 import SellerLayout from '@components/seller/SellerLayout';
 import CouponList from '@components/coupon/CouponList';
+import { useGetToken } from '@hooks/useGetToken';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 export default function SellersCouponList() {
+  const router = useRouter();
+
+  useEffect(() => {
+    let sellerId, role;
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      sellerId = localStorage.getItem('sellerId');
+      role = localStorage.getItem('role');
+    }
+    if (
+      sellerId === 'undefined' ||
+      sellerId === undefined ||
+      sellerId === 'null' ||
+      role === 'ROLE_USER'
+    ) {
+      alert('판매자 페이지입니다.');
+      router.push('/');
+    }
+    useGetToken();
+  }, []);
+
   return (
     <SellerLayout>
       <SiteHead title="Seller's Coupon List" />
