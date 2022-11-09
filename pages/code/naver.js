@@ -17,7 +17,7 @@ export default function naverCode({}) {
       state: state,
     }).then((res) => {
       if (res.success) {
-        localStorage.setItem('userId', res.data.id);
+        localStorage.setItem('userId', res.data.userId);
         localStorage.setItem('email', res.data.email);
         localStorage.setItem('username', res.data.name);
         localStorage.setItem('nickname', res.data.nickname);
