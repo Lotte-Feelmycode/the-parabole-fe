@@ -1,6 +1,8 @@
 import SellerLayout from '@components/seller/SellerLayout';
 import Link from 'next/link';
 import * as ICON from '@utils/constants/icons';
+import { LINKS } from '@utils/constants/links';
+
 export default function Home() {
   return (
     <SellerLayout>
@@ -22,7 +24,7 @@ export default function Home() {
                 </h2>
 
                 <nav className="flex flex-col sm:items-start sm:text-left text-center items-center -mb-1 space-y-2.5">
-                  <Link href="/seller/product/list">
+                  <Link href={LINKS.SELLER_PRODUCT_LIST}>
                     <a className="flex flex-row">
                       <span className="w-6 h-6 mr-2 rounded-full inline-flex items-center justify-center">
                         <img src={ICON.ICON_LIST}></img>
@@ -30,7 +32,7 @@ export default function Home() {
                     </a>
                   </Link>
 
-                  <Link href="/seller/product/list">
+                  <Link href={LINKS.SELLER_PRODUCT_NEW}>
                     <a className="flex flex-row">
                       <span className="w-6 h-6 mr-2 rounded-full inline-flex items-center justify-center">
                         <img src={ICON.ICON_POST}></img>
@@ -47,7 +49,7 @@ export default function Home() {
                 </h2>
 
                 <nav className="flex flex-col sm:items-start sm:text-left text-center items-center -mb-1 space-y-2.5">
-                  <Link href="/seller/coupon/list">
+                  <Link href={LINKS.SELLER_COUPON_LIST}>
                     <a className="flex flex-row">
                       <span className="w-6 h-6 mr-2 rounded-full inline-flex items-center justify-center">
                         <img src={ICON.ICON_LIST}></img>
@@ -56,7 +58,7 @@ export default function Home() {
                     </a>
                   </Link>
 
-                  <Link href="/seller/coupon/new">
+                  <Link href={LINKS.SELLER_COUPON_NEW}>
                     <a className="flex flex-row">
                       <span className="w-6 h-6 mr-2 rounded-full inline-flex items-center justify-center">
                         <img src={ICON.ICON_POST}></img>
@@ -65,7 +67,7 @@ export default function Home() {
                     </a>
                   </Link>
 
-                  <Link href="/seller/coupon/assign">
+                  <Link href={LINKS.SELLER_COUPON_ASSIGN}>
                     <a className="flex flex-row">
                       <span className="w-6 h-6 mr-2 rounded-full inline-flex items-center justify-center">
                         <img src={ICON.ICON_CHECK}></img>
@@ -82,20 +84,12 @@ export default function Home() {
                 </h2>
 
                 <nav className="flex flex-col sm:items-start sm:text-left text-center items-center -mb-1 space-y-2.5">
-                  <Link href="/seller/order/detail">
+                  <Link href={LINKS.SELLER_ORDER_DETAIL}>
                     <a className="flex flex-row">
                       <span className="w-6 h-6 mr-2 rounded-full inline-flex items-center justify-center">
                         <img src={ICON.ICON_CHECK}></img>
                       </span>
-                      <p className="text-lg">주문 관리</p>
-                    </a>
-                  </Link>
-                  <Link href="/seller/order/detail">
-                    <a className="flex flex-row">
-                      <span className="w-6 h-6 mr-2 rounded-full inline-flex items-center justify-center">
-                        <img src={ICON.ICON_CHECK}></img>
-                      </span>
-                      <p className="text-lg">배송 관리</p>
+                      <p className="text-lg">주문/배송 관리</p>
                     </a>
                   </Link>
                 </nav>
@@ -107,7 +101,7 @@ export default function Home() {
                 </h2>
 
                 <nav className="flex flex-col sm:items-start sm:text-left text-center items-center -mb-1 space-y-2.5">
-                  <Link href="/seller/event/list">
+                  <Link href={LINKS.SELLER_EVENT_LIST}>
                     <a className="flex flex-row">
                       <span className="w-6 h-6 mr-2 rounded-full inline-flex items-center justify-center">
                         <img src={ICON.ICON_LIST}></img>
@@ -116,7 +110,7 @@ export default function Home() {
                     </a>
                   </Link>
 
-                  <Link href="/seller/event/new">
+                  <Link href={LINKS.SELLER_EVENT_NEW}>
                     <a className="flex flex-row">
                       <span className="w-6 h-6 mr-2 rounded-full inline-flex items-center justify-center">
                         <img src={ICON.ICON_POST}></img>
