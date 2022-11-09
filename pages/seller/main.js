@@ -33,7 +33,7 @@ export default function Home() {
                     </a>
                   </Link>
 
-                  <Link href={LINKS.SELLER_PRODUCT}>
+                  <Link href={LINKS.SELLER_PRODUCT_NEW}>
                     <a className="flex flex-row">
                       <span className="w-6 h-6 mr-2 rounded-full inline-flex items-center justify-center">
                         <img src={ICON.ICON_POST}></img>

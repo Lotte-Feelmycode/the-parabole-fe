@@ -9,7 +9,7 @@ export const LINKS = {
   SIGNOUT: '/user/signout',
   SELLER_MAIN: '/seller/main',
   SELLER_ORDER_DETAIL: '/seller/order/detail',
-  SELLER_PRODUCT: '/seller/product',
+  SELLER_PRODUCT_NEW: '/seller/product_NEW',
   SELLER_PRODUCT_LIST: '/seller/product/list',
   SELLER_COUPON_ASSIGN: '/seller/coupon/assign',
   SELLER_COUPON_NEW: '/seller/coupon/new',
