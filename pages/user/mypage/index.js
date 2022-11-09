@@ -16,13 +16,11 @@ export default function Mypage() {
   const [headers, setHeaders] = useState('');
 
   useEffect(() => {
-    let userId;
     if (typeof window !== 'undefined' && typeof window !== undefined) {
-      userId = localStorage.getItem('userId');
-    }
-    if (userId === 'undefined' || userId === undefined || userId === 'null') {
-      alert('로그인 해주세요.');
-      router.push('/signin');
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push('/signin');
+      }
     }
     setHeaders(useGetToken());
   }, []);

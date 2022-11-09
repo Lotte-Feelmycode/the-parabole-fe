@@ -28,16 +28,16 @@ export default function OrderAndPayment() {
   const [receiveAddress, setReceiveAddress] = useState('');
   const [receiveMemo, setReceiveMemo] = useState('');
 
+  const [headers, setHeaders] = useState();
+
   useEffect(() => {
-    let userId;
     if (typeof window !== 'undefined' && typeof window !== undefined) {
-      userId = localStorage.getItem('userId');
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push('/signin');
+      }
     }
-    if (userId === 'undefined' || userId === undefined || userId === 'null') {
-      alert('로그인 해주세요.');
-      router.push('/signin');
-    }
-    useGetToken();
+    setHeaders(useGetToken());
 
     GET(`/orderinfo`, { userId }).then((res) => {
       console.log(res);

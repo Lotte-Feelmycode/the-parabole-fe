@@ -20,22 +20,19 @@ export default function ProductDetail() {
   const [thumbnailImg, setThumbnailImg] = useState();
   const [detailImg, setDetailImg] = useState([]);
 
+  const [headers, setHeaders] = useState();
+
   useEffect(() => {
-    let sellerId, role;
     if (typeof window !== 'undefined' && typeof window !== undefined) {
-      sellerId = localStorage.getItem('sellerId');
-      role = localStorage.getItem('role');
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push('/signin');
+      } else if (localStorage.getItem('role') === 'ROLE_USER') {
+        alert('판매자 페이지입니다.');
+        router.push('/');
+      }
     }
-    if (
-      sellerId === 'undefined' ||
-      sellerId === undefined ||
-      sellerId === 'null' ||
-      role === 'ROLE_USER'
-    ) {
-      alert('판매자 페이지입니다.');
-      router.push('/');
-    }
-    useGetToken();
+    setHeaders(useGetToken());
   }, []);
 
   // const buttonProperties = {

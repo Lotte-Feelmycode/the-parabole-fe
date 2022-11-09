@@ -15,23 +15,19 @@ export default function ProductList() {
   // const userId = localStorage.getItem("ID");
   const userId = 1;
 
-  useEffect(() => {
-    let sellerId, role;
-    if (typeof window !== 'undefined' && typeof window !== undefined) {
-      sellerId = localStorage.getItem('sellerId');
-      role = localStorage.getItem('role');
-    }
-    if (
-      sellerId === 'undefined' ||
-      sellerId === undefined ||
-      sellerId === 'null' ||
-      role === 'ROLE_USER'
-    ) {
-      alert('판매자 페이지입니다.');
-      router.push('/');
-    }
+  const [headers, setHeaders] = useState();
 
-    useGetToken();
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push('/signin');
+      } else if (localStorage.getItem('role') === 'ROLE_USER') {
+        alert('판매자 페이지입니다.');
+        router.push('/');
+      }
+    }
+    setHeaders(useGetToken());
 
     GET_DATA(`/product/list`, { sellerId: userId }).then((res) => {
       if (res) {

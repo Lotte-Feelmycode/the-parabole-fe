@@ -16,16 +16,16 @@ export default function Cart() {
   // TODO: userId 집어넣기
   const userId = 3;
 
+  const [headers, setHeaders] = useState();
+
   useEffect(() => {
-    let userId;
     if (typeof window !== 'undefined' && typeof window !== undefined) {
-      userId = localStorage.getItem('userId');
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push('/signin');
+      }
     }
-    if (userId === 'undefined' || userId === undefined || userId === 'null') {
-      alert('로그인 해주세요.');
-      router.push('/signin');
-    }
-    useGetToken();
+    setHeaders(useGetToken());
   }, []);
 
   const [cartItemCount, setCartItemCount] = useState(0);

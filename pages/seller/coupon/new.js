@@ -28,24 +28,21 @@ export default function CouponCreate() {
   const [detail, onChangeDetail] = useInput('');
   const [cnt, onChangeCnt] = useInput();
 
-  useEffect(() => {
-    let sellerId, role;
-    if (typeof window !== 'undefined' && typeof window !== undefined) {
-      sellerId = localStorage.getItem('sellerId');
-      role = localStorage.getItem('role');
-    }
-    if (
-      sellerId === 'undefined' ||
-      sellerId === undefined ||
-      sellerId === 'null' ||
-      role === 'ROLE_USER'
-    ) {
-      alert('판매자 페이지입니다.');
-      router.push('/');
-    }
-    useGetToken();
+  const [headers, setHeaders] = useState();
 
-    GET(`/user/role`, { userId }).then((res) => {
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push('/signin');
+      } else if (localStorage.getItem('role') === 'ROLE_USER') {
+        alert('판매자 페이지입니다.');
+        router.push('/');
+      }
+    }
+    setHeaders(useGetToken());
+
+    GET(`/user/role`, { userId }, headers).then((res) => {
       if (res.message === 'ROLE_USER') {
         alert('잘못된 접근입니다.');
         router.push('/');
