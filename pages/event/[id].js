@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { GET_DATA, POST_DATA } from '@apis/defaultApi';
 import { getDateTime } from '@utils/functions';
-import EventPrize from '@components/event/EventPrize';
+import EventPrize from '@components/event/eventPrize';
 import CommerceLayout from '@components/common/CommerceLayout';
 
 export default function EventDetail() {
