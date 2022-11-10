@@ -54,7 +54,7 @@ export default function CommerceHeader() {
     return (
       <header className="body-font flex flex-col">
         <HeaderSection className="md:fixed w-full h-12 md:h-24 bg-white md:border-b md:border-gray-200 md:z-50">
-          <HeaderContainer className="containxer mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+          <HeaderContainer className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
             <Link href={LINKS.MAIN}>
               <a className="flex title-font items-center ">
                 <img src="/parabole.svg" className="w-12" />
