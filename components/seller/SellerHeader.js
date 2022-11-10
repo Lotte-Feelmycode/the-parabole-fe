@@ -67,7 +67,7 @@ export default function SellerHeader() {
                 <Link href={LINKS.SIGNIN}>
                   <a className="mr-5 hover:text-gray-900">로그인</a>
                 </Link>
-                <Link href={LINKS.SINGUP}>
+                <Link href={LINKS.SIGNUP}>
                   <a className="mr-5 hover:text-gray-900">회원가입</a>
                 </Link>
               </div>
