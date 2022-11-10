@@ -7,6 +7,7 @@ import { LINKS } from '@utils/constants/links';
 
 export default function Welcome() {
   const router = useRouter();
+
   return (
     <CommerceLayout>
       <SiteHead title="회원가입 완료" />

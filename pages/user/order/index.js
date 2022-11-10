@@ -2,7 +2,10 @@ import { createContext, useEffect, useReducer, useState } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { POST, GET } from '@apis/defaultApi';
-import { isEmpty } from '@utils/functions';
+import { ThemeGray4 } from '@utils/constants/themeColor';
+import { Blue } from '@components/input/Button';
+import { isEmpty, numberToMonetary } from '@utils/functions';
+import { useGetToken } from '@hooks/useGetToken';
 import { ThemeGray3 } from '@utils/constants/themeColor';
 import { ORDER_PAY } from '@utils/constants/types';
 import CommerceLayout from '@components/common/CommerceLayout';
@@ -80,7 +83,17 @@ export default function OrderAndPayment() {
   // 결제 금액 변수
   const [productTotalPrice, setProductTotalPrice] = useState(0);
 
+  const [headers, setHeaders] = useState();
+
   useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push('/signin');
+      }
+    }
+    setHeaders(useGetToken());
+
     GET(`/orderinfo`, { userId }).then((res) => {
       console.log(res);
       if (res && res.data) {

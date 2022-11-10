@@ -4,6 +4,13 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 export default function SellerHeader() {
+  const Links = {
+    LINK_MAIN: '/',
+    LINK_SELLER_MAIN: '/seller/main',
+    LINK_SELLER_PRODUCT: '/seller/product/list',
+    LINK_SELLER_COUPON: '/seller/coupon/list',
+    LINK_SELLER_EVENT: '/seller/event/list',
+  };
   const [token, setToken] = useState();
   const router = useRouter();
 
@@ -60,7 +67,7 @@ export default function SellerHeader() {
                 <Link href={LINKS.SIGNIN}>
                   <a className="mr-5 hover:text-gray-900">로그인</a>
                 </Link>
-                <Link href={LINKS.SINGUP}>
+                <Link href={LINKS.SIGNUP}>
                   <a className="mr-5 hover:text-gray-900">회원가입</a>
                 </Link>
               </div>

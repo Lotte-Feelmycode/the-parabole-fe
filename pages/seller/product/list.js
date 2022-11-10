@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Heading from '@components/input/Heading';
 import styled from '@emotion/styled';
 import * as btn from '@components/input/Button';
+import { useGetToken } from '@hooks/useGetToken';
 
 export default function ProductList() {
   const router = useRouter();
@@ -14,7 +15,20 @@ export default function ProductList() {
   // const userId = localStorage.getItem("ID");
   const userId = 1;
 
+  const [headers, setHeaders] = useState();
+
   useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push('/signin');
+      } else if (localStorage.getItem('role') === 'ROLE_USER') {
+        alert('판매자 페이지입니다.');
+        router.push('/');
+      }
+    }
+    setHeaders(useGetToken());
+
     GET_DATA(`/product/list`, { sellerId: userId }).then((res) => {
       if (res) {
         setProductList(res.content);
