@@ -9,18 +9,7 @@ import {
 import { LINKS } from '@utils/constants/links';
 import SearchBar from '@components/input/SearchBar';
 import CommerceHeaderMenuModal from '@components/common/CommerceHeaderMenuModal';
-
-const Links = {
-  LINK_MAIN: '/',
-  LINK_PRODUCT: '/product',
-  LINK_EVENT: '/event',
-  LINK_SELLER_MAIN: '/seller/main',
-  LINK_CART: '/user/cart',
-  LINK_SIGNIN: '/signin',
-  LINK_SINGUP: '/signup',
-  LINK_MYPAGE: '/user/mypage',
-  LINK_SIGNOUT: '/user/signout',
-};
+import { useRouter } from 'next/router';
 
 export default function CommerceHeader() {
   const [token, setToken] = useState();
@@ -223,10 +212,12 @@ export default function CommerceHeader() {
 }
 
 function CheckTocken({ token }) {
+  const router = useRouter();
+
   const signout = () => {
     localStorage.clear();
     alert('로그아웃 완료');
-    router.push('/');
+    router.push(LINKS.MAIN);
   };
 
   if (token) {
