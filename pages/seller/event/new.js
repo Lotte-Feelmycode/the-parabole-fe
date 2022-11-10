@@ -1,28 +1,24 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { GET, POST } from '@apis/defaultApi';
+import { GET, GET_DATA, POST } from '@apis/defaultApi';
+import { API_BASE_URL } from '@apis/api-config';
+
 import useInput from '@hooks/useInput';
 import useCheck from '@hooks/useCheck';
 
 import Heading from '@components/input/Heading';
 import Input from '@components/input/Input';
 import Radio from '@components/input/Radio';
-import Checkbox from '@components/input/Checkbox';
 import * as btn from '@components/input/Button';
 import CloseButton from '@components/input/CloseButton';
-import ImageUploader from '@components/input/ImageUploader';
 import SellerLayout from '@components/seller/SellerLayout';
-import {
-  getDateTimeNotKor,
-  getDate,
-  getState,
-  isEmpty,
-  numberToMonetary,
-} from '@utils/functions';
+import { getDate, getState, isEmpty, numberToMonetary } from '@utils/functions';
 import { EVENT_TYPE, PRIZE_TYPE } from '@utils/constants/types';
 import { EVENT_ERROR } from '@utils/constants/errors';
-import { ICON_WARNING_SIGN } from '@utils/constants/icons';
+import { ICON_WARNING_SIGN, ICON_CHECK } from '@utils/constants/icons';
+import ModalScheduler from '@components/event/ModalScheduler';
+import axios from 'axios';
 
 export default function Event() {
   const router = useRouter();
@@ -30,48 +26,67 @@ export default function Event() {
   const [productList, setProductList] = useState([]);
   const [couponList, setCouponList] = useState([]);
   const [prizeList, setprizeList] = useState([]);
+  const [scheduleList, setScheduleList] = useState([]);
 
+  const [fileList, setFileList] = useState([]); // 업로드한 파일들을 저장하는 배열
   const [title, onChangeTitle] = useInput('');
   const [descript, onChangeDescript] = useInput('');
-  const [eventType, onEventType] = useInput('');
+  const [eventType, setEventType] = useState('');
   const [chatOpen, onChatOpen] = useCheck(true);
   const [startAt, setStartAt] = useState();
   const [endAt, setEndAt] = useState();
   const [stockList, setStockList] = useState([]);
+  const [modalState, setModalState] = useState(false);
+  const [showEndAt, setShowEndAt] = useState(true);
 
   const [isProductSelect, setProductSelect] = useState(false);
   const [isCouponSelect, setCouponSelect] = useState(false);
 
+  useEffect(() => {
+    GET_DATA('/event/seller/scheduler').then((res) => {
+      let schedules = res.map((e) => {
+        let newObj = {};
+        newObj['title'] = e.title;
+        newObj['startDate'] = new Date(e.startAt);
+        newObj['endDate'] = new Date(e.endAt);
+        return newObj;
+      });
+
+      console.log('schedules', schedules);
+      setScheduleList(schedules);
+    });
+  }, []);
+
   // 선착순 이벤트 체크
   function checkFcfsPrize() {
-    if (eventType === 'FCFS' && prizeList.length > 0) {
+    if (eventType === 'FCFS' && prizeList.length > 1) {
       alert('선착순 이벤트는 한 가지 경품만 추가할 수 있습니다.');
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
   // 이벤트 등록 validation check
   function validation(inputParams) {
     if (isEmpty(inputParams.title)) {
       alert(EVENT_ERROR.NO_EVENT_TITLE);
-      return;
+      return false;
     }
     if (isEmpty(inputParams.descript)) {
       alert(EVENT_ERROR.NO_DESCRIPT);
-      return;
+      return false;
     }
     if (isEmpty(inputParams.type)) {
       alert(EVENT_ERROR.NO_EVENT_TYPE);
-      return;
+      return false;
     }
     if (isEmpty(inputParams.startAt)) {
       alert(EVENT_ERROR.NO_START_AT);
-      return;
+      return false;
     }
     if (isEmpty(inputParams.endAt)) {
       alert(EVENT_ERROR.NO_END_AT);
-      return;
+      return false;
     }
     if (
       inputParams.startAt >= inputParams.endAt ||
@@ -79,21 +94,17 @@ export default function Event() {
       inputParams.endAt <= new Date()
     ) {
       alert(EVENT_ERROR.INVALID_DATE);
-      return;
+      return false;
     }
     if (prizeList.length < 1) {
       alert(EVENT_ERROR.NO_PRIZE_LIST);
+      return false;
+    }
+    if (fileList.length < 2) {
+      alert(EVENT_ERROR.NO_IMAGE);
       return;
     }
-    if (isEmpty(inputParams.eventImage.eventBannerImg)) {
-      alert(EVENT_ERROR.NO_EVENT_BANNER_IMAGE);
-      return;
-    }
-    if (isEmpty(inputParams.eventImage.EventDetailImg)) {
-      alert(EVENT_ERROR.NO_EVENT_DETAIL_IMAGE);
-      return;
-    }
-    if (checkFcfsPrize()) return;
+    if (checkFcfsPrize()) return false;
     return true;
   }
 
@@ -393,40 +404,49 @@ export default function Event() {
     );
   }
 
+  const eventTypeHandler = (e) => {
+    // e.preventDefault();
+    const type = e.target.value;
+    setEventType(type);
+
+    if (type === 'FCFS') {
+      setShowEndAt(false);
+    } else {
+      setShowEndAt(true);
+    }
+  };
+
   const startAtChangeHandler = (e) => {
     e.preventDefault();
 
-    // let fromDTM = e.target.value;
-    // setStartAt(fromDTM);
+    let fromDTM = e.target.value;
+    setStartAt(fromDTM.substr(0, 13) + ':00');
 
-    // console.log(fromDTM);
-    // // let date = new Date(fromDTM.sp, 0, 1);
-    // // date객체 리턴후 계산 필요
+    if (eventType === 'FCFS') {
+      setEndAt(fromDTM.substr(0, 13) + ':50:00');
 
-    // const params = {
-    //   eventStatus: 1,
-    //   dateDiv: 0,
-    //   fromDateTime: startAt + ':00',
-    //   toDateTime: startAt.substring(0, 13) + ':50:00',
-    // };
-
-    // if (eventType === 'FCFS') {
-    //   POST('/event/list', params).then((res) => {
-    //     if (res && res.data && res.data.length > 0) {
-    //       alert(
-    //         '이미 같은 시간대 등록된 이벤트가 있습니다. 다른 시간을 선택해주세요',
-    //       );
-    //       setStartAt('');
-    //       setEndAt('');
-    //     }
-    //   });
-    // }
+      GET('/event/seller/check', {
+        userId: 1,
+        inputDtm: fromDTM.substr(0, 13) + ':00:00',
+      }).then((res) => {
+        if (res.data !== true) {
+          alert(res.message);
+          return;
+        }
+      });
+    }
   };
 
   const endAtChangeHandler = (e) => {
     e.preventDefault();
+    let toDTM = e.target.value;
+    setEndAt(toDTM.substr(0, 13) + ':00');
+  };
 
-    setEndAt(e.target.value);
+  const showModal = (e) => {
+    e.preventDefault();
+
+    setModalState(true);
   };
 
   //경품 삭제 핸들러
@@ -454,7 +474,7 @@ export default function Event() {
       return;
     }
 
-    if (!checkFcfsPrize()) return;
+    if (checkFcfsPrize()) return;
 
     if (productList[e.target.value].remains < 1) {
       alert('경품으로 지급가능한 상품 재고가 부족합니다.');
@@ -490,7 +510,7 @@ export default function Event() {
       return;
     }
 
-    if (!checkFcfsPrize()) return;
+    if (checkFcfsPrize()) return;
 
     if (couponList[e.target.value].remains < 1) {
       alert('발행가능한 쿠폰 수량이 부족합니다.');
@@ -511,6 +531,35 @@ export default function Event() {
 
     setStockList([stockObj, ...stockList]);
     setprizeList([tmpobj, ...prizeList]);
+  };
+
+  const css = {
+    width: '100%',
+    padding: '12px 20px',
+    margin: '8px 0',
+    boxSizing: 'border-box',
+  };
+
+  const onChangeBannerImg = (e) => {
+    const uploadFiles = e.target.files[0]; // 파일선택창에서 선택한 파일들
+    const files = [];
+    for (var i = 0; i < fileList.length; i++) {
+      files.push(fileList[i]);
+    }
+    files.push(uploadFiles);
+    setFileList(files);
+  };
+
+  const onChangeDetailImg = (e) => {
+    const uploadFiles = e.target.files; // 파일선택창에서 선택한 파일들
+    const files = [];
+    for (var i = 0; i < fileList.length; i++) {
+      files.push(fileList[i]);
+    }
+    for (var i = 0; i < uploadFiles.length; i++) {
+      files.push(uploadFiles[i]);
+    }
+    setFileList(files);
   };
 
   // 경품(상품) 버튼 클릭시 조회 이벤트 핸들러
@@ -567,9 +616,12 @@ export default function Event() {
     for (var i = 0; i < prizeList.length; i++) {
       copyArr[i] = { ...copyArr[i], stock: stockList.at(i).stock };
     }
-
-    // TODO : 이벤트 채팅 여부 추가
     // console.log('이벤트 채팅 여부 : ', chatOpen);
+
+    const formData = new FormData();
+    for (var i = 0; i < fileList.length; i++) {
+      formData.append('images', fileList[i]);
+    }
 
     const eventParams = {
       //userId: localStorage.getItem("ID"),
@@ -580,21 +632,27 @@ export default function Event() {
       endAt: endAt + ':00',
       title: title,
       descript: descript,
+
       // chatOpen : chatOpen,
-      eventImage: {
-        eventBannerImg: 'dummyimage',
-        EventDetailImg: 'dummydetail',
-      },
-      eventPrizeCreateRequestDtos: prizeList,
+      eventPrizeCreateRequestDtos: copyArr,
     };
 
+    const eventInfos = JSON.stringify(eventParams);
+    const blob = new Blob([eventInfos], { type: 'application/json' });
+    formData.append('eventDtos', blob);
     if (validation(eventParams)) {
-      POST('/event', eventParams).then((res) => {
-        if (res && res.data && confirm('이벤트를 등록하시겠습니까?') > 0) {
-          alert('이벤트가 등록되었습니다. ');
-          router.push({ pathname: `/seller/event/list` }, `/seller/event/list`);
-        }
-      });
+      axios
+        .post(`${API_BASE_URL}/event`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        }) // Content-Type을 반드시 이렇게 하여야 한다.
+        .then((res) => {
+          if (res && res.data && confirm('이벤트를 등록하시겠습니까?') > 0) {
+            router.push(
+              { pathname: `/seller/event/list` },
+              `/seller/event/list`,
+            );
+          }
+        });
     }
   };
 
@@ -640,19 +698,39 @@ export default function Event() {
             formName="productStatus"
             className="posting-radio"
             InputClassName="posting-radio_input"
-            onChange={onEventType}
+            onChange={eventTypeHandler}
             value={eventType}
           />
         </Div>
+
         <Divider />
 
-        <Heading title="이벤트 채팅 생성 여부" type="h2" />
+        {/* <Heading title="이벤트 채팅 생성 여부" type="h2" />
         <Div>
           <Checkbox text="생성" onChange={onChatOpen} value={chatOpen} />
         </Div>
-        <Divider />
+        <Divider /> */}
 
-        <Heading title="이벤트 진행 일시" type="h2" />
+        <div className="flex">
+          <Heading title="이벤트 진행 일시" type="h2" />
+
+          <btn.SmallLinePink
+            buttonText="이벤트 스케쥴 조회"
+            onClickFunc={showModal}
+            css={{
+              width: 150,
+              marginLeft: 15,
+            }}
+          />
+        </div>
+        <div>
+          {modalState && (
+            <ModalScheduler
+              setModalState={setModalState}
+              scheduleList={scheduleList}
+            />
+          )}
+        </div>
         <div className="w-full mb-4">
           <Heading title="시작 일시" type="h3" />
           <Input
@@ -663,15 +741,28 @@ export default function Event() {
               border: '0.1px solid #52525224',
             }}
           />
-          <Heading title="종료 일시" type="h3" />
-          <Input
-            type="datetime-local"
-            onChange={endAtChangeHandler}
-            value={endAt}
-            css={{
-              border: '0.1px solid #52525224',
-            }}
-          />
+          {showEndAt ? (
+            <>
+              <Heading title="종료 일시" type="h3" />
+              <Input
+                type="datetime-local"
+                onChange={endAtChangeHandler}
+                value={endAt}
+                css={{
+                  border: '0.1px solid #52525224',
+                }}
+              />
+            </>
+          ) : (
+            <div className="flex flex-row">
+              <span className="w-5 h-5 mr-2 rounded-full inline-flex items-center justify-center">
+                <img src={ICON_CHECK}></img>
+              </span>
+              <p className="text-m">
+                선착순 이벤트는 정각부터 50분간 진행됩니다.
+              </p>
+            </div>
+          )}
         </div>
         <Divider />
 
@@ -706,12 +797,24 @@ export default function Event() {
         {/* TODO: 이미지 업로드 추후 수정 */}
         <Heading title="이벤트 배너 이미지" type="h2" />
         <Div>
-          <ImageUploader />
+          <input
+            css={css}
+            type="file"
+            accept="image/jpg, image/png, image/jpeg"
+            onChange={onChangeBannerImg}
+          />
+          {/* <ImageUploader /> */}
         </Div>
         <Divider />
         <Heading title="이벤트 상세 이미지" type="h2" />
         <Div>
-          <ImageUploader />
+          <input
+            css={css}
+            type="file"
+            accept="image/jpg, image/png, image/jpeg"
+            onChange={onChangeDetailImg}
+          />
+          {/* <ImageUploader /> */}
         </Div>
         <Divider />
         <Div>

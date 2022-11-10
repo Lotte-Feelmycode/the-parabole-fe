@@ -7,8 +7,8 @@ import SiteHead from '@components/common/SiteHead';
 import Heading from '@components/input/Heading';
 import * as btn from '@components/input/Button';
 import { getDateTime, getState } from '@utils/functions';
-import { EVENT_TYPE } from '@utils/constants/types';
-import EventWinnerList from '@components/event/EventWinnerList';
+import { PRIZE_TYPE, EVENT_TYPE } from '@utils/constants/types';
+import EventParticipant from '@components/event/EventParticipantList';
 
 export default function EventDetail() {
   const router = useRouter();
@@ -26,7 +26,7 @@ export default function EventDetail() {
           setEvent(res.data);
         } else {
           alert('잘못된 요청입니다.');
-          router.push({ pathname: `/seller/event/list` });
+          router.replace(`/seller/event/list`);
         }
       });
     }
@@ -37,7 +37,7 @@ export default function EventDetail() {
     DELETE(`/event/${eventId}`, {}).then((res) => {
       if (res && res.success == true && confirm('삭제하시겠습니까?')) {
         alert('삭제 되었습니다. ');
-        router.push({ pathname: `/seller/event/list` }, `/seller/event/list`);
+        router.replace(`/seller/event/list`);
       }
     });
   };
@@ -61,26 +61,75 @@ export default function EventDetail() {
           <br />
 
           <Heading title="이벤트 일시" type="h3" />
-          <span>
-            이벤트 시작일시 : {event.startAt && getDateTime(event.startAt)}
-          </span>
-          <br />
-          <span>
-            이벤트 종료일시 : {event.endAt && getDateTime(event.endAt)}
-          </span>
-          <br />
-          <EventWinnerList eventId={eventId} />
-          <br />
+          <div className="mb-8">
+            <span>
+              이벤트 시작일시 : {event.startAt && getDateTime(event.startAt)}
+            </span>
+            <br />
+            <span>
+              이벤트 종료일시 : {event.endAt && getDateTime(event.endAt)}
+            </span>
+          </div>
+
+          <div className="mb-8">
+            <Heading title="경품" type="h3" />
+            <table className="w-2/3 text-m text-center px-4 pb-8">
+              <thead className="text-base text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+                <tr className="h-14">
+                  <th scope="col" className="py-3 px-4 w-20">
+                    경품 타입
+                  </th>
+                  <th scope="col" className="py-3 px-4 w-20">
+                    상품/쿠폰 번호
+                  </th>
+                  <th scope="col" className="py-3 px-10 w-40">
+                    상품/쿠폰명
+                  </th>
+                  <th scope="col" className="py-3 px-2 w-10">
+                    수량
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {event.eventPrizes &&
+                  event.eventPrizes.map((eventPrize, index) => (
+                    <>
+                      <tr
+                        key={eventPrize.id}
+                        className="h-12 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                      >
+                        <td>{getState(PRIZE_TYPE, eventPrize.prizeType)}</td>
+                        {eventPrize.prizeType === 'PRODUCT' ? (
+                          <>
+                            <td>{eventPrize.productId}</td>
+                            <td>{eventPrize.productName}</td>
+                          </>
+                        ) : (
+                          <>
+                            <td>{eventPrize.couponId}</td>
+                            <td>{eventPrize.couponDetail}</td>
+                          </>
+                        )}
+                        <td>{eventPrize.stock}</td>
+                      </tr>
+                    </>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="mb-8">
+            <Heading title="참여자" type="h3" />
+            <EventParticipant eventId={eventId}></EventParticipant>
+          </div>
           <Heading title="이벤트 이미지" type="h3" />
           <Img src={event.eventImage && event.eventImage.eventBannerImg}></Img>
           <br />
           <Img src={event.eventImage && event.eventImage.eventDetailImg}></Img>
           <br />
-
           {event.status === EVENT_BEFORE && (
             // TODO: 수정 (꼭 필요한지?)
             <DivHor>
-              {/* <btn.LineBlue buttonText="수정하기" /> */}
               <btn.Pink
                 buttonText="삭제하기"
                 onClickFunc={deleteClickHandler}
