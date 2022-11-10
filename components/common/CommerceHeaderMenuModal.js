@@ -34,7 +34,7 @@ export default function CommerceHeaderMenuModal({ closeModalFunc, token }) {
             </Link>
           </ButtonSection>
           <ButtonSection>
-            <Link href={LINKS.SINGUP}>
+            <Link href={LINKS.SIGNUP}>
               <Blue buttonText={'회원가입'} css={btnCss} />
             </Link>
           </ButtonSection>
