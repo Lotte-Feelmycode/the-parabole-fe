@@ -37,7 +37,6 @@ export default function CommerceHeader() {
     });
 
     const time = setTimeout(() => {
-      console.log(window.innerWidth);
       handleResize(window.innerWidth);
     }, 0.0000000000000000001);
 
