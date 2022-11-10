@@ -1,5 +1,5 @@
 import CommerceLayout from '@components/common/CommerceLayout';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import UserOrderList from '@components/mypage/UserOrderList';
 import EventApplyList from '@components/mypage/EventApplyList';
 import MyProfile from '@components/mypage/MyProfile';
@@ -7,10 +7,23 @@ import SiteHead from '@components/common/SiteHead.js';
 import styled from '@emotion/styled';
 import { ThemeBlueWhite, MainBlue } from '@utils/constants/themeColor';
 import UserCouponList from '@components/coupon/UserCouponList';
+import { useRouter } from 'next/router';
+import { useGetToken } from '@hooks/useGetToken';
 
-export default function () {
-  // TODO: userId 집어넣기
-  const userId = 3;
+export default function Mypage() {
+  const router = useRouter();
+
+  const [headers, setHeaders] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push('/signin');
+      }
+    }
+    setHeaders(useGetToken());
+  }, []);
 
   const [nowState, setNowState] = useState(0);
   const mypageStateList = [
@@ -22,13 +35,13 @@ export default function () {
 
   function showMypageMainComp(input) {
     if (input === 0) {
-      return <UserOrderList userId={userId} />;
+      return <UserOrderList headers={headers} />;
     } else if (input === 1) {
-      return <EventApplyList userId={userId} />;
+      return <EventApplyList headers={headers} />;
     } else if (input === 2) {
-      return <UserCouponList userId={userId} />;
+      return <UserCouponList headers={headers} />;
     } else if (input === 3) {
-      return <MyProfile userId={userId} />;
+      return <MyProfile headers={headers} />;
     }
   }
 

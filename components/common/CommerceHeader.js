@@ -4,6 +4,18 @@ import { LINKS } from '@utils/constants/links';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
+const Links = {
+  LINK_MAIN: '/',
+  LINK_PRODUCT: '/product',
+  LINK_EVENT: '/event',
+  LINK_SELLER_MAIN: '/seller/main',
+  LINK_CART: '/user/cart',
+  LINK_SIGNIN: '/signin',
+  LINK_SINGUP: '/signup',
+  LINK_MYPAGE: '/user/mypage',
+  LINK_SIGNOUT: '/user/signout',
+};
+
 export default function CommerceHeader() {
   const [token, setToken] = useState();
 
@@ -63,15 +75,23 @@ export default function CommerceHeader() {
 }
 
 function CheckTocken({ token }) {
+  const signout = () => {
+    localStorage.clear();
+    alert('로그아웃 완료');
+    router.push('/');
+  };
+
   if (token) {
     return (
       <div>
         <Link href={LINKS.MYPAGE}>
           <a className="px-5 font-medium hover:text-gray-700">마이페이지</a>
         </Link>
-        <Link href={LINKS.SIGNOUT}>
-          <a className="px-5 font-medium hover:text-gray-700">로그아웃</a>
-        </Link>
+        <div>
+          <button onClick={signout}>
+            <a className="mr-5 hover:text-gray-900">로그아웃</a>
+          </button>
+        </div>
       </div>
     );
   } else {
@@ -80,7 +100,7 @@ function CheckTocken({ token }) {
         <Link href={LINKS.SIGNIN}>
           <a className="px-5 font-medium hover:text-gray-700">로그인</a>
         </Link>
-        <Link href={LINKS.SINGUP}>
+        <Link href={LINKS.SIGNUP}>
           <a className="px-5 font-medium hover:text-gray-700 border-l border-r">
             회원가입
           </a>

@@ -3,10 +3,8 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { GET, GET_DATA, POST } from '@apis/defaultApi';
 import { API_BASE_URL } from '@apis/api-config';
-
 import useInput from '@hooks/useInput';
 import useCheck from '@hooks/useCheck';
-
 import Heading from '@components/input/Heading';
 import Input from '@components/input/Input';
 import Radio from '@components/input/Radio';
@@ -16,12 +14,29 @@ import SellerLayout from '@components/seller/SellerLayout';
 import { getDate, getState, isEmpty, numberToMonetary } from '@utils/functions';
 import { EVENT_TYPE, PRIZE_TYPE } from '@utils/constants/types';
 import { EVENT_ERROR } from '@utils/constants/errors';
+import { ICON_WARNING_SIGN } from '@utils/constants/icons';
+import { useGetToken } from '@hooks/useGetToken';
 import { ICON_WARNING_SIGN, ICON_CHECK } from '@utils/constants/icons';
 import ModalScheduler from '@components/event/ModalScheduler';
 import axios from 'axios';
 
 export default function Event() {
   const router = useRouter();
+
+  const [headers, setHeaders] = useState();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push('/signin');
+      } else if (localStorage.getItem('role') === 'ROLE_USER') {
+        alert('판매자 페이지입니다.');
+        router.push('/');
+      }
+    }
+    setHeaders(useGetToken());
+  }, []);
 
   const [productList, setProductList] = useState([]);
   const [couponList, setCouponList] = useState([]);
