@@ -50,15 +50,6 @@ const Bar = styled.div`
   height: 38px;
   //margin-left: 10px;
   margin: auto;
-  @media (max-width: 1024px) {
-    display: none;
-  }
-  @media (min-width: 1024px) {
-    min-width: 200px;
-  }
-  @media (min-width: 1260px) {
-    min-width: 400px;
-  }
 `;
 
 const InputDiv = styled.div`
