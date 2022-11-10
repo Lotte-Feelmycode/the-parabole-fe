@@ -231,7 +231,7 @@ function CheckTocken({ token }) {
 
   if (token) {
     return (
-      <div>
+      <>
         <Link href={LINKS.MYPAGE}>
           <a className="px-5 font-medium hover:text-gray-700">마이페이지</a>
         </Link>
@@ -240,11 +240,11 @@ function CheckTocken({ token }) {
             <a className="mr-5 hover:text-gray-900">로그아웃</a>
           </button>
         </div>
-      </div>
+      </>
     );
   } else {
     return (
-      <div>
+      <>
         <Link href={LINKS.SIGNIN}>
           <a className="px-5 font-medium hover:text-gray-700">로그인</a>
         </Link>
@@ -253,7 +253,7 @@ function CheckTocken({ token }) {
             회원가입
           </a>
         </Link>
-      </div>
+      </>
     );
   }
 }
