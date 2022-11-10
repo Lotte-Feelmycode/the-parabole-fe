@@ -1,18 +1,18 @@
-import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead.js';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Input from '@components/input/Input';
 import ImageUploader from '@components/input/ImageUploader';
-import * as btn from '@components/input/Button';
-import EventParticipantList from '@components/event/EventParticipantList';
+import * as Button from '@components/input/Button';
+import SellerLayout from '@components/seller/SellerLayout';
 import { useGetToken } from '@hooks/useGetToken';
 
 export default function ProductDetail() {
   // TODO: userId를 가져올 때 저장되어있는 걸(cookie, localstorage)로 가져오게 변경
+  const userId = 1;
+
   const router = useRouter();
-  const [userId, setUserId] = useState(router.query.id);
   const [name, setName] = useState();
   const [category, setCategory] = useState();
   const [remain, setRemain] = useState();
@@ -35,17 +35,10 @@ export default function ProductDetail() {
     setHeaders(useGetToken());
   }, []);
 
-  function setProduct() {
-    {
-      name, category, remain, price;
-    }
-    console.log(name, category, remain, price);
-  }
-
-  const buttonProperties = {
-    buttonText: '상품 등록',
-    onClickFunc: setProduct,
-  };
+  // const buttonProperties = {
+  //   buttonText: '상품 등록',
+  //   onClickFunc: setProduct,
+  // };
 
   const onChangeName = (event) => {
     setName(event.target.value);
@@ -71,14 +64,14 @@ export default function ProductDetail() {
     setDetailImg(event.target.value);
   };
 
-  useEffect(() => {
-    const userId = router.query.id;
-    if (userId) setUserId(userId);
-  }, [router.query]);
+  // useEffect(() => {
+  //   const userId = router.query.id;
+  //   if (userId) setUserId(userId);
+  // }, [router.query]);
 
   return (
     <>
-      <CommerceLayout>
+      <SellerLayout>
         <SiteHead title="상품 등록" />
         <Div>
           상품명
@@ -103,10 +96,13 @@ export default function ProductDetail() {
           <br />
           <ImageUploader></ImageUploader>
           <br />
-          <btn.Blue {...buttonProperties}></btn.Blue>
+          <Button.Pink
+            buttonText="상품 등록"
+            name="setProduct"
+            // onClickFunc={setProduct}
+          ></Button.Pink>
         </Div>
-      </CommerceLayout>
-      <EventParticipantList eventId={userId} />
+      </SellerLayout>
     </>
   );
 }

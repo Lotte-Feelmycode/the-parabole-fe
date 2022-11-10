@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useInput from '@hooks/useInput';
 import SellerLayout from '@components/seller/SellerLayout';
+import { useGetToken } from '@hooks/useGetToken';
 
 export default function CouponCreate() {
   // TODO:
@@ -27,8 +28,21 @@ export default function CouponCreate() {
   const [detail, onChangeDetail] = useInput('');
   const [cnt, onChangeCnt] = useInput();
 
+  const [headers, setHeaders] = useState();
+
   useEffect(() => {
-    GET(`/user/role`, { userId }).then((res) => {
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push('/signin');
+      } else if (localStorage.getItem('role') === 'ROLE_USER') {
+        alert('판매자 페이지입니다.');
+        router.push('/');
+      }
+    }
+    setHeaders(useGetToken());
+
+    GET(`/user/role`, { userId }, headers).then((res) => {
       if (res.message === 'ROLE_USER') {
         alert('잘못된 접근입니다.');
         router.push('/');
