@@ -4,7 +4,7 @@ import { API_BASE_URL } from '@apis/api-config';
 import { DEV_ERROR } from '@utils/constants/errors';
 const CONTENT_TYPE = 'application/json';
 
-//axios.defaults.baseurl = API_BASE_URL;
+axios.defaults.headers.common['Content-Type'] = CONTENT_TYPE;
 axios.defaults.headers.post['Content-Type'] = CONTENT_TYPE;
 
 export const GET = async (url, params, headers) => {
