@@ -8,7 +8,8 @@ import { numberToMonetary } from '@utils/functions';
 import * as color from '@utils/constants/themeColor';
 import { SmallLineWhite, LineBlue, Blue } from '@components/input/Button';
 import Input from '@components/input/Input';
-
+import { ICON_SHOP } from '@utils/constants/icons';
+import CouponListModal from '@components/coupon/CouponListModal';
 export default function ProductDetail() {
   // TODO : userID
   const userId = 3;
@@ -19,6 +20,7 @@ export default function ProductDetail() {
   const [productDetail, setProductDetail] = useState([]);
   const [seller, setSeller] = useState('');
   const [count, setCount] = useState(1);
+  const [modalState, setModalState] = useState(false);
 
   const [maxCount, setMaxCount] = useState(100);
   const minCount = 0;
@@ -42,6 +44,17 @@ export default function ProductDetail() {
     if (storeId) {
       router.push({ pathname: `/store/${storeId}` });
     }
+  }
+
+  function showBenefitModal(e, storeId) {
+    e.preventDefault();
+
+    setModalState(true);
+    GET_DATA(`/seller/list`, { sellerId: 1 }).then((res) => {
+      if (res) {
+        console.log(res);
+      }
+    });
   }
 
   function isCountValid() {
@@ -117,7 +130,7 @@ export default function ProductDetail() {
       <SiteHead title={product.productName} />
       <section className="flex min-h-screen flex-col text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">
-          <span>상품 상세 화면</span>
+          {/* <span>상품 상세 화면</span> */}
           <ProductWrap>
             <ProductTopSection className="product-top-section">
               <ProductThumbnailImgSection className="product-thumbnail-img-section">
@@ -130,7 +143,7 @@ export default function ProductDetail() {
                 <div className="product-name-title">
                   <ProductName>{product.productName}</ProductName>
                 </div>
-                <div className="product-price">
+                <div className="product-price border-b-2 pb-4">
                   <ProductPrice>
                     {numberToMonetary(product.productPrice)}
                   </ProductPrice>
@@ -138,12 +151,33 @@ export default function ProductDetail() {
                 </div>
                 <StoreSection onClick={() => goToStore(product.sellerId)}>
                   <StoreNameSection>
+                    <img
+                      src={ICON_SHOP}
+                      loading="lazy"
+                      className="w-7 h-7 mx-2 object-cover object-center"
+                    />
                     <span className="text-lg"> {seller} </span>
                   </StoreNameSection>
                   <StoreBtnSection>
                     <SmallLineWhite buttonText="브랜드홈 ▶" />
                   </StoreBtnSection>
                 </StoreSection>
+                <div className='flex border-t-2 py-2'>
+                  <StoreBenfitBox onClick={(e) => showBenefitModal(e, product.sellerId)}>
+                    <div className='align-baseline'>
+                      <p className='font-3xl text-black-800 font-semibold text-center'>스토어 혜택을 받아보세요!</p> 
+                    </div>
+                  </StoreBenfitBox>
+                </div>
+                <div>
+                  {modalState && (
+                    <CouponListModal
+                      setModalState={setModalState}
+                      // scheduleList={scheduleList}
+                      storeName = {seller}
+                    />
+                  )}
+                </div>
                 <InputSection>
                   <ProductCountSection>
                     <Input
@@ -154,7 +188,7 @@ export default function ProductDetail() {
                         min: minCount,
                         max: maxCount,
                       }}
-                      css={{ width: '100%' }}
+                      css={{ width: '100%', height:'40px', fontSize:'20px', border:'0px'}}
                     />
                   </ProductCountSection>
                   <TotalInputSection>
@@ -206,8 +240,8 @@ const ProductWrap = styled.div`
 `;
 
 const ProductName = styled.span`
-  font-size: 22px;
-  font-weight: 400;
+  font-size: 36px;
+  font-weight: 500;
   margin-right: 36px;
 `;
 
@@ -239,6 +273,8 @@ const ProductDetailTop = styled.div`
   flex-direction: column;
   flex-wrap: nowrap;
   flex: 1 1 auto;
+  margin: 20px;
+
 `;
 
 const ProductPrice = styled.span`
@@ -250,15 +286,28 @@ const ProductPrice = styled.span`
 const StoreSection = styled.a`
   display: flex;
   align-items: center;
-  margin: 10px 0px;
+  margin: 20px 0px;
 `;
 const StoreNameSection = styled.div`
-  flex: none;
+  display: flex;
+  flex-direction: row;
   vertical-align: center;
 `;
 
 const StoreBtnSection = styled.div`
   margin-left: auto;
+`;
+
+const StoreBenfitBox = styled.div`
+  background-color: ${color.ThemeBlueWhite};
+  border-radius: 0.375rem;
+  width: 100%;
+  height: 3rem;
+
+  &:hover {
+    background-color: ${color.ColorBlue2};
+    cursor: pointer;
+  }
 `;
 
 const InputSection = styled.div`
@@ -268,7 +317,8 @@ const InputSection = styled.div`
   flex-wrap: wrap;
   margin: 10px 0;
   padding: 10px;
-  background-color: ${color.ThemeGray4};
+  background-color: ${color.ThemeGray5};
+
   border-radius: 0.25rem;
 `;
 
