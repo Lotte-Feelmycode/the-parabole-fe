@@ -82,9 +82,10 @@ function CouponListRadio({ sellerId, setCouponParentId }) {
                     />
                     {coupon.name}
                   </th>
-                  <td className="py-4 px-6">{coupon.type}</td>
+                  <td className="py-4 px-6">
+                    {coupon.type === 1 ? '할인액 (원)' : '할인율 (%)'}
+                  </td>{' '}
                   <td className="py-4 px-6">{coupon.discountValue}</td>
-
                   <td className="py-4 px-6">{coupon.detail}</td>
                   <td className="py-4 px-6">{coupon.cnt}</td>
                   <td className="py-4 px-6">{coupon.remains}</td>
