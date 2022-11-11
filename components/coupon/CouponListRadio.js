@@ -13,7 +13,7 @@ function CouponListRadio({ sellerId, setCouponParentId, headers }) {
   const [radioValue, setRadioValue] = useState(1);
 
   useEffect(() => {
-    // let headers = useGetToken();
+    let headers = useGetToken();
     GET_DATA(`/coupon/seller/list`, '', headers).then((res) => {
       if (res) {
         if (res.numberOfElements === 0) {
