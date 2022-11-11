@@ -162,10 +162,14 @@ export default function ProductDetail() {
                     <SmallLineWhite buttonText="브랜드홈 ▶" />
                   </StoreBtnSection>
                 </StoreSection>
-                <div className='flex border-t-2 py-2'>
-                  <StoreBenfitBox onClick={(e) => showBenefitModal(e, product.sellerId)}>
-                    <div className='align-baseline'>
-                      <p className='font-3xl text-black-800 font-semibold text-center'>스토어 혜택을 받아보세요!</p> 
+                <div className="flex border-t-2 py-2">
+                  <StoreBenfitBox
+                    onClick={(e) => showBenefitModal(e, product.sellerId)}
+                  >
+                    <div className="align-baseline">
+                      <p className="font-3xl text-black-800 font-semibold text-center">
+                        스토어 혜택을 받아보세요!
+                      </p>
                     </div>
                   </StoreBenfitBox>
                 </div>
@@ -174,7 +178,7 @@ export default function ProductDetail() {
                     <CouponListModal
                       setModalState={setModalState}
                       // scheduleList={scheduleList}
-                      storeName = {seller}
+                      storeName={seller}
                     />
                   )}
                 </div>
@@ -188,7 +192,12 @@ export default function ProductDetail() {
                         min: minCount,
                         max: maxCount,
                       }}
-                      css={{ width: '100%', height:'40px', fontSize:'20px', border:'0px'}}
+                      css={{
+                        width: '100%',
+                        height: '40px',
+                        fontSize: '20px',
+                        border: '0px',
+                      }}
                     />
                   </ProductCountSection>
                   <TotalInputSection>
@@ -274,7 +283,6 @@ const ProductDetailTop = styled.div`
   flex-wrap: nowrap;
   flex: 1 1 auto;
   margin: 20px;
-
 `;
 
 const ProductPrice = styled.span`

@@ -4,13 +4,17 @@ import { LinePink } from '@components/input/Button';
 import * as Color from '@utils/constants/themeColor';
 import { POST } from '@apis/defaultApi';
 
-export default function CouponListModal({ setModalState, couponList, storeName }) {
+export default function CouponListModal({
+  setModalState,
+  couponList,
+  storeName,
+}) {
   const [coupons, setCoupons] = useState(couponList);
   const getCoupon = (e) => {
     e.preventDefault();
 
     const userIdList = [2];
-    POST("/assign", { couponId : 1, userIdList}).then((res) => {
+    POST('/assign', { couponId: 1, userIdList }).then((res) => {
       if (res && res.success) {
         setModalState(false);
       }
@@ -20,18 +24,18 @@ export default function CouponListModal({ setModalState, couponList, storeName }
   };
   const couponsDummy = [
     {
-      id : 1,
-      name : '두벚냊 쿠폰',
-      discountValue : 10,
-      detail : '10%쿠포을 받으세요'
-    }, 
-    {
-      id : 2,
-      name : '첫번째 쿠폰',
-      discountValue : 10,
-      detail : '10%쿠포을 받으세요'
+      id: 1,
+      name: '두벚냊 쿠폰',
+      discountValue: 10,
+      detail: '10%쿠포을 받으세요',
     },
-  ]
+    {
+      id: 2,
+      name: '첫번째 쿠폰',
+      discountValue: 10,
+      detail: '10%쿠포을 받으세요',
+    },
+  ];
 
   const modalRef = useRef();
 
@@ -51,27 +55,22 @@ export default function CouponListModal({ setModalState, couponList, storeName }
         </TopSection>
         <DetailSection>
           <ModalTableSection>
-            {couponsDummy && couponsDummy.map((coupons) =>{
+            {couponsDummy &&
+              couponsDummy.map((coupons) => {
                 return (
-                <div className='px-2 text-left border-2 rounded-md mx-2 my-2 h-16'>
-                  <div className='t'>
-                    졸려죽겟다... {coupons.name}
+                  <div className="px-2 text-left border-2 rounded-md mx-2 my-2 h-16">
+                    <div className="t">졸려죽겟다... {coupons.name}</div>
+                    <div>{coupons.detail}</div>
                   </div>
-                  <div>
-                    {coupons.detail}
-                  </div>
-
-                </div>
                   // <CouponDetail coupon={coupon}></CouponDetail>
                 );
-              }
-            )}
+              })}
           </ModalTableSection>
         </DetailSection>
         <ButtonWrapper>
           <ButtonSection>
-            <div className='text-white font-bold text-center'>
-              <button onClickFunc={getCoupon}>쿠폰 발급받기</button>  
+            <div className="text-white font-bold text-center">
+              <button onClickFunc={getCoupon}>쿠폰 발급받기</button>
             </div>
             {/* <LinePink buttonText="확인" onClickFunc={closeModal} /> */}
           </ButtonSection>
@@ -130,10 +129,10 @@ const ButtonWrapper = styled.div`
   padding: 0;
   bottom: 0;
   z-index: 1;
-`
+`;
 
 const ButtonSection = styled.div`
   background-color: ${Color.MainBlue};
   border-radius: 0 0 20px 20px;
   padding: 20px 0;
-`
+`;
