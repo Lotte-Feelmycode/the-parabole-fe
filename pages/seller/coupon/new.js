@@ -6,21 +6,39 @@ import { useEffect, useState } from 'react';
 import useInput from '@hooks/useInput';
 import SellerLayout from '@components/seller/SellerLayout';
 import { useGetToken } from '@hooks/useGetToken';
+import { useCallback } from 'react';
 
 export default function CouponCreate() {
-  // TODO:
-  // setUserId(현재로그인되어있는userId-세션,쿠키 등에서 얻어올 것임);
-  const uidFromStorage = 4;
-  const [role, setRole] = useState();
-  const [sellerId, setSellerId] = useState();
-
   const router = useRouter();
   const [name, onChangeName] = useInput('');
-  const [userId, onChangeUserId] = useInput(uidFromStorage);
   const [type, onChangeType] = useInput(1);
   const [discountValue, onChangeDiscountValue] = useInput();
   const [validAt, onChangeValidAt] = useInput(Date);
   const [expiresAt, onChangeExpiresAt] = useInput(Date);
+
+  function validateValidDate(initialValue = null) {
+    const [value, setValue] = useState(initialValue);
+    const handler = useCallback((e) => {
+      if (expiresAt !== null && e < expiresAt) {
+        setValue(e.target.value);
+      } else {
+        alert('쿠폰 유효 시작일은 만료일 이전이어야 합니다.');
+      }
+    }, []);
+    return [value, handler, setValue];
+  }
+
+  function validateExpireDate(initialValue = null) {
+    const [value, setValue] = useState(initialValue);
+    const handler = useCallback((e) => {
+      if (validAt !== null && e > validAt) {
+        setValue(e.target.value);
+      } else {
+        alert('쿠폰 만료일은 유효 시작일 이후이어야 합니다.');
+      }
+    }, []);
+    return [value, handler, setValue];
+  }
 
   const [detail, onChangeDetail] = useInput('');
   const [cnt, onChangeCnt] = useInput();
@@ -101,17 +119,15 @@ export default function CouponCreate() {
                   required
                 />
               </div>
-              <form>
-                <label for="type">쿠폰 유형 </label>
-                <select
-                  className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
-                  name="type"
-                  id="cars"
-                >
-                  <option value="RATE">할인율</option>
-                  <option value="AMOUNT">할인 금액</option>
-                </select>
-              </form>
+              <label for="type">쿠폰 유형 </label>
+              <select
+                className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                name="type"
+                id="cars"
+              >
+                <option value="RATE">할인율</option>
+                <option value="AMOUNT">할인 금액</option>
+              </select>
               <div>
                 <label
                   for="discountValue"
