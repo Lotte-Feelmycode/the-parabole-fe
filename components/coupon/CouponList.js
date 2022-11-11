@@ -34,7 +34,7 @@ function CouponList() {
   }, []);
 
   useEffect(() => {
-    GET_DATA(`/coupon/list`, '', headers)
+    GET_DATA(`/coupon/seller/list`, '', headers)
       .then((res) => {
         if (res) {
           if (res.numberOfElements === 0) {

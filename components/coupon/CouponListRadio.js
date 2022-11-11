@@ -3,6 +3,7 @@ import * as btn from '@components/input/Button';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import { useGetToken } from '@hooks/useGetToken';
 
 function CouponListRadio({ sellerId, setCouponParentId }) {
   const router = useRouter();
@@ -12,7 +13,8 @@ function CouponListRadio({ sellerId, setCouponParentId }) {
   const [radioValue, setRadioValue] = useState(1);
 
   useEffect(() => {
-    GET_DATA(`/coupon/seller/list`, { sellerId }).then((res) => {
+    let headers = useGetToken();
+    GET_DATA(`/coupon/seller/list`, '', headers).then((res) => {
       if (res) {
         if (res.numberOfElements === 0) {
           alert('판매자가 등록한 쿠폰이 없습니다.');

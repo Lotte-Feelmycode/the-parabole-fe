@@ -2,6 +2,7 @@ import SearchBar from '@components/input/SearchBar';
 import { ICON_CART_BLACK } from '@utils/constants/icons';
 import { LINKS } from '@utils/constants/links';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 const Links = {
@@ -13,11 +14,11 @@ const Links = {
   LINK_SIGNIN: '/signin',
   LINK_SINGUP: '/signup',
   LINK_MYPAGE: '/user/mypage',
-  LINK_SIGNOUT: '/user/signout',
 };
 
 export default function CommerceHeader() {
   const [token, setToken] = useState();
+  const router = useRouter();
 
   useEffect(() => {
     setToken(localStorage.getItem('token'));

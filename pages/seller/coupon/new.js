@@ -18,13 +18,10 @@ export default function CouponCreate() {
   const [name, onChangeName] = useInput('');
   const [userId, onChangeUserId] = useInput(uidFromStorage);
   const [type, onChangeType] = useInput(1);
-  const [discountValue, onChangeDiscountValue] = useInput(0);
+  const [discountValue, onChangeDiscountValue] = useInput();
   const [validAt, onChangeValidAt] = useInput(Date);
-  const [validTime, onChangeValidTime] = useInput();
   const [expiresAt, onChangeExpiresAt] = useInput(Date);
-  const [expireTime, onChangeExpireTime] = useInput();
-  const [maxDiscountAmount, onChangeMaxDiscountAmount] = useInput(0);
-  const [minPaymentAmount, onChangeMinPaymentAmount] = useInput(0);
+
   const [detail, onChangeDetail] = useInput('');
   const [cnt, onChangeCnt] = useInput();
 
@@ -61,13 +58,12 @@ export default function CouponCreate() {
 
     const reqBody = {
       name: name,
-      userId: userId,
       type: type,
       discountValue: discountValue,
       validAt: validAt + 'T00:00:00',
       expiresAt: expiresAt + 'T23:59:59',
-      maxDiscountAmount: maxDiscountAmount,
-      minPaymentAmount: minPaymentAmount,
+      // maxDiscountAmount: maxDiscountAmount,
+      // minPaymentAmount: minPaymentAmount,
       detail: detail,
       cnt: cnt,
     };
@@ -78,9 +74,7 @@ export default function CouponCreate() {
 
         // TODO: alert메시지 수정, 등록 완료 후에 redirection 여부도 추후 의견 통일하여 수정
         alert(
-          res.type +
-            " 유형의 '" +
-            res.couponName +
+          res.couponName +
             "' 쿠폰이 \n" +
             res.cnt +
             ' 장 발급 완료 되었습니다.',
@@ -177,38 +171,6 @@ export default function CouponCreate() {
                     name="expiresAt"
                     placeHolder="만료일을 입력하세요."
                     onChange={onChangeExpiresAt}
-                    required
-                  />
-                </div>
-                <div>
-                  <label
-                    for="maxDiscountAmount"
-                    className="inline-block text-gray-800 text-sm sm:text-base mb-2"
-                  >
-                    최대 할인 금액
-                  </label>
-                  <input
-                    className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
-                    type="number"
-                    name="maxDiscountAmount"
-                    placeHolder="최대 할인 금액을 입력하세요."
-                    onChange={onChangeMaxDiscountAmount}
-                    required
-                  />
-                </div>
-                <div>
-                  <label
-                    for="minPaymentAmount"
-                    className="inline-block text-gray-800 text-sm sm:text-base mb-2"
-                  >
-                    최소 결제 금액
-                  </label>
-                  <input
-                    className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
-                    type="number"
-                    name="minPaymentAmount"
-                    placeHolder="최소 결제 금액을 입력하세요."
-                    onChange={onChangeMinPaymentAmount}
                     required
                   />
                 </div>
