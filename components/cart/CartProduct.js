@@ -7,7 +7,7 @@ import { SmallWhite } from '@components/input/Button';
 import Input from '@components/input/Input';
 
 export default function CartProduct({
-  userId,
+  headers,
   cartItemId,
   product,
   count,
@@ -27,12 +27,15 @@ export default function CartProduct({
   useEffect(() => {
     countCheck(optionCount);
     if (optionCount != optionCountHistory) {
-      PATCH(`/cart/update/cnt`, {
-        cartItemId: cartItemId,
-        userId: userId,
-        productId: product.productId,
-        cnt: optionCount,
-      }).then((res) => {
+      PATCH(
+        `/cart/update/cnt`,
+        {
+          cartItemId: cartItemId,
+          productId: product.productId,
+          cnt: optionCount,
+        },
+        headers,
+      ).then((res) => {
         if (res) {
           if (res.success) {
             setOptionCountHistory(optionCount);
