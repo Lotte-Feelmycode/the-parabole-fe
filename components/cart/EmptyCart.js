@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { ThemeWhite } from '@utils/constants/themeColor';
 import { Blue } from '@components/input/Button';
 import { useRouter } from 'next/router';
+import { LINKS } from '@utils/constants/links';
 
 export default function EmptyCart() {
   const router = useRouter();
@@ -39,7 +40,7 @@ export default function EmptyCart() {
         <Blue
           buttonText={'상품담으러가기'}
           onClickFunc={() => {
-            router.push('/');
+            router.push(LINKS.MAIN);
           }}
         />
       </EmptyButton>

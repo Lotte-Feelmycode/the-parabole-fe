@@ -35,7 +35,7 @@ export default function NotFoundPage() {
             <Blue
               buttonText="Go home"
               onClickFunc={() => {
-                router.push('/');
+                router.push(LINKS.MAIN);
               }}
             />
           </div>
