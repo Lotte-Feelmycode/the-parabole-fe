@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { useGetToken } from '@hooks/useGetToken';
 
-function CouponListRadio({ sellerId, setCouponParentId }) {
+function CouponListRadio({ sellerId, setCouponParentId, headers }) {
   const router = useRouter();
   const [couponList, setCouponList] = useState([]);
   const [totalElementCnt, setTotalElementCnt] = useState(0);
@@ -13,7 +13,7 @@ function CouponListRadio({ sellerId, setCouponParentId }) {
   const [radioValue, setRadioValue] = useState(1);
 
   useEffect(() => {
-    let headers = useGetToken();
+    // let headers = useGetToken();
     GET_DATA(`/coupon/seller/list`, '', headers).then((res) => {
       if (res) {
         if (res.numberOfElements === 0) {
