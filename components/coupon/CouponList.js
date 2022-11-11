@@ -13,10 +13,10 @@ function Coupon({ coupon }) {
       >
         {coupon.name}
       </th>
+      <td className="py-4 px-6">{coupon.type === 1 ? '할인금액' : '할인율'}</td>
       <td className="py-4 px-6">
-        {coupon.type === 1 ? '할인액 (원)' : '할인율 (%)'}
+        {coupon.discountValue} {coupon.type === 1 ? '원' : '%'}
       </td>
-      <td className="py-4 px-6">{coupon.discountValue}</td>
 
       <td className="py-4 px-6">{coupon.detail}</td>
       <td className="py-4 px-6">{coupon.cnt}</td>

@@ -7,14 +7,20 @@ import useInput from '@hooks/useInput';
 import SellerLayout from '@components/seller/SellerLayout';
 import { useGetToken } from '@hooks/useGetToken';
 import { useCallback } from 'react';
+import Radio from '@components/input/Radio';
+import { COUPON_TYPE } from '@utils/constants/types';
 
 export default function CouponCreate() {
   const router = useRouter();
   const [name, onChangeName] = useInput('');
-  const [type, onChangeType] = useInput(1);
   const [discountValue, onChangeDiscountValue] = useInput();
   const [validAt, onChangeValidAt] = useInput(Date);
   const [expiresAt, onChangeExpiresAt] = useInput(Date);
+  const [coupontype, setCoupontype] = useState();
+
+  const typeHandler = (e) => {
+    setCoupontype(e.target.value);
+  };
 
   function validateValidDate(initialValue = null) {
     const [value, setValue] = useState(initialValue);
@@ -63,21 +69,16 @@ export default function CouponCreate() {
 
     const reqBody = {
       name: name,
-      type: type,
+      type: coupontype,
       discountValue: discountValue,
       validAt: validAt + 'T00:00:00',
       expiresAt: expiresAt + 'T23:59:59',
-      // maxDiscountAmount: maxDiscountAmount,
-      // minPaymentAmount: minPaymentAmount,
       detail: detail,
       cnt: cnt,
     };
 
-    POST_DATA(`/coupon/create`, reqBody, headers)
+    POST_DATA(`/coupon/new`, reqBody, headers)
       .then((res) => {
-        console.log(res);
-
-        // TODO: alert메시지 수정, 등록 완료 후에 redirection 여부도 추후 의견 통일하여 수정
         alert(
           res.couponName +
             "' 쿠폰이 \n" +
@@ -120,14 +121,15 @@ export default function CouponCreate() {
                 />
               </div>
               <label for="type">쿠폰 유형 </label>
-              <select
-                className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
-                name="type"
-                id="cars"
-              >
-                <option value="RATE">할인율</option>
-                <option value="AMOUNT">할인 금액</option>
-              </select>
+
+              <div>
+                <Radio
+                  id="couponType"
+                  items={COUPON_TYPE}
+                  onChange={typeHandler}
+                  value={coupontype}
+                />
+              </div>
               <div>
                 <label
                   for="discountValue"

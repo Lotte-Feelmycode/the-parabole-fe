@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { GET, GET_DATA, POST } from '@apis/defaultApi';
+import { GET, GET_DATA } from '@apis/defaultApi';
 import { API_BASE_URL } from '@apis/api-config';
 import useInput from '@hooks/useInput';
 import useCheck from '@hooks/useCheck';
