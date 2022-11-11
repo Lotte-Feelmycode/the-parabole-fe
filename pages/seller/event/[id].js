@@ -75,6 +75,7 @@ export default function EventDetail() {
           </span>
           <br />
           <br />
+
           <Heading title="이벤트 일시" type="h3" />
           <div className="mb-8">
             <span>
