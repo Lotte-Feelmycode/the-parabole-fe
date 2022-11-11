@@ -2,9 +2,7 @@ import { createContext, useEffect, useReducer, useState } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { POST, GET } from '@apis/defaultApi';
-import { ThemeGray4 } from '@utils/constants/themeColor';
-import { Blue } from '@components/input/Button';
-import { isEmpty, numberToMonetary } from '@utils/functions';
+import { isEmpty } from '@utils/functions';
 import { useGetToken } from '@hooks/useGetToken';
 import { ThemeGray3 } from '@utils/constants/themeColor';
 import { ORDER_PAY } from '@utils/constants/types';
@@ -14,6 +12,7 @@ import PayList from '@components/order/PayList';
 import OrderSidebar from '@components/order/OrderSidebar';
 import OrdererSection from '@components/order/OrdererSection';
 import OrderDetail from '@components/order/OrderDetail';
+import { LINKS } from '@utils/constants/links';
 
 export const CouponContext = createContext([]);
 export const CouponDispatchContext = createContext(null);
@@ -21,8 +20,6 @@ export const CouponDispatchContext = createContext(null);
 export default function OrderAndPayment() {
   const router = useRouter();
 
-  const getUserId = 3;
-  const [userId, setUserId] = useState(getUserId);
   const [orderId, setOrderId] = useState(0);
   const [totalOrderInfoCount, setTotalOrderInfoCount] = useState(0);
   const [orderBySellerDtoList, setOrderBySellerDtoList] = useState([]);
@@ -72,7 +69,6 @@ export default function OrderAndPayment() {
             orderInfoIdList.push(coupon);
           }
         });
-        console.log('couponReducer-SET-AFTER', action, state);
         return orderInfoIdList;
       default:
         throw new Error('invalid action type');
@@ -83,18 +79,19 @@ export default function OrderAndPayment() {
   // 결제 금액 변수
   const [productTotalPrice, setProductTotalPrice] = useState(0);
 
-  const [headers, setHeaders] = useState();
+  const [headers, setHeaders] = useState('');
 
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof window !== undefined) {
       if (localStorage.getItem('userId') === null) {
         alert('로그인 해주세요.');
-        router.push('/signin');
+        router.push(LINKS.SIGNIN);
       }
     }
-    setHeaders(useGetToken());
+    const getToken = useGetToken();
+    setHeaders(getToken);
 
-    GET(`/orderinfo`, { userId }).then((res) => {
+    GET(`/orderinfo`, null, getToken).then((res) => {
       console.log(res);
       if (res && res.data) {
         setOrderId(res.data.orderId);
@@ -109,25 +106,30 @@ export default function OrderAndPayment() {
         });
       } else {
         alert('주문 정보가 없습니다.');
-        router.push('/');
+        router.push(LINKS.MAIN);
       }
     });
-  }, []);
 
-  useEffect(() => {
-    GET(`/user/` + userId).then((res) => {
+    GET(`/user`, '', getToken).then((res) => {
       if (res && res.data) {
         setUserName(res.data.username);
         setUserPhone(res.data.phone);
-        setUserEmail(res.data.email);
       }
     });
-  }, [userId]);
+  }, []);
 
   function goToPayment() {
     if (payState === -1) {
       alert('결제수단을 선택해서 결제를 진행해주세요');
       return;
+    }
+
+    if (isEmpty(getUserName)) {
+      alert('주문자 이름을 입력해주세요');
+    }
+
+    if (isEmpty(getUserPhone)) {
+      alert('주문자 번호를 입력해주세요');
     }
 
     if (isEmpty(receiverName)) {
@@ -171,21 +173,24 @@ export default function OrderAndPayment() {
       }
     });
 
-    POST(`/order`, {
-      userId,
-      orderId,
-      orderInfoRequestList: orderInfoRequestList,
-      receiverName: receiverName,
-      receiverPhone: receiverPhone,
-      addressSimple: receiverSimpleAddress,
-      addressDetail: receiverDetailAddress,
-      deliveryComment: receiverMemo,
-      orderPayState: payStateString,
-    }).then((res) => {
+    POST(
+      `/order`,
+      {
+        orderId,
+        orderInfoRequestList: orderInfoRequestList,
+        receiverName: receiverName,
+        receiverPhone: receiverPhone,
+        addressSimple: receiverSimpleAddress,
+        addressDetail: receiverDetailAddress,
+        deliveryComment: receiverMemo,
+        orderPayState: payStateString,
+      },
+      headers,
+    ).then((res) => {
       console.log(res);
       if (res) {
         if (res.success) {
-          router.push('/user/mypage');
+          router.push(LINKS.MYPAGE);
         } else {
           alert('주문에 실패했습니다. 다시시도해주세요');
         }
@@ -202,15 +207,16 @@ export default function OrderAndPayment() {
   }
 
   function getProductTotalPrice({ orderBySellerDtoList }) {
-    setProductTotalPrice(0);
-    orderBySellerDtoList.forEach((dto) => {
-      const orderInfoDtos = dto.orderInfoResponseDtos;
-      orderInfoDtos.forEach((dto) => {
-        setProductTotalPrice(
-          productTotalPrice + dto.productPrice * dto.productCnt,
-        );
+    let totalPrice = 0;
+    orderBySellerDtoList.forEach((orderBySellerDto) => {
+      const orderInfoResponseDtos = orderBySellerDto.orderInfoResponseDtos;
+      orderInfoResponseDtos.forEach((orderInfoResponseDto) => {
+        totalPrice =
+          totalPrice +
+          orderInfoResponseDto.productPrice * orderInfoResponseDto.productCnt;
       });
     });
+    setProductTotalPrice(totalPrice);
   }
 
   return (
