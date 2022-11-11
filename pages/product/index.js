@@ -4,6 +4,7 @@ import SiteHead from '@components/common/SiteHead.js';
 import { useRouter } from 'next/router';
 import ProductList from '@components/product/ProductList';
 import CustomSwiper from '@components/common/CustomSwiper';
+import SearchBar from '@components/input/SearchBar';
 
 export default function Products({}) {
   const router = useRouter();
@@ -18,16 +19,28 @@ export default function Products({}) {
     <>
       <CommerceLayout>
         <SiteHead title="Home" />
-        <div className="container py-12">
-          <CustomSwiper />
-          <Row>
-            <ProductList {...productListProps} />
-          </Row>
-        </div>
+        <SearchBarSection className="search-bar-section">
+          <SearchBar
+            placeholder={inputSearchValue || '검색어를 입력해주세요'}
+          />
+        </SearchBarSection>
+        <CustomSwiper />
+        <Row>
+          <ProductList {...productListProps} />
+        </Row>
       </CommerceLayout>
     </>
   );
 }
+
+const SearchBarSection = styled.div`
+  @media (min-width: 1024px) {
+    display: none;
+  }
+  @media (max-width: 1024px) {
+    padding: 24px 5px;
+  }
+`;
 
 const Row = styled.div`
   display: flex;

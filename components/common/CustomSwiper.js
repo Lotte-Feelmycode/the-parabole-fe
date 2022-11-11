@@ -40,11 +40,11 @@ export default function CustomSwiper() {
 }
 
 const SwiperSection = styled.div`
-  @media (min-width: 768px) {
+  @media (min-width: 767px) {
     display: block;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     display: none;
   }
 `;
