@@ -184,7 +184,7 @@ export default function Signin() {
             <div className="flex justify-center items-center bg-gray-100 p-4">
               <p className="text-gray-500 text-sm text-center">
                 <a
-                  href={LINKS.SINGUP}
+                  href={LINKS.SIGNUP}
                   className="text-indigo-500 hover:text-indigo-600 active:text-indigo-700 transition duration-100"
                 >
                   회원가입하기

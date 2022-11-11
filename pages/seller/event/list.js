@@ -10,7 +10,7 @@ import { getDateTime, getState } from '@utils/functions';
 import * as btn from '@components/input/Button';
 import { EVENT_TYPE, EVENT_STATUS } from '@utils/constants/types';
 import { ICON_SEARCH_MAGNIFY } from '@utils/constants/icons';
-import Selectbox from '@components/input/Selectbox';
+import Selectbox from '@components/input/SelectBox';
 import { useGetToken } from '@hooks/useGetToken';
 
 export default function EventList() {
