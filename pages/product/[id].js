@@ -10,6 +10,8 @@ import { SmallLineWhite, LineBlue, Blue } from '@components/input/Button';
 import Input from '@components/input/Input';
 import { ICON_SHOP } from '@utils/constants/icons';
 import CouponListModal from '@components/coupon/CouponListModal';
+import { useGetToken } from '@hooks/useGetToken';
+
 export default function ProductDetail() {
   // TODO : userID
   const userId = 3;
@@ -21,9 +23,22 @@ export default function ProductDetail() {
   const [seller, setSeller] = useState('');
   const [count, setCount] = useState(1);
   const [modalState, setModalState] = useState(false);
+  const [coupons, setCoupons] = useState([]);
 
   const [maxCount, setMaxCount] = useState(100);
   const minCount = 0;
+
+  const [headers, setHeaders] = useState();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push('/signin');
+      }
+    }
+    setHeaders(useGetToken());
+  }, []);
 
   useEffect(() => {
     const productId = router.query.id;
@@ -50,9 +65,10 @@ export default function ProductDetail() {
     e.preventDefault();
 
     setModalState(true);
-    GET_DATA(`/seller/list`, { sellerId: 1 }).then((res) => {
+    // seller header없이 셀러아이디로 받는 api 필요
+    GET_DATA(`/coupon/seller/list`, '', headers).then((res) => {
       if (res) {
-        console.log(res);
+        setCoupons(res.content);
       }
     });
   }
@@ -167,7 +183,7 @@ export default function ProductDetail() {
                     onClick={(e) => showBenefitModal(e, product.sellerId)}
                   >
                     <div className="align-baseline">
-                      <p className="font-3xl text-black-800 font-semibold text-center">
+                      <p className="align-middle font-3xl text-black-800 font-semibold text-center">
                         스토어 혜택을 받아보세요!
                       </p>
                     </div>
@@ -177,7 +193,7 @@ export default function ProductDetail() {
                   {modalState && (
                     <CouponListModal
                       setModalState={setModalState}
-                      // scheduleList={scheduleList}
+                      couponList={coupons}
                       storeName={seller}
                     />
                   )}
@@ -252,6 +268,7 @@ const ProductName = styled.span`
   font-size: 36px;
   font-weight: 500;
   margin-right: 36px;
+  text-overflow: ellipsis;
 `;
 
 const ProductTopSection = styled.div`

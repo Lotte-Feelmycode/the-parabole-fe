@@ -1,41 +1,37 @@
 import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
-import { LinePink } from '@components/input/Button';
 import * as Color from '@utils/constants/themeColor';
 import { POST } from '@apis/defaultApi';
+import { numberToMonetary, getTodayDateShort } from '@utils/functions';
 
 export default function CouponListModal({
   setModalState,
   couponList,
   storeName,
 }) {
-  const [coupons, setCoupons] = useState(couponList);
+  const [selectCoupon, setSelectCoupon] = useState();
+
+  const setCoupon = (e, couponId) => {
+    e.preventDefault();
+    setSelectCoupon(couponId);
+  };
+
   const getCoupon = (e) => {
     e.preventDefault();
 
-    const userIdList = [2];
-    POST('/assign', { couponId: 1, userIdList }).then((res) => {
+    let userId = localStorage.getItem('userId');
+    const userIds = [userId];
+    POST('/coupon/assign', {
+      couponId: selectCoupon,
+      userIdList: userIds,
+    }).then((res) => {
+      console.log(res);
       if (res && res.success) {
+        alert(storeName + '의 상품 주문시 사용가능한 쿠폰을 다운받았습니다');
         setModalState(false);
       }
     });
-
-    setModalState(false);
   };
-  const couponsDummy = [
-    {
-      id: 1,
-      name: '두벚냊 쿠폰',
-      discountValue: 10,
-      detail: '10%쿠포을 받으세요',
-    },
-    {
-      id: 2,
-      name: '첫번째 쿠폰',
-      discountValue: 10,
-      detail: '10%쿠포을 받으세요',
-    },
-  ];
 
   const modalRef = useRef();
 
@@ -55,14 +51,24 @@ export default function CouponListModal({
         </TopSection>
         <DetailSection>
           <ModalTableSection>
-            {couponsDummy &&
-              couponsDummy.map((coupons) => {
+            {couponList &&
+              couponList.map((coupon) => {
                 return (
-                  <div className="px-2 text-left border-2 rounded-md mx-2 my-2 h-16">
-                    <div className="t">졸려죽겟다... {coupons.name}</div>
-                    <div>{coupons.detail}</div>
+                  <div className="text-left border-2 rounded-md mx-2 my-2 hover:bg-slate-50">
+                    <button onClick={(e) => setCoupon(e, coupon.couponId)}>
+                      <div className="flex flex-col p-4 text-left">
+                        <div className="font-bold text-xl text-black-600">
+                          {coupon.name}
+                        </div>
+                        <div>{coupon.detail}</div>
+                        <div>
+                          {numberToMonetary(coupon.minPaymentAmount)}원 이상
+                          사용가능
+                        </div>
+                        <div>( ~ {getTodayDateShort(coupon.expiresAt)})</div>
+                      </div>
+                    </button>
                   </div>
-                  // <CouponDetail coupon={coupon}></CouponDetail>
                 );
               })}
           </ModalTableSection>
@@ -70,9 +76,8 @@ export default function CouponListModal({
         <ButtonWrapper>
           <ButtonSection>
             <div className="text-white font-bold text-center">
-              <button onClickFunc={getCoupon}>쿠폰 발급받기</button>
+              <button onClick={getCoupon}>쿠폰 발급받기</button>
             </div>
-            {/* <LinePink buttonText="확인" onClickFunc={closeModal} /> */}
           </ButtonSection>
         </ButtonWrapper>
       </ModalContainer>
@@ -118,6 +123,7 @@ const TopSection = styled.div`
 
 const DetailSection = styled.div`
   text-align: center;
+  height: 410px;
 `;
 
 const ModalTableSection = styled.div`
