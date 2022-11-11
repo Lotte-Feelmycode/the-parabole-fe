@@ -28,7 +28,7 @@ export default function CouponAssign() {
   }, []);
 
   const [couponParentId, setCouponParentId] = useState();
-  const [userParentList, setUserParentList] = useState();
+  const [userParentList, setUserParentList] = useState([]);
 
   function assignCoupon(e) {
     const reqBody = {
@@ -36,6 +36,7 @@ export default function CouponAssign() {
       userIdList: userParentList,
     };
 
+    console.log(reqBody.userIdList);
     POST(`/coupon/assign`, reqBody)
       .then((res) => {
         if (res.success) {
@@ -63,7 +64,7 @@ export default function CouponAssign() {
               // {...sellerProps}
               // sellerId={sellerId}
               setCouponParentId={setCouponParentId}
-              headers={headers}
+              // headers={headers}
             ></CouponListRadio>
           </Split>
           <Split>
