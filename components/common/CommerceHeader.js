@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import {
@@ -9,7 +10,6 @@ import {
 import { LINKS } from '@utils/constants/links';
 import SearchBar from '@components/input/SearchBar';
 import CommerceHeaderMenuModal from '@components/common/CommerceHeaderMenuModal';
-import { useRouter } from 'next/router';
 
 export default function CommerceHeader() {
   const [token, setToken] = useState();
