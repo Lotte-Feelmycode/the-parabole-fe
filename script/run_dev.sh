@@ -10,6 +10,9 @@ ssh ec2-user@3.39.167.221 <<EOF
 		git fetch 
 		git merge origin main
 
+		sudo chmod 755 script
+		sudo chmod 755 script/run_dev.sh
+
 		cp .env ../.env
 
     npm install
