@@ -2,7 +2,9 @@ import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
 import * as Color from '@utils/constants/themeColor';
 import { POST } from '@apis/defaultApi';
-import { numberToMonetary, getTodayDateShort } from '@utils/functions';
+import { numberToMonetary, getTodayDateShort, isEmpty } from '@utils/functions';
+import { useRouter } from 'next/router';
+import { SIGNIN } from '@utils/constants/links';
 
 export default function CouponListModal({
   setModalState,
@@ -10,6 +12,7 @@ export default function CouponListModal({
   storeName,
 }) {
   const [selectCoupon, setSelectCoupon] = useState();
+  const router = useRouter();
 
   const setCoupon = (e, couponId) => {
     e.preventDefault();
@@ -18,19 +21,31 @@ export default function CouponListModal({
 
   const getCoupon = (e) => {
     e.preventDefault();
-
     let userId = localStorage.getItem('userId');
     const userIds = [userId];
-    POST('/coupon/assign', {
-      couponId: selectCoupon,
-      userIdList: userIds,
-    }).then((res) => {
-      console.log(res);
-      if (res && res.success) {
-        alert(storeName + '의 상품 주문시 사용가능한 쿠폰을 다운받았습니다');
-        setModalState(false);
-      }
-    });
+
+
+    if (isEmpty(selectCoupon)) {
+      alert("쿠폰을 선택해주세요.");
+      return;
+    }
+
+    if (isEmpty(userId)) {
+      alert("로그인 해주세요.");
+      return;
+    }
+
+    if (userId && selectCoupon) {
+      POST('/coupon/assign', {
+        couponId: selectCoupon,
+        userIdList: userIds,
+      }).then((res) => {
+        if (res && res.success) {
+          alert(storeName + '의 상품 주문시 사용가능한 쿠폰을 다운받았습니다');
+          setModalState(false);
+        }
+      });
+    }
   };
 
   // 모달 외부 클릭시 끄기 처리
