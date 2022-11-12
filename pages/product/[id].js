@@ -155,7 +155,7 @@ export default function ProductDetail() {
                 />
               </ProductThumbnailImgSection>
               <ProductDetailTop className="product-detail-top">
-                <div className="product-name-title">
+                <div className="product-name-title max-w-2xl overflow-ellipsis">
                   <ProductName>{product.productName}</ProductName>
                 </div>
                 <div className="product-price border-b-2 pb-4">
@@ -181,11 +181,9 @@ export default function ProductDetail() {
                   <StoreBenfitBox
                     onClick={(e) => showBenefitModal(e, product.sellerId)}
                   >
-                    <div className="align-baseline">
-                      <p className="align-middle font-3xl text-black-800 font-semibold text-center">
-                        스토어 혜택을 받아보세요!
-                      </p>
-                    </div>
+                    <p className="py-2.5 align-middle font-3xl text-black-800 font-semibold text-center">
+                      스토어 혜택을 받아보세요!
+                    </p>
                   </StoreBenfitBox>
                 </div>
                 <div>
@@ -266,8 +264,7 @@ const ProductWrap = styled.div`
 const ProductName = styled.span`
   font-size: 36px;
   font-weight: 500;
-  margin-right: 36px;
-  text-overflow: ellipsis;
+  text-overflow: elipsis;
 `;
 
 const ProductTopSection = styled.div`

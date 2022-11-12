@@ -75,7 +75,7 @@ export default function CouponListModal({
             {couponList &&
               couponList.map((coupon) => {
                 return (
-                  <div className="overflow-y-auto text-left border-2 rounded-md mx-2 my-2 hover:bg-slate-50">
+                  <div className="text-left border-2 rounded-md mx-2 my-2 hover:bg-slate-50">
                     <button onClick={(e) => setCoupon(e, coupon.couponId)}>
                       <div className="flex flex-col p-4 text-left">
                         <div className="truncate font-bold text-xl text-black-600">
@@ -149,7 +149,8 @@ const DetailSection = styled.div`
 
 const ModalTableSection = styled.div`
   margin-top: 0;
-  height: 60%;
+  height: 410px;
+  overflow-y: auto;
 `;
 
 const ButtonWrapper = styled.div`
