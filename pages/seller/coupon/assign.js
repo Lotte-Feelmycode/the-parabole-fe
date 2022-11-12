@@ -69,10 +69,10 @@ export default function CouponAssign() {
       return;
     }
 
-    let userIdList = [];
+    let userIdList = new Array();
 
     userParentList.forEach((user) => {
-      userIdList = [...userIdList, user.userId];
+      userIdList.push(user.userId);
     });
 
     const reqBody = {
