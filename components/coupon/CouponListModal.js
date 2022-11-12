@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
-import * as Color from '@utils/constants/themeColor';
+import { MainBlue } from '@utils/constants/themeColor';
 import { POST } from '@apis/defaultApi';
 import { numberToMonetary, getTodayDateShort, isEmpty } from '@utils/functions';
 import { useRouter } from 'next/router';
@@ -175,7 +175,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const ButtonSection = styled.div`
-  background-color: ${Color.MainBlue};
+  background-color: ${MainBlue};
   border-radius: 0 0 20px 20px;
   padding: 20px 0;
 `;
