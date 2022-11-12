@@ -65,8 +65,7 @@ export default function ProductDetail() {
     e.preventDefault();
 
     setModalState(true);
-    // seller header없이 셀러아이디로 받는 api 필요
-    GET_DATA(`/coupon/seller/list`, '', headers).then((res) => {
+    GET_DATA(`/coupon/store`, {sellerId : storeId}).then((res) => {
       if (res) {
         setCoupons(res.content);
       }

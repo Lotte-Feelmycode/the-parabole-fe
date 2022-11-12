@@ -75,13 +75,13 @@ export default function CouponListModal({
             {couponList &&
               couponList.map((coupon) => {
                 return (
-                  <div className="text-left border-2 rounded-md mx-2 my-2 hover:bg-slate-50">
+                  <div className="overflow-y-auto text-left border-2 rounded-md mx-2 my-2 hover:bg-slate-50">
                     <button onClick={(e) => setCoupon(e, coupon.couponId)}>
                       <div className="flex flex-col p-4 text-left">
-                        <div className="font-bold text-xl text-black-600">
+                        <div className="truncate font-bold text-xl text-black-600">
                           {coupon.name}
                         </div>
-                        <div>{coupon.detail}</div>
+                        <div className='truncate'>{coupon.detail}</div>
                         <div>
                           {numberToMonetary(coupon.minPaymentAmount)}원 이상
                           사용가능
