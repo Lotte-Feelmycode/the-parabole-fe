@@ -7,12 +7,22 @@ import SellerLayout from '@components/seller/SellerLayout';
 import { POST_DATA } from '@apis/defaultApi';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import { useGetToken } from '@hooks/useGetToken';
 
-export default function ProductDetail() {
+export default function SellerProductNew() {
   const router = useRouter();
 
-  // TODO: userId를 가져올 때 저장되어있는 걸(cookie, localstorage)로 가져오게 변경
-  const userId = 1;
+  const [headers, setHeaders] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push(LINKS.SIGNIN);
+      }
+    }
+    setHeaders(useGetToken());
+  }, []);
 
   const [name, setName] = useState();
   const [category, setCategory] = useState();
@@ -68,7 +78,6 @@ export default function ProductDetail() {
 
   function setProduct() {
     const params = {
-      userId: userId,
       productName: name,
       productCategory: category,
       productRemains: remain,
@@ -76,7 +85,7 @@ export default function ProductDetail() {
       productThumbnailImg: '',
     };
 
-    POST_DATA('/product', params).then((res) => {
+    POST_DATA('/product', params, headers).then((res) => {
       setProductId(res);
     });
   }

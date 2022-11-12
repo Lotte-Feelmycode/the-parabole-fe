@@ -9,12 +9,10 @@ export default function OrderSidebar({ productTotalPrice, goToPayment }) {
   const couponSelectStates = useContext(CouponContext);
   let discountCouponPrice = 0;
 
-  console.log('OrderSidebar', couponSelectStates);
   couponSelectStates.forEach((coupon) => {
     if (coupon && coupon.discountPrice && coupon.discountPrice > 0) {
       discountCouponPrice = discountCouponPrice + coupon.discountPrice;
     }
-    console.log('OrderSidebar-forEach', coupon, discountCouponPrice);
   });
 
   function ShowDiscountPrice({ discountCouponPrice }) {

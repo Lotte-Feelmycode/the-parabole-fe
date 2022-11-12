@@ -1,18 +1,17 @@
+import { useEffect, useState } from 'react';
 import { GET_DATA } from '@apis/defaultApi';
 import Order from '@components/order/SellerOrder';
-import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
 
-export default function OrderList({ sellerId }) {
+export default function SellerOrderList({ headers }) {
   const [orderList, setOrderList] = useState([]);
 
   useEffect(() => {
-    GET_DATA(`/orderinfo/seller`, { userId: sellerId }).then((res) => {
+    GET_DATA(`/orderinfo/seller`, null, headers).then((res) => {
       if (res) {
         setOrderList(res);
       }
     });
-  }, [sellerId]);
+  }, []);
 
   return (
     <>

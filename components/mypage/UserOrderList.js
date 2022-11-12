@@ -1,18 +1,18 @@
+import { useEffect, useState } from 'react';
+import styled from '@emotion/styled';
 import { GET_DATA } from '@apis/defaultApi';
 import UserOrder from '@components/mypage/UserOrder';
-import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
 
 export default function OrderList({ headers }) {
   const [orderList, setOrderList] = useState([]);
 
   useEffect(() => {
-    GET_DATA(`/order`, '', headers).then((res) => {
+    GET_DATA(`/order`, null, headers).then((res) => {
       if (res) {
         setOrderList(res);
       }
     });
-  }, []);
+  }, [headers]);
 
   return (
     <>
