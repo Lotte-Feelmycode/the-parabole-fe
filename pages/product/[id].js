@@ -34,7 +34,7 @@ export default function ProductDetail() {
     if (typeof window !== 'undefined' && typeof window !== undefined) {
       if (localStorage.getItem('userId') === null) {
         alert('로그인 해주세요.');
-        router.push('/signin');
+        router.push(LINKS.SIGNIN);
       }
     }
     setHeaders(useGetToken());
