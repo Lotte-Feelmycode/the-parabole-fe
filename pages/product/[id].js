@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
+
 import { GET_DATA, POST } from '@apis/defaultApi';
 import { numberToMonetary } from '@utils/functions';
-import { ThemeGray4 } from '@utils/constants/themeColor';
+import { ThemeBlueWhite, ThemeGray4 } from '@utils/constants/themeColor';
 import { LINKS } from '@utils/constants/links';
 import { useGetToken } from '@hooks/useGetToken';
 import CommerceLayout from '@components/common/CommerceLayout';
@@ -12,7 +13,6 @@ import { SmallLineWhite, LineBlue, Blue } from '@components/input/Button';
 import Input from '@components/input/Input';
 import { ICON_SHOP } from '@utils/constants/icons';
 import CouponListModal from '@components/coupon/CouponListModal';
-import { useGetToken } from '@hooks/useGetToken';
 
 export default function ProductDetail() {
   const router = useRouter();
@@ -344,7 +344,7 @@ const StoreBtnSection = styled.div`
 `;
 
 const StoreBenfitBox = styled.div`
-  background-color: ${color.ThemeBlueWhite};
+  background-color: ${ThemeBlueWhite};
   border-radius: 0.375rem;
   width: 100%;
   height: 3rem;
