@@ -22,7 +22,7 @@ import axios from 'axios';
 export default function Event() {
   const router = useRouter();
 
-  const [headers, setHeaders] = useState();
+  const [token, setToken] = useState();
 
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof window !== undefined) {
@@ -34,7 +34,7 @@ export default function Event() {
         router.push('/');
       }
     }
-    setHeaders(useGetToken());
+    setToken('useGetToken ' + localStorage.getItem('token'));
   }, []);
 
   const [productList, setProductList] = useState([]);
@@ -657,7 +657,10 @@ export default function Event() {
     if (validation(eventParams)) {
       axios
         .post(`${API_BASE_URL}/event`, formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: token,
+          },
         }) // Content-Type을 반드시 이렇게 하여야 한다.
         .then((res) => {
           if (res && res.data && confirm('이벤트를 등록하시겠습니까?') > 0) {
