@@ -61,7 +61,6 @@ export default function CouponListRadio({ changeCouponParentId, headers }) {
               {coupon.type === 0 ? '정액(₩)' : '정률(%)'}
             </td>
             <td className="py-4 px-6">{coupon.discountValue}</td>
-            <td className="py-4 px-6">{coupon.detail}</td>
             <td className="py-4 px-6">{coupon.cnt}</td>
             <td className="py-4 px-6">{coupon.remains}</td>
           </tr>
@@ -92,9 +91,6 @@ export default function CouponListRadio({ changeCouponParentId, headers }) {
               </th>
               <th scope="col" className="py-3 px-6">
                 할인율/액수
-              </th>
-              <th scope="col" className="py-3 px-6">
-                쿠폰 상세설명
               </th>
               <th scope="col" className="py-3 px-6">
                 발급 수량(총 수량)
