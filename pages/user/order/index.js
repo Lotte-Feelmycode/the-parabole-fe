@@ -126,10 +126,12 @@ export default function OrderAndPayment() {
 
     if (isEmpty(getUserName)) {
       alert('주문자 이름을 입력해주세요');
+      return;
     }
 
     if (isEmpty(getUserPhone)) {
       alert('주문자 번호를 입력해주세요');
+      return;
     }
 
     if (isEmpty(receiverName)) {
