@@ -20,7 +20,6 @@ export default function CouponAssignResult({
 
   function ShowCoupon() {
     if (selectedCoupon !== 0) {
-      console.log('ShowCoupon', selectedCoupon);
       let couponString =
         selectedCoupon.name +
         ' (' +
@@ -53,7 +52,6 @@ export default function CouponAssignResult({
   }
 
   function ShowUser() {
-    console.log('CouponAssignResult-showUser', userParentList);
     if (userParentList.length > 0) {
       return (
         userParentList &&

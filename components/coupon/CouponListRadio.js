@@ -27,7 +27,6 @@ export default function CouponListRadio({ changeCouponParentId, headers }) {
   }, [headers]);
 
   function handleRadioChange(coupon) {
-    console.log('handleRadioChange', coupon, coupon.couponId);
     changeCouponParentId(coupon);
     setRadioValue(coupon.couponId);
   }

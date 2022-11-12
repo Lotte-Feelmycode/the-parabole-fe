@@ -80,7 +80,6 @@ export default function CouponAssign() {
       userIdList,
     };
 
-    console.log('assignCoupon', reqBody);
     POST(`/coupon/assign`, reqBody)
       .then((res) => {
         if (res.success) {
