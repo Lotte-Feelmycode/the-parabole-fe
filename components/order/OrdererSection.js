@@ -39,7 +39,7 @@ export default function OrdererSection({
           <Inputpart>
             <LargeInput
               css={input}
-              attr={{ readOnly: true }}
+              attr={{ disabled: true }}
               value={getUserName}
             />
           </Inputpart>
@@ -50,7 +50,6 @@ export default function OrdererSection({
             <LargeInput
               // TODO : user 정보 넣기
               css={input}
-              attr={{ readOnly: true }}
               value={getUserPhone}
             />
           </Inputpart>
@@ -100,7 +99,6 @@ export default function OrdererSection({
               <LargeInput
                 type="text"
                 css={input}
-                attr={{ disabled: true }}
                 value={receiverPhone}
                 onChange={(event) => {
                   setReceiverPhone(event.target.value);

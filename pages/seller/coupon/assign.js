@@ -14,7 +14,6 @@ export default function CouponAssign() {
   const router = useRouter();
 
   const [headers, setHeaders] = useState();
-
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof window !== undefined) {
       if (localStorage.getItem('userId') === null) {
@@ -28,14 +27,8 @@ export default function CouponAssign() {
     setHeaders(useGetToken());
   }, []);
 
-  const [sellerId, setSellerId] = useState();
-
-  const [couponParentId, setCouponParentId] = useState(0);
-
-  var userParentList = [];
-  function setUserParentList(list) {
-    userParentList = list;
-  }
+  const [couponParentId, setCouponParentId] = useState();
+  const [userParentList, setUserParentList] = useState([]);
 
   function assignCoupon(e) {
     const reqBody = {
@@ -43,6 +36,7 @@ export default function CouponAssign() {
       userIdList: userParentList,
     };
 
+    console.log(reqBody.userIdList);
     POST(`/coupon/assign`, reqBody)
       .then((res) => {
         if (res.success) {
@@ -55,9 +49,9 @@ export default function CouponAssign() {
       });
   }
 
-  const sellerProps = {
-    sellerId: sellerId,
-  };
+  // const sellerProps = {
+  //   sellerId: sellerId,
+  // };
 
   return (
     <>
@@ -67,8 +61,10 @@ export default function CouponAssign() {
         <PageContainer>
           <Split>
             <CouponListRadio
-              {...sellerProps}
+              // {...sellerProps}
+              // sellerId={sellerId}
               setCouponParentId={setCouponParentId}
+              // headers={headers}
             ></CouponListRadio>
           </Split>
           <Split>

@@ -5,7 +5,7 @@ import CartContentFooter from '@components/cart/CartContentFooter';
 import CartContentHeader from '@components/cart/CartContentHeader';
 
 export default function CartContent({
-  userId,
+  headers,
   cartBySellerDtoList,
   checkBoxStates,
   cartCheckBoxChange,
@@ -34,7 +34,7 @@ export default function CartContent({
           <CartStoreSection className="cart-store-section" key={item.sellerId}>
             <CartContentHeader storeName={item.storeName} />
             <CartContentDetail
-              userId={userId}
+              headers={headers}
               storeName={item.storeName}
               cartItemDtoList={item.cartItemDtoList}
               checkBoxStates={checkBoxStates}

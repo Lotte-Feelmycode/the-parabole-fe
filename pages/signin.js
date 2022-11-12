@@ -45,7 +45,7 @@ export default function Signin() {
           localStorage.setItem('token', res.data.token);
 
           alert('로그인 성공');
-          router.push('/');
+          router.push(LINKS.MAIN);
         }
       })
       .catch(function (error) {

@@ -1,11 +1,13 @@
-import CommerceLayout from '@components/common/CommerceLayout';
-import SiteHead from '@components/common/SiteHead.js';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-import { useState, useEffect } from 'react';
 import { GET_DATA, POST } from '@apis/defaultApi';
 import { numberToMonetary } from '@utils/functions';
-import * as color from '@utils/constants/themeColor';
+import { ThemeGray4 } from '@utils/constants/themeColor';
+import { LINKS } from '@utils/constants/links';
+import { useGetToken } from '@hooks/useGetToken';
+import CommerceLayout from '@components/common/CommerceLayout';
+import SiteHead from '@components/common/SiteHead.js';
 import { SmallLineWhite, LineBlue, Blue } from '@components/input/Button';
 import Input from '@components/input/Input';
 import { ICON_SHOP } from '@utils/constants/icons';
@@ -13,10 +15,8 @@ import CouponListModal from '@components/coupon/CouponListModal';
 import { useGetToken } from '@hooks/useGetToken';
 
 export default function ProductDetail() {
-  // TODO : userID
-  const userId = 3;
-
   const router = useRouter();
+
   const [productId, setProductId] = useState(router.query.id);
   const [product, setProduct] = useState({});
   const [productDetail, setProductDetail] = useState([]);
@@ -82,24 +82,36 @@ export default function ProductDetail() {
   }
 
   function addCart() {
+    let headers;
     if (!isCountValid()) {
       return;
     } else if (count <= 0) {
       alert('수량을 입력해주세요');
       return;
     } else {
-      POST(`/cart/product/add`, {
-        userId: userId,
-        productId: productId,
-        cnt: count,
-      }).then((res) => {
+      if (typeof window !== 'undefined' && typeof window !== undefined) {
+        if (localStorage.getItem('userId') === null) {
+          alert('로그인 해주세요.');
+          router.push(LINKS.SIGNIN);
+        }
+      }
+      headers = useGetToken();
+
+      POST(
+        `/cart/product/add`,
+        {
+          productId: productId,
+          cnt: count,
+        },
+        headers,
+      ).then((res) => {
         if (res) {
           if (res.success) {
             const confirmMsg =
               '장바구니에 성공적으로 담겼습니다. 장바구니페이지로 이동하시겠습니까?';
             const confirmFlag = confirm(confirmMsg);
             if (confirmFlag) {
-              router.push({ pathname: `/user/cart` });
+              router.push(LINKS.CART);
             }
           } else {
             console.log(res);
@@ -114,11 +126,23 @@ export default function ProductDetail() {
   }
 
   function directOrder() {
+    let headers;
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push(LINKS.SIGNIN);
+      }
+    }
+    headers = useGetToken();
+
     const orderInfoDto = [{ productId: productId, productCnt: count }];
-    POST(`/orderinfo`, {
-      userId: userId,
-      orderInfoDto: orderInfoDto,
-    }).then((res) => {
+    POST(
+      `/orderinfo`,
+      {
+        orderInfoDto: orderInfoDto,
+      },
+      headers,
+    ).then((res) => {
       if (res && res.success) {
         router.push(`/user/order`);
       }
@@ -338,8 +362,7 @@ const InputSection = styled.div`
   flex-wrap: wrap;
   margin: 10px 0;
   padding: 10px;
-  background-color: ${color.ThemeGray5};
-
+  background-color: ${ThemeGray4};
   border-radius: 0.25rem;
 `;
 

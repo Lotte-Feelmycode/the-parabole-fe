@@ -21,7 +21,7 @@ export default function SellerHeader() {
   const signout = () => {
     localStorage.clear();
     alert('로그아웃 완료');
-    router.push('/');
+    router.push(LINKS.MAIN);
   };
 
   return (

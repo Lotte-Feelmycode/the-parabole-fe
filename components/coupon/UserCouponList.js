@@ -55,7 +55,7 @@ export default function UserCouponList({ userId }) {
   }, []);
 
   useEffect(() => {
-    GET_DATA(`/coupon/list`, '', headers)
+    GET_DATA(`/coupon/user/list`, '', headers)
       .then((res) => {
         if (res) {
           if (res.numberOfElements === 0) {

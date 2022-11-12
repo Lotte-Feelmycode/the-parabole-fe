@@ -4,12 +4,12 @@ import { useRouter } from 'next/router';
 import { GET_DATA } from '@apis/defaultApi';
 import styled from '@emotion/styled';
 import Pagination from '@components/common/Pagination';
-import * as color from '@utils/constants/themeColor';
+import { BlueTheme } from '@utils/constants/themeColor';
 import Link from 'next/link';
 import { LINKS } from '@utils/constants/links';
 
 const INIT_PAGENUM = 0;
-const INIT_SIZENUM = 20;
+const INIT_SIZENUM = 12;
 
 export default function ProductList({
   sellerId,
@@ -18,6 +18,7 @@ export default function ProductList({
   productName,
   page,
   size,
+  sort,
 }) {
   const [productList, setProductList] = useState([]);
   const [totalElementCnt, setTotalElementCnt] = useState(0);
@@ -34,6 +35,7 @@ export default function ProductList({
       productName: productName,
       size: size,
       page: nowPage,
+      sort: sort,
     }).then((res) => {
       if (res) {
         console.log(res);
@@ -79,7 +81,7 @@ export default function ProductList({
           totalPage={totalPages}
           activePage={nowPage}
           setNowPageFunction={setNowPage}
-          theme={color.BlueTheme}
+          theme={BlueTheme}
         />
       </PaginationSection>
       <p className="pt-4 text-right">총 상품 갯수 : {totalElementCnt}</p>
@@ -94,6 +96,7 @@ ProductList.defaultProps = {
   productName: '',
   size: INIT_SIZENUM,
   page: INIT_PAGENUM,
+  sort: 'createdAt,desc',
 };
 
 const PaginationSection = styled.div`

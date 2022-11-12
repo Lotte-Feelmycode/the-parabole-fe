@@ -21,10 +21,6 @@ export default function EventList() {
   const router = useRouter();
   const [eventList, setEventList] = useState([]);
 
-  // TODO : 로그인 정보 가져오기
-  // const userId = localStorage.getItem("ID");
-  const userId = 1;
-
   const [headers, setHeaders] = useState();
 
   useEffect(() => {
@@ -49,7 +45,7 @@ export default function EventList() {
       eventTitle: searchValue,
     };
 
-    GET_DATA('/event/list', params).then((res) => {
+    GET_DATA('/event/list', params, headers).then((res) => {
       if (res) {
         setEventList(res);
       }

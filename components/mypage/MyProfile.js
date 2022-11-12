@@ -1,6 +1,6 @@
-import { GET_DATA } from '@apis/defaultApi';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import { GET_DATA } from '@apis/defaultApi';
 import { LargeInput } from '@components/input/Input';
 
 export default function MyProfile({ headers }) {

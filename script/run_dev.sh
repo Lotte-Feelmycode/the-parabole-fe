@@ -1,21 +1,44 @@
 #!/bin/sh
 
-ssh ec2-user@3.39.167.221 <<EOF	
+PROJECT_NAME="The Parabole"
 
-    cd ~/the-parabole-fe
- 
-    git pull -f origin dev
+TODAY=$(date +"%Y%m%d")
 
-		cd submodule
-		git fetch 
-		git merge origin main
+DEPLOY_PATH=/home/ubuntu
 
-		cp .env ../.env
+LOG_PATH=$DEPLOY_PATH/log
+LINK_LOG_FILE=$LOG_PATH/parabole.log
+LOG_FILE=$LOG_PATH/$PROJECT_NAME_$TODAY.log
+ERR_LOG_FILE=$LOG_PATH/$PROJECT_NAME_ERROR_$TODAY.log
 
-    npm install
+echo "> Start run.sh for $PROJECT_NAME : $TODAY" >> $LOG_FILE
 
-    npm install -g pm2
+echo "> Delete log link file" >> $LOG_FILE
 
-    pm2 restart ecosystem.config.js
-    exit
-EOF
+rm $LINK_LOG_FILE
+ln -s $LOG_FILE $LINK_LOG_FILE
+echo "> Build log : $LOG_FILE" >> $LOG_FILE
+
+cd ~/the-parabole-fe
+
+echo "> git pull start" >> $LOG_FILE
+
+git pull -f origin dev
+
+cd submodule
+git fetch 
+git merge origin main
+
+echo "> Copy .env file" >> $LOG_FILE
+
+cp .env ../.env
+
+echo "> npm install start" >> $LOG_FILE
+
+npm install
+npm install -g pm2
+
+echo "> Deploy start "
+pm2 reload all
+
+echo "> End of run.sh" >> $LOG_FILE

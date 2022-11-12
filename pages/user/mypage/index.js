@@ -1,14 +1,15 @@
-import CommerceLayout from '@components/common/CommerceLayout';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import styled from '@emotion/styled';
+import { LINKS } from '@utils/constants/links';
+import { ThemeBlueWhite, MainBlue } from '@utils/constants/themeColor';
+import { useGetToken } from '@hooks/useGetToken';
+import CommerceLayout from '@components/common/CommerceLayout';
 import UserOrderList from '@components/mypage/UserOrderList';
 import EventApplyList from '@components/mypage/EventApplyList';
 import MyProfile from '@components/mypage/MyProfile';
 import SiteHead from '@components/common/SiteHead.js';
-import styled from '@emotion/styled';
-import { ThemeBlueWhite, MainBlue } from '@utils/constants/themeColor';
 import UserCouponList from '@components/coupon/UserCouponList';
-import { useRouter } from 'next/router';
-import { useGetToken } from '@hooks/useGetToken';
 
 export default function Mypage() {
   const router = useRouter();
@@ -19,7 +20,7 @@ export default function Mypage() {
     if (typeof window !== 'undefined' && typeof window !== undefined) {
       if (localStorage.getItem('userId') === null) {
         alert('로그인 해주세요.');
-        router.push('/signin');
+        router.push(LINKS.SIGNIN);
       }
     }
     setHeaders(useGetToken());
@@ -48,10 +49,7 @@ export default function Mypage() {
   return (
     <CommerceLayout>
       <SiteHead title="My page" />
-      <NavSection
-        color={ThemeBlueWhite}
-        className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center border-b"
-      >
+      <NavSection className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center border-b">
         <ul className="contents list-none text-center whitespace-nowrap">
           {mypageStateList.map((state, index) => (
             <li className="float-left" key={index}>
@@ -89,7 +87,7 @@ export default function Mypage() {
 }
 
 const NavSection = styled.nav`
-  background-color: ${(props) => props.color};
+  background-color: ${ThemeBlueWhite};
 `;
 
 const SelectedNav = styled.a`
