@@ -3,22 +3,23 @@ import { useEffect, useState } from 'react';
 import ProductList from '@components/product/ProductList';
 import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead.js';
-import { useGetToken } from '@hooks/useGetToken';
 
 export default function store() {
   const router = useRouter();
 
   const [productListProps, setProductListProps] = useState({
-    size: 6,
+    size: 12,
     page: 0,
     sellerId: router.query.id,
+    sort: 'createdAt,desc',
   });
 
   useEffect(() => {
     setProductListProps({
-      size: 6,
+      size: 12,
       page: 0,
       sellerId: router.query.id,
+      sort: 'createdAt,desc',
     });
   }, [router.query]);
 

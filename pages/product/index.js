@@ -13,6 +13,7 @@ export default function Products({}) {
     size: 12,
     page: 0,
     productName: inputSearchValue,
+    sort: 'createdAt,desc',
   };
 
   return (
