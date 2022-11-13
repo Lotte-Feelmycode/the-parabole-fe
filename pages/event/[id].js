@@ -5,7 +5,7 @@ import { GET_DATA, POST_DATA } from '@apis/defaultApi';
 import { getDateTime } from '@utils/functions';
 import EventPrize from '@components/event/eventPrize';
 import CommerceLayout from '@components/common/CommerceLayout';
-
+import Timer from '@components/common/Timer';
 import EventInfo from '@components/event/EvenInfo';
 import EventPrizeContainer from '@components/event/EventPrizeContainer';
 
@@ -70,7 +70,8 @@ export default function EventDetail() {
         <EventPrizeContainer
           eventPrizes={eventPrizes}
           eventType={eventInfo.type}
-        ></EventPrizeContainer>
+          applyStatus={applyStatus}
+        />
       </main>
     </CommerceLayout>
   );

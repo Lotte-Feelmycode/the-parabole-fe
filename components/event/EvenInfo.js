@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import * as btn from '@components/input/Button';
 import { getDateTime } from '@utils/functions';
 import styled from '@emotion/styled';
+import Timer from '@components/common/Timer';
 
 export default function EventInfo({ eventInfo, eventImage }) {
   return (
@@ -31,6 +32,14 @@ export default function EventInfo({ eventInfo, eventImage }) {
                 >
                   {eventInfo.storeName}에서 {getDateTime(eventInfo.startAt)} ~{' '}
                   {getDateTime(eventInfo.endAt)}동안 진행하는 이벤트!
+                </p>
+                <p
+                  className="text-3xl md:text-4xl text-gray-600 mb-8"
+                  data-aos="zoom-y-out"
+                  data-aos-delay="150"
+                >
+                  {/* TODO : 이벤트 종료일시 - 현재 */}
+                  <Timer endAt={eventInfo.endAt}/>
                 </p>
                 <div
                   className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center"

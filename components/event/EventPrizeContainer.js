@@ -2,16 +2,38 @@ import { useState, useEffect, useMemo } from 'react';
 import { Blue } from '@components/input/Button';
 import { POST } from '@apis/defaultApi';
 import { ICON_COUPON } from '@utils/constants/icons';
-import { ThemeGray4, ThemeGray5 } from '@utils/constants/themeColor';
 import styled from '@emotion/styled';
 import Heading from '@components/input/Heading';
-export default function EventPrizeContainer({ eventPrizes, eventInfo }) {
+export default function EventPrizeContainer({ eventPrizes, eventInfo, applyStatus }) {
   function BtnSection() {
     return (
-      <button className="font-bold rounded-md tracking-wide py-2 px-5 sm:px-8 border border-blue-500 text-blue-500 bg-white-500 outline-none hover:bg-blue-500 hover:text-white transition-all hover:shadow-xl">
-        "응모하기"
-      </button>
+      <Blue
+        buttonText={'이벤트 응모'}
+        onClickFunc={() => applyEvent(eventId, prize.eventPrizeId)}
+        attr={{ disabled: applyStatus }}
+        css={{ marginTop: 'auto', marginBottom: '10px' }}
+      />
     );
+  }
+
+  function applyEvent(eventId, eventPrizeId) {
+    //TODO: userID 나중에 받아와야함
+    POST('/event/participant', {
+      userId,
+      eventId,
+      eventPrizeId,
+    }).then((res) => {
+      if (res) {
+        if (res.success) {
+          alert('응모 성공');
+          location.reload();
+        } else {
+          alert('이미 응모 하셨습니다.');
+        }
+      } else {
+        alert('잠시후 다시 시도해주세요');
+      }
+    });
   }
 
   return (
@@ -50,7 +72,7 @@ export default function EventPrizeContainer({ eventPrizes, eventInfo }) {
                             </h4>
                           </>
                         ) : (
-                          <>
+                          <div>
                             <ImgSection>
                               <EventPrizeCouponImg
                                 className="prize-img"
@@ -58,9 +80,9 @@ export default function EventPrizeContainer({ eventPrizes, eventInfo }) {
                               />
                             </ImgSection>
                             <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">
-                              {prize.couponDetail}
+                              {prize.couponName}
                             </h4>
-                          </>
+                          </div>
                         )}
                         <BtnSection />
                       </div>
