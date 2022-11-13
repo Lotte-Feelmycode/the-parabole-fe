@@ -10,6 +10,9 @@ import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead.js';
 import { SmallLineWhite, LineBlue, Blue } from '@components/input/Button';
 import Input from '@components/input/Input';
+import { confirmAlert } from 'react-confirm-alert';
+import { toast } from 'react-toastify';
+import Toast from '@components/common/ToastPopup';
 
 export default function ProductDetail() {
   const router = useRouter();
@@ -47,10 +50,26 @@ export default function ProductDetail() {
   function isCountValid() {
     if (count > maxCount || count < minCount) {
       setCount(1);
-      alert('담을 수 있는 수를 초과했습니다.');
+      toast.error('담을 수 있는 수를 초과했습니다.');
       return false;
     }
     return true;
+  }
+
+  function confirmGoCart(msg) {
+    confirmAlert({
+      title: msg,
+      buttons: [
+        {
+          label: '네',
+          onClick: () => { router.push(LINKS.CART); }
+        },
+        {
+          label: '아니오',
+          onClick: () => { return false; }
+        }
+      ]
+    });
   }
 
   function addCart() {
@@ -58,12 +77,12 @@ export default function ProductDetail() {
     if (!isCountValid()) {
       return;
     } else if (count <= 0) {
-      alert('수량을 입력해주세요');
+      toast.warn('수량을 입력해주세요');
       return;
     } else {
       if (typeof window !== 'undefined' && typeof window !== undefined) {
         if (localStorage.getItem('userId') === null) {
-          alert('로그인 해주세요.');
+          toast.error('로그인 해주세요.');
           router.push(LINKS.SIGNIN);
         }
       }
@@ -81,17 +100,14 @@ export default function ProductDetail() {
           if (res.success) {
             const confirmMsg =
               '장바구니에 성공적으로 담겼습니다. 장바구니페이지로 이동하시겠습니까?';
-            const confirmFlag = confirm(confirmMsg);
-            if (confirmFlag) {
-              router.push(LINKS.CART);
-            }
+            confirmGoCart(confirmMsg);
           } else {
             console.log(res);
-            alert(res.data.message);
+            toast.warn(res.data.message);
           }
         } else {
           // TODO 장바구니 실패했을때 경우의 수 추가
-          alert('이미 추가된 상품입니다.');
+          toast.warn('이미 추가된 상품입니다.');
         }
       });
     }
@@ -101,7 +117,7 @@ export default function ProductDetail() {
     let headers;
     if (typeof window !== 'undefined' && typeof window !== undefined) {
       if (localStorage.getItem('userId') === null) {
-        alert('로그인 해주세요.');
+        toast.warn('로그인 해주세요.');
         router.push(LINKS.SIGNIN);
       }
     }
@@ -199,6 +215,7 @@ export default function ProductDetail() {
                     onClickFunc={directOrder}
                     css={{ width: '49%', marginLeft: '1%' }}
                   />
+                  <Toast/>
                 </BtnSection>
               </ProductDetailTop>
             </ProductTopSection>
