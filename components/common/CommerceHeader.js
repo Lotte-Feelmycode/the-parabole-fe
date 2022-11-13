@@ -10,8 +10,11 @@ import {
 import { LINKS } from '@utils/constants/links';
 import SearchBar from '@components/input/SearchBar';
 import CommerceHeaderMenuModal from '@components/common/CommerceHeaderMenuModal';
+import Toast from '@components/common/ToastPopup';
+import { toast } from 'react-toastify';
 
 export default function CommerceHeader() {
+
   const [token, setToken] = useState();
   const [resize, setResize] = useState();
   const [menuModalState, setMenuModalState] = useState(false);
@@ -53,6 +56,7 @@ export default function CommerceHeader() {
   if (resize >= 1024) {
     return (
       <header className="body-font flex flex-col">
+        <Toast/>
         <HeaderSection className="md:fixed w-full h-12 md:h-24 bg-white md:border-b md:border-gray-200 md:z-50">
           <HeaderContainer className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
             <Link href={LINKS.MAIN}>
@@ -103,6 +107,7 @@ export default function CommerceHeader() {
   } else if (resize >= 767) {
     return (
       <header className="body-font flex flex-col">
+        <Toast/>
         <HeaderSection className="md:fixed w-full h-12 md:h-24 bg-white md:border-b md:border-gray-200 md:z-50">
           <HeaderContainer className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
             <Link href={LINKS.MAIN}>
@@ -160,6 +165,7 @@ export default function CommerceHeader() {
   } else {
     return (
       <header className="body-font flex flex-col">
+        <Toast/>
         <MobileHeaderSection className="md:fixed w-full h-12 md:h-24 bg-white md:border-b md:border-gray-200 md:z-50">
           <HeaderContainer className="container mx-auto ">
             <MobileMenuSection>
@@ -216,7 +222,8 @@ function CheckTocken({ token }) {
 
   const signout = () => {
     localStorage.clear();
-    alert('로그아웃 완료');
+    toast.warn("로그아웃 완료 !");
+    
     router.push(LINKS.MAIN);
   };
 
