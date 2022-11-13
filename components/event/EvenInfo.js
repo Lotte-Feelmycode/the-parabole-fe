@@ -11,9 +11,7 @@ export default function EventInfo({ eventInfo, eventImage }) {
         aria-hidden="true"
       >
         <svg
-          width="1360"
-          height="578"
-          viewBox="0 0 1360 578"
+          width="100%"
           xmlns="http://www.w3.org/2000/svg"
         >
           <defs>
@@ -39,20 +37,23 @@ export default function EventInfo({ eventInfo, eventImage }) {
       <section className="relative">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="pt-32 pb-12 md:pt-40 md:pb-20">
-            <div className="text-center pb-12 md:pb-16">
+            <div className="flex flex-col text-center pb-12 md:pb-16">
               <H1
-                className="text-4xl md:text-5xl font-extrabold leading-tighter tracking-tighter mb-4"
+                className="break-all text-4xl md:text-5xl lg:text-6xl leading-tighter tracking-tighter"
                 data-aos="zoom-y-out"
-              >
+                >
                 {eventInfo.descript}
-                <br />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">
-                  {eventInfo.title}
-                </span>
+              </H1>
+              <H1
+                className="break-all text-4xl md:text-7xl lg:text-8xl font-bold leading-tighter tracking-tighter
+                  bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400 whitespace-pre-line"
+                data-aos="zoom-y-out"
+                >
+                {eventInfo.title}
               </H1>
               <div className="max-w-3xl mx-auto">
                 <p
-                  className="text-2xl text-gray-600 mb-8"
+                  className="text-xl md:text-2xl text-gray-600 mb-8"
                   data-aos="zoom-y-out"
                   data-aos-delay="150"
                 >
@@ -80,8 +81,6 @@ export default function EventInfo({ eventInfo, eventImage }) {
   );
 }
 
-const H1 = styled.h1`
-  font-size: 80px;
-  margin-bottom: 30px;
+const H1 = styled.div`
   font-family: 'AppleSDGothicNeoB';
 `;
