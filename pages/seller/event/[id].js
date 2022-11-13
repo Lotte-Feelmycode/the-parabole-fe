@@ -10,6 +10,9 @@ import { getDateTime, getState } from '@utils/functions';
 import { PRIZE_TYPE, EVENT_TYPE } from '@utils/constants/types';
 import EventParticipant from '@components/event/EventParticipantList';
 import { useGetToken } from '@hooks/useGetToken';
+import { confirmAlert } from 'react-confirm-alert';
+import { toast } from 'react-toastify';
+import Toast from '@components/common/ToastPopup';
 
 export default function EventDetail() {
   const router = useRouter();
@@ -23,10 +26,10 @@ export default function EventDetail() {
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof window !== undefined) {
       if (localStorage.getItem('userId') === null) {
-        alert('로그인 해주세요.');
+        toast('로그인 해주세요.');
         router.push('/signin');
       } else if (localStorage.getItem('role') === 'ROLE_USER') {
-        alert('판매자 페이지입니다.');
+        toast.warn('판매자 페이지입니다.');
         router.push('/');
       }
     }
@@ -41,7 +44,7 @@ export default function EventDetail() {
         if (res && res.data.id == eventId) {
           setEvent(res.data);
         } else {
-          alert('잘못된 요청입니다.');
+          toast.error('잘못된 요청입니다.');
           router.replace(`/seller/event/list`);
         }
       });
@@ -50,18 +53,35 @@ export default function EventDetail() {
 
   const deleteClickHandler = async (e) => {
     e.preventDefault();
-    DELETE(`/event/${eventId}`, {}).then((res) => {
-      if (res && res.success == true && confirm('삭제하시겠습니까?')) {
-        alert('삭제 되었습니다. ');
-        router.replace(`/seller/event/list`);
-      }
+
+    confirmAlert({
+      title: "등록한 이벤트를 취소하시겠습니까?",
+      buttons: [
+        {
+          label: '네',
+          onClick: () => {     
+            DELETE(`/event/${eventId}`, {}).then((res) => {
+              if (res && res.success == true) {
+                toast('삭제 되었습니다. ');
+                router.replace(`/seller/event/list`);
+              }
+            });
+          }
+        },
+        {
+          label: '아니오',
+          onClick: () => { return false; }
+        }
+      ]
     });
+
   };
 
   return (
     <SellerLayout>
       <SiteHead title={'Seller Office'} />
 
+      <Toast/>
       <section className="flex min-h-screen flex-col text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">
           <Heading title="이벤트 상세" type="h1" />

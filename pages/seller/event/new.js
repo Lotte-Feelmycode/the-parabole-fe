@@ -18,6 +18,8 @@ import { useGetToken } from '@hooks/useGetToken';
 import { ICON_WARNING_SIGN, ICON_CHECK } from '@utils/constants/icons';
 import ModalScheduler from '@components/event/ModalScheduler';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import Toast from '@components/common/ToastPopup';
 
 export default function Event() {
   const router = useRouter();
@@ -27,10 +29,10 @@ export default function Event() {
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof window !== undefined) {
       if (localStorage.getItem('userId') === null) {
-        alert('로그인 해주세요.');
+        toast('로그인 해주세요.');
         router.push('/signin');
       } else if (localStorage.getItem('role') === 'ROLE_USER') {
-        alert('판매자 페이지입니다.');
+        toast.warn('판매자 페이지입니다.');
         router.push('/');
       }
     }
@@ -74,7 +76,7 @@ export default function Event() {
   // 선착순 이벤트 체크
   function checkFcfsPrize() {
     if (eventType === 'FCFS' && prizeList.length > 1) {
-      alert('선착순 이벤트는 한 가지 경품만 추가할 수 있습니다.');
+      toast.warn('선착순 이벤트는 한 가지 경품만 추가할 수 있습니다.');
       return true;
     }
     return false;
@@ -83,23 +85,23 @@ export default function Event() {
   // 이벤트 등록 validation check
   function validation(inputParams) {
     if (isEmpty(inputParams.title)) {
-      alert(EVENT_ERROR.NO_EVENT_TITLE);
+      toast.warn(EVENT_ERROR.NO_EVENT_TITLE);
       return false;
     }
     if (isEmpty(inputParams.descript)) {
-      alert(EVENT_ERROR.NO_DESCRIPT);
+      toast.warn(EVENT_ERROR.NO_DESCRIPT);
       return false;
     }
     if (isEmpty(inputParams.type)) {
-      alert(EVENT_ERROR.NO_EVENT_TYPE);
+      toast.warn(EVENT_ERROR.NO_EVENT_TYPE);
       return false;
     }
     if (isEmpty(inputParams.startAt)) {
-      alert(EVENT_ERROR.NO_START_AT);
+      toast.warn(EVENT_ERROR.NO_START_AT);
       return false;
     }
     if (isEmpty(inputParams.endAt)) {
-      alert(EVENT_ERROR.NO_END_AT);
+      toast.warn(EVENT_ERROR.NO_END_AT);
       return false;
     }
     if (
@@ -107,15 +109,15 @@ export default function Event() {
       inputParams.startAt <= new Date() ||
       inputParams.endAt <= new Date()
     ) {
-      alert(EVENT_ERROR.INVALID_DATE);
+      toast.warn(EVENT_ERROR.INVALID_DATE);
       return false;
     }
     if (prizeList.length < 1) {
-      alert(EVENT_ERROR.NO_PRIZE_LIST);
+      toast.warn(EVENT_ERROR.NO_PRIZE_LIST);
       return false;
     }
     if (fileList.length < 2) {
-      alert(EVENT_ERROR.NO_IMAGE);
+      toast.warn(EVENT_ERROR.NO_IMAGE);
       return;
     }
     if (checkFcfsPrize()) return false;
@@ -128,7 +130,7 @@ export default function Event() {
 
     let newVal = stockList[index].stock - 1;
     if (newVal < 1) {
-      alert('경품 수량은 한 개 이상 선택해야 합니다.');
+      toast.warn('경품 수량은 한 개 이상 선택해야 합니다.');
       return;
     }
     let copyArray = [...stockList];
@@ -145,7 +147,7 @@ export default function Event() {
     let copyArray = [...stockList];
 
     if (prizeList[index].stock < newVal) {
-      alert('등록 가능한 경품 수량을 초과했습니다.');
+      toast.warn('등록 가능한 경품 수량을 초과했습니다.');
       return;
     }
     copyArray[index] = { ...copyArray[index], stock: newVal };
@@ -444,7 +446,7 @@ export default function Event() {
         inputDtm: fromDTM.substr(0, 13) + ':00:00',
       }).then((res) => {
         if (res.data !== true) {
-          alert(res.message);
+          toast.warn(res.message);
           return;
         }
       });
@@ -484,14 +486,14 @@ export default function Event() {
     );
 
     if (arrIdx > -1 && prizeList[arrIdx].type === 'PRODUCT') {
-      alert('이미 같은 상품을 등록했습니다');
+      toast.warn('이미 같은 상품을 등록했습니다');
       return;
     }
 
     if (checkFcfsPrize()) return;
 
     if (productList[e.target.value].remains < 1) {
-      alert('경품으로 지급가능한 상품 재고가 부족합니다.');
+      toast.warn('경품으로 지급가능한 상품 재고가 부족합니다.');
       return;
     }
 
@@ -520,14 +522,14 @@ export default function Event() {
     const arrIdx = prizeList.findIndex((e) => e.id == couponList[idx].couponId);
 
     if (arrIdx > -1 && prizeList[arrIdx].type === 'COUPON') {
-      alert('이미 같은 쿠폰을 등록했습니다');
+      toast.warn('이미 같은 쿠폰을 등록했습니다');
       return;
     }
 
     if (checkFcfsPrize()) return;
 
     if (couponList[e.target.value].remains < 1) {
-      alert('발행가능한 쿠폰 수량이 부족합니다.');
+      toast.warn('발행가능한 쿠폰 수량이 부족합니다.');
       return;
     }
 
