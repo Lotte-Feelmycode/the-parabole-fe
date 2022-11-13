@@ -2,6 +2,9 @@ import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { DELETE } from '@apis/defaultApi';
 import { SmallLineWhite } from '@components/input/Button';
+import Toast from '@components/common/ToastPopup';
+import { toast } from 'react-toastify';
+import { confirmAlert } from 'react-confirm-alert'; // Import
 
 export default function CartHeader({
   totalCheckBoxChange,
@@ -39,12 +42,28 @@ export default function CartHeader({
     flex: 0 0 auto;
   `;
 
+  function confirmDelete (msg) {
+    confirmAlert({
+      title: msg,
+      buttons: [
+        {
+          label: '네',
+          onClick: () => { return true; }
+        },
+        {
+          label: '아니오',
+          onClick: () => { return false; }
+        }
+      ]
+    });
+  }
+
   const deleteCheckedItemBtn = () => {
     let deleteFlag = false;
     if (
       cartBySellerDtoList &&
       numberOfChekced !== 0 &&
-      confirm('선택한 상품을 장바구니에서 삭제하시겠습니까?')
+      confirmDelete('선택한 상품을 장바구니에서 삭제하시겠습니까?')
     ) {
       cartBySellerDtoList.map((dto) => {
         const cartItemList = dto.cartItemDtoList;
@@ -62,7 +81,7 @@ export default function CartHeader({
         router.reload();
       }
     } else {
-      alert('상품을 선택해주세요');
+      toast.warn('상품을 선택해주세요');
     }
   };
 
@@ -86,6 +105,7 @@ export default function CartHeader({
               deleteCheckedItemBtn();
             }}
           />
+          <Toast/>
         </CommerceCartHeaderRight>
       </CommerceCartHeaderContainerChild>
     </CommerceCartHeaderContainer>

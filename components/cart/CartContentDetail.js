@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { DELETE } from '@apis/defaultApi';
 import { ThemeGray1 } from '@utils/constants/themeColor';
 import CartProduct from '@components/cart/CartProduct';
+import { confirmAlert } from 'react-confirm-alert';
 
 export default function CartContentDetail({
   headers,
@@ -56,14 +57,28 @@ export default function CartContentDetail({
     display: flex;
   `;
 
+  
   const deleteCartItem = ({ input }) => {
     const CartItemDeleteRequestDto = {
       cartItemId: input,
     };
-    if (confirm('장바구니에서 삭제하시겠습니까?')) {
-      DELETE(`/cart/delete`, CartItemDeleteRequestDto, headers);
-      router.reload();
-    }
+
+    confirmAlert({
+      title: "장바구니에서 삭제하시겠습니까?",
+      buttons: [
+        {
+          label: '네',
+          onClick: () => {
+            DELETE(`/cart/delete`, CartItemDeleteRequestDto, headers);
+            router.reload();
+          }
+        },
+        {
+          label: '아니오',
+          onClick: () => { return false; }
+        }
+      ]
+    });
   };
 
   return (
