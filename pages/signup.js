@@ -3,8 +3,9 @@ import useInput from '@hooks/useInput';
 import CommerceLayout from '@components/common/CommerceLayout';
 import { POST, POST_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import { Blue } from '@components/input/Button';
+import { toast } from 'react-toastify';
+import Toast from '@components/common/ToastPopup';
 
 export default function Signup() {
   const router = useRouter();
@@ -34,7 +35,7 @@ export default function Signup() {
       !reqBody.password ||
       !reqBody.passwordConfirmation
     ) {
-      alert(`입력란을 모두 채워주세요.`);
+      toast.warn(`입력란을 모두 채워주세요.`);
       return;
     }
 
@@ -42,14 +43,14 @@ export default function Signup() {
       .then((res) => {
         console.log(res);
         if (res.success) {
-          alert('회원가입 성공');
+          toast.success('회원가입 성공');
           router.push({
             pathname: `./welcome/${res.data.name}`,
           });
         }
       })
       .catch(function (error) {
-        alert('회원가입 실패');
+        toast.error('회원가입 실패');
         return {};
       });
   }
@@ -62,6 +63,7 @@ export default function Signup() {
           <h2 className="text-gray-800 text-2xl lg:text-3xl font-bold text-center mb-4 md:mb-8">
             회원가입
           </h2>
+          <Toast/>
 
           <form className="max-w-lg border rounded-lg mx-auto" method="post">
             <div className="flex flex-col gap-4 p-4 md:p-8">

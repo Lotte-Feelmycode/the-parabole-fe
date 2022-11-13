@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { Blue } from '@components/input/Button';
 import { FRONT_BASE_URL } from '@apis/api-config';
 import { LINKS } from '@utils/constants/links';
+import { toast } from 'react-toastify';
+import Toast from '@components/common/ToastPopup';
 
 export default function Signin() {
   const router = useRouter();
@@ -44,12 +46,12 @@ export default function Signin() {
           localStorage.setItem('sellerId', res.data.sellerId);
           localStorage.setItem('token', res.data.token);
 
-          alert('로그인 성공');
+          toast.success('로그인 성공');
           router.push(LINKS.MAIN);
         }
       })
       .catch(function (error) {
-        alert('로그인 실패');
+        toast.error('로그인 실패');
       });
   }
 
@@ -57,6 +59,7 @@ export default function Signin() {
     <CommerceLayout>
       <SiteHead title="로그인" />
 
+      <Toast/>
       <div className="bg-white py-6 sm:py-8 lg:py-12">
         <div className="max-w-screen-2xl px-4 md:px-8 mx-auto">
           <h2 className="text-gray-800 text-2xl lg:text-3xl font-bold text-center mb-4 md:mb-8">
