@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 
 import { GET_DATA, POST } from '@apis/defaultApi';
 import { numberToMonetary } from '@utils/functions';
-import { ThemeBlueWhite, ThemeGray4 } from '@utils/constants/themeColor';
+import { ColorBlue2, ThemeBlueWhite, ThemeGray4 } from '@utils/constants/themeColor';
 import { LINKS } from '@utils/constants/links';
 import { useGetToken } from '@hooks/useGetToken';
 import CommerceLayout from '@components/common/CommerceLayout';
@@ -114,7 +114,6 @@ export default function ProductDetail() {
               router.push(LINKS.CART);
             }
           } else {
-            console.log(res);
             alert(res.data.message);
           }
         } else {
@@ -202,13 +201,11 @@ export default function ProductDetail() {
                   </StoreBtnSection>
                 </StoreSection>
                 <div className="flex border-t-2 py-2">
-                  <StoreBenfitBox
-                    onClick={(e) => showBenefitModal(e, product.sellerId)}
-                  >
-                    <p className="py-2.5 align-middle font-3xl text-black-800 font-semibold text-center">
-                      스토어 혜택을 받아보세요!
-                    </p>
-                  </StoreBenfitBox>
+                  <LineBlue
+                    buttonText="스토어 혜택을 받아보세요!"
+                    onClickFunc={(e) => showBenefitModal(e, product.sellerId)}
+                    css={{ width: '100%', fontWeight: 'bold', }}
+                  />
                 </div>
                 <div>
                   {modalState && (
@@ -350,7 +347,7 @@ const StoreBenfitBox = styled.div`
   height: 3rem;
 
   &:hover {
-    background-color: ${color.ColorBlue2};
+    background-color: ${ColorBlue2};
     cursor: pointer;
   }
 `;
