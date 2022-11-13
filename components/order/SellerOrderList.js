@@ -3,6 +3,7 @@ import { GET_DATA } from '@apis/defaultApi';
 import Order from '@components/order/SellerOrder';
 import { useGetToken } from '@hooks/useGetToken';
 import SortButton from '@components/input/SortButton';
+import { isEmpty, numberToMonetary } from '@utils/functions';
 
 export default function SellerOrderList() {
   const [orderList, setOrderList] = useState([]);
@@ -118,6 +119,21 @@ export default function SellerOrderList() {
     setOrderList(copyArray);
   };
   
+  function sumTotal() {
+    if (Array.isArray(orderList)) {
+      let sum = 0;
+      orderList.forEach((order) => {
+        if (!isEmpty(order.productdiscountPrice)) {
+          sum += (order.productCnt * order.productdiscountPrice);
+        } else {
+          sum += (order.productCnt * order.productPrice);
+        }
+      });
+      return sum;
+    } else {
+      return 0;
+    }
+  }
   return (
     <>
       <table className="w-full text-m text-center">
@@ -170,6 +186,16 @@ export default function SellerOrderList() {
         <tbody>
           {orderList && orderList.map((order) => <Order order={order} />)}
         </tbody>
+        <tfoot className='bg-gray-100'>
+          <tr className="h-14 rounded-l-lg font-semibold text-gray-900 dark:text-white">
+            <th scope="row" className="py-3 px-6 text-base">Total</th>
+            <td/>
+            <td/>
+            <td colSpan={4}/>
+            <td className="text-right text-red-600 py-3 px-6">총 주문수 : {orderList.length}</td>
+            <td colSpan={2} className="text-right text-red-600 py-3 px-6">총 주문 금액 : {numberToMonetary(sumTotal())}원</td>
+          </tr>
+        </tfoot>
       </table>
     </>
   );
