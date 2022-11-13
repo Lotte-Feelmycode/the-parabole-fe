@@ -86,7 +86,6 @@ export default function ProductDetail() {
               router.push(LINKS.CART);
             }
           } else {
-            console.log(res);
             alert(res.data.message);
           }
         } else {
