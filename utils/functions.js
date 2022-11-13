@@ -115,6 +115,29 @@ export function getDateTimeNotKor(str) {
 }
 
 /**
+ * 일시 데이터를 자바스크립트 Date 객체로 리턴하는 함수
+ * @param {*} str
+ * @returns
+ */
+export function getNewDate(str) {
+  if (!isEmpty(str)) {
+    const getDate = str.split('T')[0];
+    const year = getDate.split('-')[0];
+
+    const monthStr = getDate.split('-')[1];
+    const month = monthStr > 9 ? monthStr - 1 : monthStr.substr(1, 1) - 1;
+
+    const dayStr = getDate.split('-')[2];
+    const day = dayStr > 9 ? dayStr : dayStr.substr(1, 1);
+
+    const getTime = str.split('T')[1];
+    let time = getTime.split(':')[0];
+    return new Date(year, month, day, time);
+  }
+  return str;
+}
+
+/*
  * 현재 날짜를 '0000-00-00'으로 리턴하는 함수
  * @returns
  */

@@ -1,21 +1,32 @@
-import { GET_DATA } from '@apis/defaultApi';
-import SellerLayout from '@components/seller/SellerLayout';
-import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import Heading from '@components/input/Heading';
+import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-import * as btn from '@components/input/Button';
+import { GET_DATA } from '@apis/defaultApi';
+import { useGetToken } from '@hooks/useGetToken';
+import { LINKS } from '@utils/constants/links';
+import SellerLayout from '@components/seller/SellerLayout';
+import Heading from '@components/input/Heading';
+import { SmallPink } from '@components/input/Button';
 
-export default function ProductList() {
+export default function SellerProductList() {
   const router = useRouter();
   const [productList, setProductList] = useState([]);
 
-  // TODO : 로그인 정보 가져오기
-  // const userId = localStorage.getItem("ID");
-  const userId = 1;
+  const [headers, setHeaders] = useState();
 
   useEffect(() => {
-    GET_DATA(`/product/list`, { sellerId: userId }).then((res) => {
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push(LINKS.SIGNIN);
+      } else if (localStorage.getItem('role') === 'ROLE_USER') {
+        alert('판매자 페이지입니다.');
+        router.push(LINKS.MAIN);
+      }
+    }
+    setHeaders(useGetToken());
+
+    GET_DATA(`/product/list`, null, headers).then((res) => {
       if (res) {
         setProductList(res.content);
       }
@@ -67,7 +78,7 @@ export default function ProductList() {
         </table>
 
         <Div>
-          <btn.SmallPink
+          <SmallPink
             buttonText="등록하기"
             name="btnPost"
             onClickFunc={() => {
@@ -87,7 +98,7 @@ const Divider = styled.hr`
 
 const Tags = styled.span`
   background-color: black;
-  color: #fff;
+  color: white;
   font-size: 0.8rem;
   margin: 0 0.5rem;
   padding: 0.5rem 1rem;

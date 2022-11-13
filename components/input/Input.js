@@ -1,5 +1,9 @@
 import styled from '@emotion/styled';
-import * as color from '@utils/constants/themeColor';
+import {
+  ThemeGray2,
+  ThemeGray1,
+  ThemeBlueWhite,
+} from '@utils/constants/themeColor';
 
 export default function Input({ type, value, onChange, onInput, attr, css }) {
   return (
@@ -17,7 +21,7 @@ export default function Input({ type, value, onChange, onInput, attr, css }) {
 const InputCSS = styled.input`
   max-width: 100%;
   color: black;
-  border: 1px solid ${color.ThemeGray1};
+  border: 1px solid ${ThemeGray1};
   font-size: 12px;
   padding: 1% 2%;
   margin-top: 5px;
@@ -43,16 +47,16 @@ const LargeInputCSS = styled.input`
   max-width: 100%;
   height: 40px;
   color: black;
-  border: 1px solid ${color.ThemeGray2};
+  border: 1px solid ${ThemeGray2};
   border-radius: 5px;
   font-size: 1rem;
   ${(props) => props.css};
 
   &:hover {
-    background: ${color.ThemeGray5};
+    background: ${ThemeBlueWhite};
   }
 
   &:focus {
-    background: ${color.ThemeGray5};
+    background: ${ThemeBlueWhite};
   }
 `;

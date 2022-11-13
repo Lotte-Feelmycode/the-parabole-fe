@@ -1,0 +1,18 @@
+export const LINKS = {
+  MAIN: '/',
+  PRODUCT: '/product',
+  EVENT: '/event',
+  CART: '/user/cart',
+  SIGNIN: '/signin',
+  SIGNUP: '/signup',
+  MYPAGE: '/user/mypage',
+  SELLER_MAIN: '/seller/main',
+  SELLER_ORDER_DETAIL: '/seller/order/detail',
+  SELLER_PRODUCT_NEW: '/seller/product_NEW',
+  SELLER_PRODUCT_LIST: '/seller/product/list',
+  SELLER_COUPON_ASSIGN: '/seller/coupon/assign',
+  SELLER_COUPON_NEW: '/seller/coupon/new',
+  SELLER_COUPON_LIST: '/seller/coupon/list',
+  SELLER_EVENT_NEW: '/seller/event/new',
+  SELLER_EVENT_LIST: '/seller/event/list',
+};

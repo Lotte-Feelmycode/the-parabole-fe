@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import SiteHead from '@components/common/SiteHead';
 import CommerceLayout from '@components/common/CommerceLayout';
 import * as btn from '@components/input/Button';
 import Link from 'next/link';
+import { LINKS } from '@utils/constants/links';
 
 export default function Welcome() {
   const router = useRouter();
+
   return (
     <CommerceLayout>
       <SiteHead title="회원가입 완료" />
@@ -24,13 +25,13 @@ export default function Welcome() {
             </div>
 
             <div className="flex justify-center items-center p-4 mb-7">
-              <Link href="/">
+              <Link href={LINKS.MAIN}>
                 <a>
                   <btn.Blue buttonText="홈으로" />
                 </a>
               </Link>
               <div className="px-3" />
-              <Link href="/user/signin">
+              <Link href={LINKS.SIGNIN}>
                 <a>
                   <btn.Blue buttonText="로그인하기" />
                 </a>

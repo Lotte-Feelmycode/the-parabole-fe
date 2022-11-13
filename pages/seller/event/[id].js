@@ -9,6 +9,7 @@ import * as btn from '@components/input/Button';
 import { getDateTime, getState } from '@utils/functions';
 import { PRIZE_TYPE, EVENT_TYPE } from '@utils/constants/types';
 import EventParticipant from '@components/event/EventParticipantList';
+import { useGetToken } from '@hooks/useGetToken';
 
 export default function EventDetail() {
   const router = useRouter();
@@ -16,6 +17,21 @@ export default function EventDetail() {
   const [event, setEvent] = useState([]);
 
   const EVENT_BEFORE = 0;
+
+  const [headers, setHeaders] = useState();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push('/signin');
+      } else if (localStorage.getItem('role') === 'ROLE_USER') {
+        alert('판매자 페이지입니다.');
+        router.push('/');
+      }
+    }
+    setHeaders(useGetToken());
+  }, []);
 
   useEffect(() => {
     const eventId = router.query.id;
@@ -59,6 +75,7 @@ export default function EventDetail() {
           </span>
           <br />
           <br />
+
           <Heading title="이벤트 일시" type="h3" />
           <div className="mb-8">
             <span>

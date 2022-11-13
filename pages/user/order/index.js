@@ -1,40 +1,119 @@
-import SiteHead from '@components/common/SiteHead.js';
-import CommerceLayout from '@components/common/CommerceLayout';
-import styled from '@emotion/styled';
-import { createContext, useEffect, useState } from 'react';
-import Input from '@components/input/Input';
-import ProductList from '@components/order/OrderProductList';
-import PayList from '@components/order/PayList';
-import { POST, GET } from '@apis/defaultApi';
-import { ThemeGray4 } from '@utils/constants/themeColor';
-import { Blue } from '@components/input/Button';
+import { createContext, useEffect, useReducer, useState } from 'react';
 import { useRouter } from 'next/router';
-import { isEmpty, numberToMonetary } from '@utils/functions';
+import styled from '@emotion/styled';
+import { POST, GET } from '@apis/defaultApi';
+import { isEmpty } from '@utils/functions';
+import { useGetToken } from '@hooks/useGetToken';
+import { ThemeGray3 } from '@utils/constants/themeColor';
+import { ORDER_PAY } from '@utils/constants/types';
+import CommerceLayout from '@components/common/CommerceLayout';
+import SiteHead from '@components/common/SiteHead.js';
+import PayList from '@components/order/PayList';
+import OrderSidebar from '@components/order/OrderSidebar';
+import OrdererSection from '@components/order/OrdererSection';
+import OrderDetail from '@components/order/OrderDetail';
+import { LINKS } from '@utils/constants/links';
 
-export const AppContext = createContext();
+export const CouponContext = createContext([]);
+export const CouponDispatchContext = createContext(null);
 
 export default function OrderAndPayment() {
-  const getUserId = 3;
   const router = useRouter();
 
-  const [userId, setUserId] = useState(getUserId);
-  const [orderInfoResponseDto, setOrderInfoResponseDto] = useState([]);
+  const [orderId, setOrderId] = useState(0);
+  const [totalOrderInfoCount, setTotalOrderInfoCount] = useState(0);
+  const [orderBySellerDtoList, setOrderBySellerDtoList] = useState([]);
   const [payState, setPayState] = useState(-1);
 
   // TODO 초기값에 user정보 넣기
+  const [getUserName, setUserName] = useState('');
+  const [getUserPhone, setUserPhone] = useState('');
+
+  // 주문시에 넣을 변수
   const [receiverName, setReceiverName] = useState('');
-  const [receivePhone, setReceivePhone] = useState('');
-  const [receiveAddress, setReceiveAddress] = useState('');
-  const [receiveMemo, setReceiveMemo] = useState('');
+  const [receiverPhone, setReceiverPhone] = useState('');
+  const [receiverSimpleAddress, setReceiverSimpleAddress] = useState('');
+  const [receiverDetailAddress, setReceiverDetailAddress] = useState('');
+  const [receiverMemo, setReceiverMemo] = useState('');
+
+  const couponReducer = (state, action) => {
+    let orderInfoIdList = new Array();
+    switch (action.type) {
+      case 'INIT':
+        const list = action.data.orderBySellerDtoList;
+        if (list) {
+          list.forEach((item) => {
+            const parameter = {
+              key: item.sellerId,
+              couponName: '',
+              description: '',
+              discountPrice: 0,
+              serialNo: '',
+            };
+            orderInfoIdList.push(parameter);
+          });
+        }
+        return orderInfoIdList;
+      case 'SET':
+        state.forEach((coupon) => {
+          if (action.data.key === coupon.key) {
+            let newCoupon = {
+              key: action.data.key,
+              couponName: action.data.couponName,
+              description: action.data.description,
+              discountPrice: action.data.discountPrice,
+              serialNo: action.data.serialNo,
+            };
+            orderInfoIdList.push(newCoupon);
+          } else {
+            orderInfoIdList.push(coupon);
+          }
+        });
+        return orderInfoIdList;
+      default:
+        throw new Error('invalid action type');
+    }
+  };
+  const [stateList, dispatch] = useReducer(couponReducer, new Array());
+
+  // 결제 금액 변수
+  const [productTotalPrice, setProductTotalPrice] = useState(0);
+
+  const [headers, setHeaders] = useState('');
 
   useEffect(() => {
-    GET(`/orderinfo`, { userId }).then((res) => {
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push(LINKS.SIGNIN);
+      }
+    }
+    const getToken = useGetToken();
+    setHeaders(getToken);
+
+    GET(`/orderinfo`, null, getToken).then((res) => {
       console.log(res);
       if (res && res.data) {
-        setOrderInfoResponseDto(res.data);
+        setOrderId(res.data.orderId);
+        setTotalOrderInfoCount(res.data.cnt);
+        setOrderBySellerDtoList(res.data.orderBySellerDtoList);
+        getProductTotalPrice({
+          orderBySellerDtoList: res.data.orderBySellerDtoList,
+        });
+        dispatch({
+          type: 'INIT',
+          data: { orderBySellerDtoList: res.data.orderBySellerDtoList },
+        });
       } else {
         alert('주문 정보가 없습니다.');
-        router.push('/');
+        router.push(LINKS.MAIN);
+      }
+    });
+
+    GET(`/user`, '', getToken).then((res) => {
+      if (res && res.data) {
+        setUserName(res.data.username);
+        setUserPhone(res.data.phone);
       }
     });
   }, []);
@@ -44,24 +123,76 @@ export default function OrderAndPayment() {
       alert('결제수단을 선택해서 결제를 진행해주세요');
       return;
     }
+
+    if (isEmpty(getUserName)) {
+      alert('주문자 이름을 입력해주세요');
+      return;
+    }
+
+    if (isEmpty(getUserPhone)) {
+      alert('주문자 번호를 입력해주세요');
+      return;
+    }
+
     if (isEmpty(receiverName)) {
       alert('수령인을 입력해주세요');
       return;
     }
-    if (isEmpty(receivePhone)) {
+
+    if (isEmpty(receiverPhone)) {
       alert('수령인 전화번호를 입력해주세요');
       return;
     }
-    if (isEmpty(receiveAddress)) {
+
+    if (isEmpty(receiverSimpleAddress)) {
       alert('수령인 주소를 입력해주세요');
       return;
     }
 
-    POST(`/order`, { userId, orderPayState: payState }).then((res) => {
+    let payStateString = '';
+    ORDER_PAY.forEach((state) => {
+      if (state.index === payState) {
+        payStateString = state.value;
+      }
+    });
+    let orderInfoRequestList = new Array();
+    stateList.forEach((state) => {
+      if (state.serialNo && state.serialNo !== '') {
+        let orderInfoIdList = new Array();
+        orderBySellerDtoList.forEach((orderBySellerDto) => {
+          if (orderBySellerDto.sellerId === state.key) {
+            orderBySellerDto.orderInfoResponseDtos.forEach(
+              (orderInfoResponseDto) => {
+                orderInfoIdList.push(orderInfoResponseDto.id);
+              },
+            );
+          }
+        });
+        orderInfoRequestList.push({
+          couponSerialNo: state.serialNo,
+          orderInfoIdList: orderInfoIdList,
+        });
+      }
+    });
+
+    POST(
+      `/order`,
+      {
+        orderId,
+        orderInfoRequestList: orderInfoRequestList,
+        receiverName: receiverName,
+        receiverPhone: receiverPhone,
+        addressSimple: receiverSimpleAddress,
+        addressDetail: receiverDetailAddress,
+        deliveryComment: receiverMemo,
+        orderPayState: payStateString,
+      },
+      headers,
+    ).then((res) => {
       console.log(res);
       if (res) {
         if (res.success) {
-          router.push('/user/mypage');
+          router.push(LINKS.MYPAGE);
         } else {
           alert('주문에 실패했습니다. 다시시도해주세요');
         }
@@ -69,202 +200,74 @@ export default function OrderAndPayment() {
     });
   }
 
-  function getProductTotalPrice(products) {
-    if (!products) return;
-    let total = 0;
-    products.map((products) => {
-      total += products.productPrice * products.productCnt;
-    });
-    return total;
-  }
-
-  function sameAsUser(flag) {
-    if (flag) {
-      //TODO 사용자 정보 불러오기
-      setReceiverName('더파라');
-      setReceivePhone('01082828585');
+  function payStateClick(event) {
+    if (event === payState) {
+      setPayState(-1);
+    } else {
+      setPayState(event);
     }
   }
 
-  const input = {
-    width: '14rem',
-    borderRadius: '0.2rem',
-    border: 'solid 1px ' + ThemeGray4,
-    fontSize: '1rem',
-    margin: 0,
-  };
+  function getProductTotalPrice({ orderBySellerDtoList }) {
+    let totalPrice = 0;
+    orderBySellerDtoList.forEach((orderBySellerDto) => {
+      const orderInfoResponseDtos = orderBySellerDto.orderInfoResponseDtos;
+      orderInfoResponseDtos.forEach((orderInfoResponseDto) => {
+        totalPrice =
+          totalPrice +
+          orderInfoResponseDto.productPrice * orderInfoResponseDto.productCnt;
+      });
+    });
+    setProductTotalPrice(totalPrice);
+  }
 
   return (
-    <Div>
-      <CommerceLayout>
-        <SiteHead title="Order/Payment" />
-        <OrderContainer className="order-container">
-          <OrderSection className="order-section">
-            <H1>주문/결제</H1>
-            <H2>주문자</H2>
-            <div>
-              <InputContainer>
-                <InputLable>주문자</InputLable>
-                <Inputpart>
-                  <Input
-                    // TODO : user 정보 넣기
-                    css={input}
-                    attr={{ readOnly: true }}
-                    value={'더파라'}
-                  />
-                </Inputpart>
-              </InputContainer>
-              <InputContainer>
-                <InputLable>휴대전화</InputLable>
-                <Inputpart>
-                  <Input
-                    // TODO : user 정보 넣기
-                    css={input}
-                    attr={{ readOnly: true }}
-                    value={'01082828585'}
-                  />
-                </Inputpart>
-              </InputContainer>
-            </div>
-            <br />
-            <hr />
-            <br />
-            <H2>수령자</H2>
-            <SameAsUserSection>
-              <input
-                type="checkBox"
-                onChange={(event) => {
-                  sameAsUser(event.target.checked);
-                }}
-              />
-              <span> 주문자 정보와 동일</span>
-            </SameAsUserSection>
-            <div>
-              <InputContainer>
-                <InputLable>수령인</InputLable>
-                <Inputpart>
-                  <Input
-                    type="text"
-                    css={input}
-                    value={receiverName}
-                    onChange={(event) => {
-                      setReceiverName(event.target.value);
-                    }}
-                  />
-                </Inputpart>
-              </InputContainer>
-              <InputContainer>
-                <InputLable>휴대전화</InputLable>
-                <Inputpart>
-                  <Input
-                    type="text"
-                    css={input}
-                    value={receivePhone}
-                    onChange={(event) => {
-                      setReceivePhone(event.target.value);
-                    }}
-                  />
-                </Inputpart>
-              </InputContainer>
-              <InputContainer>
-                <InputLable>배송지 주소</InputLable>
-                <Inputpart>
-                  <Input
-                    css={input}
-                    value={receiveAddress}
-                    onChange={(event) => {
-                      setReceiveAddress(event.target.value);
-                    }}
-                  />
-                </Inputpart>
-              </InputContainer>
-              <InputContainer>
-                <InputLable>배송 메모</InputLable>
-                <Inputpart>
-                  <Input
-                    css={input}
-                    value={receiveMemo}
-                    onChange={(event) => {
-                      setReceiveMemo(event.target.value);
-                    }}
-                  />
-                </Inputpart>
-              </InputContainer>
-            </div>
-            <br />
-            <hr />
-            <br />
-            <H2>상품 정보</H2>
-            <ProductList productList={orderInfoResponseDto} />
-            <br />
-            <hr />
-            <br />
-            <div>
-              <H2>쿠폰 / 할인</H2>
-              <>총 금액 </>
-              <Total>
-                {numberToMonetary(getProductTotalPrice(orderInfoResponseDto))}원
-              </Total>
-            </div>
-            <br />
-            <hr />
-            <br />
-            <div>
-              <H2>결제방식</H2>
-              <PayList index={payState} setIndex={setPayState} />
-            </div>
-          </OrderSection>
-          <SideBarSection className="sidebar-section">
-            <StickyContainer>
-              <PayResultSection
-                className="pay-result-section"
-                borderColor={ThemeGray4}
-              >
-                <h3>결제금액</h3>
-                <TotalProductPriceSection>
-                  <PayIndex>
-                    <PayLable>총 상품금액</PayLable>
-                    <PayPrice marginLeft="auto">
-                      {numberToMonetary(
-                        getProductTotalPrice(orderInfoResponseDto),
-                      ) || 0}
-                      원
-                    </PayPrice>
-                  </PayIndex>
-                  <PayIndex>
-                    <PayLable>할인금액</PayLable>
-                    <PayPrice marginLeft="auto">{0}원</PayPrice>
-                  </PayIndex>
-                  <PayIndex>
-                    <PayLable>배송비</PayLable>
-                    <PayPrice marginLeft="auto">{0}원</PayPrice>
-                  </PayIndex>
-                  <PayLargeIndex borderColor={ThemeGray4}>
-                    <PayLargeLable>최종 결제 금액</PayLargeLable>
-                    <PayLargePrice>
-                      {numberToMonetary(
-                        getProductTotalPrice(orderInfoResponseDto),
-                      ) || 0}
-                      원
-                    </PayLargePrice>
-                  </PayLargeIndex>
-                </TotalProductPriceSection>
-              </PayResultSection>
-              <Blue
-                buttonText={
-                  numberToMonetary(getProductTotalPrice(orderInfoResponseDto)) +
-                  '원 결제하기'
-                }
-                onClickFunc={goToPayment}
-                css={{ width: '100%' }}
-              />
-            </StickyContainer>
-          </SideBarSection>
-        </OrderContainer>
-        <br />
-        <hr />
-      </CommerceLayout>
-    </Div>
+    <CommerceLayout>
+      <SiteHead title="Order/Payment" />
+      <CouponContext.Provider value={stateList}>
+        <CouponDispatchContext.Provider value={dispatch}>
+          <OrderContainer className="order-container">
+            <OrderSection className="order-section">
+              <H1>주문/결제</H1>
+              <div>
+                <H2>주문정보</H2>
+                <OrdererSection
+                  getUserName={getUserName}
+                  getUserPhone={getUserPhone}
+                  receiverName={receiverName}
+                  receiverPhone={receiverPhone}
+                  receiverSimpleAddress={receiverSimpleAddress}
+                  receiverDetailAddress={receiverDetailAddress}
+                  receiverMemo={receiverMemo}
+                  setReceiverName={setReceiverName}
+                  setReceiverPhone={setReceiverPhone}
+                  setReceiverSimpleAddress={setReceiverSimpleAddress}
+                  setReceiverDetailAddress={setReceiverDetailAddress}
+                  setReceiverMemo={setReceiverMemo}
+                />
+              </div>
+              <HR />
+              <div>
+                <H2>상품 정보</H2>
+                <OrderDetail orderBySellerDtoList={orderBySellerDtoList} />
+              </div>
+              <HR />
+              <div>
+                <H2>결제방식</H2>
+                <PayList index={payState} setIndex={payStateClick} />
+              </div>
+              <EndOfOrderSection>
+                <HR />
+              </EndOfOrderSection>
+            </OrderSection>
+            <OrderSidebar
+              goToPayment={goToPayment}
+              productTotalPrice={productTotalPrice}
+            />
+          </OrderContainer>
+        </CouponDispatchContext.Provider>
+      </CouponContext.Provider>
+    </CommerceLayout>
   );
 }
 
@@ -273,6 +276,7 @@ const OrderContainer = styled.div`
   justify-content: center;
   position: relative;
   flex-wrap: wrap;
+  font-size: 1.3rem;
 `;
 
 const OrderSection = styled.div`
@@ -281,85 +285,10 @@ const OrderSection = styled.div`
   flex: 1 0 0px;
 `;
 
-const SideBarSection = styled.div`
-  padding-top: 60px;
-  margin-left: 40px;
-  flex: 0 1 0px;
-  max-width: 100%;
-  min-width: 300px;
-`;
-
-const StickyContainer = styled.div`
-  position: sticky;
-  top: 81px;
-  padding-top: 40px;
-`;
-
-const PayResultSection = styled.div`
-  border: solid 1px ${(props) => props.borderColor};
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  margin-bottom: 10px;
-  padding: 20px;
-`;
-
-const PayIndex = styled.div`
-  display: inline-flex;
-  margin-top: 5px;
-`;
-
-const PayLable = styled.h4`
-  font-size: 1rem;
-`;
-
-const PayPrice = styled.span`
-  margin-left: auto;
-  font-size: 1rem;
-`;
-
-const PayLargeIndex = styled.div`
-  border-top: solid 1px ${(props) => props.borderColor};
-  display: inline-flex;
-  margin-top: 20px;
-  padding-top: 19px;
-`;
-
-const PayLargeLable = styled.h4`
-  font-size: 1.2rem;
-`;
-
-const PayLargePrice = styled.span`
-  margin-left: auto;
-  font-size: 1.2rem;
-`;
-
-const TotalProductPriceSection = styled.div`
-  margin: 10px 0;
-  display: flex;
-  flex-direction: column;
-`;
-
-const SameAsUserSection = styled.div`
-  padding: 5px 0;
-  font-size: 1rem;
-`;
-
-const Div = styled.div`
-  font-size: 1.3rem;
-`;
-
-const Total = styled.span`
-  font-size: 1.3rem;
-`;
-
-const Td = styled.td`
-  text-align: right;
-  width: 10rem;
-`;
-
-const TdTitle = styled.td`
-  font-size: 1.2rem;
-  width: 5rem;
+const EndOfOrderSection = styled.div`
+  @media (min-width: 1024px) {
+    display: none;
+  }
 `;
 
 const H1 = styled.h1`
@@ -367,20 +296,14 @@ const H1 = styled.h1`
   margin-bottom: 30px;
 `;
 
-const H2 = styled.p`
+const H2 = styled.h2`
   font-size: 2rem;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 `;
 
-const InputContainer = styled.div`
-  display: inline-flex;
-  width: 100%;
-  margin: 10px 0;
-`;
-
-const InputLable = styled.span``;
-
-const Inputpart = styled.div`
-  margin: 0;
-  margin-left: auto;
+const HR = styled.hr`
+  color: ${ThemeGray3};
+  background-color: ${ThemeGray3};
+  border-color: ${ThemeGray3};
+  margin: 3rem 0;
 `;

@@ -4,9 +4,9 @@ let backendHost;
 const hostname = 'dev';
 
 if (hostname === 'prod') {
-  backendHost = 'http://localhost:8080';
+  backendHost = 'http://localhost:8000';
 } else if (hostname === 'dev') {
-  backendHost = 'http://13.125.163.134';
+  backendHost = 'http://3.39.25.221:8000';
 } else {
   backendHost = 'http://localhost:8080';
 }

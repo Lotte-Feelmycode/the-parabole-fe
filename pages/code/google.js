@@ -14,7 +14,6 @@ export default function googleCode({}) {
     GET(`/auth/token/google`, {
       code: code,
     }).then((res) => {
-      console.log(res);
       if (res.success) {
         localStorage.setItem('userId', res.data.userId);
         localStorage.setItem('email', res.data.email);
@@ -28,7 +27,6 @@ export default function googleCode({}) {
         localStorage.setItem('role', res.data.role);
         localStorage.setItem('token', res.data.token);
 
-        alert('Google 로그인 성공');
         router.push('/');
       }
     });

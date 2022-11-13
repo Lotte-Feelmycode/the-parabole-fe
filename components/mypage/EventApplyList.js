@@ -5,12 +5,13 @@ import { ThemeGray4, ThemeGray1, MainBlue } from '@utils/constants/themeColor';
 import { APPLY_TYPE } from '@utils/constants/types';
 import { getDateTimeShort } from '@utils/functions';
 
-export default function EventApplyList({ userId }) {
+export default function EventApplyList({ headers }) {
   const [total, setTotal] = useState([]);
   const [nowState, setNowState] = useState(3);
 
   useEffect(() => {
-    GET_DATA(`/event/user/participant/${userId}`).then((res) => {
+    // TODO: PathVariable 대신 Header 를 넘기고 백엔드에서 @RequestAttribute 로 변경합니다.
+    GET_DATA(`/event/user/participant/${userId}`, '', headers).then((res) => {
       if (res) {
         setTotal(res);
       }

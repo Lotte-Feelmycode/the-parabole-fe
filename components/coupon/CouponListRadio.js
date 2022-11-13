@@ -3,8 +3,9 @@ import * as btn from '@components/input/Button';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import { useGetToken } from '@hooks/useGetToken';
 
-function CouponListRadio({ sellerId, setCouponParentId }) {
+function CouponListRadio({ sellerId, setCouponParentId, headers }) {
   const router = useRouter();
   const [couponList, setCouponList] = useState([]);
   const [totalElementCnt, setTotalElementCnt] = useState(0);
@@ -12,7 +13,8 @@ function CouponListRadio({ sellerId, setCouponParentId }) {
   const [radioValue, setRadioValue] = useState(1);
 
   useEffect(() => {
-    GET_DATA(`/coupon/seller/list`, { sellerId }).then((res) => {
+    let headers = useGetToken();
+    GET_DATA(`/coupon/seller/list`, '', headers).then((res) => {
       if (res) {
         if (res.numberOfElements === 0) {
           alert('판매자가 등록한 쿠폰이 없습니다.');
@@ -80,9 +82,10 @@ function CouponListRadio({ sellerId, setCouponParentId }) {
                     />
                     {coupon.name}
                   </th>
-                  <td className="py-4 px-6">{coupon.type}</td>
+                  <td className="py-4 px-6">
+                    {coupon.type === 1 ? '할인액 (원)' : '할인율 (%)'}
+                  </td>{' '}
                   <td className="py-4 px-6">{coupon.discountValue}</td>
-
                   <td className="py-4 px-6">{coupon.detail}</td>
                   <td className="py-4 px-6">{coupon.cnt}</td>
                   <td className="py-4 px-6">{coupon.remains}</td>

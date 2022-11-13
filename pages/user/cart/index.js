@@ -3,20 +3,22 @@ import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { GET, POST } from '@apis/defaultApi';
 import { ThemeGray5 } from '@utils/constants/themeColor';
+import { LINKS } from '@utils/constants/links';
 import CommerceLayout from '@components/common/CommerceLayout';
 import CartContent from '@components/cart/CartContent';
 import CartHeader from '@components/cart/CartHeader';
 import CartFooter from '@components/cart/CartFooter';
 import CartSidebar from '@components/cart/CartSidebar';
 import EmptyCart from '@components/cart/EmptyCart';
+import { useGetToken } from '@hooks/useGetToken';
 
 export default function Cart() {
   const router = useRouter();
-  // TODO: userId 집어넣기
-  const userId = 3;
+
+  const [headers, setHeaders] = useState('');
 
   const [cartItemCount, setCartItemCount] = useState(0);
-  const [cartId, setCartId] = useState(userId);
+  const [cartId, setCartId] = useState(0);
   const [cartBySellerDtoList, setCartBySellerDtoList] = useState([]);
   const [checkBoxStates, setCheckBoxStates] = useState(new Map());
   const [numberOfChekced, setNumberOfChekced] = useState(0);
@@ -36,7 +38,17 @@ export default function Cart() {
   };
 
   useEffect(() => {
-    GET(`/cart/list`, { userId }).then((res) => {
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push(LINKS.SIGNIN);
+      }
+    }
+    let getHeaders = useGetToken();
+    setHeaders(getHeaders);
+
+    console.log('headers:', getHeaders);
+    GET(`/cart/list`, null, getHeaders).then((res) => {
       console.log(res);
       if (res) {
         if (res.success) {
@@ -176,10 +188,13 @@ export default function Cart() {
           }
         });
       });
-      POST(`/orderinfo`, {
-        userId: userId,
-        orderInfoDto: orderInfoDto,
-      }).then((res) => {
+      POST(
+        `/orderinfo`,
+        {
+          orderInfoDto: orderInfoDto,
+        },
+        headers,
+      ).then((res) => {
         if (res && res.success) {
           router.push({ pathname: `/user/order` });
         } else {
@@ -264,12 +279,12 @@ export default function Cart() {
                 checkBoxStates={checkBoxStates}
                 numberOfChekced={numberOfChekced}
                 totalCheckBoxFlag={totalCheckBoxFlag}
-                userId={userId}
+                headers={headers}
               />
               <CartContent
                 cartInfoChange={cartInfoChange}
                 cartCheckBoxChange={cartCheckBoxChange}
-                userId={userId}
+                headers={headers}
                 cartBySellerDtoList={cartBySellerDtoList}
                 checkBoxStates={checkBoxStates}
               />

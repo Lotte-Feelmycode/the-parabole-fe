@@ -5,7 +5,7 @@ import { ThemeGray1 } from '@utils/constants/themeColor';
 import CartProduct from '@components/cart/CartProduct';
 
 export default function CartContentDetail({
-  userId,
+  headers,
   cartItemDtoList,
   checkBoxStates,
   cartCheckBoxChange,
@@ -58,11 +58,10 @@ export default function CartContentDetail({
 
   const deleteCartItem = ({ input }) => {
     const CartItemDeleteRequestDto = {
-      userId: userId,
       cartItemId: input,
     };
     if (confirm('장바구니에서 삭제하시겠습니까?')) {
-      DELETE(`/cart/delete`, CartItemDeleteRequestDto);
+      DELETE(`/cart/delete`, CartItemDeleteRequestDto, headers);
       router.reload();
     }
   };
@@ -86,7 +85,7 @@ export default function CartContentDetail({
             </ProductCheckSection>
             <ProductDetailSection className="product-detail-section">
               <CartProduct
-                userId={userId}
+                headers={headers}
                 cartItemId={item.cartItemId}
                 product={item.product}
                 count={item.count}

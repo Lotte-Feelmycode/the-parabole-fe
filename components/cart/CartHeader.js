@@ -9,7 +9,7 @@ export default function CartHeader({
   checkBoxStates,
   numberOfChekced,
   totalCheckBoxFlag,
-  userId,
+  headers,
 }) {
   const router = useRouter();
 
@@ -51,10 +51,9 @@ export default function CartHeader({
         cartItemList.map((item) => {
           if (checkBoxStates.get(item.cartItemId)) {
             const CartItemDeleteRequestDto = {
-              userId: userId,
               cartItemId: item.cartItemId,
             };
-            DELETE(`/cart/delete`, CartItemDeleteRequestDto);
+            DELETE(`/cart/delete`, CartItemDeleteRequestDto, headers);
             deleteFlag = true;
           }
         });

@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
-
 import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead.js';
-
 import MainContent from '@components/common/MainContent';
 import IconList from '@components/common/IconList';
 import ProductList from '@components/product/ProductList';
@@ -11,7 +9,7 @@ export default function Home() {
   const productListProps = {
     size: 12,
     page: 0,
-    sort: 'id.desc',
+    sort: 'createdAt,desc',
   };
 
   return (

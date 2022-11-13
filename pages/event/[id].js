@@ -2,6 +2,8 @@ import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { GET_DATA, POST_DATA } from '@apis/defaultApi';
+import { getDateTime } from '@utils/functions';
+import EventPrize from '@components/event/eventPrize';
 import CommerceLayout from '@components/common/CommerceLayout';
 
 import EventInfo from '@components/event/EvenInfo';

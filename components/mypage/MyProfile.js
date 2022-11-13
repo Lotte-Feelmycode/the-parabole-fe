@@ -1,16 +1,10 @@
-import { GET_DATA } from '@apis/defaultApi';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import { GET_DATA } from '@apis/defaultApi';
 import { LargeInput } from '@components/input/Input';
-import { useGetToken } from '@hooks/useGetToken';
 
-export default function MyProfile({ userId }) {
+export default function MyProfile({ headers }) {
   const [userInfo, setUserInfo] = useState([]);
-
-  let headers;
-  useEffect(() => {
-    headers = useGetToken();
-  }, []);
 
   useEffect(() => {
     GET_DATA(`/user`, '', headers).then((res) => {
@@ -18,7 +12,7 @@ export default function MyProfile({ userId }) {
         setUserInfo(res);
       }
     });
-  }, [userId]);
+  }, []);
 
   function GetEmail({ email }) {
     if (email && email.split('@')[1]) {
@@ -80,18 +74,6 @@ export default function MyProfile({ userId }) {
           <LabelTitle>이메일</LabelTitle>
           <LabelInputSection>
             <GetEmail email={userInfo.email} />
-          </LabelInputSection>
-        </LabelSection>
-
-        <LabelSection>
-          <LabelTitle>연락처</LabelTitle>
-          <LabelInputSection>
-            <LargeInput
-              type="text"
-              attr={{ readOnly: true }}
-              css={{ width: '100%' }}
-              value={userInfo.phone || ''}
-            />
           </LabelInputSection>
         </LabelSection>
         <LabelSection>

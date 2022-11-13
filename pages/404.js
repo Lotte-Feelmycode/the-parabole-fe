@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import CommerceLayout from '@components/common/CommerceLayout';
 import { Blue } from '@components/input/Button';
 import { useRouter } from 'next/router';
+import { LINKS } from '@utils/constants/links';
 
 export default function NotFoundPage() {
   const router = useRouter();
@@ -12,7 +13,7 @@ export default function NotFoundPage() {
         <div className="max-w-screen-2xl px-4 md:px-8 mx-auto">
           <div className="flex flex-col items-center">
             <a
-              href="/"
+              href={LINKS.MAIN}
               className="inline-flex items-center text-2xl md:text-3xl font-bold gap-2.5 mb-8"
               aria-label="logo"
             >
@@ -34,7 +35,7 @@ export default function NotFoundPage() {
             <Blue
               buttonText="Go home"
               onClickFunc={() => {
-                router.push('/');
+                router.push(LINKS.MAIN);
               }}
             />
           </div>

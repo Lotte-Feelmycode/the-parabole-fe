@@ -10,6 +10,5 @@ export const useGetToken = () => {
   let headers = {
     Authorization: bearerToken,
   };
-  console.log('headers in useGetToken Hooks');
   return headers;
 };
