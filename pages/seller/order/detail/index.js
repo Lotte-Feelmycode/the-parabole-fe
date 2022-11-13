@@ -28,19 +28,14 @@ export default function Home() {
   return (
     <SellerLayout>
       <SiteHead title="OrderListHome" />
-
       <section className="flex min-h-screen flex-col text-gray-600 body-font">
-        <div className="container px-5 py-24 mx-auto">
-          <H1>THE PARABOLE SELLER OFFICE</H1>
+        <div>
+          <span className='text-3xl font-bold'>주문 내역 조회</span>
+        </div>
+        <div className="container py-12 mx-auto">
           <SellerOrderList headers={headers} />
         </div>
       </section>
     </SellerLayout>
   );
 }
-
-const H1 = styled.h1`
-  font-size: 30px;
-  margin-bottom: 30px;
-  font-family: 'SansBold';
-`;

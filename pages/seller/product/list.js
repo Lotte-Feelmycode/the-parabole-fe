@@ -107,32 +107,32 @@ export default function SellerProductList() {
         <table className="w-full text-m text-center">
           <thead className="text-base text-black uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr className="h-14">
-                <th scope="col" className="py-3 px-12 w-52 bg-gray-50">
-                  <div className="flex items-center justify-center">
-                    상품명
-                    <SortButton onClickFunc={(e) => sortListByName(e)}></SortButton>
-                  </div>
-                </th>
-                <th scope="col" className="p-4 w-18">
-                  상품 이미지
-                </th>
-                <th scope="col" className="py-3 px-10 w-24">
-                  카테고리
-                </th>
-                <th scope="col" className="py-3 px-10 w-40">
-                  <div class="flex justify-center items-center">
-                    가격
-                    <SortButton onClickFunc={(e) => sortListByPrice(e)}></SortButton>
-                  </div>
-                </th>
-                <th scope="col" className="py-3 px-6 w-40">
-                  <div className="flex items-center justify-center">
-                    재고
-                    <SortButton onClickFunc={(e) => sortListByStock(e)}></SortButton>
-                  </div>
-                </th>
-              </tr>
-            </thead>
+              <th scope="col" className="py-3 px-12 w-52 bg-gray-50">
+                <div className="flex items-center justify-center">
+                  상품명
+                  <SortButton onClickFunc={(e) => sortListByName(e)}></SortButton>
+                </div>
+              </th>
+              <th scope="col" className="p-4 w-18">
+                상품 이미지
+              </th>
+              <th scope="col" className="py-3 px-10 w-24">
+                카테고리
+              </th>
+              <th scope="col" className="py-3 px-10 w-40">
+                <div class="flex justify-center items-center">
+                  가격
+                  <SortButton onClickFunc={(e) => sortListByPrice(e)}></SortButton>
+                </div>
+              </th>
+              <th scope="col" className="py-3 px-6 w-40">
+                <div className="flex items-center justify-center">
+                  재고
+                  <SortButton onClickFunc={(e) => sortListByStock(e)}></SortButton>
+                </div>
+              </th>
+            </tr>
+          </thead>
           <tbody>
             {productList &&
               Array.isArray(productList) &&
@@ -160,7 +160,6 @@ export default function SellerProductList() {
                   <td className=" py-2 px-4  w-40">
                     {product.productRemains}
                   </td>
-
                 </tr>
               ))
             ) : (
