@@ -90,7 +90,7 @@ export default function CouponListRadio({ changeCouponParentId, headers }) {
                 쿠폰 타입
               </th>
               <th scope="col" className="py-3 px-6">
-                할인율/액수
+                할인율/금액
               </th>
               <th scope="col" className="py-3 px-6">
                 발급 수량(총 수량)
