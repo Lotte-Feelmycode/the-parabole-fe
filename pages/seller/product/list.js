@@ -9,6 +9,9 @@ import Heading from '@components/input/Heading';
 import { SmallPink } from '@components/input/Button';
 import { isEmpty, numberToMonetary } from '@utils/functions';
 import SortButton from '@components/input/SortButton';
+import { getState } from '@utils/functions';
+import { PRODUCT_STATE } from '@utils/constants/types';
+import { ColorBlue1 } from '@utils/constants/themeColor';
 
 export default function SellerProductList() {
   const router = useRouter();
@@ -31,7 +34,7 @@ export default function SellerProductList() {
     }
     setHeaders(useGetToken());
 
-    GET_DATA(`/product/list`, null, headers).then((res) => {
+    GET_DATA(`/product/seller/list`, null, headers).then((res) => {
       if (res) {
         setProductList(res.content);
       }
@@ -119,17 +122,20 @@ export default function SellerProductList() {
               <th scope="col" className="py-3 px-10 w-24">
                 카테고리
               </th>
-              <th scope="col" className="py-3 px-10 w-40">
+              <th scope="col" className="py-3 px-10 w-24">
                 <div class="flex justify-center items-center">
                   가격
                   <SortButton onClickFunc={(e) => sortListByPrice(e)}></SortButton>
                 </div>
               </th>
-              <th scope="col" className="py-3 px-6 w-40">
+              <th scope="col" className="py-3 px-6 w-24">
                 <div className="flex items-center justify-center">
                   재고
                   <SortButton onClickFunc={(e) => sortListByStock(e)}></SortButton>
                 </div>
+              </th>
+              <th scope="col" className="py-3 px-2 w-24">
+                판매 상태
               </th>
             </tr>
           </thead>
@@ -154,11 +160,14 @@ export default function SellerProductList() {
                   <td className=" py-2 px-4  w-24">
                     {product.productCategory}
                   </td>
-                  <td className=" py-2 px-4  w-40">
+                  <td className=" py-2 px-4  w-24">
                     {numberToMonetary(product.productPrice)} 원
                   </td>
-                  <td className=" py-2 px-4  w-40">
-                    {product.productRemains}
+                  <td className=" py-2 px-4  w-24">
+                    {numberToMonetary(product.productRemains)}
+                  </td>
+                  <td className=" py-2 px-4  w-24">
+                    <Tags>{getState(PRODUCT_STATE, product.productStatus)}</Tags>
                   </td>
                 </tr>
               ))
@@ -192,7 +201,7 @@ const Divider = styled.hr`
 `;
 
 const Tags = styled.span`
-  background-color: black;
+  background-color: ${ColorBlue1};
   color: white;
   font-size: 0.8rem;
   margin: 0 0.5rem;
