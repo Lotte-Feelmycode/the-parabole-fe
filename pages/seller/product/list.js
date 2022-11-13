@@ -83,7 +83,7 @@ export default function SellerProductList() {
 
     let copyArray = [...productList];
 
-    if (nameSortDesc) {
+    if (stockSortDesc) {
       copyArray.sort(function(a, b) { // 오름차순
         return a.productRemains > b.productRemains ? -1 : a.productRemains < b.productRemains ? 1 : 0;
       }); 
