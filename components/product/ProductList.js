@@ -26,6 +26,8 @@ export default function ProductList({
   const [nowPage, setNowPage] = useState(page);
 
   const [store, setStore] = useState();
+  const [storeId, setStoreId] = useState();
+
   const router = useRouter();
   const isMainPage = router.pathname === '/' ? true : false;
 
@@ -48,6 +50,7 @@ export default function ProductList({
           setTotalPages(res.totalPages);
           setNowPage(res.pageable.pageNumber);
           setStore(res.content[0].storeName);
+          setStoreId(res.content[0].sellerId);
         }
       } else {
         alert('상품을 찾을 수 없습니다. 다시 시도해주세요.');
@@ -61,7 +64,7 @@ export default function ProductList({
         {router.pathname.includes("store") &&
           (
             <div>
-              <StoreInfo total={totalElementCnt} products={productList} store={store}/>
+              <StoreInfo total={totalElementCnt} storeId={storeId} storeName={store}/>
            </div>   
           )
         }
