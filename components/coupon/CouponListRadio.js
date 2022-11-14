@@ -32,7 +32,7 @@ export default function CouponListRadio({ changeCouponParentId, headers }) {
   }
 
   function ShowCoupon() {
-    if (couponList.length > 0) {
+    if (couponList && couponList.length > 0) {
       return (
         couponList &&
         couponList.map((coupon) => (
