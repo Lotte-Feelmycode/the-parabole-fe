@@ -40,19 +40,29 @@ export default function SellerOrderList() {
     let copyArray = [...orderList];
 
     if (nameSortDesc) {
-      copyArray.sort(function(a, b) { // 내림차순
-        return a.productName > b.productName ? -1 : a.productName < b.productName ? 1 : 0;
-      }); 
+      copyArray.sort(function (a, b) {
+        // 내림차순
+        return a.productName > b.productName
+          ? -1
+          : a.productName < b.productName
+          ? 1
+          : 0;
+      });
       setNameSortDesc(false);
     } else {
-      copyArray.sort(function(a, b) { // 오름차순
-        return a.productName < b.productName ? -1 : a.productName > b.productName ? 1 : 0;
-      });  
+      copyArray.sort(function (a, b) {
+        // 오름차순
+        return a.productName < b.productName
+          ? -1
+          : a.productName > b.productName
+          ? 1
+          : 0;
+      });
       setNameSortDesc(true);
     }
 
     setOrderList(copyArray);
-  };
+  }
 
   // 주문수량정렬
   function sortListByOrders(e) {
@@ -61,19 +71,29 @@ export default function SellerOrderList() {
     let copyArray = [...orderList];
 
     if (orderCntSortDesc) {
-      copyArray.sort(function(a, b) { // 내림차순
-        return a.productCnt > b.productCnt ? -1 : a.productCnt < b.productCnt ? 1 : 0;
-      }); 
+      copyArray.sort(function (a, b) {
+        // 내림차순
+        return a.productCnt > b.productCnt
+          ? -1
+          : a.productCnt < b.productCnt
+          ? 1
+          : 0;
+      });
       setOrderCntSortDesc(false);
     } else {
-      copyArray.sort(function(a, b) { // 오름차순
-        return a.productCnt < b.productCnt ? -1 : a.productCnt > b.productCnt ? 1 : 0;
-      });  
+      copyArray.sort(function (a, b) {
+        // 오름차순
+        return a.productCnt < b.productCnt
+          ? -1
+          : a.productCnt > b.productCnt
+          ? 1
+          : 0;
+      });
       setOrderCntSortDesc(true);
     }
 
     setOrderList(copyArray);
-  };
+  }
 
   // 주문총금액 정렬
   function sortListByTotal(e) {
@@ -82,21 +102,33 @@ export default function SellerOrderList() {
     let copyArray = [...orderList];
 
     if (totalSortDesc) {
-      copyArray.sort(function(a, b) { // 내림차순
-        return a.productCnt * a.productdiscountPrice > b.productCnt * b.productdiscountPrice ?
-         -1 : a.productCnt * a.productdiscountPrice < b.productCnt * b.productdiscountPrice ? 1 : 0;
-      }); 
+      copyArray.sort(function (a, b) {
+        // 내림차순
+        return a.productCnt * a.productdiscountPrice >
+          b.productCnt * b.productdiscountPrice
+          ? -1
+          : a.productCnt * a.productdiscountPrice <
+            b.productCnt * b.productdiscountPrice
+          ? 1
+          : 0;
+      });
       setTotalSortDesc(false);
     } else {
-      copyArray.sort(function(a, b) { // 오름차순
-        return a.productCnt * a.productdiscountPrice < b.productCnt * b.productdiscountPrice ?
-         -1 : a.productCnt * a.productdiscountPrice > b.productCnt * b.productdiscountPrice ? 1 : 0;
-      });  
+      copyArray.sort(function (a, b) {
+        // 오름차순
+        return a.productCnt * a.productdiscountPrice <
+          b.productCnt * b.productdiscountPrice
+          ? -1
+          : a.productCnt * a.productdiscountPrice >
+            b.productCnt * b.productdiscountPrice
+          ? 1
+          : 0;
+      });
       setTotalSortDesc(true);
     }
 
     setOrderList(copyArray);
-  };
+  }
 
   // 주문상태 정렬
   function sortListByState(e) {
@@ -105,28 +137,30 @@ export default function SellerOrderList() {
     let copyArray = [...orderList];
 
     if (stateSortDesc) {
-      copyArray.sort(function(a, b) { // 내림차순
+      copyArray.sort(function (a, b) {
+        // 내림차순
         return a.state > b.state ? -1 : a.state < b.state ? 1 : 0;
-      }); 
+      });
       setStateSortDesc(false);
     } else {
-      copyArray.sort(function(a, b) { // 오름차순
+      copyArray.sort(function (a, b) {
+        // 오름차순
         return a.state < b.state ? -1 : a.state > b.state ? 1 : 0;
-      });  
+      });
       setStateSortDesc(true);
     }
 
     setOrderList(copyArray);
-  };
-  
+  }
+
   function sumTotal() {
     if (Array.isArray(orderList)) {
       let sum = 0;
       orderList.forEach((order) => {
         if (!isEmpty(order.productdiscountPrice)) {
-          sum += (order.productCnt * order.productdiscountPrice);
+          sum += order.productCnt * order.productdiscountPrice;
         } else {
-          sum += (order.productCnt * order.productPrice);
+          sum += order.productCnt * order.productPrice;
         }
       });
       return sum;
@@ -142,7 +176,7 @@ export default function SellerOrderList() {
             <th scope="col" className="py-3 px-12 w-52 bg-gray-50">
               <div className="flex items-center justify-center">
                 주문상품
-                <SortButton onClickFunc={(e) => sortListByName(e)}/>
+                <SortButton onClickFunc={(e) => sortListByName(e)} />
               </div>
             </th>
             <th scope="col" className="p-4 w-18">
@@ -157,13 +191,13 @@ export default function SellerOrderList() {
             <th scope="col" className="py-3 px-2 w-24">
               <div className="flex justify-center items-center">
                 주문수량
-                <SortButton onClickFunc={(e) => sortListByOrders(e)}/>
+                <SortButton onClickFunc={(e) => sortListByOrders(e)} />
               </div>
             </th>
             <th scope="col" className="py-3 px-2 w-24">
               <div className="flex justify-center items-center">
                 결제금액
-                <SortButton onClickFunc={(e) => sortListByTotal(e)}/>
+                <SortButton onClickFunc={(e) => sortListByTotal(e)} />
               </div>
             </th>
             <th scope="col" className="py-3 px-6 w-24">
@@ -175,9 +209,9 @@ export default function SellerOrderList() {
             <th scope="col" className="py-3 px-4 w-24">
               <div className="flex justify-center items-center">
                 주문상태
-                <SortButton onClickFunc={(e) => sortListByState(e)}/>
+                <SortButton onClickFunc={(e) => sortListByState(e)} />
               </div>
-            </th>            
+            </th>
             <th scope="col" className="py-3 px-4 w-24">
               결제수단
             </th>
@@ -186,14 +220,20 @@ export default function SellerOrderList() {
         <tbody>
           {orderList && orderList.map((order) => <Order order={order} />)}
         </tbody>
-        <tfoot className='bg-gray-100'>
+        <tfoot className="bg-gray-100">
           <tr className="h-14 rounded-l-lg font-semibold text-gray-900 dark:text-white">
-            <th scope="row" className="py-3 px-6 text-base">Total</th>
-            <td/>
-            <td/>
-            <td colSpan={4}/>
-            <td className="text-right text-red-600 py-3 px-6">총 주문수 : {orderList.length}</td>
-            <td colSpan={2} className="text-right text-red-600 py-3 px-6">총 주문 금액 : {numberToMonetary(sumTotal())}원</td>
+            <th scope="row" className="py-3 px-6 text-base">
+              Total
+            </th>
+            <td />
+            <td />
+            <td colSpan={4} />
+            <td className="text-right text-red-600 py-3 px-6">
+              총 주문수 : {orderList.length}
+            </td>
+            <td colSpan={2} className="text-right text-red-600 py-3 px-6">
+              총 주문 금액 : {numberToMonetary(sumTotal())}원
+            </td>
           </tr>
         </tfoot>
       </table>

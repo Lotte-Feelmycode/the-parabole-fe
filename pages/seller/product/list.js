@@ -47,19 +47,29 @@ export default function SellerProductList() {
     let copyArray = [...productList];
 
     if (priceSortDesc) {
-      copyArray.sort(function(a, b) { // 오름차순
-        return a.productPrice > b.productPrice ? -1 : a.productPrice < b.productPrice ? 1 : 0;
-      }); 
+      copyArray.sort(function (a, b) {
+        // 오름차순
+        return a.productPrice > b.productPrice
+          ? -1
+          : a.productPrice < b.productPrice
+          ? 1
+          : 0;
+      });
       setPriceSortDesc(false);
     } else {
-      copyArray.sort(function(a, b) { // 오름차순
-        return a.productPrice < b.productPrice ? -1 : a.productPrice > b.productPrice ? 1 : 0;
-      });  
+      copyArray.sort(function (a, b) {
+        // 오름차순
+        return a.productPrice < b.productPrice
+          ? -1
+          : a.productPrice > b.productPrice
+          ? 1
+          : 0;
+      });
       setPriceSortDesc(true);
     }
 
     setProductList(copyArray);
-  };
+  }
 
   function sortListByName(e) {
     e.preventDefault();
@@ -67,19 +77,29 @@ export default function SellerProductList() {
     let copyArray = [...productList];
 
     if (nameSortDesc) {
-      copyArray.sort(function(a, b) { // 오름차순
-        return a.productName > b.productName ? -1 : a.productName < b.productName ? 1 : 0;
-      }); 
+      copyArray.sort(function (a, b) {
+        // 오름차순
+        return a.productName > b.productName
+          ? -1
+          : a.productName < b.productName
+          ? 1
+          : 0;
+      });
       setNameSortDesc(false);
     } else {
-      copyArray.sort(function(a, b) { // 오름차순
-        return a.productName < b.productName ? -1 : a.productName > b.productName ? 1 : 0;
-      });  
+      copyArray.sort(function (a, b) {
+        // 오름차순
+        return a.productName < b.productName
+          ? -1
+          : a.productName > b.productName
+          ? 1
+          : 0;
+      });
       setNameSortDesc(true);
     }
 
     setProductList(copyArray);
-  };
+  }
 
   function sortListByStock(e) {
     e.preventDefault();
@@ -87,20 +107,29 @@ export default function SellerProductList() {
     let copyArray = [...productList];
 
     if (stockSortDesc) {
-      copyArray.sort(function(a, b) { // 오름차순
-        return a.productRemains > b.productRemains ? -1 : a.productRemains < b.productRemains ? 1 : 0;
-      }); 
+      copyArray.sort(function (a, b) {
+        // 오름차순
+        return a.productRemains > b.productRemains
+          ? -1
+          : a.productRemains < b.productRemains
+          ? 1
+          : 0;
+      });
       setStockSortDesc(false);
     } else {
-      copyArray.sort(function(a, b) { // 오름차순
-        return a.productRemains < b.productRemains ? -1 : a.productRemains > b.productRemains ? 1 : 0;
-      });  
+      copyArray.sort(function (a, b) {
+        // 오름차순
+        return a.productRemains < b.productRemains
+          ? -1
+          : a.productRemains > b.productRemains
+          ? 1
+          : 0;
+      });
       setStockSortDesc(true);
     }
 
     setProductList(copyArray);
-  };
-
+  }
 
   return (
     <>
@@ -113,7 +142,9 @@ export default function SellerProductList() {
               <th scope="col" className="py-3 px-12 w-52 bg-gray-50">
                 <div className="flex items-center justify-center">
                   상품명
-                  <SortButton onClickFunc={(e) => sortListByName(e)}></SortButton>
+                  <SortButton
+                    onClickFunc={(e) => sortListByName(e)}
+                  ></SortButton>
                 </div>
               </th>
               <th scope="col" className="p-4 w-18">
@@ -125,13 +156,17 @@ export default function SellerProductList() {
               <th scope="col" className="py-3 px-10 w-24">
                 <div class="flex justify-center items-center">
                   가격
-                  <SortButton onClickFunc={(e) => sortListByPrice(e)}></SortButton>
+                  <SortButton
+                    onClickFunc={(e) => sortListByPrice(e)}
+                  ></SortButton>
                 </div>
               </th>
               <th scope="col" className="py-3 px-6 w-24">
                 <div className="flex items-center justify-center">
                   재고
-                  <SortButton onClickFunc={(e) => sortListByStock(e)}></SortButton>
+                  <SortButton
+                    onClickFunc={(e) => sortListByStock(e)}
+                  ></SortButton>
                 </div>
               </th>
               <th scope="col" className="py-3 px-2 w-24">
@@ -141,21 +176,18 @@ export default function SellerProductList() {
           </thead>
           <tbody>
             {productList &&
-              Array.isArray(productList) &&
-              productList.length > 0 ? (
+            Array.isArray(productList) &&
+            productList.length > 0 ? (
               productList.map((product, index) => (
                 <tr
                   key={product.productId}
                   className="h-24 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                  >
+                >
                   <td className="bg-gray-50 py-2 px-4 w-52 text-left">
                     {product.productName}
                   </td>
                   <td className="py-2 px-4 mx-2 w-16">
-                    <img
-                      src={product.productThumbnailImg}
-                      alt="상품"
-                    ></img>
+                    <img src={product.productThumbnailImg} alt="상품"></img>
                   </td>
                   <td className=" py-2 px-4  w-24">
                     {product.productCategory}
@@ -167,7 +199,9 @@ export default function SellerProductList() {
                     {numberToMonetary(product.productRemains)}
                   </td>
                   <td className=" py-2 px-4  w-24">
-                    <Tags>{getState(PRODUCT_STATE, product.productStatus)}</Tags>
+                    <Tags>
+                      {getState(PRODUCT_STATE, product.productStatus)}
+                    </Tags>
                   </td>
                 </tr>
               ))

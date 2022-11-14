@@ -30,7 +30,7 @@ export default function Home() {
       <SiteHead title="OrderListHome" />
       <section className="flex min-h-screen flex-col text-gray-600 body-font">
         <div>
-          <span className='text-3xl font-bold'>주문 내역 조회</span>
+          <span className="text-3xl font-bold">주문 내역 조회</span>
         </div>
         <Divider />
         <div className="container py-12 mx-auto">
@@ -40,7 +40,6 @@ export default function Home() {
     </SellerLayout>
   );
 }
-
 
 const Divider = styled.hr`
   color: black;

@@ -21,7 +21,6 @@ export default function EventList() {
   const [startAtSortDesc, setStartAtSortDesc] = useState(false);
   const [endAtSortDesc, setEndAtSortDesc] = useState(false);
 
-
   const router = useRouter();
   const [eventList, setEventList] = useState([]);
 
@@ -77,19 +76,21 @@ export default function EventList() {
     let copyArray = [...eventList];
 
     if (startAtSortDesc) {
-      copyArray.sort(function(a, b) { // 내림차순
+      copyArray.sort(function (a, b) {
+        // 내림차순
         return a.startAt > b.startAt ? -1 : a.startAt < b.startAt ? 1 : 0;
-      }); 
+      });
       setStartAtSortDesc(false);
     } else {
-      copyArray.sort(function(a, b) { // 오름차순
+      copyArray.sort(function (a, b) {
+        // 오름차순
         return a.startAt < b.startAt ? -1 : a.startAt > b.startAt ? 1 : 0;
-      });  
+      });
       setStartAtSortDesc(true);
     }
 
     setEventList(copyArray);
-  };
+  }
 
   function sortListByEndAt(e) {
     e.preventDefault();
@@ -97,19 +98,21 @@ export default function EventList() {
     let copyArray = [...eventList];
 
     if (endAtSortDesc) {
-      copyArray.sort(function(a, b) { // 내림차순
+      copyArray.sort(function (a, b) {
+        // 내림차순
         return a.endAt > b.endAt ? -1 : a.endAt < b.endAt ? 1 : 0;
-      }); 
+      });
       setEndAtSortDesc(false);
     } else {
-      copyArray.sort(function(a, b) { // 오름차순
+      copyArray.sort(function (a, b) {
+        // 오름차순
         return a.endAt < b.endAt ? -1 : a.endAt > b.endAt ? 1 : 0;
-      });  
+      });
       setEndAtSortDesc(true);
     }
 
     setEventList(copyArray);
-  };
+  }
   return (
     <>
       <SellerLayout>
@@ -172,13 +175,17 @@ export default function EventList() {
               <th scope="col" className="py-1 px-10 w-40">
                 <div className="flex items-center justify-center">
                   이벤트 시작일시
-                  <SortButton onClickFunc={(e) => sortListByStartAt(e)}></SortButton>
+                  <SortButton
+                    onClickFunc={(e) => sortListByStartAt(e)}
+                  ></SortButton>
                 </div>
               </th>
               <th scope="col" className="py-1 px-10 w-40">
                 <div className="flex items-center justify-center">
                   이벤트 종료일시
-                  <SortButton onClickFunc={(e) => sortListByEndAt(e)}></SortButton>
+                  <SortButton
+                    onClickFunc={(e) => sortListByEndAt(e)}
+                  ></SortButton>
                 </div>
               </th>
             </tr>
