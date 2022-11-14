@@ -12,11 +12,14 @@ import { EVENT_TYPE, EVENT_STATUS } from '@utils/constants/types';
 import { ICON_SEARCH_MAGNIFY } from '@utils/constants/icons';
 import Selectbox from '@components/input/SelectBox';
 import { useGetToken } from '@hooks/useGetToken';
+import SortButton from '@components/input/SortButton';
 
 export default function EventList() {
   const [searchValue, onSearchValue] = useInput('');
   const [searchStatus, onSearchStatus] = useInput();
   const [searchType, onSearchType] = useInput();
+  const [startAtSortDesc, setStartAtSortDesc] = useState(false);
+  const [endAtSortDesc, setEndAtSortDesc] = useState(false);
 
   const router = useRouter();
   const [eventList, setEventList] = useState([]);
@@ -45,6 +48,7 @@ export default function EventList() {
       eventTitle: searchValue,
     };
 
+    //TODO: 셀러리스트
     GET_DATA('/event/list', params, headers).then((res) => {
       if (res) {
         setEventList(res);
@@ -66,6 +70,49 @@ export default function EventList() {
     router.push({ pathname: `/seller/event/new` });
   };
 
+  function sortListByStartAt(e) {
+    e.preventDefault();
+
+    let copyArray = [...eventList];
+
+    if (startAtSortDesc) {
+      copyArray.sort(function (a, b) {
+        // 내림차순
+        return a.startAt > b.startAt ? -1 : a.startAt < b.startAt ? 1 : 0;
+      });
+      setStartAtSortDesc(false);
+    } else {
+      copyArray.sort(function (a, b) {
+        // 오름차순
+        return a.startAt < b.startAt ? -1 : a.startAt > b.startAt ? 1 : 0;
+      });
+      setStartAtSortDesc(true);
+    }
+
+    setEventList(copyArray);
+  }
+
+  function sortListByEndAt(e) {
+    e.preventDefault();
+
+    let copyArray = [...eventList];
+
+    if (endAtSortDesc) {
+      copyArray.sort(function (a, b) {
+        // 내림차순
+        return a.endAt > b.endAt ? -1 : a.endAt < b.endAt ? 1 : 0;
+      });
+      setEndAtSortDesc(false);
+    } else {
+      copyArray.sort(function (a, b) {
+        // 오름차순
+        return a.endAt < b.endAt ? -1 : a.endAt > b.endAt ? 1 : 0;
+      });
+      setEndAtSortDesc(true);
+    }
+
+    setEventList(copyArray);
+  }
   return (
     <>
       <SellerLayout>
@@ -126,10 +173,20 @@ export default function EventList() {
                 진행 상태
               </th>
               <th scope="col" className="py-1 px-10 w-40">
-                이벤트 시작일시
+                <div className="flex items-center justify-center">
+                  이벤트 시작일시
+                  <SortButton
+                    onClickFunc={(e) => sortListByStartAt(e)}
+                  ></SortButton>
+                </div>
               </th>
               <th scope="col" className="py-1 px-10 w-40">
-                이벤트 종료일시
+                <div className="flex items-center justify-center">
+                  이벤트 종료일시
+                  <SortButton
+                    onClickFunc={(e) => sortListByEndAt(e)}
+                  ></SortButton>
+                </div>
               </th>
             </tr>
           </thead>
