@@ -49,7 +49,7 @@ export default function EventList() {
     };
 
     //TODO: 셀러리스트
-    GET_DATA('/event/list', params, null).then((res) => {
+    GET_DATA('/event/list', params, headers).then((res) => {
       if (res) {
         setEventList(res);
       }
