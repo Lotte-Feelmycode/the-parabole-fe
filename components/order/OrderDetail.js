@@ -18,7 +18,6 @@ export default function OrderDetail({ orderBySellerDtoList }) {
         <OrderDetailContent orderInfoResponseDtos={dto.orderInfoResponseDtos} />
         <OrderDetailFooter
           contentTotalPrice={contentTotalPrice}
-          couponDto={dto.couponDto}
           storeName={dto.storeName}
           sellerId={dto.sellerId}
         />

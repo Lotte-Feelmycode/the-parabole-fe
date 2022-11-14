@@ -4,10 +4,11 @@ import { numberToMonetary } from '@utils/functions';
 import { SmallBlue } from '@components/input/Button';
 import OrderCouponModal from '@components/order/OrderCouponModal';
 import { CouponContext, CouponDispatchContext } from '@pages/user/order/index';
+import { GET_DATA } from '@apis/defaultApi';
+import { LoginHeaderContext } from '@pages/user/cart/index';
 
 export default function OrderDetailFooter({
   contentTotalPrice,
-  couponDto,
   storeName,
   sellerId,
 }) {
@@ -16,76 +17,19 @@ export default function OrderDetailFooter({
   const [couponState, setCouponState] = useState(-1);
   const couponSelectStates = useContext(CouponContext);
   const dispatch = useContext(CouponDispatchContext);
-
-  const addCouponArray = (parameter) => {
-    setCouponArray((couponArray) => [
-      ...couponArray,
-      {
-        couponName: parameter.couponName,
-        description: parameter.description,
-        discountPrice: parameter.discountPrice,
-        serialNo: parameter.serialNo,
-      },
-    ]);
-  };
+  const headers = useContext(LoginHeaderContext);
 
   useEffect(() => {
-    if (
-      couponDto &&
-      couponDto.rateCoupon &&
-      couponDto.amountCoupon &&
-      couponDto.amountCoupon.length + couponDto.rateCoupon.length > 0
-    ) {
-      const rateCouponList = couponDto.rateCoupon;
-      const amountCouponList = couponDto.amountCoupon;
-
-      var rateIndex = 0;
-      var amountIndex = 0;
-
-      for (
-        null;
-        rateIndex + amountIndex <
-        rateCouponList.length + amountCouponList.length;
-        null
-      ) {
-        var parameter = null;
-
-        if (rateCouponList.length > rateIndex) {
-          const nowCoupon = rateCouponList[rateIndex];
-          const nowPrice = (contentTotalPrice * nowCoupon.discountValue) / 100;
-          parameter = {
-            couponName: nowCoupon.couponName,
-            description: nowCoupon.discountValue + '%',
-            discountPrice: nowPrice,
-            serialNo: nowCoupon.serialNo,
-          };
-        }
-
-        if (amountCouponList.length > amountIndex) {
-          const nowCoupon = amountCouponList[amountIndex];
-          var nowPrice =
-            contentTotalPrice - nowCoupon.discountValue < 0
-              ? 0
-              : nowCoupon.discountValue;
-
-          if (parameter == null || parameter.discountPrice < nowPrice) {
-            parameter = {
-              couponName: nowCoupon.couponName,
-              description: nowCoupon.discountValue + '₩',
-              discountPrice: nowPrice,
-              serialNo: nowCoupon.serialNo,
-            };
-            amountIndex = amountIndex + 1;
-          } else {
-            rateIndex = rateIndex + 1;
-          }
-        }
-
-        if (parameter) {
-          addCouponArray(parameter);
-        }
+    GET_DATA(
+      `/coupon`,
+      { sellerId, totalFee: contentTotalPrice },
+      headers,
+    ).then((res) => {
+      console.log(res);
+      if (res) {
+        setCouponArray(res);
       }
-    }
+    });
   }, []);
 
   const showModal = () => {
@@ -98,10 +42,7 @@ export default function OrderDetailFooter({
       const coupon = couponArray[index];
       const parameter = {
         key: sellerId,
-        couponName: coupon.couponName,
-        description: coupon.description,
-        discountPrice: coupon.discountPrice,
-        serialNo: coupon.serialNo,
+        ...coupon,
       };
       dispatch({ type: 'SET', data: parameter });
     }
