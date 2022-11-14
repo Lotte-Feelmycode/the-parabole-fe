@@ -39,33 +39,35 @@ export default function CartCouponModal({
   });
 
   return (
-    <ModalContainer ref={modalRef} className="modal-container">
-      <TopSection>
-        <button onClick={closeModal}>
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 12 12"
-            fill={ThemeGray1}
-            preserveAspectRatio="xMidYMid meet"
-          >
-            <path
-              fillRule="nonzero"
-              d="M6 4.6L10.3.3l1.4 1.4L7.4 6l4.3 4.3-1.4 1.4L6 7.4l-4.3 4.3-1.4-1.4L4.6 6 .3 1.7 1.7.3 6 4.6z"
+    <BackgroundDIM>
+      <ModalContainer ref={modalRef} className="modal-container">
+        <TopSection>
+          <button onClick={closeModal}>
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill={ThemeGray1}
+              preserveAspectRatio="xMidYMid meet"
+            >
+              <path
+                fillRule="nonzero"
+                d="M6 4.6L10.3.3l1.4 1.4L7.4 6l4.3 4.3-1.4 1.4L6 7.4l-4.3 4.3-1.4-1.4L4.6 6 .3 1.7 1.7.3 6 4.6z"
+              />
+            </svg>
+          </button>
+        </TopSection>
+        <DetailSection>
+          <ModalTitleSection>{storeName}에서 사용가능한 쿠폰</ModalTitleSection>
+          <ModalTableSection>
+            <ShowCouponTable
+              couponDto={couponArray}
+              contentTotalPrice={contentTotalPrice}
             />
-          </svg>
-        </button>
-      </TopSection>
-      <DetailSection>
-        <ModalTitleSection>{storeName}에서 사용가능한 쿠폰</ModalTitleSection>
-        <ModalTableSection>
-          <ShowCouponTable
-            couponDto={couponArray}
-            contentTotalPrice={contentTotalPrice}
-          />
-        </ModalTableSection>
-      </DetailSection>
-    </ModalContainer>
+          </ModalTableSection>
+        </DetailSection>
+      </ModalContainer>
+    </BackgroundDIM>
   );
 }
 
@@ -131,6 +133,19 @@ function CouponTableRow({
     </tr>
   );
 }
+
+const BackgroundDIM = styled.div`
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const ModalContainer = styled.div`
   /* 최상단 위치 */
