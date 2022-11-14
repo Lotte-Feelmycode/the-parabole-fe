@@ -54,10 +54,16 @@ export default function CartContentDetail({
   const CartDetailSection = styled.div`
     padding-top: 5px;
     padding-bottom: 10px;
-    height: 100px;
+
     border-top: 1px solid white;
     border-bottom: 1px solid white;
     display: flex;
+
+    @media (max-width: 1024px) {
+    }
+    @media (min-width: 1024px) {
+      height: 100px;
+    }
   `;
 
   const deleteCartItem = ({ input }) => {
