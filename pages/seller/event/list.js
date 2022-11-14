@@ -33,10 +33,8 @@ export default function EventList() {
         router.push('/');
       }
     }
-    setHeaders(useGetToken());
-  }, []);
 
-  useEffect(() => {
+    setHeaders(useGetToken());
     const params = {
       eventType:
         searchType == null || searchType == '이벤트 타입' ? '' : searchType,
@@ -45,11 +43,13 @@ export default function EventList() {
       eventTitle: searchValue,
     };
 
-    GET_DATA('/event/list', params, headers).then((res) => {
-      if (res) {
-        setEventList(res);
-      }
-    });
+    if (headers) {
+      GET_DATA('/event/list', params, headers).then((res) => {
+        if (res) {
+          setEventList(res);
+        }
+      });
+    }
   }, [searchValue, searchStatus, searchType]);
 
   const rowClickHandler = (row) => {
