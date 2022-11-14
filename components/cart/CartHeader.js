@@ -42,31 +42,31 @@ export default function CartHeader({
     flex: 0 0 auto;
   `;
 
-  function confirmDelete (msg) {
+  function confirmDelete(msg) {
     confirmAlert({
-      title: "선택한 상품을 장바구니에서 삭제하시겠습니까?",
+      title: '선택한 상품을 장바구니에서 삭제하시겠습니까?',
       buttons: [
         {
           label: '네',
-          onClick: () => { return true; }
+          onClick: () => {
+            return true;
+          },
         },
         {
           label: '아니오',
-          onClick: () => { return false; }
-        }
-      ]
+          onClick: () => {
+            return false;
+          },
+        },
+      ],
     });
   }
 
   const deleteCheckedItemBtn = () => {
     let deleteFlag = false;
-    if (
-      cartBySellerDtoList &&
-      numberOfChekced !== 0
-    ) {
-
+    if (cartBySellerDtoList && numberOfChekced !== 0) {
       confirmAlert({
-        title: "선택한 상품을 장바구니에서 삭제하시겠습니까?",
+        title: '선택한 상품을 장바구니에서 삭제하시겠습니까?',
         buttons: [
           {
             label: '네',
@@ -86,13 +86,13 @@ export default function CartHeader({
               if (deleteFlag) {
                 router.reload();
               }
-            }
+            },
           },
           {
             label: '아니오',
             // onClick: () => { return false; }
-          }
-        ]
+          },
+        ],
       });
     } else {
       toast.warn('상품을 선택해주세요');
@@ -119,7 +119,7 @@ export default function CartHeader({
               deleteCheckedItemBtn();
             }}
           />
-          <Toast/>
+          <Toast />
         </CommerceCartHeaderRight>
       </CommerceCartHeaderContainerChild>
     </CommerceCartHeaderContainer>

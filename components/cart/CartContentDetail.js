@@ -57,27 +57,28 @@ export default function CartContentDetail({
     display: flex;
   `;
 
-  
   const deleteCartItem = ({ input }) => {
     const CartItemDeleteRequestDto = {
       cartItemId: input,
     };
 
     confirmAlert({
-      title: "장바구니에서 삭제하시겠습니까?",
+      title: '장바구니에서 삭제하시겠습니까?',
       buttons: [
         {
           label: '네',
           onClick: () => {
             DELETE(`/cart/delete`, CartItemDeleteRequestDto, headers);
             router.reload();
-          }
+          },
         },
         {
           label: '아니오',
-          onClick: () => { return false; }
-        }
-      ]
+          onClick: () => {
+            return false;
+          },
+        },
+      ],
     });
   };
 

@@ -14,6 +14,5 @@ export default function Toast() {
       pauseOnHover
       theme="light"
     />
-
-  )
+  );
 }

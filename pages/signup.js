@@ -63,7 +63,7 @@ export default function Signup() {
           <h2 className="text-gray-800 text-2xl lg:text-3xl font-bold text-center mb-4 md:mb-8">
             회원가입
           </h2>
-          <Toast/>
+          <Toast />
 
           <form className="max-w-lg border rounded-lg mx-auto" method="post">
             <div className="flex flex-col gap-4 p-4 md:p-8">

@@ -55,33 +55,34 @@ export default function EventDetail() {
     e.preventDefault();
 
     confirmAlert({
-      title: "등록한 이벤트를 취소하시겠습니까?",
+      title: '등록한 이벤트를 취소하시겠습니까?',
       buttons: [
         {
           label: '네',
-          onClick: () => {     
+          onClick: () => {
             DELETE(`/event/${eventId}`, {}).then((res) => {
               if (res && res.success == true) {
                 toast('삭제 되었습니다. ');
                 router.replace(`/seller/event/list`);
               }
             });
-          }
+          },
         },
         {
           label: '아니오',
-          onClick: () => { return false; }
-        }
-      ]
+          onClick: () => {
+            return false;
+          },
+        },
+      ],
     });
-
   };
 
   return (
     <SellerLayout>
       <SiteHead title={'Seller Office'} />
 
-      <Toast/>
+      <Toast />
       <section className="flex min-h-screen flex-col text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">
           <Heading title="이벤트 상세" type="h1" />
