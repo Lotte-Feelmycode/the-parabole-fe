@@ -4,7 +4,11 @@ import styled from '@emotion/styled';
 
 import { GET_DATA, POST } from '@apis/defaultApi';
 import { numberToMonetary } from '@utils/functions';
-import { ColorBlue2, ThemeBlueWhite, ThemeGray4 } from '@utils/constants/themeColor';
+import {
+  ColorBlue2,
+  ThemeBlueWhite,
+  ThemeGray4,
+} from '@utils/constants/themeColor';
 import { LINKS } from '@utils/constants/links';
 import { useGetToken } from '@hooks/useGetToken';
 import CommerceLayout from '@components/common/CommerceLayout';
@@ -65,7 +69,7 @@ export default function ProductDetail() {
     e.preventDefault();
 
     setModalState(true);
-    GET_DATA(`/coupon/store`, {sellerId : storeId}).then((res) => {
+    GET_DATA(`/coupon/store`, { sellerId: storeId }).then((res) => {
       if (res) {
         setCoupons(res.content);
       }
@@ -204,7 +208,7 @@ export default function ProductDetail() {
                   <LineBlue
                     buttonText="스토어 혜택을 받아보세요!"
                     onClickFunc={(e) => showBenefitModal(e, product.sellerId)}
-                    css={{ width: '100%', fontWeight: 'bold', }}
+                    css={{ width: '100%', fontWeight: 'bold' }}
                   />
                 </div>
                 <div>

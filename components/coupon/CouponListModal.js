@@ -24,14 +24,13 @@ export default function CouponListModal({
     let userId = localStorage.getItem('userId');
     const userIds = [userId];
 
-
     if (isEmpty(selectCoupon)) {
-      alert("쿠폰을 선택해주세요.");
+      alert('쿠폰을 선택해주세요.');
       return;
     }
 
     if (isEmpty(userId)) {
-      alert("로그인 해주세요.");
+      alert('로그인 해주세요.');
       return;
     }
 
@@ -96,7 +95,7 @@ export default function CouponListModal({
                         <div className="truncate font-bold text-xl text-black-600">
                           {coupon.name}
                         </div>
-                        <div className='truncate'>{coupon.detail}</div>
+                        <div className="truncate">{coupon.detail}</div>
                         <div>
                           {numberToMonetary(coupon.minPaymentAmount)}원 이상
                           사용가능
