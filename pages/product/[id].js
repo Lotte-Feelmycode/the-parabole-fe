@@ -1,15 +1,22 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
+
 import { GET_DATA, POST } from '@apis/defaultApi';
 import { numberToMonetary } from '@utils/functions';
-import { ThemeGray4 } from '@utils/constants/themeColor';
+import {
+  ColorBlue2,
+  ThemeBlueWhite,
+  ThemeGray4,
+} from '@utils/constants/themeColor';
 import { LINKS } from '@utils/constants/links';
 import { useGetToken } from '@hooks/useGetToken';
 import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead.js';
 import { SmallLineWhite, LineBlue, Blue } from '@components/input/Button';
 import Input from '@components/input/Input';
+import { ICON_SHOP } from '@utils/constants/icons';
+import CouponListModal from '@components/coupon/CouponListModal';
 
 export default function ProductDetail() {
   const router = useRouter();
@@ -19,9 +26,23 @@ export default function ProductDetail() {
   const [productDetail, setProductDetail] = useState([]);
   const [seller, setSeller] = useState('');
   const [count, setCount] = useState(1);
+  const [modalState, setModalState] = useState(false);
+  const [coupons, setCoupons] = useState([]);
 
   const [maxCount, setMaxCount] = useState(100);
   const minCount = 0;
+
+  const [headers, setHeaders] = useState();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push(LINKS.SIGNIN);
+      }
+    }
+    setHeaders(useGetToken());
+  }, []);
 
   useEffect(() => {
     const productId = router.query.id;
@@ -42,6 +63,17 @@ export default function ProductDetail() {
     if (storeId) {
       router.push({ pathname: `/store/${storeId}` });
     }
+  }
+
+  function showBenefitModal(e, storeId) {
+    e.preventDefault();
+
+    setModalState(true);
+    GET_DATA(`/coupon/store`, { sellerId: storeId }).then((res) => {
+      if (res) {
+        setCoupons(res.content);
+      }
+    });
   }
 
   function isCountValid() {
@@ -86,7 +118,6 @@ export default function ProductDetail() {
               router.push(LINKS.CART);
             }
           } else {
-            console.log(res);
             alert(res.data.message);
           }
         } else {
@@ -141,7 +172,7 @@ export default function ProductDetail() {
       <SiteHead title={product.productName} />
       <section className="flex min-h-screen flex-col text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">
-          <span>상품 상세 화면</span>
+          {/* <span>상품 상세 화면</span> */}
           <ProductWrap>
             <ProductTopSection className="product-top-section">
               <ProductThumbnailImgSection className="product-thumbnail-img-section">
@@ -151,10 +182,10 @@ export default function ProductDetail() {
                 />
               </ProductThumbnailImgSection>
               <ProductDetailTop className="product-detail-top">
-                <div className="product-name-title">
+                <div className="product-name-title max-w-2xl overflow-ellipsis">
                   <ProductName>{product.productName}</ProductName>
                 </div>
-                <div className="product-price">
+                <div className="product-price border-b-2 pb-4">
                   <ProductPrice>
                     {numberToMonetary(product.productPrice)}
                   </ProductPrice>
@@ -162,12 +193,33 @@ export default function ProductDetail() {
                 </div>
                 <StoreSection onClick={() => goToStore(product.sellerId)}>
                   <StoreNameSection>
+                    <img
+                      src={ICON_SHOP}
+                      loading="lazy"
+                      className="w-7 h-7 mx-2 object-cover object-center"
+                    />
                     <span className="text-lg"> {seller} </span>
                   </StoreNameSection>
                   <StoreBtnSection>
                     <SmallLineWhite buttonText="브랜드홈 ▶" />
                   </StoreBtnSection>
                 </StoreSection>
+                <div className="flex border-t-2 py-2">
+                  <LineBlue
+                    buttonText="스토어 혜택을 받아보세요!"
+                    onClickFunc={(e) => showBenefitModal(e, product.sellerId)}
+                    css={{ width: '100%', fontWeight: 'bold' }}
+                  />
+                </div>
+                <div>
+                  {modalState && (
+                    <CouponListModal
+                      setModalState={setModalState}
+                      couponList={coupons}
+                      storeName={seller}
+                    />
+                  )}
+                </div>
                 <InputSection>
                   <ProductCountSection>
                     <Input
@@ -178,7 +230,12 @@ export default function ProductDetail() {
                         min: minCount,
                         max: maxCount,
                       }}
-                      css={{ width: '100%' }}
+                      css={{
+                        width: '100%',
+                        height: '40px',
+                        fontSize: '20px',
+                        border: '0px',
+                      }}
                     />
                   </ProductCountSection>
                   <TotalInputSection>
@@ -230,9 +287,9 @@ const ProductWrap = styled.div`
 `;
 
 const ProductName = styled.span`
-  font-size: 22px;
-  font-weight: 400;
-  margin-right: 36px;
+  font-size: 36px;
+  font-weight: 500;
+  text-overflow: elipsis;
 `;
 
 const ProductTopSection = styled.div`
@@ -263,6 +320,7 @@ const ProductDetailTop = styled.div`
   flex-direction: column;
   flex-wrap: nowrap;
   flex: 1 1 auto;
+  margin: 20px;
 `;
 
 const ProductPrice = styled.span`
@@ -274,15 +332,28 @@ const ProductPrice = styled.span`
 const StoreSection = styled.a`
   display: flex;
   align-items: center;
-  margin: 10px 0px;
+  margin: 20px 0px;
 `;
 const StoreNameSection = styled.div`
-  flex: none;
+  display: flex;
+  flex-direction: row;
   vertical-align: center;
 `;
 
 const StoreBtnSection = styled.div`
   margin-left: auto;
+`;
+
+const StoreBenfitBox = styled.div`
+  background-color: ${ThemeBlueWhite};
+  border-radius: 0.375rem;
+  width: 100%;
+  height: 3rem;
+
+  &:hover {
+    background-color: ${ColorBlue2};
+    cursor: pointer;
+  }
 `;
 
 const InputSection = styled.div`
