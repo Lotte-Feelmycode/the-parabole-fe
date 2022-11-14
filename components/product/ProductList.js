@@ -61,26 +61,31 @@ export default function ProductList({
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
       <div className="max-w-screen-2xl px-4 md:px-8 mx-auto">
-        {router.pathname.includes("store") &&
-          (
-            <div>
-              <StoreInfo total={totalElementCnt} storeId={storeId} storeName={store}/>
-           </div>   
-          )
-        }
+        {router.pathname.includes('store') && (
+          <div>
+            <StoreInfo
+              total={totalElementCnt}
+              storeId={storeId}
+              storeName={store}
+            />
+          </div>
+        )}
         {router.query.searchValue && (
-          <div className='my-4 h-24'>
-            <div className='p-6 border rounded-sm border-gray-100'>
+          <div className="my-4 h-24">
+            <div className="p-6 border rounded-sm border-gray-100">
               <div className="flex flex-row justify-center">
-                <p className="place-self-center text-gray-800 font-bold text-2xl lg:text-3xl">{router.query.searchValue}</p>
-                <p className="place-self-center text-gray-500 font-semibold text-xl lg:text-2xl">에 대한 검색결과</p>            
+                <p className="place-self-center text-gray-800 font-bold text-2xl lg:text-3xl">
+                  {router.query.searchValue}
+                </p>
+                <p className="place-self-center text-gray-500 font-semibold text-xl lg:text-2xl">
+                  에 대한 검색결과
+                </p>
               </div>
             </div>
           </div>
         )}
 
         <div className="flex justify-between items-end gap-4 mb-6">
-
           {isMainPage && (
             <Link href={LINKS.PRODUCT}>
               <a className="inline-block bg-white hover:bg-gray-100 active:bg-gray-200 focus-visible:ring ring-indigo-300 border text-gray-500 text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-4 md:px-8 py-2 md:py-3">

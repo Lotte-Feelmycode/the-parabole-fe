@@ -10,7 +10,6 @@ import EventParticipantList from '@components/event/EventParticipantList';
 import { useGetToken } from '@hooks/useGetToken';
 
 export default function SellerProductDetail() {
-  // TODO: userId를 가져올 때 저장되어있는 걸(cookie, localstorage)로 가져오게 변경
   const router = useRouter();
   const [userId, setUserId] = useState(router.query.id);
   const [name, setName] = useState();
