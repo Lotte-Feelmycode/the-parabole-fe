@@ -15,7 +15,6 @@ export default function IconList() {
   return (
     <div className="flex flex-col items-centermt-8 md:mt-16">
       <div className="grid grid-cols-4 md:grid-cols-8 gap-x-4 lg:gap-x-10 gap-y-8 lg:gap-y-12 items-center">
-        {console.log(iconList)}
         {iconList.map((item) => (
           <div className="flex flex-col items-center" key={item.title}>
             <div className="md:w-24 md:h-24 bg-gray-100 rounded-full overflow-hidden shadow-lg mb-2 md:mb-4">

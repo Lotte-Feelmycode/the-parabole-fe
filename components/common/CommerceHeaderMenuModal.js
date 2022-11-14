@@ -5,23 +5,34 @@ import { LINKS } from '@utils/constants/links';
 import { Blue, LineBlue } from '@components/input/Button';
 import { ICON_GIFT } from '@utils/constants/icons';
 import { ICON_BASKET } from '../../utils/constants/icons';
+import { useRouter } from 'next/router';
 
 export default function CommerceHeaderMenuModal({ closeModalFunc, token }) {
   const btnCss = { width: '100%' };
+
+  const router = useRouter();
 
   function CheckTocken({ token }) {
     if (token) {
       return (
         <MainButtonSection>
           <ButtonSection>
-            <Link href={LINKS.MYPAGE}>
-              <LineBlue buttonText={'마이페이지'} css={btnCss} />
-            </Link>
+            <LineBlue
+              buttonText={'마이페이지'}
+              css={btnCss}
+              onClickFunc={() => {
+                router.push(LINKS.MYPAGE);
+              }}
+            />
           </ButtonSection>
           <ButtonSection>
-            <Link href={LINKS.SIGNOUT}>
-              <Blue buttonText={'로그아웃'} css={btnCss} />
-            </Link>
+            <Blue
+              buttonText={'로그아웃'}
+              css={btnCss}
+              onClickFunc={() => {
+                router.push(LINKS.SIGNOUT);
+              }}
+            />
           </ButtonSection>
         </MainButtonSection>
       );
@@ -29,14 +40,22 @@ export default function CommerceHeaderMenuModal({ closeModalFunc, token }) {
       return (
         <MainButtonSection>
           <ButtonSection>
-            <Link href={LINKS.SIGNIN}>
-              <LineBlue buttonText={'로그인'} css={btnCss} />
-            </Link>
+            <LineBlue
+              buttonText={'로그인'}
+              css={btnCss}
+              onClickFunc={() => {
+                router.push(LINKS.SIGNIN);
+              }}
+            />
           </ButtonSection>
           <ButtonSection>
-            <Link href={LINKS.SIGNUP}>
-              <Blue buttonText={'회원가입'} css={btnCss} />
-            </Link>
+            <Blue
+              buttonText={'회원가입'}
+              css={btnCss}
+              onClickFunc={() => {
+                router.push(LINKS.SIGNUP);
+              }}
+            />
           </ButtonSection>
         </MainButtonSection>
       );

@@ -13,9 +13,9 @@ function Coupon({ coupon }) {
       >
         {coupon.name}
       </th>
-      <td className="py-4 px-6">{coupon.type === 1 ? '할인금액' : '할인율'}</td>
+      <td className="py-4 px-6">{coupon.type === 1 ? '정액' : '정률'}</td>
       <td className="py-4 px-6">
-        {coupon.discountValue} {coupon.type === 1 ? '원' : '%'}
+        {coupon.discountValue} {coupon.type === 1 ? '%' : '₩'}
       </td>
 
       <td className="py-4 px-6">{coupon.detail}</td>
@@ -66,7 +66,7 @@ function CouponList() {
                 쿠폰 타입
               </th>
               <th scope="col" className="py-3 px-6">
-                할인율/액수
+                할인율/금액
               </th>
               <th scope="col" className="py-3 px-6">
                 쿠폰 상세설명
