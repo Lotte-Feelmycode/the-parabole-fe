@@ -1,39 +1,44 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState } from 'react';
 import { Blue } from '@components/input/Button';
 import { POST } from '@apis/defaultApi';
 import { ICON_COUPON } from '@utils/constants/icons';
 import styled from '@emotion/styled';
 import Heading from '@components/input/Heading';
-export default function EventPrizeContainer({ eventPrizes, eventInfo, applyStatus }) {
-  function BtnSection() {
-    return (
-      <Blue
-        buttonText={'이벤트 응모'}
-        onClickFunc={() => applyEvent(eventId, prize.eventPrizeId)}
-        attr={{ disabled: applyStatus }}
-        css={{ marginTop: 'auto', marginBottom: '10px' }}
-      />
-    );
-  }
+export default function EventPrizeContainer({
+  eventId,
+  eventPrizes,
+  eventInfo,
+  applyStatus,
+  headers,
+}) {
+  const [applySts, setApplySts] = useState(applyStatus);
 
-  function applyEvent(eventId, eventPrizeId) {
-    //TODO: userID 나중에 받아와야함
-    POST('/event/participant', {
-      userId,
-      eventId,
-      eventPrizeId,
-    }).then((res) => {
-      if (res) {
-        if (res.success) {
-          alert('응모 성공');
-          location.reload();
+  // TODO: 이벤트 API 변경되면 수정해야함
+  function applyEvent(eventId, eventPrizeId, prizeName) {
+    if (confirm('경품' + prizeName + '에 응모하시겠습니까?')) {
+      POST(
+        '/event/participant',
+        {
+          userId: localStorage.getItem('userId'),
+          eventId,
+          eventPrizeId,
+          userEmail: localStorage.getItem('email'),
+          userName: localStorage.getItem('name'),
+        },
+        headers,
+      ).then((res) => {
+        if (res) {
+          if (res.success) {
+            alert('응모 성공');
+            setApplySts('disabled');
+          } else {
+            alert('이미 응모 하셨습니다.');
+          }
         } else {
-          alert('이미 응모 하셨습니다.');
+          alert('잠시후 다시 시도해주세요');
         }
-      } else {
-        alert('잠시후 다시 시도해주세요');
-      }
-    });
+      });
+    }
   }
 
   return (
@@ -43,7 +48,6 @@ export default function EventPrizeContainer({ eventPrizes, eventInfo, applyStatu
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
           <div className="py-12 md:py-20">
-            {/* Section header */}
             <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
               <Heading type={'h1'} title={'경품을 확인해 보세요!'} />
               <p className="text-xl text-gray-600">
@@ -70,21 +74,46 @@ export default function EventPrizeContainer({ eventPrizes, eventInfo, applyStatu
                             <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">
                               {prize.productName}
                             </h4>
+                            <Blue
+                              buttonText={'이벤트 응모'}
+                              onClickFunc={() =>
+                                applyEvent(
+                                  eventId,
+                                  prize.eventPrizeId,
+                                  prize.productName,
+                                )
+                              }
+                              attr={{ disabled: applySts }}
+                              css={{ marginTop: 'auto', marginBottom: '10px' }}
+                            />
                           </>
                         ) : (
-                          <div>
-                            <ImgSection>
-                              <EventPrizeCouponImg
-                                className="prize-img"
-                                src={ICON_COUPON}
-                              />
-                            </ImgSection>
-                            <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">
-                              {prize.couponName}
-                            </h4>
-                          </div>
+                          <>
+                            <div>
+                              <ImgSection>
+                                <EventPrizeCouponImg
+                                  className="prize-img"
+                                  src={ICON_COUPON}
+                                />
+                              </ImgSection>
+                              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">
+                                {prize.couponName}
+                              </h4>
+                            </div>
+                            <Blue
+                              buttonText={'이벤트 응모'}
+                              onClickFunc={() =>
+                                applyEvent(
+                                  eventId,
+                                  prize.eventPrizeId,
+                                  prize.couponName,
+                                )
+                              }
+                              attr={{ disabled: applySts }}
+                              css={{ marginTop: 'auto', marginBottom: '10px' }}
+                            />
+                          </>
                         )}
-                        <BtnSection />
                       </div>
                     </div>
                   );
@@ -104,10 +133,6 @@ const ImgSection = styled.div`
   text-align: center;
 `;
 
-const EventBodySection = styled.div`
-  margin-bottom: 10px;
-`;
-
 const EventPrizeProductImg = styled.img`
   overflow: hidden;
   object-fit: cover;
@@ -124,8 +149,4 @@ const EventPrizeCouponImg = styled.img`
   object-position: center;
   min-width: 200px;
   border-radius: 20px;
-`;
-
-const PrizeNameSection = styled.div`
-  text-align: center;
 `;

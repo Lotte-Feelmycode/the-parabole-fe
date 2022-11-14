@@ -10,7 +10,6 @@ import { useGetToken } from '@hooks/useGetToken';
 export default function EventDetail() {
   const [eventInfo, setEventInfo] = useState({});
   const [eventImage, setEventImage] = useState({});
-  const [storeInfo, setStoreInfo] = useState();
   const router = useRouter();
   const [eventId, setEventId] = useState(router.query.id);
   const [eventPrizes, setEventPrizes] = useState([]);
@@ -90,9 +89,11 @@ export default function EventDetail() {
       <main className="flex-grow">
         <EventInfo eventInfo={eventInfo} eventImage={eventImage} />
         <EventPrizeContainer
+          eventId={eventId}
           eventPrizes={eventPrizes}
           eventType={eventInfo.type}
           applyStatus={applyStatus}
+          headers={headers}
         />
       </main>
     </CommerceLayout>
