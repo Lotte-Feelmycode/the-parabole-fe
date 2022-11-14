@@ -1,17 +1,19 @@
+import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { DELETE } from '@apis/defaultApi';
 import { ThemeGray1 } from '@utils/constants/themeColor';
 import CartProduct from '@components/cart/CartProduct';
+import { LoginHeaderContext } from '@pages/user/cart/index';
 
 export default function CartContentDetail({
-  headers,
   cartItemDtoList,
   checkBoxStates,
   cartCheckBoxChange,
   cartInfoChange,
 }) {
   const router = useRouter();
+  const headers = useContext(LoginHeaderContext);
 
   const ProductCheckSection = styled.div`
     position: relative;
@@ -51,6 +53,8 @@ export default function CartContentDetail({
 
   const CartDetailSection = styled.div`
     padding-top: 5px;
+    padding-bottom: 10px;
+    height: 100px;
     border-top: 1px solid white;
     border-bottom: 1px solid white;
     display: flex;

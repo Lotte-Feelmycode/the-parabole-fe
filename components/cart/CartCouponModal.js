@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   ThemeGray1,
   ThemeWhite,
@@ -9,79 +9,10 @@ import { numberToMonetary } from '@utils/functions';
 
 export default function CartCouponModal({
   setModalState,
-  couponDto,
-  contentTotalPrice,
   storeName,
+  couponArray,
+  contentTotalPrice,
 }) {
-  const [couponArray, setCouponArray] = useState([]);
-
-  const addCouponArray = (parameter) => {
-    setCouponArray((couponArray) => [
-      ...couponArray,
-      {
-        couponName: parameter.couponName,
-        description: parameter.description,
-        discountPrice: parameter.discountPrice,
-      },
-    ]);
-  };
-
-  useEffect(() => {
-    if (
-      couponDto.rateCoupon &&
-      couponDto.amountCoupon &&
-      couponDto.amountCoupon.length + couponDto.rateCoupon.length > 0
-    ) {
-      const rateCouponList = couponDto.rateCoupon;
-      const amountCouponList = couponDto.amountCoupon;
-
-      let rateIndex = 0;
-      let amountIndex = 0;
-
-      for (
-        ;
-        rateIndex + amountIndex <
-        rateCouponList.length + amountCouponList.length;
-
-      ) {
-        let parameter = null;
-
-        if (rateCouponList.length > rateIndex) {
-          const nowCoupon = rateCouponList[rateIndex];
-          const nowPrice = (contentTotalPrice * nowCoupon.discountValue) / 100;
-          parameter = {
-            couponName: nowCoupon.couponName,
-            description: nowCoupon.discountValue + '%',
-            discountPrice: nowPrice,
-          };
-        }
-
-        if (amountCouponList.length > amountIndex) {
-          const nowCoupon = amountCouponList[amountIndex];
-          let nowPrice =
-            contentTotalPrice - nowCoupon.discountValue < 0
-              ? 0
-              : nowCoupon.discountValue;
-
-          if (parameter == null || parameter.discountPrice < nowPrice) {
-            parameter = {
-              couponName: nowCoupon.couponName,
-              description: nowCoupon.discountValue + '₩',
-              discountPrice: nowPrice,
-            };
-            amountIndex = amountIndex + 1;
-          } else {
-            rateIndex = rateIndex + 1;
-          }
-        }
-
-        if (parameter) {
-          addCouponArray(parameter);
-        }
-      }
-    }
-  }, []);
-
   const closeModal = () => {
     setModalState(false);
   };
@@ -100,12 +31,10 @@ export default function CartCouponModal({
 
     // 이벤트 핸들러 등록
     document.addEventListener('mousedown', handler);
-    // document.addEventListener('touchstart', handler); // 모바일 대응
 
     return () => {
       // 이벤트 핸들러 해제
       document.removeEventListener('mousedown', handler);
-      // document.removeEventListener('touchstart', handler); // 모바일 대응
     };
   });
 
@@ -162,12 +91,12 @@ function ShowCouponTable({ couponDto, contentTotalPrice }) {
         </thead>
         <tbody className="text-m">
           {couponDto &&
-            couponDto.map((coupon) => (
+            couponDto.map((coupon, index) => (
               <CouponTableRow
-                key={coupon.couponName}
+                key={coupon.couponName + index}
                 couponName={coupon.couponName}
                 description={coupon.description}
-                discountPrice={coupon.discountPrice}
+                discountPrice={coupon.totalFee}
                 contentTotalPrice={contentTotalPrice}
               />
             ))}

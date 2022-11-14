@@ -1,19 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { PATCH } from '@apis/defaultApi';
 import { numberToMonetary } from '@utils/functions';
 import { SmallWhite } from '@components/input/Button';
 import Input from '@components/input/Input';
+import { LoginHeaderContext } from '@pages/user/cart/index';
 
 export default function CartProduct({
-  headers,
   cartItemId,
   product,
   count,
   setCountFunc,
 }) {
   const router = useRouter();
+  const headers = useContext(LoginHeaderContext);
+
   const goToProductDetail = (id) => {
     router.push({
       pathname: `/product/${id}`,
