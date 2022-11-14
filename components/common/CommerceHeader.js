@@ -1,6 +1,6 @@
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import {
   ICON_CART_BLACK,
@@ -12,7 +12,7 @@ import SearchBar from '@components/input/SearchBar';
 import CommerceHeaderMenuModal from '@components/common/CommerceHeaderMenuModal';
 
 export default function CommerceHeader() {
-  const [token, setToken] = useState();
+  const [token, setToken] = useState('');
   const [resize, setResize] = useState();
   const [menuModalState, setMenuModalState] = useState(false);
 
@@ -201,7 +201,8 @@ export default function CommerceHeader() {
             {menuModalState && (
               <CommerceHeaderMenuModal
                 closeModalFunc={closeMenuModal}
-                CheckTocken={CheckTocken}
+                token={token}
+                setToken={setToken}
               />
             )}
           </HeaderContainer>
@@ -216,6 +217,7 @@ function CheckTocken({ token }) {
 
   const signout = () => {
     localStorage.clear();
+    setToken('');
     alert('로그아웃 완료');
     router.push(LINKS.MAIN);
   };
