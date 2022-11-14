@@ -32,7 +32,7 @@ export default function EventInfo({ eventInfo, eventImage }) {
           <div className="pt-32 pb-12 md:pt-40 md:pb-20">
             <div className="flex flex-col text-center pb-12 md:pb-16">
               <H1
-                className="break-all text-4xl md:text-5xl lg:text-6xl leading-tighter tracking-tighter"
+                className="break-all text-2xl md:text-5xl lg:text-6xl leading-tighter tracking-tighter"
                 data-aos="zoom-y-out"
               >
                 {eventInfo.descript}

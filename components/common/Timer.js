@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
-import { getNewDate } from '@utils/functions';
 const Timer = ({ endAt }) => {
   let endDate = new Date(endAt);
   let now = new Date();
 
   if (endDate.getTime() - now.getTime() < 0) {
-    return <div>0:00</div>;
+    return (
+      <div className="text-rose-600 font-bold text-3xl md:text-5xl">
+        이벤트 종료
+      </div>
+    );
   } else {
     let diffTMins = (endDate.getTime() - now.getTime()) / (1000 * 60);
 
