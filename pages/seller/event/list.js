@@ -85,7 +85,7 @@ export default function EventList() {
         />
 
         <div className="pb-4 bg-white dark:bg-gray-900">
-          <label for="table-search" className="sr-only">
+          <label htmlFor="table-search" className="sr-only">
             Search
           </label>
           <div className="relative mt-1">
@@ -98,11 +98,9 @@ export default function EventList() {
               type="text"
               value={searchValue}
               onChange={onSearchValue}
-              // onKeyUp={handleOnKeyPress}
               placeholder="이벤트 제목을 검색하세요."
               className="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             ></input>
-            {/* <input type="text" id="table-search" className="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items"> */}
           </div>
         </div>
         <table className="w-full text-m text-center">
@@ -137,6 +135,7 @@ export default function EventList() {
             {eventList && Array.isArray(eventList) && eventList.length > 0 ? (
               eventList.map((event, index) => (
                 <tr
+                  key={event.id}
                   onClick={() => rowClickHandler(event)}
                   className="h-16 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                 >
