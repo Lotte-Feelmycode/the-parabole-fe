@@ -7,7 +7,7 @@ import Pagination from '@components/common/Pagination';
 import { BlueTheme } from '@utils/constants/themeColor';
 import Link from 'next/link';
 import { LINKS } from '@utils/constants/links';
-import StoreInfo from '@components/store/storeInfo';
+import StoreInfo from '@components/store/StoreInfo';
 const INIT_PAGENUM = 0;
 const INIT_SIZENUM = 12;
 
