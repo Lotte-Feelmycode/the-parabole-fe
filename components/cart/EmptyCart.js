@@ -40,7 +40,7 @@ export default function EmptyCart() {
         <Blue
           buttonText={'상품담으러가기'}
           onClickFunc={() => {
-            router.push(LINKS.MAIN);
+            router.push(LINKS.PRODUCT);
           }}
         />
       </EmptyButton>
