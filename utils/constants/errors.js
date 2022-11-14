@@ -32,3 +32,18 @@ export const COUPON_ENROLL_ERROR = Object.freeze({
   NO_COUPON_DETAILS: '쿠폰 상세 정보를 입력해주세요',
   NO_COUPON_CNT: '발급할 쿠폰 수량을 입력해주세요.',
 });
+
+export const AUTH_ERROR = Object.freeze({
+  NO_EMAIL: '이메일을 입력해주세요.',
+  INADEQUATE_EMAIL: '이메일 형식이 올바르지 않습니다.',
+  NO_PASSWORD: '비밀번호를 입력해주세요.',
+  INADEQUATE_PASSWORD:
+    '영문, 숫자, 특수기호 조합으로 8-20자리 이상 입력해주세요.',
+
+  NO_DISCOUNT_VALUE: '쿠폰 할인액/할인율을 입력해주세요.',
+  INVALID_DATE: '쿠폰 유효 시작 및 만료일시를 확인해주세요',
+  NO_VALID_AT: '쿠폰 유효 시작일을 입력해주세요.',
+  NO_EXPIRES_AT: '쿠폰 만료일을 입력해주세요.',
+  NO_COUPON_DETAILS: '쿠폰 상세 정보를 입력해주세요',
+  NO_COUPON_CNT: '발급할 쿠폰 수량을 입력해주세요.',
+});
