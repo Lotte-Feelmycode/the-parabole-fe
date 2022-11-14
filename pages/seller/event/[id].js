@@ -5,19 +5,23 @@ import styled from '@emotion/styled';
 import SellerLayout from '@components/seller/SellerLayout';
 import SiteHead from '@components/common/SiteHead';
 import Heading from '@components/input/Heading';
-import * as btn from '@components/input/Button';
+import { Pink } from '@components/input/Button';
 import { getDateTime, getState } from '@utils/functions';
 import { PRIZE_TYPE, EVENT_TYPE } from '@utils/constants/types';
 import EventParticipant from '@components/event/EventParticipantList';
 import { useGetToken } from '@hooks/useGetToken';
-import * as ICON from '@utils/constants/icons';
+import { EventSampleModal } from '@components/event/EventSampleModal';
+
 
 export default function EventDetail() {
   const router = useRouter();
   const [eventId, setEventId] = useState(router.query.id);
   const [event, setEvent] = useState([]);
+  const [modalState, setModalState] = useState(false);
 
   const EVENT_BEFORE = 0;
+  const EVENT_PRGS = 1;
+  const EVENT_END = 2;
 
   const [headers, setHeaders] = useState();
 
@@ -59,31 +63,41 @@ export default function EventDetail() {
     });
   };
 
+  function showBenefitModal(e) {
+    e.preventDefault();
+
+    setModalState(true);
+  }
+
+
   return (
     <SellerLayout>
       <SiteHead title={'Seller Office'} />
 
       <section className="flex min-h-screen flex-col text-gray-900 body-font">
         <div className="container px-5 py-24 mx-auto items-center">
-          <a className="flex flex-row">
-            <span className="w-9 h-9 mr-2 rounded-full inline-flex justify-center">
-              <img src={ICON.ICON_LIST}></img>
-            </span>
-            <span className="text-4xl font-bold mb-2">이벤트 상세</span>
-          </a>
+          <div className="text-4xl font-bold mb-2">이벤트 상세</div>
           <Divider />
-          <div className="mb-8">
-            <span className="text-2xl font-bold mb-2">{event.title}</span>
+          <div className="flex flex-col mb-14">
+            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">이벤트 제목</span>
+            <span className="ml-2 text-xl font-bold mb-1">
+              "{event.title}"
+            </span>
+            <span className="ml-2">{event.descript}</span>
           </div>
-          <div className="flex flex-col mb-8">
-            <span className="text-xl font-bold">이벤트 유형</span>
+
+          <div className="flex flex-col mb-14">
+            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">이벤트 유형</span>
             <span className="text-l ml-2">
               {getState(EVENT_TYPE, event.type)} 이벤트
             </span>
           </div>
 
-          <div className="flex flex-col mb-8">
-            <span className="text-xl font-bold">이벤트 일시</span>
+          <div className="flex flex-col mb-14">
+            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">이벤트 일시</span>
+            {event.type === 'FCFS' && (
+              <div className='ml-2 text-xl font-bold text-rose-700'>📌 선착순 이벤트는 정각부터 50분간 진행됩니다.</div>
+            )}
             <span className="ml-2">
               이벤트 시작일시 : {event.startAt && getDateTime(event.startAt)}
             </span>
@@ -92,68 +106,85 @@ export default function EventDetail() {
             </span>
           </div>
 
-          <div className="flex flex-col mb-8">
-            <span className="text-xl font-bold mb-2">경품</span>
-            <table className="ml-2 w-2/3 text-m text-center px-4 pb-8">
-              <thead className="text-base text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
-                <tr className="h-14">
-                  <th scope="col" className="py-3 px-4 w-20">
-                    경품 타입
-                  </th>
-                  <th scope="col" className="py-3 px-4 w-20">
-                    상품/쿠폰 번호
-                  </th>
-                  <th scope="col" className="py-3 px-10 w-40">
-                    상품/쿠폰명
-                  </th>
-                  <th scope="col" className="py-3 px-2 w-10">
-                    수량
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {event.eventPrizes &&
-                  event.eventPrizes.map((eventPrize, index) => (
-                    <>
-                      <tr
-                        key={eventPrize.id}
-                        className="h-12 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      >
-                        <td>{getState(PRIZE_TYPE, eventPrize.prizeType)}</td>
-                        {eventPrize.prizeType === 'PRODUCT' ? (
-                          <>
-                            <td>{eventPrize.productId}</td>
-                            <td>{eventPrize.productName}</td>
-                          </>
-                        ) : (
-                          <>
-                            <td>{eventPrize.couponId}</td>
-                            <td>{eventPrize.couponDetail}</td>
-                          </>
-                        )}
-                        <td>{eventPrize.stock}</td>
-                      </tr>
-                    </>
-                  ))}
-              </tbody>
-            </table>
+          <div className="flex flex-col mb-14">
+            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">이벤트 경품</span>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2'>
+            {event.eventPrizes &&
+                  event.eventPrizes.map((eventPrize, index) => (          
+              <div key={index} className="text-gray-900 border-1 border py-2 px-8 mb-4 h-full flex sm:flex-row flex-col items-center sm:justify-start justify-center text-center sm:text-left">
+                {eventPrize.prizeType === 'PRODUCT' ? (
+                  <>
+                    <img alt="team" className="flex-shrink-0 rounded-lg w-24 h-24 object-cover object-center sm:mb-0 mb-4" src={eventPrize.productImg}/>
+                    <div className="flex-grow sm:pl-8">
+                      <h2 className="title-font font-bold text-lg text-gray-900">{eventPrize.productName}</h2>
+                      <h3 className="text-gray-500 mb-2">상품 번호 : {eventPrize.productId}</h3>
+                      <p className="mb-4">수량 {eventPrize.stock}개</p>
+                    </div>
+                    <div className="mb-4 justify-self-end rounded-full py-2 px-4 bg-pink-400 text-white font-bold">상품</div>
+                  </>
+                ) : (
+                  <>
+                    <img alt="team" className="flex-shrink-0 rounded-lg w-24 h-24 object-cover object-center sm:mb-0 mb-4" src={eventPrize.couponImg}/>
+                    <div className="flex-grow sm:pl-8">
+                      <h2 className="title-font font-bold text-lg text-gray-900">{eventPrize.couponName}</h2>
+                      <h3 className="text-gray-500 mb-2">쿠폰 번호 : {eventPrize.couponId}</h3>
+                      <p className="mb-4">수량 {eventPrize.stock}개</p>
+                    </div>
+                    <div className="mb-4 justify-self-end rounded-full py-2 px-4 bg-pink-400 text-white font-bold">쿠폰</div>
+                  </>
+                ) }
+
+              </div>
+            ))}
+            </div>
           </div>
 
-          <div className="mb-8">
+          <div className="flex flex-col mb-4">
+            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">이벤트 응모 고객 목록</span>
+            <span className="ml-2 text-m text-gray-700">
+              이벤트에 응모한 고객 목록을 확인할 수 있습니다.
+            </span>
+          </div>
+
+          <div className="mb-12 overflow-y-auto max-h-96">
             <EventParticipant eventId={eventId}></EventParticipant>
           </div>
-          <Heading title="이벤트 이미지" type="h3" />
-          <Img src={event.eventImage && event.eventImage.eventBannerImg}></Img>
-          <br />
-          <Img src={event.eventImage && event.eventImage.eventDetailImg}></Img>
-          <br />
+
+          <div className="flex flex-col mb-14">
+            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">이벤트 당첨 고객</span>
+            {event.status === EVENT_END ? (
+              <div className="mb-12 overflow-y-auto max-h-96">
+                {/* <당첨자내역></당첨자내역> */}
+              </div>
+            ) : (<div className="ml-2">이벤트 종료 후 추첨됩니다.</div>)}
+          </div>
+
+ 
+          <div className="flex flex-col mb-14">
+            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">이벤트 이미지</span>
+            <div className="ml-2">
+              <Img src={event.eventImage && event.eventImage.eventBannerImg}></Img>
+            </div>
+            <div className="ml-2">
+              <Img src={event.eventImage && event.eventImage.eventDetailImg}></Img>
+            </div>
+          </div>
+
+          {modalState && (
+            <EventSampleModal setModalState={setModalState}
+                              event={event}/>
+          )}
+
           {event.status === EVENT_BEFORE && (
-            // TODO: 수정 (꼭 필요한지?)
             <DivHor>
-              <btn.Pink
+              <Pink
+                buttonText="미리보기"
+                onClickFunc={(e) => showBenefitModal(e)}
+              ></Pink>
+              <Pink
                 buttonText="삭제하기"
                 onClickFunc={deleteClickHandler}
-              ></btn.Pink>
+              ></Pink>
             </DivHor>
           )}
         </div>
