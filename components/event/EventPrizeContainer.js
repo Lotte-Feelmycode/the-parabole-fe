@@ -19,11 +19,8 @@ export default function EventPrizeContainer({
       POST(
         '/event/participant',
         {
-          userId: localStorage.getItem('userId'),
           eventId,
           eventPrizeId,
-          userEmail: localStorage.getItem('email'),
-          userName: localStorage.getItem('name'),
         },
         headers,
       ).then((res) => {

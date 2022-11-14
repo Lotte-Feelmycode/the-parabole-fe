@@ -21,20 +21,13 @@ export default function EventDetail() {
     setHeaders(getHeaders);
 
     if (headers) {
-      //TODO : 백엔드 수정 후 삭제될 파라미터
-      const userId = localStorage.getItem('userId');
-      POST_DATA(
-        '/event/participant/check',
-        {
-          userId,
-          eventId,
+      POST_DATA('/event/participant/check', { eventId }, useGetToken()).then(
+        (res) => {
+          if (!res) {
+            setApplyStatus('disabled');
+          }
         },
-        headers,
-      ).then((res) => {
-        if (!res) {
-          setApplyStatus('disabled');
-        }
-      });
+      );
     }
   }, []);
 
