@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import Timer from '@components/common/Timer';
 import { useState, useEffect } from 'react';
 import { GET_DATA } from '@apis/defaultApi';
+import { ColorBlue1 } from '@utils/constants/themeColor';
 
 export default function EventInfo({ eventInfo, eventImage }) {
   const router = useRouter();
@@ -47,9 +48,9 @@ export default function EventInfo({ eventInfo, eventImage }) {
               <div className="max-w-3xl mx-auto mt-5">
                 <div>
                   <div className="flex justify-center item-center flex-row">
-                    <p className="text-3xl md:text-4xl font-bold text-blue-600 mr-2">
+                    <P className="text-3xl md:text-4xl font-bold text-blue-500 mr-2">
                       "{storeInfo && storeInfo.storeName}"
-                    </p>
+                    </P>
                     <p className="text-xl md:text-2xl text-gray-600 mb-8">
                       에서
                     </p>
@@ -97,4 +98,8 @@ export default function EventInfo({ eventInfo, eventImage }) {
 
 const H1 = styled.div`
   font-family: 'AppleSDGothicNeoB';
+`;
+
+const P = styled.p`
+  color: ${ColorBlue1};
 `;
