@@ -79,32 +79,22 @@ export default function Signup() {
       passwordConfirmation: passwordConfirmation,
     };
 
-    if (
-      !reqBody.email ||
-      !reqBody.name ||
-      !reqBody.nickname ||
-      !reqBody.phone ||
-      !reqBody.password ||
-      !reqBody.passwordConfirmation
-    ) {
-      alert(`입력란을 모두 채워주세요.`);
-      return;
+    if (validation(reqBody)) {
+      POST(`/auth/signup`, reqBody)
+        .then((res) => {
+          console.log(res);
+          if (res.success) {
+            alert('회원가입 성공');
+            router.push({
+              pathname: `./welcome/${res.data.name}`,
+            });
+          }
+        })
+        .catch(function (error) {
+          alert('회원가입 실패');
+          return {};
+        });
     }
-
-    POST(`/auth/signup`, reqBody)
-      .then((res) => {
-        console.log(res);
-        if (res.success) {
-          alert('회원가입 성공');
-          router.push({
-            pathname: `./welcome/${res.data.name}`,
-          });
-        }
-      })
-      .catch(function (error) {
-        alert('회원가입 실패');
-        return {};
-      });
   }
 
   return (
