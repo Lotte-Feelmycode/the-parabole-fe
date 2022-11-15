@@ -4,13 +4,13 @@ import { GET, DELETE } from '@apis/defaultApi';
 import styled from '@emotion/styled';
 import SellerLayout from '@components/seller/SellerLayout';
 import SiteHead from '@components/common/SiteHead';
-import Heading from '@components/input/Heading';
 import { Pink } from '@components/input/Button';
 import { getDateTime, getState } from '@utils/functions';
-import { PRIZE_TYPE, EVENT_TYPE } from '@utils/constants/types';
+import { EVENT_TYPE } from '@utils/constants/types';
 import EventParticipant from '@components/event/EventParticipantList';
 import { useGetToken } from '@hooks/useGetToken';
 import EventSampleModal from '@components/event/EventSampleModal';
+import { NO_IMAGE } from '@utils/constants/images';
 
 export default function EventDetail() {
   const router = useRouter();
@@ -25,15 +25,15 @@ export default function EventDetail() {
   const [headers, setHeaders] = useState();
 
   useEffect(() => {
-    // if (typeof window !== 'undefined' && typeof window !== undefined) {
-    //   if (localStorage.getItem('userId') === null) {
-    //     alert('로그인 해주세요.');
-    //     router.push('/signin');
-    //   } else if (localStorage.getItem('role') === 'ROLE_USER') {
-    //     alert('판매자 페이지입니다.');
-    //     router.push('/');
-    //   }
-    // }
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push('/signin');
+      } else if (localStorage.getItem('role') === 'ROLE_USER') {
+        alert('판매자 페이지입니다.');
+        router.push('/');
+      }
+    }
     setHeaders(useGetToken());
   }, []);
 
@@ -126,7 +126,7 @@ export default function EventDetail() {
                         <img
                           alt="team"
                           className="flex-shrink-0 rounded-lg w-24 h-24 object-cover object-center sm:mb-0 mb-4"
-                          src={eventPrize.productImg}
+                          src={eventPrize.productImg || NO_IMAGE}
                         />
                         <div className="flex-grow sm:pl-8">
                           <h2 className="title-font font-bold text-lg text-gray-900">
@@ -146,7 +146,7 @@ export default function EventDetail() {
                         <img
                           alt="team"
                           className="flex-shrink-0 rounded-lg w-24 h-24 object-cover object-center sm:mb-0 mb-4"
-                          src={eventPrize.couponImg}
+                          src={eventPrize.couponImg || NO_IMAGE}
                         />
                         <div className="flex-grow sm:pl-8">
                           <h2 className="title-font font-bold text-lg text-gray-900">
@@ -186,7 +186,7 @@ export default function EventDetail() {
             </span>
             {event.status === EVENT_END ? (
               <div className="mb-12 overflow-y-auto max-h-96">
-                {/* <당첨자내역></당첨자내역> */}
+                {/* TODO: <당첨자내역></당첨자내역> */}
               </div>
             ) : (
               <div className="ml-2">이벤트 종료 후 추첨됩니다.</div>
