@@ -13,6 +13,7 @@ import EventSampleModal from '@components/event/EventSampleModal';
 import { NO_IMAGE } from '@utils/constants/images';
 import EventWinnerList from '@components/event/EventWinnerList';
 import { LINKS } from '@utils/constants/links';
+import { ICON_COUPON } from '@utils/constants/icons';
 
 export default function EventDetail() {
   const router = useRouter();
@@ -148,7 +149,7 @@ export default function EventDetail() {
                         <img
                           alt="team"
                           className="flex-shrink-0 rounded-lg w-24 h-24 object-cover object-center sm:mb-0 mb-4"
-                          src={eventPrize.couponImg || NO_IMAGE}
+                          src={ICON_COUPON}
                         />
                         <div className="flex-grow sm:pl-8">
                           <h2 className="title-font font-bold text-lg text-gray-900">
