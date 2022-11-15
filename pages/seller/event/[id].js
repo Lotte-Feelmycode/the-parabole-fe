@@ -30,10 +30,10 @@ export default function EventDetail() {
     if (typeof window !== 'undefined' && typeof window !== undefined) {
       if (localStorage.getItem('userId') === null) {
         alert('로그인 해주세요.');
-        router.push({LINKS.SIGNIN});
+        router.push(LINKS.SIGNIN);
       } else if (localStorage.getItem('role') === 'ROLE_USER') {
         alert('판매자 페이지입니다.');
-        router.push({LINKS.MAIN});
+        router.push(LINKS.MAIN);
       }
     }
     setHeaders(useGetToken());
