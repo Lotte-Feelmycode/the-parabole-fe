@@ -17,7 +17,6 @@ export default function EventSampleModal({ setModalState, event }) {
         <section className="flex min-h-screen flex-col text-gray-600 body-font">
           <div className="container px-5 py-24 mx-auto">
             <CloseButton onClickFunc={(e) => closeModal(e)} />
-
             <div
               className="event-detail-startAt"
               style={{ fontSize: 'xx-large', padding: '10px' }}
@@ -45,6 +44,7 @@ export default function EventSampleModal({ setModalState, event }) {
                 event.eventPrizes.map((prize) => {
                   return (
                     <EventPrize
+                      className="cursor-not-allowd"
                       prize={prize}
                       eventId={event.id}
                       applyStatus=""
@@ -63,6 +63,7 @@ const EventPrizeListSection = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin-top: 10px;
+  pointer-events: none;
 `;
 
 const BackgroundDIM = styled.div`
