@@ -181,7 +181,7 @@ const ModalTableSection = styled.div`
   overflow-y: auto;
   text-align: center;
   @media (min-width: 767px) {
-    height: 450px;
+    height: 430px;
   }
   @media (max-width: 767px) {
     max-height: 410px;
