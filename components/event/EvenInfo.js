@@ -6,12 +6,14 @@ import Timer from '@components/common/Timer';
 import { useState, useEffect } from 'react';
 import { GET_DATA } from '@apis/defaultApi';
 import { ColorBlue1 } from '@utils/constants/themeColor';
+import { NO_EVENT_DETAIL_IMAGE } from '@utils/constants/images';
 
 export default function EventInfo({ eventInfo, eventImage }) {
   const router = useRouter();
   const [storeInfo, setStoreInfo] = useState();
 
   useEffect(() => {
+    console.log(eventInfo);
     if (eventInfo) {
       GET_DATA(`/seller`, { sellerId: eventInfo.sellerId }).then((res) => {
         if (res) {
@@ -20,6 +22,7 @@ export default function EventInfo({ eventInfo, eventImage }) {
       });
     }
   }, [router.query]);
+
   function goToStore() {
     if (storeInfo && storeInfo.sellerId) {
       router.push({ pathname: `/store/${storeInfo.sellerId}` });
@@ -70,7 +73,9 @@ export default function EventInfo({ eventInfo, eventImage }) {
                   data-aos-delay="150"
                 >
                   {/* TODO : 이벤트 종료일시 - 현재 */}
-                  <Timer endAt={eventInfo.endAt} />
+                  {eventInfo.type === 'FCFS' && (
+                    <Timer endAt={eventInfo.endAt} />
+                  )}
                 </p>
                 <div
                   className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center"
@@ -88,7 +93,10 @@ export default function EventInfo({ eventInfo, eventImage }) {
             </div>
           </div>
           <div>
-            <img src={eventImage.eventDetailImg} layout="responsive" />
+            <img
+              src={eventImage.eventDetailImg || NO_EVENT_DETAIL_IMAGE}
+              layout="responsive"
+            />
           </div>
         </div>
       </section>

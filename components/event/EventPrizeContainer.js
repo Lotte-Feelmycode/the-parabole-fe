@@ -4,6 +4,11 @@ import { POST } from '@apis/defaultApi';
 import { ICON_COUPON } from '@utils/constants/icons';
 import styled from '@emotion/styled';
 import Heading from '@components/input/Heading';
+import {
+  NO_IMAGE,
+  NO_EVENT_BANNER_IMAGE,
+  NO_EVENT_DETAIL_IMAGE,
+} from '@utils/constants/images';
 export default function EventPrizeContainer({
   eventId,
   eventPrizes,
@@ -63,9 +68,9 @@ export default function EventPrizeContainer({
                         {prize && prize.prizeType === 'PRODUCT' ? (
                           <>
                             <ImgSection>
-                              <EventPrizeProductImg
-                                className="prize-img"
-                                src={prize.productImg}
+                              <img
+                                className="prize-img w-48 h-48 object-center "
+                                src={prize.productImg || NO_IMAGE}
                               />
                             </ImgSection>
                             <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">
