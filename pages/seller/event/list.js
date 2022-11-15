@@ -153,7 +153,7 @@ export default function EventList() {
           </div>
         </div>
         <table className="w-full text-m text-center">
-          <thead className="text-m text-gray-700 uppercase bg-rose-50 dark:bg-gray-700 dark:text-gray-400">
+          <thead className="text-m text-gray-700 uppercase bg-pink-50 dark:bg-gray-700 dark:text-gray-400">
             <tr className="h-12">
               <th scope="col" className="py-1 w-10">
                 이벤트
