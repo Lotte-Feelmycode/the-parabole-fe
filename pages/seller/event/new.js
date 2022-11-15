@@ -8,7 +8,13 @@ import useCheck from '@hooks/useCheck';
 import Heading from '@components/input/Heading';
 import Input from '@components/input/Input';
 import Radio from '@components/input/Radio';
-import * as btn from '@components/input/Button';
+import {
+  Pink,
+  SmallLinePink,
+  LinePink,
+  SmallWhite,
+  SmallPink,
+} from '@components/input/Button';
 import CloseButton from '@components/input/CloseButton';
 import SellerLayout from '@components/seller/SellerLayout';
 import { getDate, getState, isEmpty, numberToMonetary } from '@utils/functions';
@@ -34,7 +40,7 @@ export default function Event() {
         router.push('/');
       }
     }
-    setToken('useGetToken ' + localStorage.getItem('token'));
+    setToken('Bearer ' + localStorage.getItem('token'));
   }, []);
 
   const [productList, setProductList] = useState([]);
@@ -66,7 +72,6 @@ export default function Event() {
         return newObj;
       });
 
-      console.log('schedules', schedules);
       setScheduleList(schedules);
     });
   }, []);
@@ -206,7 +211,7 @@ export default function Event() {
                           {product.productRemains}
                         </td>
                         <td className="p-4 w-30">
-                          <btn.LinePink
+                          <LinePink
                             buttonText="등록"
                             name="btnPost"
                             css={{
@@ -295,7 +300,7 @@ export default function Event() {
                         </td>
                         <td className="px-6 w-12">
                           <div className="flex items-center">
-                            <btn.SmallLinePink
+                            <SmallLinePink
                               buttonText="등록"
                               name="btnPost"
                               css={{
@@ -366,7 +371,7 @@ export default function Event() {
                     <td className="py-4 px-8 w-48">{prize.name}</td>
                     <td className="py-4 px-8 w-20">
                       <OptionInputSection>
-                        <btn.SmallWhite
+                        <SmallWhite
                           buttonText="-"
                           onClickFunc={(event) =>
                             minusBtnClick(event, index, prize)
@@ -386,7 +391,7 @@ export default function Event() {
                             margin: '0',
                           }}
                         />
-                        <btn.SmallWhite
+                        <SmallWhite
                           buttonText="+"
                           onClickFunc={(event) =>
                             plusBtnClick(event, index, prize)
@@ -439,11 +444,14 @@ export default function Event() {
     if (eventType === 'FCFS') {
       setEndAt(fromDTM.substr(0, 13) + ':50:00');
 
-      GET('/event/seller/check', {
-        userId: 1,
-        inputDtm: fromDTM.substr(0, 13) + ':00:00',
-      }).then((res) => {
-        if (res.data !== true) {
+      GET(
+        '/event/seller/check',
+        {
+          inputDtm: fromDTM.substr(0, 13) + ':00:00',
+        },
+        useGetToken(),
+      ).then((res) => {
+        if (res && res.data !== true) {
           alert(res.message);
           return;
         }
@@ -580,15 +588,12 @@ export default function Event() {
   const onSearchProductsHandler = (e) => {
     e.preventDefault();
 
-    // TODO : USER 정보 가져오기
-    // const userId = sessionStorage.getItem("ID");
-    const params = {
-      sellerId: 1,
-    };
-    GET(`/product/list`, params).then((res) => {
-      setProductList(res.data.content);
-      setProductSelect(true);
-      setCouponSelect(false);
+    GET(`/product/seller/list`, null, useGetToken()).then((res) => {
+      if (res && res.data && res.data.content) {
+        setProductList(res.data.content);
+        setProductSelect(true);
+        setCouponSelect(false);
+      }
     });
   };
 
@@ -596,15 +601,12 @@ export default function Event() {
   const onSearchCouponsHandler = (e) => {
     e.preventDefault();
 
-    // TODO : USER 정보 가져오기
-    // const userId = sessionStorage.getItem("ID");
-    const params = {
-      sellerId: 1,
-    };
-    GET(`/coupon/seller/list`, params).then((res) => {
-      setCouponList(res.data.content);
-      setCouponSelect(true);
-      setProductSelect(false);
+    GET(`/coupon/seller/list`, null, useGetToken()).then((res) => {
+      if (res && res.data && res.data.content) {
+        setCouponList(res.data.content);
+        setCouponSelect(true);
+        setProductSelect(false);
+      }
     });
   };
 
@@ -620,8 +622,6 @@ export default function Event() {
     }
   };
 
-  // 이벤트 등록 버튼 핸들러
-  // TODO : 이미지 업로더 수정
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
@@ -630,7 +630,6 @@ export default function Event() {
     for (var i = 0; i < prizeList.length; i++) {
       copyArr[i] = { ...copyArr[i], stock: stockList.at(i).stock };
     }
-    // console.log('이벤트 채팅 여부 : ', chatOpen);
 
     const formData = new FormData();
     for (var i = 0; i < fileList.length; i++) {
@@ -638,23 +637,19 @@ export default function Event() {
     }
 
     const eventParams = {
-      //userId: localStorage.getItem("ID"),
-      userId: 1,
       createdBy: 'SELLER',
       type: eventType,
       startAt: startAt + ':00',
       endAt: endAt + ':00',
       title: title,
       descript: descript,
-
-      // chatOpen : chatOpen,
       eventPrizeCreateRequestDtos: copyArr,
     };
 
     const eventInfos = JSON.stringify(eventParams);
     const blob = new Blob([eventInfos], { type: 'application/json' });
     formData.append('eventDtos', blob);
-    if (validation(eventParams)) {
+    if (validation(eventParams) & confirm('이벤트를 등록하시겠습니까?')) {
       axios
         .post(`${API_BASE_URL}/event`, formData, {
           headers: {
@@ -663,7 +658,7 @@ export default function Event() {
           },
         }) // Content-Type을 반드시 이렇게 하여야 한다.
         .then((res) => {
-          if (res && res.data && confirm('이벤트를 등록하시겠습니까?') > 0) {
+          if (res && res.data > 0) {
             router.push(
               { pathname: `/seller/event/list` },
               `/seller/event/list`,
@@ -722,16 +717,10 @@ export default function Event() {
 
         <Divider />
 
-        {/* <Heading title="이벤트 채팅 생성 여부" type="h2" />
-        <Div>
-          <Checkbox text="생성" onChange={onChatOpen} value={chatOpen} />
-        </Div>
-        <Divider /> */}
-
         <div className="flex">
           <Heading title="이벤트 진행 일시" type="h2" />
 
-          <btn.SmallLinePink
+          <SmallLinePink
             buttonText="이벤트 스케쥴 조회"
             onClickFunc={showModal}
             css={{
@@ -786,15 +775,9 @@ export default function Event() {
         <div className="flex">
           <Heading title="이벤트 경품 선택" type="h2" />
           &nbsp;&nbsp;
-          <btn.SmallPink
-            buttonText="상품"
-            onClickFunc={onSearchProductsHandler}
-          />
+          <SmallPink buttonText="상품" onClickFunc={onSearchProductsHandler} />
           &nbsp;
-          <btn.SmallPink
-            buttonText="쿠폰"
-            onClickFunc={onSearchCouponsHandler}
-          />
+          <SmallPink buttonText="쿠폰" onClickFunc={onSearchCouponsHandler} />
         </div>
         <div className="mb-8">
           <p>상품 또는 쿠폰 목록을 조회해서 경품을 등록하세요.</p>
@@ -811,7 +794,6 @@ export default function Event() {
 
         <Divider />
         <Divider />
-        {/* TODO: 이미지 업로드 추후 수정 */}
         <Heading title="이벤트 배너 이미지" type="h2" />
         <Div>
           <input
@@ -835,12 +817,12 @@ export default function Event() {
         </Div>
         <Divider />
         <Div>
-          <btn.Pink
+          <Pink
             buttonText="등록하기"
             name="btnPost"
             onClickFunc={onSubmitHandler}
           />
-          <btn.LinePink
+          <LinePink
             buttonText="취소하기"
             name="btnCancel"
             onClickFunc={onCancelHandler}
