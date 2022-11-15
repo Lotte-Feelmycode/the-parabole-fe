@@ -5,7 +5,7 @@ import SiteHead from '@components/common/SiteHead';
 import { POST } from '@apis/defaultApi';
 import Link from 'next/link';
 import { Blue } from '@components/input/Button';
-import { FRONT_BASE_URL } from '@apis/api-config';
+import { FRONT_BASE_URL, FRONT_DEPLOY_URL } from '@apis/api-config';
 import { LINKS } from '@utils/constants/links';
 import { AUTH_ERROR } from '@utils/constants/errors';
 import { isEmpty } from '@utils/functions';
@@ -15,13 +15,13 @@ export default function Signin() {
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
 
-  const GOOGLE_REDIRECT_URI = FRONT_BASE_URL + '/code/google';
+  const GOOGLE_REDIRECT_URI = FRONT_DEPLOY_URL + '/code/google';
   const GOOGLE_AUTH_URI = `${process.env.NEXT_PUBLIC_GOOGLE_AUTH}?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code&scope=profile%20email%20openid`;
 
-  const KAKAO_REDIRECT_URI = FRONT_BASE_URL + '/code/kakao';
+  const KAKAO_REDIRECT_URI = FRONT_DEPLOY_URL + '/code/kakao';
   const KAKAO_AUTH_URI = `${process.env.NEXT_PUBLIC_KAKAO_AUTH}?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
 
-  const NAVER_REDIRECT_URI = FRONT_BASE_URL + '/code/naver';
+  const NAVER_REDIRECT_URI = FRONT_DEPLOY_URL + '/code/naver';
   const NAVER_AUTH_URI = `${process.env.NEXT_PUBLIC_NAVER_AUTH}?client_id=${process.env.NEXT_PUBLIC_NAVER_REST_API_KEY}&redirect_uri=${NAVER_REDIRECT_URI}&response_type=code&state=${process.env.NEXT_PUBLIC_NAVER_STATE}`;
 
   function email_check(email) {
