@@ -50,12 +50,11 @@ export default function EventList() {
     };
 
     //TODO: 셀러리스트
-    GET_DATA('/event/list', params, headers).then((res) => {
+    GET_DATA('/event/list', params, useGetToken()).then((res) => {
       if (res) {
         setEventList(res);
       }
     });
-
   }, [searchValue, searchStatus, searchType]);
 
   const rowClickHandler = (row) => {
@@ -71,7 +70,7 @@ export default function EventList() {
   const onSubmitHandler = () => {
     router.push({ pathname: `/seller/event/new` });
   };
-  
+
   function sortListByStartAt(e) {
     e.preventDefault();
 
@@ -119,7 +118,7 @@ export default function EventList() {
     <>
       <SellerLayout>
         <Heading title="이벤트 목록" type="h1" />
-        <StatusSummary eventList={eventList}/>
+        <StatusSummary eventList={eventList} />
         <Divider />
         <Selectbox
           props={EVENT_STATUS}
