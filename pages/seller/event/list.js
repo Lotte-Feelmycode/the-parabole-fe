@@ -7,12 +7,13 @@ import { useState, useEffect } from 'react';
 import Heading from '@components/input/Heading';
 import styled from '@emotion/styled';
 import { getDateTime, getState } from '@utils/functions';
-import * as btn from '@components/input/Button';
+import { SmallPink } from '@components/input/Button';
 import { EVENT_TYPE, EVENT_STATUS } from '@utils/constants/types';
 import { ICON_SEARCH_MAGNIFY } from '@utils/constants/icons';
 import Selectbox from '@components/input/SelectBox';
 import { useGetToken } from '@hooks/useGetToken';
 import SortButton from '@components/input/SortButton';
+import StatusSummary from '@components/event/EventStatusSummary';
 
 export default function EventList() {
   const [searchValue, onSearchValue] = useInput('');
@@ -49,7 +50,7 @@ export default function EventList() {
     };
 
     //TODO: 셀러리스트
-    GET_DATA('/event/list', params, headers).then((res) => {
+    GET_DATA('/event/list', params, useGetToken()).then((res) => {
       if (res) {
         setEventList(res);
       }
@@ -117,6 +118,7 @@ export default function EventList() {
     <>
       <SellerLayout>
         <Heading title="이벤트 목록" type="h1" />
+        <StatusSummary eventList={eventList} />
         <Divider />
         <Selectbox
           props={EVENT_STATUS}
@@ -145,15 +147,13 @@ export default function EventList() {
               type="text"
               value={searchValue}
               onChange={onSearchValue}
-              // onKeyUp={handleOnKeyPress}
               placeholder="이벤트 제목을 검색하세요."
               className="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             ></input>
-            {/* <input type="text" id="table-search" className="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items"> */}
           </div>
         </div>
         <table className="w-full text-m text-center">
-          <thead className="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <thead className="text-m text-gray-700 uppercase bg-pink-50 dark:bg-gray-700 dark:text-gray-400">
             <tr className="h-12">
               <th scope="col" className="py-1 w-10">
                 이벤트
@@ -219,7 +219,7 @@ export default function EventList() {
         </table>
 
         <Div>
-          <btn.SmallPink
+          <SmallPink
             buttonText="등록하기"
             name="btnPost"
             onClickFunc={onSubmitHandler}
@@ -248,9 +248,4 @@ const Div = styled.div`
   display: flex;
   flex-direction: row-reverse;
   margin: 20px;
-`;
-const IconSpan = styled.span`
-  display: block;
-  width: 20px;
-  height: 20px;
 `;

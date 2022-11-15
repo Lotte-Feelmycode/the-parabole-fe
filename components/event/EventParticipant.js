@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { getDateTime } from '@utils/functions';
 
-export default function EventParticipant({ participant }) {
+export default function EventParticipant({ idx, participant }) {
   const [partinfo, setPartinfo] = useState(participant);
 
   useEffect(() => {
@@ -12,12 +12,21 @@ export default function EventParticipant({ participant }) {
   return (
     <tr
       key={partinfo.id}
-      className="h-12 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+      className="text-base h-12 bg-white border-b hover:bg-gray-50"
     >
-      <td>{partinfo.user.email}</td>
-      <td>{partinfo.user.name}</td>
-      <td>{partinfo.eventPrizes[0].productName}</td>
-      <td>{getDateTime(partinfo.eventTimeStartAt)}</td>
+      <td className="py-4 px-2">{idx + 1}</td>
+      <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        {partinfo.userName}
+      </td>
+      <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        {partinfo.userEmail}
+      </td>
+      <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        {partinfo.eventPrizes[0].productName}
+      </td>
+      <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        {getDateTime(partinfo.eventTimeStartAt)}
+      </td>
     </tr>
   );
 }
