@@ -602,9 +602,13 @@ export default function Event() {
       sellerId: 1,
     };
     GET(`/coupon/seller/list`, params).then((res) => {
-      setCouponList(res.data.content);
-      setCouponSelect(true);
-      setProductSelect(false);
+      if (res && res.data) {
+        setCouponList(res.data.content);
+        setCouponSelect(true);
+        setProductSelect(false);
+      } else {
+        alert('등록할 쿠폰이 존재하지 않습니다.');
+      }
     });
   };
 
