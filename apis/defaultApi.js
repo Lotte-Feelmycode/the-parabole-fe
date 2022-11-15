@@ -2,8 +2,18 @@ import axios from 'axios';
 
 import { API_BASE_URL } from '@apis/api-config';
 import { DEV_ERROR } from '@utils/constants/errors';
+import { useGetToken } from '@hooks/useGetToken';
 const CONTENT_TYPE = 'application/json';
 
+let bearerToken = 'Bearer ';
+let accessToken;
+if (typeof window !== 'undefined' && typeof window !== undefined) {
+  accessToken = localStorage.getItem('token');
+}
+if (accessToken && accessToken !== null && accessToken !== undefined) {
+  bearerToken += accessToken;
+}
+axios.defaults.headers.common['Authorization'] = bearerToken;
 axios.defaults.headers.common['Content-Type'] = CONTENT_TYPE;
 axios.defaults.headers.post['Content-Type'] = CONTENT_TYPE;
 
