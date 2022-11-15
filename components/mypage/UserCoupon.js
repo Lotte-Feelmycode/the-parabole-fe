@@ -24,26 +24,6 @@ export default function UserCoupon({ userCoupon }) {
     couponState = '사용불가능';
   }
 
-  // return (
-  //   <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-  //     <th
-  //       scope="row"
-  //       className="px-1 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-  //     >
-  //       {userCoupon.name}
-  //     </th>
-  //     <td className="px-1">{userCoupon.serialNo}</td>
-  //     <td className="px-1">{userCoupon.sellerName}</td>
-  //     <td className="py-1 px-1">
-  //       <BenefitSection>
-  //         <span>{benefitType}</span>
-  //         <span>{benefitAmount}</span>
-  //       </BenefitSection>
-  //     </td>
-  //     <td className="px-1">{getDate(userCoupon.validAt)}</td>
-  //   </tr>
-  // );
-
   return (
     <UserCouponSection className="user-coupon-section">
       <TopSection className="top-section">
