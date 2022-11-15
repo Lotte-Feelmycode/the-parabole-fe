@@ -73,7 +73,7 @@ export default function EventInfo({ eventInfo, eventImage }) {
                   data-aos-delay="150"
                 >
                   {/* TODO : 이벤트 종료일시 - 현재 */}
-                  {eventInfo.type === 'FCFS' && (
+                  {eventInfo.type === 'FCFS' && eventInfo.status === 1 && (
                     <Timer endAt={eventInfo.endAt} />
                   )}
                 </p>

@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
+import { isEmpty } from '@utils/functions';
 const Timer = ({ endAt }) => {
   let endDate = new Date(endAt);
   let now = new Date();
 
-  if (endDate.getTime() - now.getTime() < 0) {
+  if (isEmpty(endAt) || endDate.getTime() < now.getTime()) {
     return (
       <div className="text-rose-600 font-bold text-3xl md:text-5xl">
         이벤트 종료
@@ -34,7 +35,7 @@ const Timer = ({ endAt }) => {
 
     return (
       <div>
-        {minutes}:{seconds < 10 ? `0${seconds}` : seconds} 남음
+        {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
       </div>
     );
   }
