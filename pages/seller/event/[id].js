@@ -148,7 +148,7 @@ export default function EventDetail() {
                       <>
                         <img
                           alt="team"
-                          className="flex-shrink-0 rounded-lg w-24 h-24 object-cover object-center sm:mb-0 mb-4"
+                          className="flex-shrink-0 rounded-lg w-28 h-28 object-contain sm:mb-0 mb-4"
                           src={ICON_COUPON}
                         />
                         <div className="flex-grow sm:pl-8">
