@@ -58,6 +58,12 @@ export default function CartContentDetail({
     border-top: 1px solid white;
     border-bottom: 1px solid white;
     display: flex;
+
+    @media (max-width: 1024px) {
+    }
+    @media (min-width: 1024px) {
+      height: 100px;
+    }
   `;
 
   const deleteCartItem = ({ input }) => {
