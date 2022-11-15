@@ -10,8 +10,7 @@ import { getDateTime, getState } from '@utils/functions';
 import { PRIZE_TYPE, EVENT_TYPE } from '@utils/constants/types';
 import EventParticipant from '@components/event/EventParticipantList';
 import { useGetToken } from '@hooks/useGetToken';
-import { EventSampleModal } from '@components/event/EventSampleModal';
-
+import EventSampleModal from '@components/event/EventSampleModal';
 
 export default function EventDetail() {
   const router = useRouter();
@@ -69,7 +68,6 @@ export default function EventDetail() {
     setModalState(true);
   }
 
-
   return (
     <SellerLayout>
       <SiteHead title={'Seller Office'} />
@@ -79,24 +77,30 @@ export default function EventDetail() {
           <div className="text-4xl font-bold mb-2">이벤트 상세</div>
           <Divider />
           <div className="flex flex-col mb-14">
-            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">이벤트 제목</span>
-            <span className="ml-2 text-xl font-bold mb-1">
-              "{event.title}"
+            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">
+              이벤트 제목
             </span>
+            <span className="ml-2 text-xl font-bold mb-1">"{event.title}"</span>
             <span className="ml-2">{event.descript}</span>
           </div>
 
           <div className="flex flex-col mb-14">
-            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">이벤트 유형</span>
+            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">
+              이벤트 유형
+            </span>
             <span className="text-l ml-2">
               {getState(EVENT_TYPE, event.type)} 이벤트
             </span>
           </div>
 
           <div className="flex flex-col mb-14">
-            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">이벤트 일시</span>
+            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">
+              이벤트 일시
+            </span>
             {event.type === 'FCFS' && (
-              <div className='ml-2 text-xl font-bold text-rose-700'>📌 선착순 이벤트는 정각부터 50분간 진행됩니다.</div>
+              <div className="ml-2 text-xl font-bold text-rose-700">
+                📌 선착순 이벤트는 정각부터 50분간 진행됩니다.
+              </div>
             )}
             <span className="ml-2">
               이벤트 시작일시 : {event.startAt && getDateTime(event.startAt)}
@@ -107,40 +111,66 @@ export default function EventDetail() {
           </div>
 
           <div className="flex flex-col mb-14">
-            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">이벤트 경품</span>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2'>
-            {event.eventPrizes &&
-                  event.eventPrizes.map((eventPrize, index) => (          
-              <div key={index} className="text-gray-900 border-1 border py-2 px-8 mb-4 h-full flex sm:flex-row flex-col items-center sm:justify-start justify-center text-center sm:text-left">
-                {eventPrize.prizeType === 'PRODUCT' ? (
-                  <>
-                    <img alt="team" className="flex-shrink-0 rounded-lg w-24 h-24 object-cover object-center sm:mb-0 mb-4" src={eventPrize.productImg}/>
-                    <div className="flex-grow sm:pl-8">
-                      <h2 className="title-font font-bold text-lg text-gray-900">{eventPrize.productName}</h2>
-                      <h3 className="text-gray-500 mb-2">상품 번호 : {eventPrize.productId}</h3>
-                      <p className="mb-4">수량 {eventPrize.stock}개</p>
-                    </div>
-                    <div className="mb-4 justify-self-end rounded-full py-2 px-4 bg-pink-400 text-white font-bold">상품</div>
-                  </>
-                ) : (
-                  <>
-                    <img alt="team" className="flex-shrink-0 rounded-lg w-24 h-24 object-cover object-center sm:mb-0 mb-4" src={eventPrize.couponImg}/>
-                    <div className="flex-grow sm:pl-8">
-                      <h2 className="title-font font-bold text-lg text-gray-900">{eventPrize.couponName}</h2>
-                      <h3 className="text-gray-500 mb-2">쿠폰 번호 : {eventPrize.couponId}</h3>
-                      <p className="mb-4">수량 {eventPrize.stock}개</p>
-                    </div>
-                    <div className="mb-4 justify-self-end rounded-full py-2 px-4 bg-pink-400 text-white font-bold">쿠폰</div>
-                  </>
-                ) }
-
-              </div>
-            ))}
+            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">
+              이벤트 경품
+            </span>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+              {event.eventPrizes &&
+                event.eventPrizes.map((eventPrize, index) => (
+                  <div
+                    key={index}
+                    className="text-gray-900 border-1 border py-2 px-8 mb-4 h-full flex sm:flex-row flex-col items-center sm:justify-start justify-center text-center sm:text-left"
+                  >
+                    {eventPrize.prizeType === 'PRODUCT' ? (
+                      <>
+                        <img
+                          alt="team"
+                          className="flex-shrink-0 rounded-lg w-24 h-24 object-cover object-center sm:mb-0 mb-4"
+                          src={eventPrize.productImg}
+                        />
+                        <div className="flex-grow sm:pl-8">
+                          <h2 className="title-font font-bold text-lg text-gray-900">
+                            {eventPrize.productName}
+                          </h2>
+                          <h3 className="text-gray-500 mb-2">
+                            상품 번호 : {eventPrize.productId}
+                          </h3>
+                          <p className="mb-4">수량 {eventPrize.stock}개</p>
+                        </div>
+                        <div className="mb-4 justify-self-end rounded-full py-2 px-4 bg-pink-400 text-white font-bold">
+                          상품
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <img
+                          alt="team"
+                          className="flex-shrink-0 rounded-lg w-24 h-24 object-cover object-center sm:mb-0 mb-4"
+                          src={eventPrize.couponImg}
+                        />
+                        <div className="flex-grow sm:pl-8">
+                          <h2 className="title-font font-bold text-lg text-gray-900">
+                            {eventPrize.couponName}
+                          </h2>
+                          <h3 className="text-gray-500 mb-2">
+                            쿠폰 번호 : {eventPrize.couponId}
+                          </h3>
+                          <p className="mb-4">수량 {eventPrize.stock}개</p>
+                        </div>
+                        <div className="mb-4 justify-self-end rounded-full py-2 px-4 bg-pink-400 text-white font-bold">
+                          쿠폰
+                        </div>
+                      </>
+                    )}
+                  </div>
+                ))}
             </div>
           </div>
 
           <div className="flex flex-col mb-4">
-            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">이벤트 응모 고객 목록</span>
+            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">
+              이벤트 응모 고객 목록
+            </span>
             <span className="ml-2 text-m text-gray-700">
               이벤트에 응모한 고객 목록을 확인할 수 있습니다.
             </span>
@@ -151,41 +181,50 @@ export default function EventDetail() {
           </div>
 
           <div className="flex flex-col mb-14">
-            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">이벤트 당첨 고객</span>
+            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">
+              이벤트 당첨 고객
+            </span>
             {event.status === EVENT_END ? (
               <div className="mb-12 overflow-y-auto max-h-96">
                 {/* <당첨자내역></당첨자내역> */}
               </div>
-            ) : (<div className="ml-2">이벤트 종료 후 추첨됩니다.</div>)}
+            ) : (
+              <div className="ml-2">이벤트 종료 후 추첨됩니다.</div>
+            )}
           </div>
 
- 
           <div className="flex flex-col mb-14">
-            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">이벤트 이미지</span>
+            <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">
+              이벤트 이미지
+            </span>
             <div className="ml-2">
-              <Img src={event.eventImage && event.eventImage.eventBannerImg}></Img>
+              <Img
+                src={event.eventImage && event.eventImage.eventBannerImg}
+              ></Img>
             </div>
             <div className="ml-2">
-              <Img src={event.eventImage && event.eventImage.eventDetailImg}></Img>
+              <Img
+                src={event.eventImage && event.eventImage.eventDetailImg}
+              ></Img>
             </div>
           </div>
 
           {modalState && (
-            <EventSampleModal setModalState={setModalState}
-                              event={event}/>
+            <EventSampleModal setModalState={setModalState} event={event} />
           )}
 
           {event.status === EVENT_BEFORE && (
-            <DivHor>
-              <Pink
-                buttonText="미리보기"
-                onClickFunc={(e) => showBenefitModal(e)}
-              ></Pink>
-              <Pink
-                buttonText="삭제하기"
-                onClickFunc={deleteClickHandler}
-              ></Pink>
-            </DivHor>
+            <div className="flex flex-row">
+              <div className="mr-4">
+                <Pink
+                  buttonText="미리보기"
+                  onClickFunc={(e) => showBenefitModal(e)}
+                />
+              </div>
+              <div>
+                <Pink buttonText="삭제하기" onClickFunc={deleteClickHandler} />
+              </div>
+            </div>
           )}
         </div>
       </section>
