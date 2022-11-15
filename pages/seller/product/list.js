@@ -220,7 +220,7 @@ export default function SellerProductList() {
             buttonText="등록하기"
             name="btnPost"
             onClickFunc={() => {
-              router.push('/seller/product/index');
+              router.push('/seller/product/new');
             }}
           />
         </Div>
