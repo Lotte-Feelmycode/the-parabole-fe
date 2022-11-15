@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import { Blue } from '@components/input/Button';
 import { AUTH_ERROR } from '@utils/constants/errors';
 import { isEmpty } from '@utils/functions';
-import NotFoundPage from './404';
 
 export default function Signup() {
   const router = useRouter();
@@ -25,7 +24,6 @@ export default function Signup() {
         router.back();
       }
     }
-    setHeaders(useGetToken());
   }, []);
 
   function email_check(email) {

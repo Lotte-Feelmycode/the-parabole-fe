@@ -32,7 +32,6 @@ export default function Signin() {
         router.back();
       }
     }
-    setHeaders(useGetToken());
   }, []);
 
   function email_check(email) {
