@@ -9,6 +9,8 @@ import { useGetToken } from '@hooks/useGetToken';
 import { useCallback } from 'react';
 import Radio from '@components/input/Radio';
 import { COUPON_TYPE } from '@utils/constants/types';
+import { isEmpty } from '@utils/functions';
+import { COUPON_ENROLL_ERROR } from '@utils/constants/errors';
 
 export default function CouponCreate() {
   const router = useRouter();
@@ -46,6 +48,47 @@ export default function CouponCreate() {
     return [value, handler, setValue];
   }
 
+  // 쿠폰 등록 validation check
+  function validation(inputParams) {
+    if (isEmpty(inputParams.name)) {
+      alert(COUPON_ENROLL_ERROR.NO_COUPON_NAME);
+      return false;
+    }
+    if (isEmpty(inputParams.type)) {
+      alert(COUPON_ENROLL_ERROR.NO_COUPON_TYPE);
+      return false;
+    }
+    if (isEmpty(inputParams.discountValue)) {
+      alert(COUPON_ENROLL_ERROR.NO_DISCOUNT_VALUE);
+      return false;
+    }
+    if (isEmpty(inputParams.validAt)) {
+      alert(COUPON_ENROLL_ERROR.NO_VALID_AT);
+      return false;
+    }
+    if (isEmpty(inputParams.expiresAt)) {
+      alert(COUPON_ENROLL_ERROR.NO_EXPIRES_AT);
+      return false;
+    }
+    if (isEmpty(inputParams.detail)) {
+      alert(COUPON_ENROLL_ERROR.NO_COUPON_DETAILS);
+      return false;
+    }
+    if (isEmpty(inputParams.cnt)) {
+      alert(COUPON_ENROLL_ERROR.NO_COUPON_CNT);
+      return false;
+    }
+    if (
+      inputParams.validAt >= inputParams.expiresAt ||
+      inputParams.validAt <= new Date() ||
+      inputParams.expiresAt <= new Date()
+    ) {
+      alert(COUPON_ENROLL_ERROR.INVALID_DATE);
+      return false;
+    }
+    return true;
+  }
+
   const [detail, onChangeDetail] = useInput('');
   const [cnt, onChangeCnt] = useInput();
 
@@ -77,20 +120,22 @@ export default function CouponCreate() {
       cnt: cnt,
     };
 
-    POST_DATA(`/coupon/new`, reqBody, headers)
-      .then((res) => {
-        alert(
-          res.couponName +
-            "' 쿠폰이 \n" +
-            res.cnt +
-            ' 장 발급 완료 되었습니다.',
-        );
-        router.push(`./list`);
-      })
-      .catch(function (error) {
-        console.log(error);
-        return {};
-      });
+    if (validation(reqBody)) {
+      POST_DATA(`/coupon/new`, reqBody, headers)
+        .then((res) => {
+          alert(
+            res.couponName +
+              "' 쿠폰이 \n" +
+              res.cnt +
+              ' 장 발급 완료 되었습니다.',
+          );
+          router.push(`./list`);
+        })
+        .catch(function (error) {
+          console.log(error);
+          return {};
+        });
+    }
   }
 
   return (
