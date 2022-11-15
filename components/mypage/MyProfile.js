@@ -77,13 +77,13 @@ export default function MyProfile({ headers }) {
           </LabelInputSection>
         </LabelSection>
         <LabelSection>
-          <LabelTitle>계정정보</LabelTitle>
+          <LabelTitle>휴대전화</LabelTitle>
           <LabelInputSection>
             <LargeInput
               type="text"
               attr={{ readOnly: true }}
               css={{ width: '100%' }}
-              value={userInfo.role || ''}
+              value={userInfo.phone || ''}
             />
           </LabelInputSection>
         </LabelSection>
