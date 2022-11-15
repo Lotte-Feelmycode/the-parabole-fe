@@ -187,6 +187,7 @@ export default function EventDetail() {
             <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">
               이벤트 당첨 고객
             </span>
+            {/* TODO : 이벤트 당첨자 리스트 수정예정 */}
             {event.status === EVENT_END ? (
               <div className="mb-12 overflow-y-auto max-h-96">
                 <EventWinnerList eventId={eventId} />
