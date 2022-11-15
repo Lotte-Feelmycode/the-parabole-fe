@@ -7,10 +7,18 @@ import { LINKS } from '@utils/constants/links';
 import SellerLayout from '@components/seller/SellerLayout';
 import Heading from '@components/input/Heading';
 import { SmallPink } from '@components/input/Button';
+import { isEmpty, numberToMonetary } from '@utils/functions';
+import SortButton from '@components/input/SortButton';
+import { getState } from '@utils/functions';
+import { PRODUCT_STATE } from '@utils/constants/types';
+import { ColorBlue1 } from '@utils/constants/themeColor';
 
 export default function SellerProductList() {
   const router = useRouter();
   const [productList, setProductList] = useState([]);
+  const [priceSortDesc, setPriceSortDesc] = useState(true);
+  const [nameSortDesc, setNameSortDesc] = useState(false);
+  const [stockSortDesc, setStockSortDesc] = useState(true);
 
   const [headers, setHeaders] = useState();
 
@@ -26,12 +34,102 @@ export default function SellerProductList() {
     }
     setHeaders(useGetToken());
 
-    GET_DATA(`/product/list`, null, headers).then((res) => {
+    GET_DATA(`/product/seller/list`, null, headers).then((res) => {
       if (res) {
         setProductList(res.content);
       }
     });
   }, []);
+
+  function sortListByPrice(e) {
+    e.preventDefault();
+
+    let copyArray = [...productList];
+
+    if (priceSortDesc) {
+      copyArray.sort(function (a, b) {
+        // 오름차순
+        return a.productPrice > b.productPrice
+          ? -1
+          : a.productPrice < b.productPrice
+          ? 1
+          : 0;
+      });
+      setPriceSortDesc(false);
+    } else {
+      copyArray.sort(function (a, b) {
+        // 오름차순
+        return a.productPrice < b.productPrice
+          ? -1
+          : a.productPrice > b.productPrice
+          ? 1
+          : 0;
+      });
+      setPriceSortDesc(true);
+    }
+
+    setProductList(copyArray);
+  }
+
+  function sortListByName(e) {
+    e.preventDefault();
+
+    let copyArray = [...productList];
+
+    if (nameSortDesc) {
+      copyArray.sort(function (a, b) {
+        // 오름차순
+        return a.productName > b.productName
+          ? -1
+          : a.productName < b.productName
+          ? 1
+          : 0;
+      });
+      setNameSortDesc(false);
+    } else {
+      copyArray.sort(function (a, b) {
+        // 오름차순
+        return a.productName < b.productName
+          ? -1
+          : a.productName > b.productName
+          ? 1
+          : 0;
+      });
+      setNameSortDesc(true);
+    }
+
+    setProductList(copyArray);
+  }
+
+  function sortListByStock(e) {
+    e.preventDefault();
+
+    let copyArray = [...productList];
+
+    if (stockSortDesc) {
+      copyArray.sort(function (a, b) {
+        // 오름차순
+        return a.productRemains > b.productRemains
+          ? -1
+          : a.productRemains < b.productRemains
+          ? 1
+          : 0;
+      });
+      setStockSortDesc(false);
+    } else {
+      copyArray.sort(function (a, b) {
+        // 오름차순
+        return a.productRemains < b.productRemains
+          ? -1
+          : a.productRemains > b.productRemains
+          ? 1
+          : 0;
+      });
+      setStockSortDesc(true);
+    }
+
+    setProductList(copyArray);
+  }
 
   return (
     <>
@@ -39,19 +137,40 @@ export default function SellerProductList() {
         <Heading title="상품 목록" type="h1" />
         <Divider />
         <table className="w-full text-m text-center">
-          <thead className="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr className="h-12">
-              <th scope="col" className="py-1 w-10">
-                상품명
+          <thead className="text-base text-black uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr className="h-14">
+              <th scope="col" className="py-3 px-12 w-52 bg-gray-50">
+                <div className="flex items-center justify-center">
+                  상품명
+                  <SortButton
+                    onClickFunc={(e) => sortListByName(e)}
+                  ></SortButton>
+                </div>
               </th>
-              <th scope="col" className="py-1 px-10 w-24">
-                재고
+              <th scope="col" className="p-4 w-18">
+                상품 이미지
               </th>
-              <th scope="col" className="py-1 px-10 w-40">
-                가격
-              </th>
-              <th scope="col" className="py-1 px-10 w-40">
+              <th scope="col" className="py-3 px-10 w-24">
                 카테고리
+              </th>
+              <th scope="col" className="py-3 px-10 w-24">
+                <div class="flex justify-center items-center">
+                  가격
+                  <SortButton
+                    onClickFunc={(e) => sortListByPrice(e)}
+                  ></SortButton>
+                </div>
+              </th>
+              <th scope="col" className="py-3 px-6 w-24">
+                <div className="flex items-center justify-center">
+                  재고
+                  <SortButton
+                    onClickFunc={(e) => sortListByStock(e)}
+                  ></SortButton>
+                </div>
+              </th>
+              <th scope="col" className="py-3 px-2 w-24">
+                판매 상태
               </th>
             </tr>
           </thead>
@@ -60,11 +179,30 @@ export default function SellerProductList() {
             Array.isArray(productList) &&
             productList.length > 0 ? (
               productList.map((product, index) => (
-                <tr className="h-16 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <td>{product.productName}</td>
-                  <td>{product.productRemains}</td>
-                  <td>{product.productPrice}</td>
-                  <td>{product.productCategory}</td>
+                <tr
+                  key={product.productId}
+                  className="h-24 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                >
+                  <td className="bg-gray-50 py-2 px-4 w-52 text-left">
+                    {product.productName}
+                  </td>
+                  <td className="py-2 px-4 mx-2 w-16">
+                    <img src={product.productThumbnailImg} alt="상품"></img>
+                  </td>
+                  <td className=" py-2 px-4  w-24">
+                    {product.productCategory}
+                  </td>
+                  <td className=" py-2 px-4  w-24">
+                    {numberToMonetary(product.productPrice)} 원
+                  </td>
+                  <td className=" py-2 px-4  w-24">
+                    {numberToMonetary(product.productRemains)}
+                  </td>
+                  <td className=" py-2 px-4  w-24">
+                    <Tags>
+                      {getState(PRODUCT_STATE, product.productStatus)}
+                    </Tags>
+                  </td>
                 </tr>
               ))
             ) : (
@@ -97,7 +235,7 @@ const Divider = styled.hr`
 `;
 
 const Tags = styled.span`
-  background-color: black;
+  background-color: ${ColorBlue1};
   color: white;
   font-size: 0.8rem;
   margin: 0 0.5rem;

@@ -7,16 +7,20 @@ import { useState, useEffect } from 'react';
 import Heading from '@components/input/Heading';
 import styled from '@emotion/styled';
 import { getDateTime, getState } from '@utils/functions';
-import * as btn from '@components/input/Button';
+import { SmallPink } from '@components/input/Button';
 import { EVENT_TYPE, EVENT_STATUS } from '@utils/constants/types';
 import { ICON_SEARCH_MAGNIFY } from '@utils/constants/icons';
 import Selectbox from '@components/input/SelectBox';
 import { useGetToken } from '@hooks/useGetToken';
+import SortButton from '@components/input/SortButton';
+import StatusSummary from '@components/event/EventStatusSummary';
 
 export default function EventList() {
   const [searchValue, onSearchValue] = useInput('');
   const [searchStatus, onSearchStatus] = useInput();
   const [searchType, onSearchType] = useInput();
+  const [startAtSortDesc, setStartAtSortDesc] = useState(false);
+  const [endAtSortDesc, setEndAtSortDesc] = useState(false);
 
   const router = useRouter();
   const [eventList, setEventList] = useState([]);
@@ -43,13 +47,11 @@ export default function EventList() {
       eventTitle: searchValue,
     };
 
-    if (headers) {
-      GET_DATA('/event/list', params, headers).then((res) => {
-        if (res) {
-          setEventList(res);
-        }
-      });
-    }
+    GET_DATA('/event/list', params, useGetToken()).then((res) => {
+      if (res) {
+        setEventList(res);
+      }
+    });
   }, [searchValue, searchStatus, searchType]);
 
   const rowClickHandler = (row) => {
@@ -66,10 +68,54 @@ export default function EventList() {
     router.push({ pathname: `/seller/event/new` });
   };
 
+  function sortListByStartAt(e) {
+    e.preventDefault();
+
+    let copyArray = [...eventList];
+
+    if (startAtSortDesc) {
+      copyArray.sort(function (a, b) {
+        // 내림차순
+        return a.startAt > b.startAt ? -1 : a.startAt < b.startAt ? 1 : 0;
+      });
+      setStartAtSortDesc(false);
+    } else {
+      copyArray.sort(function (a, b) {
+        // 오름차순
+        return a.startAt < b.startAt ? -1 : a.startAt > b.startAt ? 1 : 0;
+      });
+      setStartAtSortDesc(true);
+    }
+
+    setEventList(copyArray);
+  }
+
+  function sortListByEndAt(e) {
+    e.preventDefault();
+
+    let copyArray = [...eventList];
+
+    if (endAtSortDesc) {
+      copyArray.sort(function (a, b) {
+        // 내림차순
+        return a.endAt > b.endAt ? -1 : a.endAt < b.endAt ? 1 : 0;
+      });
+      setEndAtSortDesc(false);
+    } else {
+      copyArray.sort(function (a, b) {
+        // 오름차순
+        return a.endAt < b.endAt ? -1 : a.endAt > b.endAt ? 1 : 0;
+      });
+      setEndAtSortDesc(true);
+    }
+
+    setEventList(copyArray);
+  }
   return (
     <>
       <SellerLayout>
         <Heading title="이벤트 목록" type="h1" />
+        <StatusSummary eventList={eventList} />
         <Divider />
         <Selectbox
           props={EVENT_STATUS}
@@ -104,7 +150,7 @@ export default function EventList() {
           </div>
         </div>
         <table className="w-full text-m text-center">
-          <thead className="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <thead className="text-m text-gray-700 uppercase bg-pink-50 dark:bg-gray-700 dark:text-gray-400">
             <tr className="h-12">
               <th scope="col" className="py-1 w-10">
                 이벤트
@@ -124,10 +170,20 @@ export default function EventList() {
                 진행 상태
               </th>
               <th scope="col" className="py-1 px-10 w-40">
-                이벤트 시작일시
+                <div className="flex items-center justify-center">
+                  이벤트 시작일시
+                  <SortButton
+                    onClickFunc={(e) => sortListByStartAt(e)}
+                  ></SortButton>
+                </div>
               </th>
               <th scope="col" className="py-1 px-10 w-40">
-                이벤트 종료일시
+                <div className="flex items-center justify-center">
+                  이벤트 종료일시
+                  <SortButton
+                    onClickFunc={(e) => sortListByEndAt(e)}
+                  ></SortButton>
+                </div>
               </th>
             </tr>
           </thead>
@@ -161,7 +217,7 @@ export default function EventList() {
         </table>
 
         <Div>
-          <btn.SmallPink
+          <SmallPink
             buttonText="등록하기"
             name="btnPost"
             onClickFunc={onSubmitHandler}
@@ -190,9 +246,4 @@ const Div = styled.div`
   display: flex;
   flex-direction: row-reverse;
   margin: 20px;
-`;
-const IconSpan = styled.span`
-  display: block;
-  width: 20px;
-  height: 20px;
 `;

@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { Blue } from '@components/input/Button';
 import { FRONT_BASE_URL } from '@apis/api-config';
 import { LINKS } from '@utils/constants/links';
+import { AUTH_ERROR } from '@utils/constants/errors';
+import { isEmpty } from '@utils/functions';
 
 export default function Signin() {
   const router = useRouter();
@@ -22,6 +24,37 @@ export default function Signin() {
   const NAVER_REDIRECT_URI = FRONT_BASE_URL + '/code/naver';
   const NAVER_AUTH_URI = `${process.env.NEXT_PUBLIC_NAVER_AUTH}?client_id=${process.env.NEXT_PUBLIC_NAVER_REST_API_KEY}&redirect_uri=${NAVER_REDIRECT_URI}&response_type=code&state=${process.env.NEXT_PUBLIC_NAVER_STATE}`;
 
+  function email_check(email) {
+    var reg =
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    return reg.test(email);
+  }
+
+  function password_check(password) {
+    var regPass = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    return regPass.test(password);
+  }
+
+  function validation(inputParams) {
+    if (isEmpty(inputParams.email)) {
+      alert(AUTH_ERROR.NO_EMAIL);
+      return false;
+    }
+    if (!email_check(inputParams.email)) {
+      alert(AUTH_ERROR.INADEQUATE_EMAIL);
+      return false;
+    }
+    if (isEmpty(inputParams.password)) {
+      alert(AUTH_ERROR.NO_PASSWORD);
+      return false;
+    }
+    if (!password_check(inputParams.password)) {
+      alert(AUTH_ERROR.INADEQUATE_PASSWORD);
+      return false;
+    }
+    return true;
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -30,27 +63,29 @@ export default function Signin() {
       password: password,
     };
 
-    POST(`/auth/signin`, reqBody)
-      .then((res) => {
-        if (res.success) {
-          localStorage.setItem('userId', res.data.userId);
-          localStorage.setItem('email', res.data.email);
-          localStorage.setItem('name', res.data.name);
-          localStorage.setItem('nickname', res.data.nickname);
-          localStorage.setItem('phone', res.data.phone);
-          localStorage.setItem('imageUrl', res.data.imageUrl);
-          localStorage.setItem('role', res.data.role);
-          localStorage.setItem('authProvider', res.data.authProvider);
-          localStorage.setItem('sellerId', res.data.sellerId);
-          localStorage.setItem('token', res.data.token);
+    if (validation(reqBody)) {
+      POST(`/auth/signin`, reqBody)
+        .then((res) => {
+          if (res.success) {
+            localStorage.setItem('userId', res.data.userId);
+            localStorage.setItem('email', res.data.email);
+            localStorage.setItem('name', res.data.name);
+            localStorage.setItem('nickname', res.data.nickname);
+            localStorage.setItem('phone', res.data.phone);
+            localStorage.setItem('imageUrl', res.data.imageUrl);
+            localStorage.setItem('role', res.data.role);
+            localStorage.setItem('authProvider', res.data.authProvider);
+            localStorage.setItem('sellerId', res.data.sellerId);
+            localStorage.setItem('token', res.data.token);
 
-          alert('로그인 성공');
-          router.push(LINKS.MAIN);
-        }
-      })
-      .catch(function (error) {
-        alert('로그인 실패');
-      });
+            alert('로그인 성공');
+            router.push(LINKS.MAIN);
+          }
+        })
+        .catch(function (error) {
+          alert('로그인 실패');
+        });
+    }
   }
 
   return (
@@ -77,6 +112,7 @@ export default function Signin() {
                   name="email"
                   placeholder="이메일을 입력하세요."
                   onChange={onChangeEmail}
+                  pattern={new RegExp('[a-z0-9]+@[a-z]+.[a-z]{2,3}')}
                   className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
                 />
               </div>
@@ -95,6 +131,8 @@ export default function Signin() {
                   maxLength="12"
                   placeholder="비밀번호를 입력하세요."
                   onChange={onChangePassword}
+                  pattern="[a-z0-9]{1,15}"
+                  title="비밀번호는 숫자 (0 - 9) 또는 영문 알파벳 (a - z) 으로 구성되어야 합니다."
                   required
                   className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
                 />

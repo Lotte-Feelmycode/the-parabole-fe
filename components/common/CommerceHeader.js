@@ -100,7 +100,7 @@ export default function CommerceHeader() {
         </HeaderSection>
       </header>
     );
-  } else if (resize >= 767) {
+  } else if (resize > 767) {
     return (
       <header className="body-font flex flex-col">
         <HeaderSection className="md:fixed w-full h-12 md:h-24 bg-white md:border-b md:border-gray-200 md:z-50">

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   ThemeGray1,
   ThemeWhite,
@@ -9,79 +9,10 @@ import { numberToMonetary } from '@utils/functions';
 
 export default function CartCouponModal({
   setModalState,
-  couponDto,
-  contentTotalPrice,
   storeName,
+  couponArray,
+  contentTotalPrice,
 }) {
-  const [couponArray, setCouponArray] = useState([]);
-
-  const addCouponArray = (parameter) => {
-    setCouponArray((couponArray) => [
-      ...couponArray,
-      {
-        couponName: parameter.couponName,
-        description: parameter.description,
-        discountPrice: parameter.discountPrice,
-      },
-    ]);
-  };
-
-  useEffect(() => {
-    if (
-      couponDto.rateCoupon &&
-      couponDto.amountCoupon &&
-      couponDto.amountCoupon.length + couponDto.rateCoupon.length > 0
-    ) {
-      const rateCouponList = couponDto.rateCoupon;
-      const amountCouponList = couponDto.amountCoupon;
-
-      let rateIndex = 0;
-      let amountIndex = 0;
-
-      for (
-        ;
-        rateIndex + amountIndex <
-        rateCouponList.length + amountCouponList.length;
-
-      ) {
-        let parameter = null;
-
-        if (rateCouponList.length > rateIndex) {
-          const nowCoupon = rateCouponList[rateIndex];
-          const nowPrice = (contentTotalPrice * nowCoupon.discountValue) / 100;
-          parameter = {
-            couponName: nowCoupon.couponName,
-            description: nowCoupon.discountValue + '%',
-            discountPrice: nowPrice,
-          };
-        }
-
-        if (amountCouponList.length > amountIndex) {
-          const nowCoupon = amountCouponList[amountIndex];
-          let nowPrice =
-            contentTotalPrice - nowCoupon.discountValue < 0
-              ? 0
-              : nowCoupon.discountValue;
-
-          if (parameter == null || parameter.discountPrice < nowPrice) {
-            parameter = {
-              couponName: nowCoupon.couponName,
-              description: nowCoupon.discountValue + '₩',
-              discountPrice: nowPrice,
-            };
-            amountIndex = amountIndex + 1;
-          } else {
-            rateIndex = rateIndex + 1;
-          }
-        }
-
-        if (parameter) {
-          addCouponArray(parameter);
-        }
-      }
-    }
-  }, []);
-
   const closeModal = () => {
     setModalState(false);
   };
@@ -100,48 +31,48 @@ export default function CartCouponModal({
 
     // 이벤트 핸들러 등록
     document.addEventListener('mousedown', handler);
-    // document.addEventListener('touchstart', handler); // 모바일 대응
 
     return () => {
       // 이벤트 핸들러 해제
       document.removeEventListener('mousedown', handler);
-      // document.removeEventListener('touchstart', handler); // 모바일 대응
     };
   });
 
   return (
-    <ModalContainer ref={modalRef} className="modal-container">
-      <TopSection>
-        <button onClick={closeModal}>
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 12 12"
-            fill={ThemeGray1}
-            preserveAspectRatio="xMidYMid meet"
-          >
-            <path
-              fillRule="nonzero"
-              d="M6 4.6L10.3.3l1.4 1.4L7.4 6l4.3 4.3-1.4 1.4L6 7.4l-4.3 4.3-1.4-1.4L4.6 6 .3 1.7 1.7.3 6 4.6z"
+    <BackgroundDIM>
+      <ModalContainer ref={modalRef} className="modal-container">
+        <TopSection>
+          <button onClick={closeModal}>
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill={ThemeGray1}
+              preserveAspectRatio="xMidYMid meet"
+            >
+              <path
+                fillRule="nonzero"
+                d="M6 4.6L10.3.3l1.4 1.4L7.4 6l4.3 4.3-1.4 1.4L6 7.4l-4.3 4.3-1.4-1.4L4.6 6 .3 1.7 1.7.3 6 4.6z"
+              />
+            </svg>
+          </button>
+        </TopSection>
+        <DetailSection>
+          <ModalTitleSection>{storeName}에서 사용가능한 쿠폰</ModalTitleSection>
+          <ModalTableSection>
+            <ShowCouponTable
+              couponDto={couponArray}
+              contentTotalPrice={contentTotalPrice}
             />
-          </svg>
-        </button>
-      </TopSection>
-      <DetailSection>
-        <ModalTitleSection>{storeName}에서 사용가능한 쿠폰</ModalTitleSection>
-        <ModalTableSection>
-          <ShowCouponTable
-            couponDto={couponArray}
-            contentTotalPrice={contentTotalPrice}
-          />
-        </ModalTableSection>
-      </DetailSection>
-    </ModalContainer>
+          </ModalTableSection>
+        </DetailSection>
+      </ModalContainer>
+    </BackgroundDIM>
   );
 }
 
 function ShowCouponTable({ couponDto, contentTotalPrice }) {
-  if (couponDto.length > 0) {
+  if (couponDto && couponDto.length > 0) {
     return (
       <CouponTable className="coupon-table">
         <thead className="text-m uppercase">
@@ -162,12 +93,13 @@ function ShowCouponTable({ couponDto, contentTotalPrice }) {
         </thead>
         <tbody className="text-m">
           {couponDto &&
-            couponDto.map((coupon) => (
+            couponDto.map((coupon, index) => (
               <CouponTableRow
-                key={coupon.couponName}
+                key={coupon.couponName + index}
                 couponName={coupon.couponName}
-                description={coupon.description}
-                discountPrice={coupon.discountPrice}
+                type={coupon.type}
+                discountValue={coupon.discountValue}
+                discountPrice={coupon.totalFee}
                 contentTotalPrice={contentTotalPrice}
               />
             ))}
@@ -181,27 +113,52 @@ function ShowCouponTable({ couponDto, contentTotalPrice }) {
 
 function CouponTableRow({
   couponName,
-  description,
+  type,
+  discountValue,
   discountPrice,
   contentTotalPrice,
 }) {
+  let description = '';
+  if (type === 'RATE') {
+    description = discountValue + '%';
+  } else if (type === 'AMOUNT') {
+    description = discountValue + '원';
+  } else {
+    description = discountValue;
+  }
+
+  description = description + ' 할인쿠폰';
+
   return (
     <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
       <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
         <span>{couponName}</span>
       </td>
       <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-        {description} 할인쿠폰
+        {description}
       </td>
       <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
         {numberToMonetary(discountPrice)}
       </td>
       <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-        {numberToMonetary(contentTotalPrice - discountPrice)}
+        {numberToMonetary(contentTotalPrice - discountPrice) || 0}
       </td>
     </tr>
   );
 }
+
+const BackgroundDIM = styled.div`
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const ModalContainer = styled.div`
   /* 최상단 위치 */

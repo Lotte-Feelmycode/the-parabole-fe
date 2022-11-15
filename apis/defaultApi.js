@@ -6,6 +6,7 @@ const CONTENT_TYPE = 'application/json';
 
 axios.defaults.headers.common['Content-Type'] = CONTENT_TYPE;
 axios.defaults.headers.post['Content-Type'] = CONTENT_TYPE;
+axios.defaults.headers.patch['Content-Type'] = CONTENT_TYPE;
 
 export const GET = async (url, params, headers) => {
   let apiUrl = API_BASE_URL + url;

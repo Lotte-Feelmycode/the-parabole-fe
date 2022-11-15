@@ -77,3 +77,5 @@ export const ORDER_PAY_STATE = [
   { value: 'WITHOUT_BANK', name: '무통장입금' },
   { value: 'NAVER_PAY', name: '네이버페이' },
 ];
+
+export const PRODUCT_STATE = [{ value: 1, name: '판매 중' }];

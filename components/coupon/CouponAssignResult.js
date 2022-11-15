@@ -1,47 +1,61 @@
-import { GET_DATA } from '@apis/defaultApi';
-import { useState } from 'react';
-import useInput from '@hooks/useInput';
-import Input from '@components/input/Input';
-import React from 'react';
-import { SmallPink } from '@components/input/Button';
 import styled from '@emotion/styled';
+import { LargeInput } from '@components/input/Input';
 import { ThemeGray5 } from '@utils/constants/themeColor';
+import { SmallPink } from '@components/input/Button';
 
-export default function UserSearchBar({ changeUserParentList }) {
-  const [userList, setUserList] = useState([]);
-  const [userName, onChangeUserName] = useInput('');
-
-  function onSearchUserHandler(e) {
-    e.preventDefault();
-
-    if (!userName) {
-      alert('검색할 사용자명을 입력하세요.');
-      return;
-    }
-
-    GET_DATA(`/user/list`, { userName }).then((res) => {
-      if (!res) {
-        alert('조회되는 사용자가 존재하지 않습니다.');
-      }
-      setUserList(res);
-    });
-  }
-
+export default function CouponAssignResult({
+  selectedCoupon,
+  userParentList,
+  changeUserParentList,
+}) {
   function handleChkChange(user) {
     changeUserParentList({
       userId: user.userId,
       email: user.email,
       phone: user.phone,
       username: user.username,
-      flag: true,
+      flag: false,
     });
   }
 
-  function ShowUser() {
-    if (userList && userList.length > 0) {
+  function ShowCoupon() {
+    if (selectedCoupon !== 0) {
+      let couponString =
+        selectedCoupon.name +
+        ' (' +
+        selectedCoupon.discountValue +
+        (selectedCoupon.type === 1 ? '% 할인쿠폰' : '₩ 할인쿠폰') +
+        ')';
+
       return (
-        userList &&
-        userList.map((user) => (
+        <LabelInputSection>
+          <LargeInput
+            type="text"
+            attr={{ readOnly: true }}
+            css={{ width: '100%' }}
+            value={couponString}
+          />
+        </LabelInputSection>
+      );
+    } else {
+      return (
+        <LabelInputSection>
+          <LargeInput
+            type="text"
+            attr={{ readOnly: true }}
+            css={{ width: '100%' }}
+            value={'쿠폰을 선택해주세요'}
+          />
+        </LabelInputSection>
+      );
+    }
+  }
+
+  function ShowUser() {
+    if (userParentList.length > 0) {
+      return (
+        userParentList &&
+        userParentList.map((user) => (
           <tr
             key={user.userId}
             className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 px-6"
@@ -51,7 +65,7 @@ export default function UserSearchBar({ changeUserParentList }) {
             <td className="py-4 px-6">{user.phone}</td>
             <td className="py-4 px-6">
               <SmallPink
-                buttonText={'추가'}
+                buttonText={'제거'}
                 onClickFunc={() => {
                   handleChkChange(user);
                 }}
@@ -64,7 +78,7 @@ export default function UserSearchBar({ changeUserParentList }) {
       return (
         <tr>
           <EmptyTd colSpan={4}>
-            <span>{'사용자를 검색해주세요'}</span>
+            <span>{'사용자를 선택해주세요'}</span>
           </EmptyTd>
         </tr>
       );
@@ -73,15 +87,11 @@ export default function UserSearchBar({ changeUserParentList }) {
 
   return (
     <div>
-      <UserInputSection>
-        <Input
-          type="text"
-          attr={{ placeholder: '사용자명을 입력하세요' }}
-          onChange={onChangeUserName}
-          css={{ width: '49%', marginRight: '1.5%' }}
-        />
-        <SmallPink buttonText="검색" onClickFunc={onSearchUserHandler} />
-      </UserInputSection>
+      <LabelSection>
+        <LabelTitle>선택된 쿠폰</LabelTitle>
+        <ShowCoupon selectedCoupon={selectedCoupon} />
+      </LabelSection>
+      <LabelTitle>선택된 사용자</LabelTitle>
       <UserTableSection>
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -89,11 +99,11 @@ export default function UserSearchBar({ changeUserParentList }) {
               <th className="py-3 px-6">사용자명</th>
               <th className="py-3 px-6">이메일</th>
               <th className="py-3 px-6">전화번호</th>
-              <th className="py-3 px-6">추가</th>
+              <th className="py-3 px-6">제거</th>
             </tr>
           </thead>
           <tbody>
-            <ShowUser />
+            <ShowUser userParentList={userParentList} />
           </tbody>
         </table>
       </UserTableSection>
@@ -101,13 +111,25 @@ export default function UserSearchBar({ changeUserParentList }) {
   );
 }
 
-const UserInputSection = styled.div`
-  text-align: right;
+const LabelSection = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 20px 0;
+`;
+
+const LabelTitle = styled.span`
   margin-left: auto;
-  padding: 20px;
+  font-size: 1.1rem;
+  width: 30%;
+`;
+
+const LabelInputSection = styled.span`
+  display: inline-flex;
+  width: 70%;
 `;
 
 const UserTableSection = styled.div`
+  margin-top: 10px;
   max-height: 400px;
   overflow: auto;
 `;

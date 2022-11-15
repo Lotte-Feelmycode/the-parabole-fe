@@ -1,21 +1,31 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { SmallLineBlue } from '@components/input/Button';
 import CartCouponModal from '@components/cart/CartCouponModal';
+import { LoginHeaderContext } from '@pages/user/cart/index';
+import { GET_DATA } from '@apis/defaultApi';
 
 export default function CartContentFooter({
-  cartItemDtoList,
+  contentTotalPrice,
   storeName,
-  couponDto,
+  sellerId,
 }) {
+  const headers = useContext(LoginHeaderContext);
   const [modalState, setModalState] = useState(false);
-  let contentTotalPrice = 0;
-  if (cartItemDtoList && cartItemDtoList.length > 0) {
-    cartItemDtoList.forEach((item) => {
-      contentTotalPrice =
-        (contentTotalPrice + item.product.productPrice) * item.count;
+  const [couponArray, setCouponArray] = useState([]);
+
+  useEffect(() => {
+    GET_DATA(
+      `/coupon`,
+      { sellerId, totalFee: contentTotalPrice },
+      headers,
+    ).then((res) => {
+      console.log(res);
+      if (res) {
+        setCouponArray(res);
+      }
     });
-  }
+  }, []);
 
   const showModal = () => {
     setModalState(true);
@@ -32,9 +42,10 @@ export default function CartContentFooter({
       {modalState && (
         <CartCouponModal
           setModalState={setModalState}
-          couponDto={couponDto}
-          contentTotalPrice={contentTotalPrice}
           storeName={storeName}
+          sellerId={sellerId}
+          couponArray={couponArray}
+          contentTotalPrice={contentTotalPrice}
         />
       )}
     </ContentFooterSection>

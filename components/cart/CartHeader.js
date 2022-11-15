@@ -2,6 +2,8 @@ import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { DELETE } from '@apis/defaultApi';
 import { SmallLineWhite } from '@components/input/Button';
+import { LoginHeaderContext } from '@pages/user/cart/index';
+import { useContext } from 'react';
 
 export default function CartHeader({
   totalCheckBoxChange,
@@ -9,9 +11,9 @@ export default function CartHeader({
   checkBoxStates,
   numberOfChekced,
   totalCheckBoxFlag,
-  headers,
 }) {
   const router = useRouter();
+  const headers = useContext(LoginHeaderContext);
 
   const CommerceCartHeaderContainer = styled.div`
     z-index: 100;

@@ -28,7 +28,6 @@ export default function store() {
       <SiteHead title="판매자 페이지" />
       <section className="flex min-h-screen flex-col text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">
-          <span>판매자 화면</span>
           <div>
             <ProductList {...productListProps} />
           </div>
