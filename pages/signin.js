@@ -30,11 +30,6 @@ export default function Signin() {
     return reg.test(email);
   }
 
-  function password_check(password) {
-    var regPass = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    return regPass.test(password);
-  }
-
   function validation(inputParams) {
     if (isEmpty(inputParams.email)) {
       alert(AUTH_ERROR.NO_EMAIL);
@@ -46,10 +41,6 @@ export default function Signin() {
     }
     if (isEmpty(inputParams.password)) {
       alert(AUTH_ERROR.NO_PASSWORD);
-      return false;
-    }
-    if (!password_check(inputParams.password)) {
-      alert(AUTH_ERROR.INADEQUATE_PASSWORD);
       return false;
     }
     return true;
