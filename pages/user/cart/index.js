@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { GET, POST } from '@apis/defaultApi';
@@ -11,6 +11,8 @@ import CartFooter from '@components/cart/CartFooter';
 import CartSidebar from '@components/cart/CartSidebar';
 import EmptyCart from '@components/cart/EmptyCart';
 import { useGetToken } from '@hooks/useGetToken';
+
+export const LoginHeaderContext = createContext('');
 
 export default function Cart() {
   const router = useRouter();
@@ -47,7 +49,6 @@ export default function Cart() {
     let getHeaders = useGetToken();
     setHeaders(getHeaders);
 
-    console.log('headers:', getHeaders);
     GET(`/cart/list`, null, getHeaders).then((res) => {
       console.log(res);
       if (res) {
@@ -269,37 +270,38 @@ export default function Cart() {
     `;
 
     return (
-      <CartSection className="cart-section">
-        <CartContainer>
-          <CartRow>
-            <CommerceCart className="commerce-cart">
-              <CartHeader
-                totalCheckBoxChange={totalCheckBoxChange}
-                cartBySellerDtoList={cartBySellerDtoList}
-                checkBoxStates={checkBoxStates}
-                numberOfChekced={numberOfChekced}
-                totalCheckBoxFlag={totalCheckBoxFlag}
-                headers={headers}
-              />
-              <CartContent
-                cartInfoChange={cartInfoChange}
-                cartCheckBoxChange={cartCheckBoxChange}
-                headers={headers}
-                cartBySellerDtoList={cartBySellerDtoList}
-                checkBoxStates={checkBoxStates}
-              />
-              <CartFooter length={cartItemCount} />
-            </CommerceCart>
-            <CartSidebarSection className="cart-sidebar-section">
-              <CartSidebar
-                GoToOrder={GoToOrder}
-                totalPrice={totalPrice}
-                numberOfChekced={numberOfChekced}
-              />
-            </CartSidebarSection>
-          </CartRow>
-        </CartContainer>
-      </CartSection>
+      <LoginHeaderContext.Provider value={headers}>
+        <CartSection className="cart-section">
+          <CartContainer>
+            <CartRow>
+              <CommerceCart className="commerce-cart">
+                <CartHeader
+                  totalCheckBoxChange={totalCheckBoxChange}
+                  cartBySellerDtoList={cartBySellerDtoList}
+                  checkBoxStates={checkBoxStates}
+                  numberOfChekced={numberOfChekced}
+                  totalCheckBoxFlag={totalCheckBoxFlag}
+                />
+                <CartContent
+                  cartInfoChange={cartInfoChange}
+                  cartCheckBoxChange={cartCheckBoxChange}
+                  headers={headers}
+                  cartBySellerDtoList={cartBySellerDtoList}
+                  checkBoxStates={checkBoxStates}
+                />
+                <CartFooter length={cartItemCount} />
+              </CommerceCart>
+              <CartSidebarSection className="cart-sidebar-section">
+                <CartSidebar
+                  GoToOrder={GoToOrder}
+                  totalPrice={totalPrice}
+                  numberOfChekced={numberOfChekced}
+                />
+              </CartSidebarSection>
+            </CartRow>
+          </CartContainer>
+        </CartSection>
+      </LoginHeaderContext.Provider>
     );
   }
 

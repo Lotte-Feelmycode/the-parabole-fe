@@ -82,7 +82,7 @@ export default function CouponAssign() {
 
     POST(`/coupon/assign`, reqBody)
       .then((res) => {
-        if (res.success) {
+        if (res && res.success) {
           alert('선택한 사용자에게 쿠폰이 정상적으로 지급되었습니다.');
           router.reload();
         } else if (res.message) {
