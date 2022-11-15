@@ -1,9 +1,8 @@
 import { GET_DATA } from '@apis/defaultApi';
 import { useEffect, useState } from 'react';
 import EventParticipant from './EventParticipant';
-import { dto } from '@pages/seller/event/DummyData';
 import SortButton from '@components/input/SortButton';
-import { isEmpty } from './../../utils/functions';
+import { isEmpty } from '@utils/functions';
 export default function EventParticipantList({ eventId }) {
   const [participantList, setParticipantList] = useState([]);
 
@@ -154,7 +153,7 @@ export default function EventParticipantList({ eventId }) {
           </tbody>
         </table>
       ) : (
-        <div className="font-semibold">
+        <div className="ml-2 font-semibold">
           현재 이벤트에 참가한 사용자가 없습니다.
         </div>
       )}
