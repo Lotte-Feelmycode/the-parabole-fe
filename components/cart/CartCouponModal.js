@@ -72,7 +72,7 @@ export default function CartCouponModal({
 }
 
 function ShowCouponTable({ couponDto, contentTotalPrice }) {
-  if (couponDto.length > 0) {
+  if (couponDto && couponDto.length > 0) {
     return (
       <CouponTable className="coupon-table">
         <thead className="text-m uppercase">
@@ -97,7 +97,8 @@ function ShowCouponTable({ couponDto, contentTotalPrice }) {
               <CouponTableRow
                 key={coupon.couponName + index}
                 couponName={coupon.couponName}
-                description={coupon.description}
+                type={coupon.type}
+                discountValue={coupon.discountValue}
                 discountPrice={coupon.totalFee}
                 contentTotalPrice={contentTotalPrice}
               />
@@ -112,23 +113,35 @@ function ShowCouponTable({ couponDto, contentTotalPrice }) {
 
 function CouponTableRow({
   couponName,
-  description,
+  type,
+  discountValue,
   discountPrice,
   contentTotalPrice,
 }) {
+  let description = '';
+  if (type === 'RATE') {
+    description = discountValue + '%';
+  } else if (type === 'AMOUNT') {
+    description = discountValue + '원';
+  } else {
+    description = discountValue;
+  }
+
+  description = description + ' 할인쿠폰';
+
   return (
     <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
       <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
         <span>{couponName}</span>
       </td>
       <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-        {description} 할인쿠폰
+        {description}
       </td>
       <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
         {numberToMonetary(discountPrice)}
       </td>
       <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-        {numberToMonetary(contentTotalPrice - discountPrice)}
+        {numberToMonetary(contentTotalPrice - discountPrice) || 0}
       </td>
     </tr>
   );
