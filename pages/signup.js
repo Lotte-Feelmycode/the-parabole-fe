@@ -3,10 +3,11 @@ import useInput from '@hooks/useInput';
 import CommerceLayout from '@components/common/CommerceLayout';
 import { POST, POST_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Blue } from '@components/input/Button';
 import { AUTH_ERROR } from '@utils/constants/errors';
 import { isEmpty } from '@utils/functions';
+import NotFoundPage from './404';
 
 export default function Signup() {
   const router = useRouter();
@@ -16,6 +17,16 @@ export default function Signup() {
   const [phone, onChangePhone] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [passwordConfirmation, onChangePasswordConfirmation] = useInput('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') !== null) {
+        alert('로그인 되어있어 접근할 수 없습니다.');
+        router.back();
+      }
+    }
+    setHeaders(useGetToken());
+  }, []);
 
   function email_check(email) {
     var reg =
