@@ -17,10 +17,12 @@ export default function CommerceHeaderMenuModal({
   const btnCss = { width: '100%' };
 
   const signout = () => {
-    localStorage.clear();
-    setToken('');
-    alert('로그아웃 완료');
-    router.push(LINKS.MAIN);
+    if (confirm('로그아웃 하시겠습니까?')) {
+      localStorage.clear();
+      setToken('');
+      alert('로그아웃 되었습니다.');
+      router.push(LINKS.MAIN);
+    }
   };
 
   function MainMenu() {

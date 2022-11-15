@@ -44,12 +44,12 @@ export default function Signin() {
           localStorage.setItem('sellerId', res.data.sellerId);
           localStorage.setItem('token', res.data.token);
 
-          alert('로그인 성공');
+          alert('로그인 되었습니다.');
           router.push(LINKS.MAIN);
         }
       })
       .catch(function (error) {
-        alert('로그인 실패');
+        alert('로그인 실패. 다시 시도해주세요');
       });
   }
 
