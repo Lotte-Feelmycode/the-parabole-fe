@@ -11,6 +11,8 @@ import EventParticipant from '@components/event/EventParticipantList';
 import { useGetToken } from '@hooks/useGetToken';
 import EventSampleModal from '@components/event/EventSampleModal';
 import { NO_IMAGE } from '@utils/constants/images';
+import EventWinnerList from '@components/event/EventWinnerList';
+import { LINKS } from '@utils/constants/links';
 
 export default function EventDetail() {
   const router = useRouter();
@@ -28,10 +30,10 @@ export default function EventDetail() {
     if (typeof window !== 'undefined' && typeof window !== undefined) {
       if (localStorage.getItem('userId') === null) {
         alert('로그인 해주세요.');
-        router.push('/signin');
+        router.push({LINKS.SIGNIN});
       } else if (localStorage.getItem('role') === 'ROLE_USER') {
         alert('판매자 페이지입니다.');
-        router.push('/');
+        router.push({LINKS.MAIN});
       }
     }
     setHeaders(useGetToken());
@@ -186,7 +188,7 @@ export default function EventDetail() {
             </span>
             {event.status === EVENT_END ? (
               <div className="mb-12 overflow-y-auto max-h-96">
-                {/* TODO: <당첨자내역></당첨자내역> */}
+                <EventWinnerList eventId={eventId} />
               </div>
             ) : (
               <div className="ml-2">이벤트 종료 후 추첨됩니다.</div>
