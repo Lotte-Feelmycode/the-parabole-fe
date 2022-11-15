@@ -2,6 +2,7 @@ export const LINKS = {
   MAIN: '/',
   PRODUCT: '/product',
   EVENT: '/event',
+  STORE: '/store',
   CART: '/user/cart',
   SIGNIN: '/signin',
   SIGNUP: '/signup',

@@ -9,7 +9,7 @@ import UserOrderList from '@components/mypage/UserOrderList';
 import EventApplyList from '@components/mypage/EventApplyList';
 import MyProfile from '@components/mypage/MyProfile';
 import SiteHead from '@components/common/SiteHead.js';
-import UserCouponList from '@components/coupon/UserCouponList';
+import UserCouponList from '@components/mypage/UserCouponList';
 
 export default function Mypage() {
   const router = useRouter();
