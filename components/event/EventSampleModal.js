@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { getDateTime } from '@utils/functions';
 import EventPrize from '@components/event/eventPrize';
 import CloseButton from '@components/input/CloseButton';
+import { NO_IMAGE } from '@utils/constants/images';
 
 export default function EventSampleModal({ setModalState, event }) {
   const modalRef = useRef();
@@ -34,7 +35,7 @@ export default function EventSampleModal({ setModalState, event }) {
             </div>
             <div className="event-detail-img" style={{ marginBottom: '100px' }}>
               <img
-                src={event.eventImage.eventDetailImg}
+                src={event.eventImage.eventDetailImg || NO_IMAGE}
                 style={{ width: '100%' }}
               />
             </div>

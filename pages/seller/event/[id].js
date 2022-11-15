@@ -202,13 +202,19 @@ export default function EventDetail() {
             </span>
             <div className="ml-2">
               <Img
-                src={event.eventImage && event.eventImage.eventBannerImg}
-              ></Img>
+                src={
+                  (event.eventImage && event.eventImage.eventBannerImg) ||
+                  NO_IMAGE
+                }
+              />
             </div>
             <div className="ml-2">
               <Img
-                src={event.eventImage && event.eventImage.eventDetailImg}
-              ></Img>
+                src={
+                  (event.eventImage && event.eventImage.eventDetailImg) ||
+                  NO_IMAGE
+                }
+              />
             </div>
           </div>
 
