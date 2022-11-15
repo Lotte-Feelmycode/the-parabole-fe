@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Blue } from '@components/input/Button';
 import { AUTH_ERROR } from '@utils/constants/errors';
+import { isEmpty } from '@utils/functions';
 
 export default function Signup() {
   const router = useRouter();
