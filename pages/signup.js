@@ -5,6 +5,7 @@ import { POST, POST_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Blue } from '@components/input/Button';
+import { AUTH_ERROR } from '@utils/constants/errors';
 
 export default function Signup() {
   const router = useRouter();
@@ -14,6 +15,58 @@ export default function Signup() {
   const [phone, onChangePhone] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [passwordConfirmation, onChangePasswordConfirmation] = useInput('');
+
+  function email_check(email) {
+    var reg =
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    return reg.test(email);
+  }
+
+  function password_check(password) {
+    var regPass = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    return regPass.test(password);
+  }
+
+  function validation(inputParams) {
+    if (isEmpty(inputParams.email)) {
+      alert(AUTH_ERROR.NO_EMAIL);
+      return false;
+    }
+    if (!email_check(inputParams.email)) {
+      alert(AUTH_ERROR.INADEQUATE_EMAIL);
+      return false;
+    }
+    if (isEmpty(inputParams.name)) {
+      alert(AUTH_ERROR.NO_USERNAME);
+      return false;
+    }
+    if (isEmpty(inputParams.nickname)) {
+      alert(AUTH_ERROR.NO_NICKNAME);
+      return false;
+    }
+    if (isEmpty(inputParams.phone)) {
+      alert(AUTH_ERROR.NO_PHONE);
+      return false;
+    }
+    if (isEmpty(inputParams.password)) {
+      alert(AUTH_ERROR.NO_PASSWORD);
+      return false;
+    }
+    if (isEmpty(inputParams.passwordConfirmation)) {
+      alert(AUTH_ERROR.NO_PASSWORD_CONFIRMATION);
+      return false;
+    }
+    if (!password_check(inputParams.password)) {
+      alert(AUTH_ERROR.INADEQUATE_PASSWORD);
+      return false;
+    }
+    if (inputParams.password !== inputParams.passwordConfirmation) {
+      alert(AUTH_ERROR.NOT_IDENTICAL);
+      return false;
+    }
+    return true;
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
 

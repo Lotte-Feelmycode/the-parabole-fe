@@ -32,7 +32,7 @@ export default function CouponListRadio({ changeCouponParentId, headers }) {
   }
 
   function ShowCoupon() {
-    if (couponList.length > 0) {
+    if (couponList && couponList.length > 0) {
       return (
         couponList &&
         couponList.map((coupon) => (
@@ -58,7 +58,7 @@ export default function CouponListRadio({ changeCouponParentId, headers }) {
               {coupon.name}
             </th>
             <td className="py-4 px-6">
-              {coupon.type === 0 ? '정액(₩)' : '정률(%)'}
+              {coupon.type === 1 ? '정률(%)' : '정액(₩)'}
             </td>
             <td className="py-4 px-6">{coupon.discountValue}</td>
             <td className="py-4 px-6">{coupon.cnt}</td>
