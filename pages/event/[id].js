@@ -5,6 +5,7 @@ import { GET_DATA, POST_DATA } from '@apis/defaultApi';
 import { getDateTime } from '@utils/functions';
 import EventPrize from '@components/event/eventPrize';
 import CommerceLayout from '@components/common/CommerceLayout';
+import SiteHead from '@components/common/SiteHead';
 
 export default function EventDetail() {
   //TODO userId 객체 받아오기
@@ -47,6 +48,7 @@ export default function EventDetail() {
 
   return (
     <CommerceLayout>
+      <SiteHead title={eventInfo.title} description={eventInfo.descript} url={`https://theparabole.shop/${eventId}`}/>
       <section className="flex min-h-screen flex-col text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">
           <div

@@ -17,8 +17,9 @@ export default function SiteHead({ title, description, url, image, keyword }) {
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <meta name="keywords" content={keyword || "이벤트 마케팅"}/>
       <meta property="og:type" content="website" />
-      <meta property="og:title" content={titleString} />
       <meta property="og:site_name" content="The Parabole" />
+      <meta property="og:title" content={titleString} /> 
+      <meta property="og:description" content={description} /> 
       <meta property="og:url" content={url || "https://theparabole.shop"} />
       <meta property="og:image" content={image} />
       <meta property="og:article:author" content="필마이코드" />
