@@ -64,13 +64,15 @@ export default function Event() {
 
   useEffect(() => {
     GET_DATA('/event/seller/scheduler').then((res) => {
-      let schedules = res.map((e) => {
-        let newObj = {};
-        newObj['title'] = e.title;
-        newObj['startDate'] = new Date(e.startAt);
-        newObj['endDate'] = new Date(e.endAt);
-        return newObj;
-      });
+      let schedules =
+        res &&
+        res.map((e) => {
+          let newObj = {};
+          newObj['title'] = e.title;
+          newObj['startDate'] = new Date(e.startAt);
+          newObj['endDate'] = new Date(e.endAt);
+          return newObj;
+        });
 
       setScheduleList(schedules);
     });
