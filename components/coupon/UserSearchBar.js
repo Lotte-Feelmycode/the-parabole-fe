@@ -38,7 +38,7 @@ export default function UserSearchBar({ changeUserParentList }) {
   }
 
   function ShowUser() {
-    if (userList.length > 0) {
+    if (userList && userList.length > 0) {
       return (
         userList &&
         userList.map((user) => (
