@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import { EVENT_TYPE } from '@utils/constants/types';
 import { getDateTime, getState } from '@utils/functions';
+import { NO_IMAGE } from '@utils/constants/images';
+
 import {
   ThemeGray4,
   ThemeGray1,
@@ -23,7 +25,7 @@ export default function Event({ event }) {
       <a className="cursor-pointer" onClick={() => goToEventDetail(event.id)}>
         <ImgSection className="img-section">
           <EventImage
-            src={event.eventImage.eventBannerImg}
+            src={event.eventImage.eventBannerImg || NO_IMAGE}
             alt={event.descript}
           />
         </ImgSection>
