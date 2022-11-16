@@ -180,11 +180,7 @@ export default function EventApplyList({ headers }) {
 
 const SelectedNav = styled.a`
   color: ${MainBlue};
-  @media (min-width: 767px) {
-    margin-left: 0.75rem;
-  }
-  @media (max-width: 767px) {
-  }
+  margin-bottom: 0.1rem;
 `;
 
 const NavSection = styled.nav`
