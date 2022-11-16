@@ -34,7 +34,7 @@ export default function SellerProductList() {
     }
     setHeaders(useGetToken());
 
-    GET_DATA(`/product/seller/list`).then((res) => {
+    GET_DATA(`/product/seller/list`, null, headers).then((res) => {
       if (res) {
         setProductList(res.content);
       }
