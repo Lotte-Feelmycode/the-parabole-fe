@@ -9,8 +9,8 @@ export default function EventInfo({ eventInfo, eventImage, storeInfo }) {
   const router = useRouter();
 
   function goToStore() {
-    if (storeId) {
-      router.push({ pathname: `/store/${storeId}` });
+    if (storeInfo && storeInfo.sellerId) {
+      router.push({ pathname: `/store/${storeInfo.sellerId}` });
     }
   }
 
