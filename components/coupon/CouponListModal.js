@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
-import { MainBlue } from '@utils/constants/themeColor';
+import { MainBlue, ThemeBlueWhite } from '@utils/constants/themeColor';
 import { POST } from '@apis/defaultApi';
-import { numberToMonetary, getTodayDateShort, isEmpty } from '@utils/functions';
+import { numberToMonetary, getDateShort, isEmpty } from '@utils/functions';
 import { useRouter } from 'next/router';
 import CloseButton from '@components/input/CloseButton';
 
@@ -96,10 +96,24 @@ export default function CouponListModal({
         <ModalTableSection className="modal-table-section">
           {couponList &&
             couponList.map((coupon) => {
+              let description = '';
+              if (coupon.type === 1) {
+                description = coupon.discountValue + '%';
+              } else if (coupon.type === 2) {
+                description =
+                  (numberToMonetary(coupon.discountValue) || 0) + '원';
+              } else {
+                description = coupon.discountValue;
+              }
+              description = '[' + description + ' 할인쿠폰]';
+
               return (
                 <>
                   {coupon.couponId === selectCoupon ? (
-                    <div className="text-left border-2 rounded-md mx-2 my-2 bg-slate-200">
+                    <SelectedCouponSection
+                      className="text-left border-2 rounded-md mx-2 my-2"
+                      key={coupon.couponId}
+                    >
                       <button
                         className="w-full"
                         onClick={(e) => setCoupon(e, coupon.couponId)}
@@ -108,34 +122,40 @@ export default function CouponListModal({
                           <CouponNameSection className="truncate font-bold text-xl text-black-600">
                             <span>{coupon.name}</span>
                           </CouponNameSection>
-                          <div className="truncate">{coupon.detail}</div>
-                          <div>
-                            {numberToMonetary(coupon.minPaymentAmount)}원 이상
-                            사용가능
+                          <CouponDescriptionSection className="truncate">
+                            {description}
+                          </CouponDescriptionSection>
+                          <div className="truncate pl-2 pt-1">
+                            {coupon.detail}
                           </div>
-                          <div>( ~ {getTodayDateShort(coupon.expiresAt)})</div>
+                          <div className="text-sm text-gray-400 text-right">
+                            {getDateShort(coupon.expiresAt) + ' 까지 사용가능'}
+                          </div>
                         </div>
                       </button>
-                    </div>
+                    </SelectedCouponSection>
                   ) : (
-                    <div className="text-left border-2 rounded-md mx-2 my-2 hover:bg-slate-100">
+                    <NoneSelectedCouponSection className="text-left border-2 rounded-md mx-2 my-2">
                       <button
                         className="w-full"
                         onClick={(e) => setCoupon(e, coupon.couponId)}
                       >
                         <div className="flex flex-col p-4 text-left">
-                          <CouponNameSection className="truncate font-bold text-xl text-black-600">
+                          <CouponNameSection className="truncate font-bold text-xl">
                             <span>{coupon.name}</span>
                           </CouponNameSection>
-                          <div className="truncate">{coupon.detail}</div>
-                          <div>
-                            {numberToMonetary(coupon.minPaymentAmount)}원 이상
-                            사용가능
+                          <CouponDescriptionSection className="truncate">
+                            {description}
+                          </CouponDescriptionSection>
+                          <div className="truncate pl-2 pt-1">
+                            {coupon.detail}
                           </div>
-                          <div>( ~ {getTodayDateShort(coupon.expiresAt)})</div>
+                          <div className="text-sm text-gray-400 text-right">
+                            {getDateShort(coupon.expiresAt) + ' 까지 사용가능'}
+                          </div>
                         </div>
                       </button>
-                    </div>
+                    </NoneSelectedCouponSection>
                   )}
                 </>
               );
@@ -156,8 +176,8 @@ export default function CouponListModal({
 const BackgroundDIM = styled.div`
   position: fixed;
   background-color: rgba(0, 0, 0, 0.3);
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   z-index: 1000;
   top: 0;
   left: 0;
@@ -217,12 +237,30 @@ const ModalTableSection = styled.div`
   }
 `;
 
+const SelectedCouponSection = styled.div`
+  background-color: ${ThemeBlueWhite};
+`;
+
+const NoneSelectedCouponSection = styled.div`
+  &:hover {
+    background-color: ${ThemeBlueWhite};
+  }
+`;
+
 const CouponNameSection = styled.div`
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
   word-break: break-all;
+  color: ${MainBlue};
+  font-weight: 800;
+`;
+
+const CouponDescriptionSection = styled.div`
+  font-size: large;
+  color: black;
+  font-weight: 800;
 `;
 
 const ButtonSection = styled.div`
