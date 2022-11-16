@@ -165,6 +165,7 @@ export default function CouponCreate() {
                   type="text"
                   name="name"
                   placeHolder="쿠폰명을 입력하세요."
+                  maxlength="20"
                   onChange={onChangeName}
                   required
                 />
@@ -240,6 +241,7 @@ export default function CouponCreate() {
                   name="detail"
                   placeHolder="쿠폰 상세 설명을 입력하세요."
                   onChange={onChangeDetail}
+                  maxlength="20"
                   required
                 />
               </div>
