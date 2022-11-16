@@ -97,27 +97,55 @@ export default function CouponListModal({
           {couponList &&
             couponList.map((coupon) => {
               return (
-                <div className="text-left border-2 rounded-md mx-2 my-2 hover:bg-slate-50">
-                  <button onClick={(e) => setCoupon(e, coupon.couponId)}>
-                    <div className="flex flex-col p-4 text-left">
-                      <CouponNameSection className="truncate font-bold text-xl text-black-600">
-                        <span>{coupon.name}</span>
-                      </CouponNameSection>
-                      <div className="truncate">{coupon.detail}</div>
-                      <div>
-                        {numberToMonetary(coupon.minPaymentAmount)}원 이상
-                        사용가능
-                      </div>
-                      <div>( ~ {getTodayDateShort(coupon.expiresAt)})</div>
+                <>
+                  {coupon.couponId === selectCoupon ? (
+                    <div className="text-left border-2 rounded-md mx-2 my-2 bg-slate-200">
+                      <button
+                        className="w-full"
+                        onClick={(e) => setCoupon(e, coupon.couponId)}
+                      >
+                        <div className="flex flex-col p-4 text-left">
+                          <CouponNameSection className="truncate font-bold text-xl text-black-600">
+                            <span>{coupon.name}</span>
+                          </CouponNameSection>
+                          <div className="truncate">{coupon.detail}</div>
+                          <div>
+                            {numberToMonetary(coupon.minPaymentAmount)}원 이상
+                            사용가능
+                          </div>
+                          <div>( ~ {getTodayDateShort(coupon.expiresAt)})</div>
+                        </div>
+                      </button>
                     </div>
-                  </button>
-                </div>
+                  ) : (
+                    <div className="text-left border-2 rounded-md mx-2 my-2 hover:bg-slate-100">
+                      <button
+                        className="w-full"
+                        onClick={(e) => setCoupon(e, coupon.couponId)}
+                      >
+                        <div className="flex flex-col p-4 text-left">
+                          <CouponNameSection className="truncate font-bold text-xl text-black-600">
+                            <span>{coupon.name}</span>
+                          </CouponNameSection>
+                          <div className="truncate">{coupon.detail}</div>
+                          <div>
+                            {numberToMonetary(coupon.minPaymentAmount)}원 이상
+                            사용가능
+                          </div>
+                          <div>( ~ {getTodayDateShort(coupon.expiresAt)})</div>
+                        </div>
+                      </button>
+                    </div>
+                  )}
+                </>
               );
             })}
         </ModalTableSection>
         <ButtonSection>
           <div className="text-white font-bold text-center">
-            <button onClick={getCoupon}>쿠폰 발급받기</button>
+            <button className="w-full" onClick={getCoupon}>
+              쿠폰 발급받기
+            </button>
           </div>
         </ButtonSection>
       </ModalContainer>
