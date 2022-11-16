@@ -36,7 +36,6 @@ export default function OrderAndPayment() {
   const [receiverMemo, setReceiverMemo] = useState('');
 
   const couponReducer = (state, action) => {
-    console.log(couponReducer, state, action);
     let orderInfoIdList = new Array();
     switch (action.type) {
       case 'INIT':
@@ -45,6 +44,7 @@ export default function OrderAndPayment() {
           list.forEach((item) => {
             const parameter = {
               key: item.sellerId,
+              state: -1,
               couponName: '',
               description: '',
               discountPrice: 0,
@@ -59,6 +59,7 @@ export default function OrderAndPayment() {
           if (action.data.key === coupon.key) {
             let newCoupon = {
               key: action.data.key,
+              state: action.data.state,
               couponName: action.data.couponName,
               description: action.data.description,
               discountPrice: action.data.discountPrice,
@@ -235,6 +236,7 @@ export default function OrderAndPayment() {
                   <OrdererSection
                     getUserName={getUserName}
                     getUserPhone={getUserPhone}
+                    setUserPhone={setUserPhone}
                     receiverName={receiverName}
                     receiverPhone={receiverPhone}
                     receiverSimpleAddress={receiverSimpleAddress}
