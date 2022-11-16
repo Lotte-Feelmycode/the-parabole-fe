@@ -22,7 +22,8 @@ export default function EventParticipant({ idx, participant }) {
         {partinfo.userEmail}
       </td>
       <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-        {partinfo.eventPrizes[0].productName}
+        {partinfo.eventPrizes[0].coupon.name ||
+          partinfo.eventPrizes[0].product.name}
       </td>
       <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
         {getDateTime(partinfo.eventTimeStartAt)}

@@ -37,10 +37,8 @@ export default function EventList() {
         router.push('/');
       }
     }
-    setHeaders(useGetToken());
-  }, []);
 
-  useEffect(() => {
+    setHeaders(useGetToken());
     const params = {
       eventType:
         searchType == null || searchType == '이벤트 타입' ? '' : searchType,
@@ -49,7 +47,6 @@ export default function EventList() {
       eventTitle: searchValue,
     };
 
-    //TODO: 셀러리스트
     GET_DATA('/event/list', params, useGetToken()).then((res) => {
       if (res) {
         setEventList(res);
@@ -134,7 +131,7 @@ export default function EventList() {
         />
 
         <div className="pb-4 bg-white dark:bg-gray-900">
-          <label for="table-search" className="sr-only">
+          <label htmlFor="table-search" className="sr-only">
             Search
           </label>
           <div className="relative mt-1">
@@ -194,6 +191,7 @@ export default function EventList() {
             {eventList && Array.isArray(eventList) && eventList.length > 0 ? (
               eventList.map((event, index) => (
                 <tr
+                  key={event.id}
                   onClick={() => rowClickHandler(event)}
                   className="h-16 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                 >

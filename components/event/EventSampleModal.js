@@ -1,9 +1,8 @@
 import styled from '@emotion/styled';
-import { useEffect, useRef, useState } from 'react';
-import { getDateTime } from '@utils/functions';
-import EventPrize from '@components/event/eventPrize';
+import { useRef } from 'react';
 import CloseButton from '@components/input/CloseButton';
-import { NO_IMAGE } from '@utils/constants/images';
+import EventInfo from '@components/event/EvenInfo';
+import EventPrizeContainer from '@components/event/EventPrizeContainer';
 
 export default function EventSampleModal({ setModalState, event }) {
   const modalRef = useRef();
@@ -15,57 +14,49 @@ export default function EventSampleModal({ setModalState, event }) {
   return (
     <BackgroundDIM>
       <ModalContainer ref={modalRef} className="modal-container">
-        <section className="flex min-h-screen flex-col text-gray-600 body-font">
-          <div className="container px-5 py-24 mx-auto">
-            <CloseButton onClickFunc={(e) => closeModal(e)} />
-            <div
-              className="event-detail-startAt"
-              style={{ fontSize: 'xx-large', padding: '10px' }}
+        <section className="flex min-h-screen flex-col">
+          <CloseButton onClickFunc={(e) => closeModal(e)} />
+          <div
+            className="absolute left-1/2 transform -translate-x-1/2 bottom-0 pointer-events-none"
+            aria-hidden="true"
+          >
+            <svg
+              className="w-screen"
+              viewBox="0 0 1360 578"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              {event.eventInfo && event.eventInfo.title}
-            </div>
-            <div
-              className="event-detail-startAt"
-              style={{ fontSize: 'large', padding: '10px' }}
-            >
-              {'응모 기간 : '}
-              {getDateTime(event.startAt)}
-              {' ~ '}
-              {getDateTime(event.endAt)}
-            </div>
-            <div className="event-detail-img" style={{ marginBottom: '100px' }}>
-              <img
-                src={event.eventImage.eventDetailImg || NO_IMAGE}
-                style={{ width: '100%' }}
-              />
-            </div>
-
-            <EventPrizeListSection className="prize-list">
-              {event.eventPrizes &&
-                event.eventPrizes.map((prize) => {
-                  return (
-                    <EventPrize
-                      className="cursor-not-allowd"
-                      prize={prize}
-                      eventId={event.id}
-                      applyStatus=""
-                    />
-                  );
-                })}
-            </EventPrizeListSection>
+              <defs>
+                <linearGradient
+                  x1="50%"
+                  y1="0%"
+                  x2="50%"
+                  y2="100%"
+                  id="illustration-01"
+                >
+                  <stop stopColor="#FFF" offset="0%" />
+                  <stop stopColor="#EAEAEA" offset="77.402%" />
+                  <stop stopColor="#DFDFDF" offset="100%" />
+                </linearGradient>
+              </defs>
+              <g fill="url(#illustration-01)" fillRule="evenodd">
+                <circle cx="1232" cy="128" r="128" />
+                <circle cx="155" cy="443" r="64" />
+              </g>
+            </svg>
           </div>
+          <main className="flex-grow cursor-not-allowed">
+            <EventInfo eventInfo={event} eventImage={event.eventImage} />
+            <EventPrizeContainer
+              className="cursor-not-allowed"
+              eventId={event.id}
+              eventPrizes={event.eventPrizes}
+            />
+          </main>
         </section>
       </ModalContainer>
     </BackgroundDIM>
   );
 }
-
-const EventPrizeListSection = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 10px;
-  pointer-events: none;
-`;
 
 const BackgroundDIM = styled.div`
   position: fixed;
@@ -100,9 +91,5 @@ const ModalContainer = styled.div`
   width: 1000px;
   overflow-y: auto;
 
-  height: 1200px;
-`;
-
-const TopSection = styled.div`
-  padding: 5px 15px;
+  height: 1000px;
 `;

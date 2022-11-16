@@ -57,7 +57,7 @@ export default function EventDetail() {
 
   const deleteClickHandler = async (e) => {
     e.preventDefault();
-    DELETE(`/event/${eventId}`, {}).then((res) => {
+    DELETE(`/event/${eventId}`, {}, useGetToken()).then((res) => {
       if (res && res.success == true && confirm('삭제하시겠습니까?')) {
         alert('삭제 되었습니다. ');
         router.replace(`/seller/event/list`);

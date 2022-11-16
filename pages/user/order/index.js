@@ -2,18 +2,19 @@ import { createContext, useEffect, useReducer, useState } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { POST, GET } from '@apis/defaultApi';
-import { isEmpty } from '@utils/functions';
 import { useGetToken } from '@hooks/useGetToken';
+import { isEmpty } from '@utils/functions';
 import { ThemeGray3 } from '@utils/constants/themeColor';
 import { ORDER_PAY } from '@utils/constants/types';
+import { LINKS } from '@utils/constants/links';
 import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead.js';
 import PayList from '@components/order/PayList';
 import OrderSidebar from '@components/order/OrderSidebar';
 import OrdererSection from '@components/order/OrdererSection';
 import OrderDetail from '@components/order/OrderDetail';
-import { LINKS } from '@utils/constants/links';
 
+export const LoginHeaderContext = createContext('');
 export const CouponContext = createContext([]);
 export const CouponDispatchContext = createContext(null);
 
@@ -25,11 +26,9 @@ export default function OrderAndPayment() {
   const [orderBySellerDtoList, setOrderBySellerDtoList] = useState([]);
   const [payState, setPayState] = useState(-1);
 
-  // TODO 초기값에 user정보 넣기
   const [getUserName, setUserName] = useState('');
   const [getUserPhone, setUserPhone] = useState('');
 
-  // 주문시에 넣을 변수
   const [receiverName, setReceiverName] = useState('');
   const [receiverPhone, setReceiverPhone] = useState('');
   const [receiverSimpleAddress, setReceiverSimpleAddress] = useState('');
@@ -45,6 +44,7 @@ export default function OrderAndPayment() {
           list.forEach((item) => {
             const parameter = {
               key: item.sellerId,
+              state: -1,
               couponName: '',
               description: '',
               discountPrice: 0,
@@ -59,6 +59,7 @@ export default function OrderAndPayment() {
           if (action.data.key === coupon.key) {
             let newCoupon = {
               key: action.data.key,
+              state: action.data.state,
               couponName: action.data.couponName,
               description: action.data.description,
               discountPrice: action.data.discountPrice,
@@ -79,7 +80,7 @@ export default function OrderAndPayment() {
   // 결제 금액 변수
   const [productTotalPrice, setProductTotalPrice] = useState(0);
 
-  const [headers, setHeaders] = useState('');
+  const [headers, setHeaders] = useState();
 
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof window !== undefined) {
@@ -226,45 +227,51 @@ export default function OrderAndPayment() {
       <SiteHead title="Order/Payment" />
       <CouponContext.Provider value={stateList}>
         <CouponDispatchContext.Provider value={dispatch}>
-          <OrderContainer className="order-container">
-            <OrderSection className="order-section">
-              <H1>주문/결제</H1>
-              <div>
-                <H2>주문정보</H2>
-                <OrdererSection
-                  getUserName={getUserName}
-                  getUserPhone={getUserPhone}
-                  receiverName={receiverName}
-                  receiverPhone={receiverPhone}
-                  receiverSimpleAddress={receiverSimpleAddress}
-                  receiverDetailAddress={receiverDetailAddress}
-                  receiverMemo={receiverMemo}
-                  setReceiverName={setReceiverName}
-                  setReceiverPhone={setReceiverPhone}
-                  setReceiverSimpleAddress={setReceiverSimpleAddress}
-                  setReceiverDetailAddress={setReceiverDetailAddress}
-                  setReceiverMemo={setReceiverMemo}
-                />
-              </div>
-              <HR />
-              <div>
-                <H2>상품 정보</H2>
-                <OrderDetail orderBySellerDtoList={orderBySellerDtoList} />
-              </div>
-              <HR />
-              <div>
-                <H2>결제방식</H2>
-                <PayList index={payState} setIndex={payStateClick} />
-              </div>
-              <EndOfOrderSection>
+          <LoginHeaderContext.Provider value={headers}>
+            <OrderContainer className="order-container">
+              <OrderSection className="order-section">
+                <H1>주문/결제</H1>
+                <div>
+                  <H2>주문정보</H2>
+                  <OrdererSection
+                    getUserName={getUserName}
+                    getUserPhone={getUserPhone}
+                    setUserPhone={setUserPhone}
+                    receiverName={receiverName}
+                    receiverPhone={receiverPhone}
+                    receiverSimpleAddress={receiverSimpleAddress}
+                    receiverDetailAddress={receiverDetailAddress}
+                    receiverMemo={receiverMemo}
+                    setReceiverName={setReceiverName}
+                    setReceiverPhone={setReceiverPhone}
+                    setReceiverSimpleAddress={setReceiverSimpleAddress}
+                    setReceiverDetailAddress={setReceiverDetailAddress}
+                    setReceiverMemo={setReceiverMemo}
+                  />
+                </div>
                 <HR />
-              </EndOfOrderSection>
-            </OrderSection>
-            <OrderSidebar
-              goToPayment={goToPayment}
-              productTotalPrice={productTotalPrice}
-            />
-          </OrderContainer>
+                <div>
+                  <H2>상품 정보</H2>
+                  <OrderDetail
+                    orderBySellerDtoList={orderBySellerDtoList}
+                    headers={headers}
+                  />
+                </div>
+                <HR />
+                <div>
+                  <H2>결제방식</H2>
+                  <PayList index={payState} setIndex={payStateClick} />
+                </div>
+                <EndOfOrderSection>
+                  <HR />
+                </EndOfOrderSection>
+              </OrderSection>
+              <OrderSidebar
+                goToPayment={goToPayment}
+                productTotalPrice={productTotalPrice}
+              />
+            </OrderContainer>
+          </LoginHeaderContext.Provider>
         </CouponDispatchContext.Provider>
       </CouponContext.Provider>
     </CommerceLayout>

@@ -6,6 +6,7 @@ import { useState } from 'react';
 export default function OrdererSection({
   getUserName,
   getUserPhone,
+  setUserPhone,
   receiverName,
   receiverPhone,
   receiverSimpleAddress,
@@ -23,7 +24,9 @@ export default function OrdererSection({
     setSameAsUserFlag(flag);
     if (flag) {
       setReceiverName(getUserName);
-      setReceiverPhone(getUserPhone);
+      if (getUserPhone) {
+        setReceiverPhone(getUserPhone);
+      }
     } else {
       setReceiverName('');
       setReceiverPhone('');
@@ -48,9 +51,11 @@ export default function OrdererSection({
           <InputLable>휴대전화</InputLable>
           <Inputpart>
             <LargeInput
-              // TODO : user 정보 넣기
               css={input}
               value={getUserPhone}
+              onChange={(event) => {
+                setUserPhone(event.target.value);
+              }}
             />
           </Inputpart>
         </InputContainer>
@@ -158,7 +163,7 @@ export default function OrdererSection({
 }
 
 const input = {
-  width: '14rem',
+  width: '100%',
   borderRadius: '0.2rem',
   border: 'solid 1px ' + ThemeGray4,
   fontSize: '1rem',
@@ -183,14 +188,32 @@ const SameAsUserSection = styled.div`
 `;
 
 const InputContainer = styled.div`
-  display: inline-flex;
   width: 100%;
   margin: 10px 0;
+  @media (max-width: 1024px) {
+    display: flex;
+    flex-direction: column;
+  }
+  @media (min-width: 1024px) {
+    display: inline-flex;
+  }
 `;
 
-const InputLable = styled.span``;
+const InputLable = styled.span`
+  @media (max-width: 1024px) {
+    margin-bottom: 5px;
+  }
+  @media (min-width: 1024px) {
+  }
+`;
 
 const Inputpart = styled.div`
   margin: 0;
   margin-left: auto;
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
+  @media (min-width: 1024px) {
+    width: 14rem;
+  }
 `;
