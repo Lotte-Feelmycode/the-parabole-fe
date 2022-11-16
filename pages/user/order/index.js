@@ -44,6 +44,7 @@ export default function OrderAndPayment() {
           list.forEach((item) => {
             const parameter = {
               key: item.sellerId,
+              state: -1,
               couponName: '',
               description: '',
               discountPrice: 0,
@@ -58,6 +59,7 @@ export default function OrderAndPayment() {
           if (action.data.key === coupon.key) {
             let newCoupon = {
               key: action.data.key,
+              state: action.data.state,
               couponName: action.data.couponName,
               description: action.data.description,
               discountPrice: action.data.discountPrice,
@@ -78,7 +80,7 @@ export default function OrderAndPayment() {
   // 결제 금액 변수
   const [productTotalPrice, setProductTotalPrice] = useState(0);
 
-  const [headers, setHeaders] = useState('');
+  const [headers, setHeaders] = useState();
 
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof window !== undefined) {
@@ -234,6 +236,7 @@ export default function OrderAndPayment() {
                   <OrdererSection
                     getUserName={getUserName}
                     getUserPhone={getUserPhone}
+                    setUserPhone={setUserPhone}
                     receiverName={receiverName}
                     receiverPhone={receiverPhone}
                     receiverSimpleAddress={receiverSimpleAddress}
@@ -249,7 +252,10 @@ export default function OrderAndPayment() {
                 <HR />
                 <div>
                   <H2>상품 정보</H2>
-                  <OrderDetail orderBySellerDtoList={orderBySellerDtoList} />
+                  <OrderDetail
+                    orderBySellerDtoList={orderBySellerDtoList}
+                    headers={headers}
+                  />
                 </div>
                 <HR />
                 <div>

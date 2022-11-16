@@ -78,7 +78,7 @@ export default function Signin() {
             localStorage.setItem('authProvider', res.data.authProvider);
             localStorage.setItem('sellerId', res.data.sellerId);
             localStorage.setItem('token', res.data.token);
-            alert('로그인 되었습니다.');
+            alert('로그인 되었습니다');
             router.push(LINKS.MAIN);
           }
         })

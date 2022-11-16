@@ -43,6 +43,90 @@ export default function OrderCouponModal({
     };
   });
 
+  function ShowCouponTable({ closeModal }) {
+    if (couponArray.length > 0) {
+      return (
+        <CouponTable className="coupon-table">
+          <thead className="text-m uppercase">
+            <tr className="bg-white border-b">
+              <th className="text-sm font-medium text-gray-900 px-6 py-4 ">
+                쿠폰이름
+              </th>
+              <th className="text-sm font-medium text-gray-900 px-6 py-4 ">
+                쿠폰설명
+              </th>
+              <th className="text-sm font-medium text-gray-900 px-6 py-4 ">
+                할인금액
+              </th>
+              <th className="text-sm font-medium text-gray-900 px-6 py-4">
+                적용후금액
+              </th>
+              <th className="text-sm font-medium text-gray-900 px-6 py-4">
+                쿠폰적용
+              </th>
+            </tr>
+          </thead>
+          <tbody className="text-m">
+            {couponArray &&
+              couponArray.map((coupon, index) => (
+                <CouponTableRow
+                  key={coupon.couponName + '' + index}
+                  couponName={coupon.couponName}
+                  description={coupon.description}
+                  discountPrice={coupon.totalFee}
+                  changeCouponState={changeCouponState}
+                  index={index}
+                  closeModal={closeModal}
+                />
+              ))}
+          </tbody>
+        </CouponTable>
+      );
+    } else {
+      return <div>쿠폰이 없습니다.</div>;
+    }
+  }
+
+  function CouponTableRow({
+    couponName,
+    description,
+    discountPrice,
+    changeCouponState,
+    index,
+    closeModal,
+  }) {
+    function useCoupon({ input }) {
+      changeCouponState({ index: input });
+      closeModal();
+    }
+
+    return (
+      <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+          <span>{couponName}</span>
+        </td>
+        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+          {description} 할인쿠폰
+        </td>
+        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+          {numberToMonetary(discountPrice) || 0}원
+        </td>
+        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+          {numberToMonetary(contentTotalPrice - discountPrice) || 0}원
+        </td>
+        <td>
+          <SmallBlue
+            buttonText={'적용'}
+            onClickFunc={() => {
+              useCoupon({ input: index });
+            }}
+            attr={index === couponState ? { disabled: true } : {}}
+          />
+        </td>
+      </tr>
+    );
+  }
+
   return (
     <ModalContainer ref={modalRef} className="modal-container">
       <TopSection>
@@ -65,109 +149,12 @@ export default function OrderCouponModal({
         <ModalTitleSection>{storeName}에서 사용가능한 쿠폰</ModalTitleSection>
         <ModalTableSection>
           <ShowCouponTable
-            couponArray={couponArray}
-            contentTotalPrice={contentTotalPrice}
-            couponState={couponState}
             changeCouponState={changeCouponState}
             closeModal={closeModal}
           />
         </ModalTableSection>
       </DetailSection>
     </ModalContainer>
-  );
-}
-
-function ShowCouponTable({
-  couponArray,
-  contentTotalPrice,
-  couponState,
-  changeCouponState,
-  closeModal,
-}) {
-  if (couponArray.length > 0) {
-    return (
-      <CouponTable className="coupon-table">
-        <thead className="text-m uppercase">
-          <tr className="bg-white border-b">
-            <th className="text-sm font-medium text-gray-900 px-6 py-4 ">
-              쿠폰이름
-            </th>
-            <th className="text-sm font-medium text-gray-900 px-6 py-4 ">
-              쿠폰설명
-            </th>
-            <th className="text-sm font-medium text-gray-900 px-6 py-4 ">
-              할인금액
-            </th>
-            <th className="text-sm font-medium text-gray-900 px-6 py-4">
-              적용후금액
-            </th>
-            <th className="text-sm font-medium text-gray-900 px-6 py-4">
-              쿠폰적용
-            </th>
-          </tr>
-        </thead>
-        <tbody className="text-m">
-          {couponArray &&
-            couponArray.map((coupon, index) => (
-              <CouponTableRow
-                key={coupon.couponName}
-                couponName={coupon.couponName}
-                description={coupon.description}
-                discountPrice={coupon.discountPrice}
-                contentTotalPrice={contentTotalPrice}
-                couponState={couponState}
-                changeCouponState={changeCouponState}
-                index={index}
-                closeModal={closeModal}
-              />
-            ))}
-        </tbody>
-      </CouponTable>
-    );
-  } else {
-    return <div>쿠폰이 없습니다.</div>;
-  }
-}
-
-function CouponTableRow({
-  couponName,
-  description,
-  discountPrice,
-  contentTotalPrice,
-  couponState,
-  changeCouponState,
-  index,
-  closeModal,
-}) {
-  function useCoupon({ index }) {
-    changeCouponState({ index: index });
-    closeModal();
-  }
-
-  return (
-    <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-        <span>{couponName}</span>
-      </td>
-      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-        {description} 할인쿠폰
-      </td>
-      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-        {numberToMonetary(discountPrice) || 0}원
-      </td>
-      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-        {numberToMonetary(contentTotalPrice - discountPrice) || 0}원
-      </td>
-      <td>
-        <SmallBlue
-          buttonText={'적용'}
-          onClickFunc={() => {
-            useCoupon({ index: index });
-          }}
-          attr={index === couponState ? { disabled: true } : {}}
-        />
-      </td>
-    </tr>
   );
 }
 
