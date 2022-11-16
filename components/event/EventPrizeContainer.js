@@ -4,21 +4,19 @@ import { POST } from '@apis/defaultApi';
 import { ICON_COUPON } from '@utils/constants/icons';
 import styled from '@emotion/styled';
 import Heading from '@components/input/Heading';
-import {
-  NO_IMAGE,
-  NO_EVENT_BANNER_IMAGE,
-  NO_EVENT_DETAIL_IMAGE,
-} from '@utils/constants/images';
+import { getDate } from '@utils/functions';
+import { NO_IMAGE } from '@utils/constants/images';
 export default function EventPrizeContainer({
   eventId,
   eventPrizes,
-  eventInfo,
+  eventType,
+  eventStatus,
   applyStatus,
   headers,
 }) {
   const [applySts, setApplySts] = useState(applyStatus);
+  const [status, setStatus] = useState(eventStatus || 0);
 
-  // TODO: 이벤트 API 변경되면 수정해야함
   function applyEvent(eventId, eventPrizeId, prizeName) {
     if (confirm('경품' + prizeName + '에 응모하시겠습니까?')) {
       POST(
@@ -43,6 +41,71 @@ export default function EventPrizeContainer({
     }
   }
 
+  function ProductCard({ prize }) {
+    return (
+      <>
+        <div className="h-100 place-content-center justify-center content-center">
+          <ImgSection>
+            <img
+              className="prize-img w-48 h-48 object-center"
+              src={prize.productImg || NO_IMAGE}
+            />
+          </ImgSection>
+          <h4 className="text-black text-2xl text-center font-bold leading-snug tracking-tight mb-3">
+            {prize.productName || '상품명'}
+          </h4>
+          {eventStatus === 1 && (
+            <div className="flex justify-center">
+              <Blue
+                buttonText={'이벤트 응모'}
+                onClickFunc={() =>
+                  applyEvent(eventId, prize.eventPrizeId, prize.productName)
+                }
+                attr={{ disabled: applySts }}
+                css={{
+                  marginTop: 'auto',
+                  marginBottom: '10px',
+                }}
+              />
+            </div>
+          )}
+        </div>
+      </>
+    );
+  }
+
+  function CouponCard({ prize }) {
+    return (
+      <>
+        <div className="h-100 place-items-center justify-center content-center">
+          <ImgSection>
+            <EventPrizeCouponImg className="prize-img" src={ICON_COUPON} />
+          </ImgSection>
+          <h4 className="text-black text-2xl text-center font-bold leading-snug tracking-tight mb-3">
+            {prize.couponName || '쿠폰명'}
+          </h4>
+          <div className="text-center mb-4">
+            {getDate(prize.expiresAt) || 'YYYY-MM-DD'}까지 사용가능
+          </div>
+        </div>
+        {eventStatus === 1 && (
+          <div className="flex justify-center">
+            <Blue
+              buttonText={'이벤트 응모'}
+              onClickFunc={() =>
+                applyEvent(eventId, prize.eventPrizeId, prize.couponName)
+              }
+              attr={{ disabled: applySts }}
+              css={{
+                marginTop: 'auto',
+                marginBottom: '10px',
+              }}
+            />
+          </div>
+        )}
+      </>
+    );
+  }
   return (
     <>
       <section className="relative">
@@ -55,72 +118,51 @@ export default function EventPrizeContainer({
               <p className="text-xl text-gray-600">
                 한 가지 경품만 응모할 수 있습니다.
               </p>
-              {/* {eventInfo.type === 'FCFS' && (<p>선착순 이벤트는 이벤트 오픈 50분 후 종료됩니다.</p>)} */}
             </div>
 
-            {/* Items */}
-            <div className="max-w-sm mx-auto justify-center grid gap-6 md:grid-cols-2 lg:grid-cols-3 items-start md:max-w-2xl lg:max-w-none">
-              {eventPrizes &&
-                eventPrizes.map((prize) => {
-                  return (
-                    <div className="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 ">
-                      <div className="relative flex flex-col items-center p-6 bg-white rounded shadow-xl">
-                        {prize && prize.prizeType === 'PRODUCT' ? (
-                          <>
-                            <ImgSection>
-                              <img
-                                className="prize-img w-48 h-48 object-center "
-                                src={prize.productImg || NO_IMAGE}
-                              />
-                            </ImgSection>
-                            <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">
-                              {prize.productName}
-                            </h4>
-                            <Blue
-                              buttonText={'이벤트 응모'}
-                              onClickFunc={() =>
-                                applyEvent(
-                                  eventId,
-                                  prize.eventPrizeId,
-                                  prize.productName,
-                                )
-                              }
-                              attr={{ disabled: applySts }}
-                              css={{ marginTop: 'auto', marginBottom: '10px' }}
-                            />
-                          </>
-                        ) : (
-                          <>
-                            <div>
-                              <ImgSection>
-                                <EventPrizeCouponImg
-                                  className="prize-img"
-                                  src={ICON_COUPON}
-                                />
-                              </ImgSection>
-                              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">
-                                {prize.couponName}
-                              </h4>
-                            </div>
-                            <Blue
-                              buttonText={'이벤트 응모'}
-                              onClickFunc={() =>
-                                applyEvent(
-                                  eventId,
-                                  prize.eventPrizeId,
-                                  prize.couponName,
-                                )
-                              }
-                              attr={{ disabled: applySts }}
-                              css={{ marginTop: 'auto', marginBottom: '10px' }}
-                            />
-                          </>
-                        )}
+            {eventPrizes &&
+            Array.isArray(eventPrizes) &&
+            eventPrizes.length === 1 ? (
+              <div className="w-96 mx-auto justify-center items-start md:max-w-2xl lg:max-w-none">
+                {eventPrizes &&
+                  eventPrizes.map((prize) => {
+                    return (
+                      <div
+                        key={prize.id}
+                        className="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
+                      >
+                        <div className="relative flex flex-col items-center content-center place-content-center p-6 bg-white rounded shadow-xl">
+                          {prize && prize.prizeType === 'PRODUCT' ? (
+                            <ProductCard prize={prize} />
+                          ) : (
+                            <CouponCard prize={prize} />
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-            </div>
+                    );
+                  })}
+              </div>
+            ) : (
+              <div className="max-w-sm mx-auto justify-center grid gap-6 md:grid-cols-2 lg:grid-cols-3 items-start md:max-w-2xl lg:max-w-none">
+                {eventPrizes &&
+                  eventPrizes.map((prize) => {
+                    return (
+                      <div
+                        key={prize.id}
+                        className="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
+                      >
+                        <div className="relative flex flex-col items-center content-center place-content-center p-6 bg-white rounded shadow-xl">
+                          {prize && prize.prizeType === 'PRODUCT' ? (
+                            <ProductCard prize={prize} />
+                          ) : (
+                            <CouponCard prize={prize} />
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            )}
           </div>
         </div>
       </section>
