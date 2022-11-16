@@ -31,6 +31,7 @@ export const COUPON_ENROLL_ERROR = Object.freeze({
   NO_EXPIRES_AT: '쿠폰 만료일을 입력해주세요.',
   NO_COUPON_DETAILS: '쿠폰 상세 정보를 입력해주세요',
   NO_COUPON_CNT: '발급할 쿠폰 수량을 입력해주세요.',
+  EXCESS_COUPON_CNT: '쿠폰은 최대 100장까지 발급 가능합니다.',
 });
 
 export const AUTH_ERROR = Object.freeze({

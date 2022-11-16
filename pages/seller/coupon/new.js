@@ -78,6 +78,10 @@ export default function CouponCreate() {
       alert(COUPON_ENROLL_ERROR.NO_COUPON_CNT);
       return false;
     }
+    if (inputParams.cnt > 100) {
+      alert(COUPON_ENROLL_ERROR.EXCESS_COUPON_CNT);
+      return false;
+    }
     if (
       inputParams.validAt >= inputParams.expiresAt ||
       inputParams.validAt <= new Date() ||
@@ -250,7 +254,7 @@ export default function CouponCreate() {
                   className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
                   type="number"
                   name="cnt"
-                  placeHolder="쿠폰 상세 설명을 입력하세요."
+                  placeHolder="쿠폰 발행 수량 ( 최대 100장 ) 을 입력해주세요."
                   onChange={onChangeCnt}
                   required
                 />
