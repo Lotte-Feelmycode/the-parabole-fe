@@ -137,39 +137,41 @@ export default function EventApplyList({ headers }) {
   return (
     <>
       <NavSection className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center border-b">
-        <ul className="contents list-none text-center whitespace-nowrap">
+        <MenuList className="contents list-none text-center whitespace-nowrap">
           {APPLY_TYPE.map((state) => {
             if (state.value === 'EVENT_BEGIN') return;
             return (
               <li className="float-left" key={state.index}>
                 {nowState === state.index && (
                   <SelectedNav
-                    className="flex title-font text-middle font-semibold items-center p-4 text-gray-900  cursor-pointer"
+                    className="flex title-font text-middle font-semibold items-center text-gray-900  cursor-pointer"
                     key={state.index}
                     onClick={() => {
                       setNowState(state.index);
                     }}
                   >
-                    <div className="selected-nav">{state.name}</div>
+                    <MenuNameSpan className="selected-nav">
+                      {state.name}
+                    </MenuNameSpan>
                   </SelectedNav>
                 )}
                 {nowState !== state.index && (
                   <a
-                    className="flex title-font text-middle font-semibold items-center p-4 text-gray-900  cursor-pointer"
+                    className="flex title-font text-middle font-semibold items-center text-gray-900  cursor-pointer"
                     key={state.index}
                     onClick={() => {
                       setNowState(state.index);
                     }}
                   >
-                    <span className="ml-3 text-l hover:text-blue-500">
+                    <MenuNameSpan className="hover:text-blue-500">
                       {state.name}
-                    </span>
+                    </MenuNameSpan>
                   </a>
                 )}
               </li>
             );
           })}
-        </ul>
+        </MenuList>
       </NavSection>
       <PrintEventTable />
     </>
@@ -177,12 +179,38 @@ export default function EventApplyList({ headers }) {
 }
 
 const SelectedNav = styled.a`
-  margin-left: 0.75rem;
   color: ${MainBlue};
+  @media (min-width: 767px) {
+    margin-left: 0.75rem;
+  }
+  @media (max-width: 767px) {
+  }
 `;
 
 const NavSection = styled.nav`
   background-color: ${ThemeGray4};
   font-size: large;
   margin-bottom: 10px;
+`;
+
+const MenuList = styled.ul`
+  background-color: ${ThemeGray4};
+  @media (min-width: 767px) {
+  }
+  @media (max-width: 767px) {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: auto;
+  }
+`;
+
+const MenuNameSpan = styled.span`
+  @media (min-width: 767px) {
+    font-size: large;
+    margin: 5rem;
+  }
+  @media (max-width: 767px) {
+    font-size: medium;
+    margin: 1rem;
+  }
 `;

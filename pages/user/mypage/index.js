@@ -50,7 +50,7 @@ export default function Mypage() {
     <CommerceLayout>
       <SiteHead title="My page" />
       <NavSection className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center border-b">
-        <ul className="contents list-none text-center whitespace-nowrap">
+        <MenuList className="contents list-none text-center whitespace-nowrap">
           {mypageStateList.map((state, index) => (
             <li className="float-left" key={index}>
               {nowState === index && (
@@ -59,9 +59,9 @@ export default function Mypage() {
                   onClick={() => {
                     setNowState(index);
                   }}
-                  className="flex title-font text-lg font-semibold items-center p-5 text-gray-900  cursor-pointer"
+                  className="select-nav flex title-font text-lg font-semibold items-center text-gray-900  cursor-pointer"
                 >
-                  <span className="ml-3 text-l text-blue-500">{state}</span>
+                  <MenuNameSpan className="text-blue-500">{state}</MenuNameSpan>
                 </SelectedNav>
               )}
               {nowState !== index && (
@@ -70,16 +70,16 @@ export default function Mypage() {
                   onClick={() => {
                     setNowState(index);
                   }}
-                  className="flex title-font text-lg font-semibold items-center p-5 text-gray-900  cursor-pointer"
+                  className="flex title-font text-lg font-semibold items-center text-gray-900  cursor-pointer"
                 >
-                  <span className="ml-3 text-l hover:text-blue-500">
+                  <MenuNameSpan className="hover:text-blue-500">
                     {state}
-                  </span>
+                  </MenuNameSpan>
                 </a>
               )}
             </li>
           ))}
-        </ul>
+        </MenuList>
       </NavSection>
       <div>{showMypageMainComp(nowState)}</div>
     </CommerceLayout>
@@ -93,4 +93,27 @@ const NavSection = styled.nav`
 const SelectedNav = styled.a`
   color: ${MainBlue};
   border-bottom: 1px solid ${MainBlue};
+`;
+
+const MenuList = styled.ul`
+  @media (min-width: 767px) {
+  }
+  @media (max-width: 767px) {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: auto;
+  }
+`;
+
+const MenuNameSpan = styled.span`
+  @media (min-width: 767px) {
+    font-size: larger;
+    padding: 5rem;
+    margin-left: 3rem;
+  }
+  @media (max-width: 767px) {
+    font-size: large;
+    padding: 1rem 0.3rem;
+    margin-left: 0.3rem;
+  }
 `;
