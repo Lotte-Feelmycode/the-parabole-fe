@@ -24,7 +24,6 @@ export default function OrderDetailFooter({
       { sellerId, totalFee: contentTotalPrice },
       headers,
     ).then((res) => {
-      console.log('getCoupon', res);
       if (res) {
         setCouponArray(res);
       }
@@ -36,7 +35,6 @@ export default function OrderDetailFooter({
   };
 
   function changeCouponState({ index }) {
-    console.log('changeCouponState', index);
     let discountPrice = 0;
 
     setCouponState(index);
@@ -49,6 +47,7 @@ export default function OrderDetailFooter({
       }
       const parameter = {
         key: sellerId,
+        state: index,
         couponName: coupon.couponName,
         description: coupon.description,
         discountPrice: discountPrice,
@@ -68,6 +67,9 @@ export default function OrderDetailFooter({
     });
 
     if (coupon && coupon.couponName !== '') {
+      if (coupon.state >= 0) {
+        setCouponState(coupon.state);
+      }
       return (
         <div>
           <span className="text-sm">{coupon.couponName}</span>
