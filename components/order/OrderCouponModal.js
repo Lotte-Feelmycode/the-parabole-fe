@@ -110,10 +110,10 @@ function ShowCouponTable({
           {couponArray &&
             couponArray.map((coupon, index) => (
               <CouponTableRow
-                key={coupon.couponName}
+                key={coupon.couponName + '' + index}
                 couponName={coupon.couponName}
                 description={coupon.description}
-                discountPrice={coupon.discountPrice}
+                discountPrice={coupon.totalFee}
                 contentTotalPrice={contentTotalPrice}
                 couponState={couponState}
                 changeCouponState={changeCouponState}

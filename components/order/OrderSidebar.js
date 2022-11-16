@@ -62,7 +62,7 @@ export default function OrderSidebar({ productTotalPrice, goToPayment }) {
         </PayResultSection>
         <Blue
           buttonText={
-            numberToMonetary(productTotalPrice - discountCouponPrice) +
+            (numberToMonetary(productTotalPrice - discountCouponPrice) || 0) +
             '원 결제하기'
           }
           onClickFunc={goToPayment}

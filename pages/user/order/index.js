@@ -36,6 +36,7 @@ export default function OrderAndPayment() {
   const [receiverMemo, setReceiverMemo] = useState('');
 
   const couponReducer = (state, action) => {
+    console.log(couponReducer, state, action);
     let orderInfoIdList = new Array();
     switch (action.type) {
       case 'INIT':
@@ -78,7 +79,7 @@ export default function OrderAndPayment() {
   // 결제 금액 변수
   const [productTotalPrice, setProductTotalPrice] = useState(0);
 
-  const [headers, setHeaders] = useState('');
+  const [headers, setHeaders] = useState();
 
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof window !== undefined) {
@@ -249,7 +250,10 @@ export default function OrderAndPayment() {
                 <HR />
                 <div>
                   <H2>상품 정보</H2>
-                  <OrderDetail orderBySellerDtoList={orderBySellerDtoList} />
+                  <OrderDetail
+                    orderBySellerDtoList={orderBySellerDtoList}
+                    headers={headers}
+                  />
                 </div>
                 <HR />
                 <div>

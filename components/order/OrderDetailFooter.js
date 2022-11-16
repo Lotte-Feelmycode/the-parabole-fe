@@ -5,19 +5,18 @@ import { SmallBlue } from '@components/input/Button';
 import OrderCouponModal from '@components/order/OrderCouponModal';
 import { CouponContext, CouponDispatchContext } from '@pages/user/order/index';
 import { GET_DATA } from '@apis/defaultApi';
-import { LoginHeaderContext } from '@pages/user/cart/index';
 
 export default function OrderDetailFooter({
   contentTotalPrice,
   storeName,
   sellerId,
+  headers,
 }) {
   const [couponArray, setCouponArray] = useState([]);
   const [modalState, setModalState] = useState(false);
   const [couponState, setCouponState] = useState(-1);
   const couponSelectStates = useContext(CouponContext);
   const dispatch = useContext(CouponDispatchContext);
-  const headers = useContext(LoginHeaderContext);
 
   useEffect(() => {
     GET_DATA(
@@ -25,24 +24,35 @@ export default function OrderDetailFooter({
       { sellerId, totalFee: contentTotalPrice },
       headers,
     ).then((res) => {
-      console.log(res);
+      console.log('getCoupon', res);
       if (res) {
         setCouponArray(res);
       }
     });
-  }, []);
+  }, [headers]);
 
   const showModal = () => {
     setModalState(true);
   };
 
   function changeCouponState({ index }) {
+    console.log('changeCouponState', index);
+    let discountPrice = 0;
+
     setCouponState(index);
     if (couponArray[index]) {
       const coupon = couponArray[index];
+      if (contentTotalPrice >= coupon.totalFee) {
+        discountPrice = coupon.totalFee;
+      } else {
+        discountPrice = contentTotalPrice;
+      }
       const parameter = {
         key: sellerId,
-        ...coupon,
+        couponName: coupon.couponName,
+        description: coupon.description,
+        discountPrice: discountPrice,
+        serialNo: coupon.serialNo,
       };
       dispatch({ type: 'SET', data: parameter });
     }
