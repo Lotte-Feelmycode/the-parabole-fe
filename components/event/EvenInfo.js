@@ -1,31 +1,16 @@
 import { useRouter } from 'next/router';
 import * as btn from '@components/input/Button';
-import { getDateTime } from '@utils/functions';
+import { getDate, getDateTimeShort } from '@utils/functions';
 import styled from '@emotion/styled';
 import Timer from '@components/common/Timer';
-import { useState, useEffect } from 'react';
-import { GET_DATA } from '@apis/defaultApi';
-import { ColorBlue1 } from '@utils/constants/themeColor';
 import { NO_EVENT_DETAIL_IMAGE } from '@utils/constants/images';
 
-export default function EventInfo({ eventInfo, eventImage }) {
+export default function EventInfo({ eventInfo, eventImage, storeInfo }) {
   const router = useRouter();
-  const [storeInfo, setStoreInfo] = useState();
-
-  useEffect(() => {
-    console.log(eventInfo);
-    if (eventInfo) {
-      GET_DATA(`/seller`, { sellerId: eventInfo.sellerId }).then((res) => {
-        if (res) {
-          setStoreInfo(res);
-        }
-      });
-    }
-  }, [router.query]);
 
   function goToStore() {
-    if (storeInfo && storeInfo.sellerId) {
-      router.push({ pathname: `/store/${storeInfo.sellerId}` });
+    if (storeId) {
+      router.push({ pathname: `/store/${storeId}` });
     }
   }
 
@@ -51,29 +36,44 @@ export default function EventInfo({ eventInfo, eventImage }) {
               <div className="max-w-3xl mx-auto mt-5">
                 <div>
                   <div className="flex justify-center item-center flex-row">
-                    <P className="text-3xl md:text-4xl font-bold text-blue-500 mr-2">
-                      "{storeInfo && storeInfo.storeName}"
-                    </P>
-                    <p className="text-xl md:text-2xl text-gray-600 mb-8">
-                      에서
+                    <p className="text-xl md:text-2xl font-semibold text-gray-500 my-10">
+                      {storeInfo && storeInfo.storeName}
                     </p>
                   </div>
                   <div className="flex justify-center item-center flex-col">
-                    <p className="text-xl md:text-2xl text-gray-600">
-                      {getDateTime(eventInfo.startAt)}부터
-                    </p>
-                    <p className="text-xl md:text-2xl text-gray-600 mb-8">
-                      {getDateTime(eventInfo.endAt)}까지 진행하는 이벤트!
-                    </p>
+                    <table>
+                      <tbody>
+                        <tr>
+                          <th className="w-32 px-2 text-left">
+                            <p className="text-left text-l md:text-xl text-bold text-gray-900">
+                              응모기간
+                            </p>
+                          </th>
+                          <td>
+                            <p className="text-left text-l md:text-xl text-bold text-gray-900">
+                              {getDateTimeShort(eventInfo.startAt)}-{' '}
+                              {getDateTimeShort(eventInfo.endAt)}{' '}
+                            </p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th className="w-32 px-2 text-left">
+                            <p className="text-left text-l md:text-xl text-bold text-gray-900">
+                              당첨자 발표
+                            </p>
+                          </th>
+                          <td>
+                            <p className="text-left text-l md:text-xl text-bold text-gray-900">
+                              {getDate(eventInfo.endAt)}
+                            </p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
-                <p
-                  className="text-3xl md:text-4xl text-gray-600 mb-8"
-                  data-aos="zoom-y-out"
-                  data-aos-delay="150"
-                >
-                  {/* TODO : 이벤트 종료일시 - 현재 */}
-                  {eventInfo.type === 'FCFS' && eventInfo.status === 1 && (
+                <p className="mb-8" data-aos="zoom-y-out" data-aos-delay="150">
+                  {eventInfo.type === 'FCFS' && eventInfo.status !== 1 && (
                     <Timer endAt={eventInfo.endAt} />
                   )}
                 </p>
@@ -91,12 +91,12 @@ export default function EventInfo({ eventInfo, eventImage }) {
                 </div>
               </div>
             </div>
-          </div>
-          <div>
-            <img
-              src={eventImage.eventDetailImg || NO_EVENT_DETAIL_IMAGE}
-              layout="responsive"
-            />
+            <div className="justify-self-center">
+              <img
+                src={eventImage.eventDetailImg || NO_EVENT_DETAIL_IMAGE}
+                layout="responsive"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -106,8 +106,4 @@ export default function EventInfo({ eventInfo, eventImage }) {
 
 const H1 = styled.div`
   font-family: 'AppleSDGothicNeoB';
-`;
-
-const P = styled.p`
-  color: ${ColorBlue1};
 `;
