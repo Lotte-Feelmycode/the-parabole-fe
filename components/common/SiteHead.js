@@ -1,5 +1,7 @@
 import Head from 'next/head';
 
+const PARABOLE_OG_IMG = "https://parabole-bucket.s3.ap-northeast-2.amazonaws.com/og_image_parabole.png";
+
 export default function SiteHead({ title, description, url, image, keyword }) {
   const titleString = title + ' | The Parabole';
 
@@ -21,7 +23,7 @@ export default function SiteHead({ title, description, url, image, keyword }) {
       <meta property="og:title" content={titleString} /> 
       <meta property="og:description" content={description} /> 
       <meta property="og:url" content={url || "https://theparabole.shop"} />
-      <meta property="og:image" content={image} />
+      <meta property="og:image" content={image || PARABOLE_OG_IMG} />
       <meta property="og:article:author" content="필마이코드" />
     </Head>
   );
