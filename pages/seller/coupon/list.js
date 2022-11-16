@@ -30,7 +30,7 @@ export default function SellersCouponList() {
     <SellerLayout>
       <SiteHead title="Seller's Coupon List" />
       <Heading title="쿠폰 목록" type="h1" />
-      <div className="py-1" />
+      <div className="py-2" />
       <Divider />
       <CouponList />
     </SellerLayout>
