@@ -5,6 +5,7 @@ import { GET, POST } from '@apis/defaultApi';
 import { ThemeGray5 } from '@utils/constants/themeColor';
 import { LINKS } from '@utils/constants/links';
 import CommerceLayout from '@components/common/CommerceLayout';
+import SiteHead from '@components/common/SiteHead.js';
 import CartContent from '@components/cart/CartContent';
 import CartHeader from '@components/cart/CartHeader';
 import CartFooter from '@components/cart/CartFooter';
@@ -307,6 +308,7 @@ export default function Cart() {
 
   return (
     <CommerceLayout className="commerce-layout">
+      <SiteHead title="Cart" />
       <CartPage>
         <CheckEmptyList count={cartItemCount} />
       </CartPage>

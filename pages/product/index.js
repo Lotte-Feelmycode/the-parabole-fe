@@ -19,7 +19,7 @@ export default function Products({}) {
   return (
     <>
       <CommerceLayout>
-        <SiteHead title="Home" />
+        <SiteHead title="ProductHome" />
         <SearchBarSection className="search-bar-section">
           <SearchBar
             placeholder={inputSearchValue || '검색어를 입력해주세요'}
