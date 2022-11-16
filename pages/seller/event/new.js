@@ -660,7 +660,8 @@ export default function Event() {
           },
         }) // Content-Type을 반드시 이렇게 하여야 한다.
         .then((res) => {
-          if (res && res.data > 0) {
+          if (res) {
+            alert('이벤트 등록이 완료되었습니다.');
             router.push(
               { pathname: `/seller/event/list` },
               `/seller/event/list`,
