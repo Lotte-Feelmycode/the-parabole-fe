@@ -6,6 +6,7 @@ import styled from '@emotion/styled';
 import Heading from '@components/input/Heading';
 import { getDate } from '@utils/functions';
 import { NO_IMAGE } from '@utils/constants/images';
+
 export default function EventPrizeContainer({
   eventId,
   eventPrizes,
@@ -43,50 +44,46 @@ export default function EventPrizeContainer({
 
   function ProductCard({ prize }) {
     return (
-      <>
-        <div className="h-100 place-content-center justify-center content-center">
-          <ImgSection>
-            <img
-              className="prize-img w-48 h-48 object-center"
-              src={prize.productImg || NO_IMAGE}
+      <div className="h-100 place-content-center justify-center content-center">
+        <ImgSection>
+          <img
+            className="prize-img w-48 h-48 object-center"
+            src={prize.productImg || NO_IMAGE}
+          />
+        </ImgSection>
+        <h4 className="text-black text-2xl text-center font-bold leading-snug tracking-tight mb-3">
+          {prize.productName || '상품명'}
+        </h4>
+        {eventStatus === 1 && (
+          <div className="flex justify-center">
+            <Blue
+              buttonText={'이벤트 응모'}
+              onClickFunc={() =>
+                applyEvent(eventId, prize.eventPrizeId, prize.productName)
+              }
+              attr={{ disabled: applySts }}
+              css={{
+                marginTop: 'auto',
+                marginBottom: '10px',
+              }}
             />
-          </ImgSection>
-          <h4 className="text-black text-2xl text-center font-bold leading-snug tracking-tight mb-3">
-            {prize.productName || '상품명'}
-          </h4>
-          {eventStatus === 1 && (
-            <div className="flex justify-center">
-              <Blue
-                buttonText={'이벤트 응모'}
-                onClickFunc={() =>
-                  applyEvent(eventId, prize.eventPrizeId, prize.productName)
-                }
-                attr={{ disabled: applySts }}
-                css={{
-                  marginTop: 'auto',
-                  marginBottom: '10px',
-                }}
-              />
-            </div>
-          )}
-        </div>
-      </>
+          </div>
+        )}
+      </div>
     );
   }
 
   function CouponCard({ prize }) {
     return (
-      <>
-        <div className="h-100 place-items-center justify-center content-center">
-          <ImgSection>
-            <EventPrizeCouponImg className="prize-img" src={ICON_COUPON} />
-          </ImgSection>
-          <h4 className="text-black text-2xl text-center font-bold leading-snug tracking-tight mb-3">
-            {prize.couponName || '쿠폰명'}
-          </h4>
-          <div className="text-center mb-4">
-            {getDate(prize.expiresAt) || 'YYYY-MM-DD'}까지 사용가능
-          </div>
+      <div className="h-100 place-items-center justify-center content-center">
+        <ImgSection>
+          <EventPrizeCouponImg className="prize-img" src={ICON_COUPON} />
+        </ImgSection>
+        <h4 className="text-black text-2xl text-center font-bold leading-snug tracking-tight mb-3">
+          {prize.couponName || '쿠폰명'}
+        </h4>
+        <div className="text-center mb-4">
+          {getDate(prize.expiresAt) || 'YYYY-MM-DD'}까지 사용가능
         </div>
         {eventStatus === 1 && (
           <div className="flex justify-center">
@@ -103,7 +100,7 @@ export default function EventPrizeContainer({
             />
           </div>
         )}
-      </>
+      </div>
     );
   }
   return (
