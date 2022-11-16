@@ -1,15 +1,8 @@
 import styled from '@emotion/styled';
-import { useEffect, useRef, useState } from 'react';
-import { getDateTime } from '@utils/functions';
-import EventPrize from '@components/event/eventPrize';
+import { useRef } from 'react';
 import CloseButton from '@components/input/CloseButton';
-import { NO_IMAGE } from '@utils/constants/images';
-import { useRouter } from 'next/router';
-import { GET_DATA, POST_DATA } from '@apis/defaultApi';
-import CommerceLayout from '@components/common/CommerceLayout';
 import EventInfo from '@components/event/EvenInfo';
 import EventPrizeContainer from '@components/event/EventPrizeContainer';
-import { useGetToken } from '@hooks/useGetToken';
 
 export default function EventSampleModal({ setModalState, event }) {
   const modalRef = useRef();
@@ -57,9 +50,6 @@ export default function EventSampleModal({ setModalState, event }) {
               className="cursor-not-allowed"
               eventId={event.id}
               eventPrizes={event.eventPrizes}
-              // eventType={eventInfo.type}
-              // applyStatus={applyStatus}
-              // headers={headers}
             />
           </main>
         </section>
@@ -67,13 +57,6 @@ export default function EventSampleModal({ setModalState, event }) {
     </BackgroundDIM>
   );
 }
-
-const EventPrizeListSection = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 10px;
-  pointer-events: none;
-`;
 
 const BackgroundDIM = styled.div`
   position: fixed;
@@ -109,8 +92,4 @@ const ModalContainer = styled.div`
   overflow-y: auto;
 
   height: 1000px;
-`;
-
-const TopSection = styled.div`
-  padding: 5px 15px;
 `;
