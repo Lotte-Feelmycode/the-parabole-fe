@@ -4,7 +4,7 @@ import OrderDetailContent from '@components/order/OrderDetailContent';
 import OrderDetailFooter from '@components/order/OrderDetailFooter';
 import { ThemeBlueWhite } from '@utils/constants/themeColor';
 
-export default function OrderDetail({ orderBySellerDtoList }) {
+export default function OrderDetail({ orderBySellerDtoList, headers }) {
   function ShowOrderDetail({ dto }) {
     let contentTotalPrice = 0;
     dto.orderInfoResponseDtos.forEach((item) => {
@@ -18,9 +18,9 @@ export default function OrderDetail({ orderBySellerDtoList }) {
         <OrderDetailContent orderInfoResponseDtos={dto.orderInfoResponseDtos} />
         <OrderDetailFooter
           contentTotalPrice={contentTotalPrice}
-          couponDto={dto.couponDto}
           storeName={dto.storeName}
           sellerId={dto.sellerId}
+          headers={headers}
         />
       </OrderDetailSection>
     );

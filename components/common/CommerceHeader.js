@@ -1,6 +1,6 @@
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import {
   ICON_CART_BLACK,
@@ -12,7 +12,7 @@ import SearchBar from '@components/input/SearchBar';
 import CommerceHeaderMenuModal from '@components/common/CommerceHeaderMenuModal';
 
 export default function CommerceHeader() {
-  const [token, setToken] = useState();
+  const [token, setToken] = useState('');
   const [resize, setResize] = useState();
   const [menuModalState, setMenuModalState] = useState(false);
 
@@ -49,6 +49,47 @@ export default function CommerceHeader() {
   const closeMenuModal = () => {
     setMenuModalState(false);
   };
+
+  function CheckTocken() {
+    const router = useRouter();
+
+    const signout = () => {
+      if (confirm('로그아웃 하시겠습니까?')) {
+        localStorage.clear();
+        setToken('');
+        alert('로그아웃 되었습니다.');
+        router.push(LINKS.MAIN);
+      }
+    };
+
+    if (token) {
+      return (
+        <>
+          <Link href={LINKS.MYPAGE}>
+            <a className="px-5 font-medium hover:text-gray-700">마이페이지</a>
+          </Link>
+          <div>
+            <button onClick={signout}>
+              <a className="mr-5 hover:text-gray-900">로그아웃</a>
+            </button>
+          </div>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Link href={LINKS.SIGNIN}>
+            <a className="px-5 font-medium hover:text-gray-700">로그인</a>
+          </Link>
+          <Link href={LINKS.SIGNUP}>
+            <a className="px-5 font-medium hover:text-gray-700 border-l border-r">
+              회원가입
+            </a>
+          </Link>
+        </>
+      );
+    }
+  }
 
   if (resize >= 1024) {
     return (
@@ -151,7 +192,7 @@ export default function CommerceHeader() {
             </nav>
 
             <nav className="md:ml-auto mt-l flex flex-wrap items-center text-base text-gray-500 justify-center">
-              <CheckTocken token={token} />
+              <CheckTocken token={token} setToken={setToken} />
             </nav>
           </HeaderContainer>
         </HeaderSection>
@@ -201,50 +242,13 @@ export default function CommerceHeader() {
             {menuModalState && (
               <CommerceHeaderMenuModal
                 closeModalFunc={closeMenuModal}
-                CheckTocken={CheckTocken}
+                token={token}
+                setToken={setToken}
               />
             )}
           </HeaderContainer>
         </MobileHeaderSection>
       </header>
-    );
-  }
-}
-
-function CheckTocken({ token }) {
-  const router = useRouter();
-
-  const signout = () => {
-    localStorage.clear();
-    alert('로그아웃 완료');
-    router.push(LINKS.MAIN);
-  };
-
-  if (token) {
-    return (
-      <>
-        <Link href={LINKS.MYPAGE}>
-          <a className="px-5 font-medium hover:text-gray-700">마이페이지</a>
-        </Link>
-        <div>
-          <button onClick={signout}>
-            <a className="mr-5 hover:text-gray-900">로그아웃</a>
-          </button>
-        </div>
-      </>
-    );
-  } else {
-    return (
-      <>
-        <Link href={LINKS.SIGNIN}>
-          <a className="px-5 font-medium hover:text-gray-700">로그인</a>
-        </Link>
-        <Link href={LINKS.SIGNUP}>
-          <a className="px-5 font-medium hover:text-gray-700 border-l border-r">
-            회원가입
-          </a>
-        </Link>
-      </>
     );
   }
 }
