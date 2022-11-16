@@ -108,7 +108,7 @@ const ModalContainer = styled.div`
   width: 1000px;
   overflow-y: auto;
 
-  height: 1200px;
+  height: 1000px;
 `;
 
 const TopSection = styled.div`
