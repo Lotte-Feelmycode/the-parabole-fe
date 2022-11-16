@@ -200,7 +200,7 @@ export default function SellerProductList() {
                   </td>
                   <td className=" py-2 px-4  w-24">
                     <Tags>
-                      {getState(PRODUCT_STATE, product.productStatus)}
+                      {getState(PRODUCT_STATE, product.productStatus) || "판매중"}
                     </Tags>
                   </td>
                 </tr>
