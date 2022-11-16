@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { GET_DATA, POST_DATA } from '@apis/defaultApi';
@@ -12,6 +12,8 @@ export default function EventDetail() {
   const [eventImage, setEventImage] = useState({});
   const router = useRouter();
   const [eventId, setEventId] = useState(router.query.id);
+  const [storeInfo, setStoreInfo] = useState();
+
   const [eventPrizes, setEventPrizes] = useState([]);
   const [applyStatus, setApplyStatus] = useState('');
 
@@ -20,9 +22,10 @@ export default function EventDetail() {
     let getHeaders = useGetToken();
     setHeaders(getHeaders);
 
-    if (headers) {
+    if (localStorage.getItem('userId')) {
       POST_DATA('/event/participant/check', { eventId }, useGetToken()).then(
         (res) => {
+          console.log('이벤트 응모 여부', res);
           if (!res) {
             setApplyStatus('disabled');
           }
@@ -41,14 +44,14 @@ export default function EventDetail() {
         setEventImage(res.eventImage);
         setEventPrizes(res.eventPrizes);
 
-        console.log('진행상태', res.status);
-        if (res.status !== 1) {
-          setApplyStatus('disabled');
-        }
+        GET_DATA('/seller', { sellerId: res.sellerId }).then((res) => {
+          if (res) {
+            setStoreInfo(res);
+          }
+        });
       }
     });
   }, [router.query]);
-
   return (
     <CommerceLayout>
       <div
@@ -80,11 +83,16 @@ export default function EventDetail() {
         </svg>
       </div>
       <main className="flex-grow">
-        <EventInfo eventInfo={eventInfo} eventImage={eventImage} />
+        <EventInfo
+          eventInfo={eventInfo}
+          eventImage={eventImage}
+          storeInfo={storeInfo}
+        />
         <EventPrizeContainer
           eventId={eventId}
           eventPrizes={eventPrizes}
           eventType={eventInfo.type}
+          eventStatus={eventInfo.status}
           applyStatus={applyStatus}
           headers={headers}
         />
