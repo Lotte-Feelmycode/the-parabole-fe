@@ -6,6 +6,7 @@ import { numberToMonetary } from '@utils/functions';
 import { SmallWhite } from '@components/input/Button';
 import Input from '@components/input/Input';
 import { LoginHeaderContext } from '@pages/user/cart/index';
+import { NO_IMAGE } from '@utils/constants/images';
 
 export default function CartProduct({
   cartItemId,
@@ -26,6 +27,7 @@ export default function CartProduct({
   const [optionCountHistory, setOptionCountHistory] = useState(optionCount);
   const maxCount = product.productRemains < 100 ? product.productRemains : 100;
   const minCount = 1;
+
   useEffect(() => {
     countCheck(optionCount);
     if (optionCount != optionCountHistory) {
@@ -83,7 +85,7 @@ export default function CartProduct({
         <ProductImageSection className="product-image-section">
           <ProductImage
             className="product-img"
-            src={product.productThumbnailImg}
+            src={product.productThumbnailImg || NO_IMAGE}
             alt={product.productName}
           />
         </ProductImageSection>
@@ -159,10 +161,14 @@ const ProductImageSection = styled.div`
   flex: 0 0 auto;
   text-align: center;
   margin: 10px;
+  width: 70px;
+  height: 70px;
+  overflow: hidden;
 `;
 
 const ProductImage = styled.img`
-  width: 70px;
+  width: 100%;
+  object-fit: cover;
 `;
 
 const ProductInfoSection = styled.div`
