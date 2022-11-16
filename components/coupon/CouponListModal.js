@@ -4,7 +4,7 @@ import { MainBlue } from '@utils/constants/themeColor';
 import { POST } from '@apis/defaultApi';
 import { numberToMonetary, getTodayDateShort, isEmpty } from '@utils/functions';
 import { useRouter } from 'next/router';
-import { SIGNIN } from '@utils/constants/links';
+import CloseButton from '@components/input/CloseButton';
 
 export default function CouponListModal({
   setModalState,
@@ -73,48 +73,53 @@ export default function CouponListModal({
   return (
     <BackgroundDIM>
       <ModalContainer ref={modalRef} className="modal-container">
-        <TopSection>
-          <div className="text-center mt-8 font-bold text-7xl text-black-600">
+        <TopSection className="top-section">
+          <CloseButtonSection>
+            <a
+              onClick={() => {
+                setModalState(false);
+              }}
+            >
+              <CloseButton />
+            </a>
+          </CloseButtonSection>
+          <div className="text-center mt-2 md:mt-8 font-bold text-7xl text-black-600">
             💌
           </div>
-          <div className="text-center px-2 mt-8 font-bold text-2xl text-black-600">
+          <div className="text-center px-2 mt-4 md:mt-8 font-bold text-2xl text-black-600">
             {storeName}에서 도착한 쿠폰을 확인해보세요!
           </div>
           <div className="text-center text-gray-500 px-2 my-2">
             주문시 혜택을 적용해보세요. <br />
           </div>
         </TopSection>
-        <DetailSection>
-          <ModalTableSection>
-            {couponList &&
-              couponList.map((coupon) => {
-                return (
-                  <div className="text-left border-2 rounded-md mx-2 my-2 hover:bg-slate-50">
-                    <button onClick={(e) => setCoupon(e, coupon.couponId)}>
-                      <div className="flex flex-col p-4 text-left">
-                        <div className="truncate font-bold text-xl text-black-600">
-                          {coupon.name}
-                        </div>
-                        <div className="truncate">{coupon.detail}</div>
-                        <div>
-                          {numberToMonetary(coupon.minPaymentAmount)}원 이상
-                          사용가능
-                        </div>
-                        <div>( ~ {getTodayDateShort(coupon.expiresAt)})</div>
+        <ModalTableSection className="modal-table-section">
+          {couponList &&
+            couponList.map((coupon) => {
+              return (
+                <div className="text-left border-2 rounded-md mx-2 my-2 hover:bg-slate-50">
+                  <button onClick={(e) => setCoupon(e, coupon.couponId)}>
+                    <div className="flex flex-col p-4 text-left">
+                      <CouponNameSection className="truncate font-bold text-xl text-black-600">
+                        <span>{coupon.name}</span>
+                      </CouponNameSection>
+                      <div className="truncate">{coupon.detail}</div>
+                      <div>
+                        {numberToMonetary(coupon.minPaymentAmount)}원 이상
+                        사용가능
                       </div>
-                    </button>
-                  </div>
-                );
-              })}
-          </ModalTableSection>
-        </DetailSection>
-        <ButtonWrapper>
-          <ButtonSection>
-            <div className="text-white font-bold text-center">
-              <button onClick={getCoupon}>쿠폰 발급받기</button>
-            </div>
-          </ButtonSection>
-        </ButtonWrapper>
+                      <div>( ~ {getTodayDateShort(coupon.expiresAt)})</div>
+                    </div>
+                  </button>
+                </div>
+              );
+            })}
+        </ModalTableSection>
+        <ButtonSection>
+          <div className="text-white font-bold text-center">
+            <button onClick={getCoupon}>쿠폰 발급받기</button>
+          </div>
+        </ButtonSection>
       </ModalContainer>
     </BackgroundDIM>
   );
@@ -148,32 +153,53 @@ const ModalContainer = styled.div`
   box-shadow: 0 3px 20px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
 
-  width: 400px;
-  height: 724px;
+  @media (min-width: 767px) {
+    max-width: 400px;
+    max-height: 724px;
+    width: 100%;
+    height: 100%;
+  }
+  @media (max-width: 767px) {
+    max-width: 400px;
+    max-height: 724px;
+    width: 100%;
+    height: 500px;
+  }
 `;
 
 const TopSection = styled.div`
   padding: 5px 15px;
 `;
 
-const DetailSection = styled.div`
-  text-align: center;
-  height: 410px;
+const CloseButtonSection = styled.div`
+  padding-top: 5px;
+  text-align: right;
 `;
 
 const ModalTableSection = styled.div`
   margin-top: 0;
-  height: 410px;
   overflow-y: auto;
+  text-align: center;
+  @media (min-width: 767px) {
+    height: 430px;
+  }
+  @media (max-width: 767px) {
+    max-height: 410px;
+    height: 42%;
+  }
 `;
 
-const ButtonWrapper = styled.div`
-  padding: 0;
-  bottom: 0;
-  z-index: 1;
+const CouponNameSection = styled.div`
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-all;
 `;
 
 const ButtonSection = styled.div`
+  bottom: 0;
+  z-index: 1;
   background-color: ${MainBlue};
   border-radius: 0 0 20px 20px;
   padding: 20px 0;
