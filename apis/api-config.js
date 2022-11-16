@@ -1,7 +1,7 @@
 let backendHost;
 
 //const hostname = window && window.location && window.location.hostname;
-const hostname = 'dev';
+const hostname = 'local';
 
 if (hostname === 'prod') {
   backendHost = 'http://localhost:8000';
@@ -12,5 +12,18 @@ if (hostname === 'prod') {
 }
 
 export const API_BASE_URL = `${backendHost}/api/v1`;
-export const FRONT_BASE_URL = `http://localhost:3000`;
+
+let frontendHost;
+
+const host = 'domain';
+
+if (host === 'domain') {
+  frontendHost = 'https://theparabole.shop';
+} else if (host === 'dev') {
+  frontendHost = 'http://3.39.167.221';
+} else {
+  frontendHost = 'http://localhost:3000';
+}
+
+export const FRONT_BASE_URL = `${frontendHost}`;
 export const FRONT_DEPLOY_URL = `http://theparabole.shop`;
