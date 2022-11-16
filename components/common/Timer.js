@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { isEmpty } from '@utils/functions';
 import styled from '@emotion/styled';
 
-const Timer = ({ endAt }) => {
+export default function Timer({ endAt }) {
   let endDate = new Date(endAt);
   let now = new Date();
 
@@ -43,9 +43,8 @@ const Timer = ({ endAt }) => {
       </TimerContainer>
     );
   }
-};
+}
 
 const TimerContainer = styled.div`
   font-family: 'GmarketSans';
 `;
-export default Timer;
