@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
 import { isEmpty } from '@utils/functions';
+import styled from '@emotion/styled';
+
 const Timer = ({ endAt }) => {
   let endDate = new Date(endAt);
   let now = new Date();
 
   if (isEmpty(endAt) || endDate.getTime() < now.getTime()) {
     return (
-      <div className="text-rose-600 font-bold text-3xl md:text-5xl">
-        이벤트 종료
-      </div>
+      <TimerContainer className="text-gray-600 font-bold text-3xl md:text-5xl mt-10">
+        00:00
+      </TimerContainer>
     );
   } else {
     let diffTMins = (endDate.getTime() - now.getTime()) / (1000 * 60);
@@ -34,11 +36,16 @@ const Timer = ({ endAt }) => {
     }, [minutes, seconds]);
 
     return (
-      <div>
-        {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
-      </div>
+      <TimerContainer className="mt-10">
+        <div className="text-6xl text-blue-600 ">
+          {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+        </div>
+      </TimerContainer>
     );
   }
 };
 
+const TimerContainer = styled.div`
+  font-family: 'GmarketSans';
+`;
 export default Timer;
