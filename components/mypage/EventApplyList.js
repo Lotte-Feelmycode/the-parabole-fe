@@ -11,12 +11,12 @@ export default function EventApplyList({ headers }) {
 
   useEffect(() => {
     // TODO: PathVariable 대신 Header 를 넘기고 백엔드에서 @RequestAttribute 로 변경합니다.
-    GET_DATA(`/event/user/participant/${userId}`, '', headers).then((res) => {
+    GET_DATA(`/event/user/participant`, '', headers).then((res) => {
       if (res) {
         setTotal(res);
       }
     });
-  }, [userId]);
+  }, []);
 
   function EventApply({ applyInfo }) {
     function EventStatus({ status }) {
