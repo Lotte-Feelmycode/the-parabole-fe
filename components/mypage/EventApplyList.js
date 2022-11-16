@@ -62,28 +62,33 @@ export default function EventApplyList({ headers }) {
   }
 
   const EventSection = styled.li`
-    margin: 10px 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     border: 1px solid ${ThemeGray4};
     border-radius: 10px;
-    width: 100%;
+    @media (min-width: 767px) {
+      margin: 10px;
+      width: 49%;
+    }
+    @media (max-width: 767px) {
+      margin: auto;
+      width: 100%;
+      text-align: center;
+    }
   `;
 
   const EventImgSection = styled.div`
     overflow: hidden;
     border-radius: 6px;
-    width: 300px;
+    width: 100%;
     padding: 10px;
     flex: 1 1 auto;
     text-align: center;
   `;
 
   const EventImg = styled.img`
-    overflow: hidden;
     max-width: 100%;
-    min-width: 300px;
     object-fit: cover;
     object-position: center;
     aspect-ratio: 500 / 200;
@@ -96,7 +101,6 @@ export default function EventApplyList({ headers }) {
     display: flex;
     flex-direction: column;
     max-width: 100%;
-    min-width: 300px;
     padding: 10px;
     flex: 1 1 0;
   `;
