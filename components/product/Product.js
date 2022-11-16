@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { numberToMonetary } from '@utils/functions';
+import { NO_IMAGE } from '@utils/constants/images';
 import styled from '@emotion/styled';
 
 export default function NewProduct({ product }) {
@@ -13,19 +14,20 @@ export default function NewProduct({ product }) {
 
   return (
     <>
-      <div className="product" onClick={() => onClick(product.productId || 0)}>
+      <ProductImg
+        className="product"
+        onClick={() => onClick(product.productId || 0)}
+      >
         <a
           href="#"
           className="group h-80 block bg-gray-100 rounded-lg overflow-hidden relative mb-2 lg:mb-3"
         >
-          <ProductImg>
-            <img
-              src={product.productThumbnailImg}
-              loading="lazy"
-              alt={product.descript}
-              className="product-img w-full h-full object-cover object-center group-hover:scale-110 transition duration-200"
-            />
-          </ProductImg>
+          <img
+            src={product.productThumbnailImg || NO_IMAGE}
+            loading="lazy"
+            alt={product.descript}
+            className="product-img w-full h-full object-cover object-center group-hover:scale-110 transition duration-200"
+          />
         </a>
 
         <div className="product-body">
@@ -42,15 +44,15 @@ export default function NewProduct({ product }) {
             </span>
           </div>
         </div>
-      </div>
+      </ProductImg>
     </>
   );
 }
 
 const ProductImg = styled.div`
   overflow: hidden;
-  width: 100%;
+  width: 250px;
   object-fit: cover;
   object-position: center;
-  margion: auto;
+  margin: auto;
 `;

@@ -32,8 +32,6 @@ export default function ProductDetail() {
   const [maxCount, setMaxCount] = useState(100);
   const minCount = 0;
 
-  const [headers, setHeaders] = useState();
-
   useEffect(() => {
     const productId = router.query.id;
     if (productId) setProductId(productId);
@@ -270,6 +268,13 @@ export default function ProductDetail() {
   );
 }
 
+const ProductLayout = styled.div`
+  overflow: hidden;
+  object-fit: cover;
+  object-position: center;
+  margin: auto;
+`;
+
 const ProductWrap = styled.div`
   width: 100%;
   margin: 0 auto;
@@ -293,6 +298,7 @@ const ProductThumbnailImgSection = styled.div`
   margin: 10px 10px 10px 0;
   max-width: 100%;
   min-width: 300px;
+  overflow: hidden;
 
   @media (min-width: 768px) {
     width: 50%;
@@ -305,8 +311,8 @@ const ProductThumbnailImgSection = styled.div`
 
 const ProductDetailTop = styled.div`
   max-width: 100%;
-  min-width: 300px;
   display: flex;
+  overflow: hidden;
   flex-direction: column;
   flex-wrap: nowrap;
   flex: 1 1 auto;
@@ -324,6 +330,7 @@ const StoreSection = styled.a`
   align-items: center;
   margin: 20px 0px;
 `;
+
 const StoreNameSection = styled.div`
   display: flex;
   flex-direction: row;
@@ -332,18 +339,6 @@ const StoreNameSection = styled.div`
 
 const StoreBtnSection = styled.div`
   margin-left: auto;
-`;
-
-const StoreBenfitBox = styled.div`
-  background-color: ${ThemeBlueWhite};
-  border-radius: 0.375rem;
-  width: 100%;
-  height: 3rem;
-
-  &:hover {
-    background-color: ${ColorBlue2};
-    cursor: pointer;
-  }
 `;
 
 const InputSection = styled.div`
@@ -385,7 +380,9 @@ const DetailLayout = styled.div`
 
 const ProductThumbnailImg = styled.img`
   width: 100%;
+  object-fix: cover;
 `;
+
 const ProductDetailImage = styled.img`
   width: 100%;
 `;
