@@ -7,9 +7,9 @@ import Input from '@components/input/Input';
 import ImageUploader from '@components/input/ImageUploader';
 import * as btn from '@components/input/Button';
 import EventParticipantList from '@components/event/EventParticipantList';
+import { useGetToken } from '@hooks/useGetToken';
 
-export default function ProductDetail() {
-  // TODO: userId를 가져올 때 저장되어있는 걸(cookie, localstorage)로 가져오게 변경
+export default function SellerProductDetail() {
   const router = useRouter();
   const [userId, setUserId] = useState(router.query.id);
   const [name, setName] = useState();
@@ -18,6 +18,21 @@ export default function ProductDetail() {
   const [price, setPrice] = useState();
   const [thumbnailImg, setThumbnailImg] = useState();
   const [detailImg, setDetailImg] = useState([]);
+
+  const [headers, setHeaders] = useState();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push('/signin');
+      } else if (localStorage.getItem('role') === 'ROLE_USER') {
+        alert('판매자 페이지입니다.');
+        router.push('/');
+      }
+    }
+    setHeaders(useGetToken());
+  }, []);
 
   function setProduct() {
     {

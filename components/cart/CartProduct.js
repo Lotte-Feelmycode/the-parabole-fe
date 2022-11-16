@@ -1,25 +1,22 @@
-import styled from '@emotion/styled';
+import { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
+import styled from '@emotion/styled';
+import { PATCH } from '@apis/defaultApi';
 import { numberToMonetary } from '@utils/functions';
-import { useState, useEffect } from 'react';
 import { SmallWhite } from '@components/input/Button';
 import Input from '@components/input/Input';
-import { PATCH } from '@apis/defaultApi';
+import { LoginHeaderContext } from '@pages/user/cart/index';
+import { NO_IMAGE } from '@utils/constants/images';
 
 export default function CartProduct({
-  userId,
   cartItemId,
   product,
   count,
   setCountFunc,
 }) {
-  // console.log(
-  //   'product props : ' +
-  //     JSON.stringify(product) +
-  //     ' / count : ' +
-  //     JSON.stringify(count),
-  // );
   const router = useRouter();
+  const headers = useContext(LoginHeaderContext);
+
   const goToProductDetail = (id) => {
     router.push({
       pathname: `/product/${id}`,
@@ -30,15 +27,19 @@ export default function CartProduct({
   const [optionCountHistory, setOptionCountHistory] = useState(optionCount);
   const maxCount = product.productRemains < 100 ? product.productRemains : 100;
   const minCount = 1;
+
   useEffect(() => {
     countCheck(optionCount);
     if (optionCount != optionCountHistory) {
-      PATCH(`/cart/update/cnt`, {
-        cartItemId: cartItemId,
-        userId: userId,
-        productId: product.productId,
-        cnt: optionCount,
-      }).then((res) => {
+      PATCH(
+        `/cart/update/cnt`,
+        {
+          cartItemId: cartItemId,
+          productId: product.productId,
+          cnt: optionCount,
+        },
+        headers,
+      ).then((res) => {
         if (res) {
           if (res.success) {
             setOptionCountHistory(optionCount);
@@ -77,11 +78,14 @@ export default function CartProduct({
 
   return (
     <>
-      <ProductSection onClick={() => goToProductDetail(product.productId || 0)}>
+      <ProductSection
+        onClick={() => goToProductDetail(product.productId || 0)}
+        className="product-section"
+      >
         <ProductImageSection className="product-image-section">
           <ProductImage
             className="product-img"
-            src={product.productThumbnailImg}
+            src={product.productThumbnailImg || NO_IMAGE}
             alt={product.productName}
           />
         </ProductImageSection>
@@ -100,17 +104,19 @@ export default function CartProduct({
               borderTopRightRadius: '0',
             }}
           />
-          <Input
-            type="number"
-            value={optionCount}
-            onChange={onOptionCountChange}
-            css={{
-              textAlign: 'right',
-              maxWidth: '80px',
-              height: '30px',
-              margin: '0',
-            }}
-          />
+          <InputNumberSection>
+            <Input
+              type="number"
+              value={optionCount}
+              onChange={onOptionCountChange}
+              css={{
+                textAlign: 'right',
+                height: '30px',
+                width: '100%',
+                margin: '0',
+              }}
+            />
+          </InputNumberSection>
           <SmallWhite
             buttonText="+"
             onClickFunc={plusBtnClick}
@@ -142,45 +148,78 @@ const ProductSection = styled.a`
   &:hover {
     cursor: pointer;
   }
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+  }
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
 `;
 
 const ProductImageSection = styled.div`
   flex: 0 0 auto;
   text-align: center;
   margin: 10px;
+  width: 70px;
+  height: 70px;
+  overflow: hidden;
 `;
 
 const ProductImage = styled.img`
-  width: 70px;
+  width: 100%;
+  object-fit: cover;
 `;
 
 const ProductInfoSection = styled.div`
-  flex: 1 0 0px;
   padding: 5px;
-  display: flex;
 `;
 
-const ProductTitle = styled.h3`
-  overflow-wrap: break-all;
-  word-break: break-all;
-  transition: opacity 0.1s;
+const ProductTitle = styled.p`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
+  @media (min-width: 1024px) {
+  }
 `;
 
 const CartOptionSection = styled.div`
   padding: 0 5px;
-  flex: 1 0 auto;
   display: flex;
-  flex-direction: column;
   align-items: flex-end;
+  flex-direction: column;
 `;
 
 const OptionInputSection = styled.div`
   display: flex;
   padding: 5px;
-  flex: 0 0 auto;
+  text-align: center;
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
+  @media (min-width: 1024px) {
+  }
+`;
+
+const InputNumberSection = styled.div`
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
+  @media (min-width: 1024px) {
+    max-width: 80px;
+  }
 `;
 
 const PriceSection = styled.div`
   text-align: right;
   flex: 0 0 auto;
+  padding: 10px;
+  @media (max-width: 1024px) {
+    margin-left: auto;
+  }
+  @media (min-width: 1024px) {
+  }
 `;

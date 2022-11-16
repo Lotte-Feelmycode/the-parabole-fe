@@ -5,17 +5,18 @@ import { ThemeGray4, ThemeGray1, MainBlue } from '@utils/constants/themeColor';
 import { APPLY_TYPE } from '@utils/constants/types';
 import { getDateTimeShort } from '@utils/functions';
 
-export default function EventApplyList({ userId }) {
+export default function EventApplyList({ headers }) {
   const [total, setTotal] = useState([]);
   const [nowState, setNowState] = useState(3);
 
   useEffect(() => {
-    GET_DATA(`/event/user/participant/${userId}`).then((res) => {
+    // TODO: PathVariable 대신 Header 를 넘기고 백엔드에서 @RequestAttribute 로 변경합니다.
+    GET_DATA(`/event/user/participant`, '', headers).then((res) => {
       if (res) {
         setTotal(res);
       }
     });
-  }, [userId]);
+  }, []);
 
   function EventApply({ applyInfo }) {
     function EventStatus({ status }) {
@@ -61,28 +62,33 @@ export default function EventApplyList({ userId }) {
   }
 
   const EventSection = styled.li`
-    margin: 10px 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     border: 1px solid ${ThemeGray4};
     border-radius: 10px;
-    width: 100%;
+    @media (min-width: 767px) {
+      margin: 10px;
+      width: 49%;
+    }
+    @media (max-width: 767px) {
+      margin: auto;
+      width: 100%;
+      text-align: center;
+    }
   `;
 
   const EventImgSection = styled.div`
     overflow: hidden;
     border-radius: 6px;
-    width: 300px;
+    width: 100%;
     padding: 10px;
     flex: 1 1 auto;
     text-align: center;
   `;
 
   const EventImg = styled.img`
-    overflow: hidden;
     max-width: 100%;
-    min-width: 300px;
     object-fit: cover;
     object-position: center;
     aspect-ratio: 500 / 200;
@@ -95,7 +101,6 @@ export default function EventApplyList({ userId }) {
     display: flex;
     flex-direction: column;
     max-width: 100%;
-    min-width: 300px;
     padding: 10px;
     flex: 1 1 0;
   `;
@@ -136,39 +141,41 @@ export default function EventApplyList({ userId }) {
   return (
     <>
       <NavSection className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center border-b">
-        <ul className="contents list-none text-center whitespace-nowrap">
+        <MenuList className="contents list-none text-center whitespace-nowrap">
           {APPLY_TYPE.map((state) => {
             if (state.value === 'EVENT_BEGIN') return;
             return (
               <li className="float-left" key={state.index}>
                 {nowState === state.index && (
                   <SelectedNav
-                    className="flex title-font text-middle font-semibold items-center p-4 text-gray-900  cursor-pointer"
+                    className="flex title-font text-middle font-semibold items-center text-gray-900  cursor-pointer"
                     key={state.index}
                     onClick={() => {
                       setNowState(state.index);
                     }}
                   >
-                    <div className="selected-nav">{state.name}</div>
+                    <MenuNameSpan className="selected-nav">
+                      {state.name}
+                    </MenuNameSpan>
                   </SelectedNav>
                 )}
                 {nowState !== state.index && (
                   <a
-                    className="flex title-font text-middle font-semibold items-center p-4 text-gray-900  cursor-pointer"
+                    className="flex title-font text-middle font-semibold items-center text-gray-900  cursor-pointer"
                     key={state.index}
                     onClick={() => {
                       setNowState(state.index);
                     }}
                   >
-                    <span className="ml-3 text-l hover:text-blue-500">
+                    <MenuNameSpan className="hover:text-blue-500">
                       {state.name}
-                    </span>
+                    </MenuNameSpan>
                   </a>
                 )}
               </li>
             );
           })}
-        </ul>
+        </MenuList>
       </NavSection>
       <PrintEventTable />
     </>
@@ -176,12 +183,34 @@ export default function EventApplyList({ userId }) {
 }
 
 const SelectedNav = styled.a`
-  margin-left: 0.75rem;
   color: ${MainBlue};
+  margin-bottom: 0.1rem;
 `;
 
 const NavSection = styled.nav`
   background-color: ${ThemeGray4};
   font-size: large;
   margin-bottom: 10px;
+`;
+
+const MenuList = styled.ul`
+  background-color: ${ThemeGray4};
+  @media (min-width: 767px) {
+  }
+  @media (max-width: 767px) {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: auto;
+  }
+`;
+
+const MenuNameSpan = styled.span`
+  @media (min-width: 767px) {
+    font-size: large;
+    margin: 20px;
+  }
+  @media (max-width: 767px) {
+    font-size: medium;
+    margin: 15px;
+  }
 `;

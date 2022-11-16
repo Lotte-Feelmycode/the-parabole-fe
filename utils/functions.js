@@ -1,3 +1,24 @@
+export var isLoggedIn = function () {
+  if (localStorage.getItem('token')) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export var getLoggedInInfo = function () {
+  if (checkLoggedIn) {
+    var arr;
+    arr.push(localStorage.getItem('token'));
+    arr.push(localStorage.getItem('email'));
+    arr.push(localStorage.getItem('id'));
+    arr.push(localStorage.getItem('name'));
+    arr.push(localStorage.getItem('nickname'));
+    arr.push(localStorage.getItem('phone'));
+    return arr;
+  }
+};
+
 /**
  * 일시 데이터를 '0000년 00월 00일 오후/오전 00시 00분'으로 리턴하는 함수
  * @param {*} str
@@ -91,6 +112,40 @@ export function getDateTimeNotKor(str) {
     return str.split('T')[0] + ' ' + str.split('T')[1];
   }
   return str;
+}
+
+/**
+ * 일시 데이터를 자바스크립트 Date 객체로 리턴하는 함수
+ * @param {*} str
+ * @returns
+ */
+export function getNewDate(str) {
+  if (!isEmpty(str)) {
+    const getDate = str.split('T')[0];
+    const year = getDate.split('-')[0];
+
+    const monthStr = getDate.split('-')[1];
+    const month = monthStr > 9 ? monthStr - 1 : monthStr.substr(1, 1) - 1;
+
+    const dayStr = getDate.split('-')[2];
+    const day = dayStr > 9 ? dayStr : dayStr.substr(1, 1);
+
+    const getTime = str.split('T')[1];
+    let time = getTime.split(':')[0];
+    return new Date(year, month, day, time);
+  }
+  return str;
+}
+
+/*
+ * 현재 날짜를 '0000-00-00'으로 리턴하는 함수
+ * @returns
+ */
+export function getTodayDateShort() {
+  let date = new Date();
+  return (
+    date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+  );
 }
 
 /**

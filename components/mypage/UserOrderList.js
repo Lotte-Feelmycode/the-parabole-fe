@@ -1,61 +1,71 @@
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { GET_DATA } from '@apis/defaultApi';
-import { getState, numberToMonetary } from '@utils/functions';
-import { ORDER_PAY_STATE, ORDER_STATE } from '@utils/constants/types';
+import UserOrder from '@components/mypage/UserOrder';
+import { ThemeGray5 } from '@utils/constants/themeColor';
+import { Blue } from '@components/input/Button';
+import { useRouter } from 'next/router';
+import { LINKS } from '@utils/constants/links';
 
-export default function OrderList({ userId }) {
+export default function OrderList({ headers }) {
   const [orderList, setOrderList] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
-    GET_DATA(`/order`, { userId }).then((res) => {
+    GET_DATA(`/order`, null, headers).then((res) => {
       if (res) {
         setOrderList(res);
       }
     });
-  }, [userId]);
+  }, [headers]);
 
-  return (
-    <>
-      <table className="w-full text-m text-center">
-        <thead className="text-m text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr className="h-12">
-            <ImageSection scope="col" className="p-1">
-              이미지
-            </ImageSection>
-            <ProductNameSection scope="col" className="p-1">
-              주문상품
-            </ProductNameSection>
-            <td scope="col" className="p-1">
-              주문수량
-            </td>
-            <td scope="col" className="p-1">
-              주문 금액
-            </td>
-            <td scope="col" className="p-1">
-              주문 상태
-            </td>
-            <td scope="col" className="p-1">
-              주문 일자
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          {orderList &&
-            orderList.map((order) => (
-              <UserOrder order={order} key={order.id} />
-            ))}
-        </tbody>
-      </table>
-    </>
-  );
+  if (orderList && orderList.length > 0) {
+    return (
+      <OrderListSection className="order-list-section">
+        {orderList.map((order) => (
+          <UserOrder order={order} key={order.id} />
+        ))}
+      </OrderListSection>
+    );
+  } else {
+    return (
+      <EmptyOrderList>
+        <EmptyImageContainer>
+          <EmptyImage src="/parabole.svg" />
+        </EmptyImageContainer>
+        <Blue
+          buttonText={'구매하러가기'}
+          onClickFunc={() => {
+            router.push(LINKS.PRODUCT);
+          }}
+        />
+      </EmptyOrderList>
+    );
+  }
 }
-const ImageSection = styled.td`
-  width: 15%;
+
+const OrderListSection = styled.div`
+  display: flex;
+  flex-wrap: wrap;
 `;
-const ProductNameSection = styled.td`
-  width: 30%;
+
+const EmptyOrderList = styled.div`
+  padding: 50px;
+  text-align: center;
+  background-color: ${ThemeGray5};
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+`;
+
+const EmptyImageContainer = styled.div`
+  text-align: center;
+  display: flex;
+  justify-content: center;
+`;
+const EmptyImage = styled.img`
+  max-height: 350px;
+  border-radius: 10px;
+  margin: 10px;
 `;
 
 function UserOrder({ order }) {

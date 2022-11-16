@@ -5,6 +5,17 @@ export const APPLY_TYPE = [
   { value: 'EVENT_BEGIN', name: '시작전 이벤트', index: 0 },
 ];
 
+export const COUPON_TYPE = [
+  {
+    value: '1',
+    name: '할인율',
+  },
+  {
+    value: '2',
+    name: '할인금액',
+  },
+];
+
 export const EVENT_TYPE = [
   {
     value: 'FCFS',
@@ -66,3 +77,5 @@ export const ORDER_PAY_STATE = [
   { value: 'WITHOUT_BANK', name: '무통장입금' },
   { value: 'NAVER_PAY', name: '네이버페이' },
 ];
+
+export const PRODUCT_STATE = [{ value: 1, name: '판매 중' }];

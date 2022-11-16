@@ -1,16 +1,30 @@
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import styled from '@emotion/styled';
+import { LINKS } from '@utils/constants/links';
+import { ThemeBlueWhite, MainBlue } from '@utils/constants/themeColor';
+import { useGetToken } from '@hooks/useGetToken';
 import CommerceLayout from '@components/common/CommerceLayout';
-import { useState } from 'react';
 import UserOrderList from '@components/mypage/UserOrderList';
 import EventApplyList from '@components/mypage/EventApplyList';
 import MyProfile from '@components/mypage/MyProfile';
 import SiteHead from '@components/common/SiteHead.js';
-import styled from '@emotion/styled';
-import { ThemeBlueWhite, MainBlue } from '@utils/constants/themeColor';
-import UserCouponList from '@components/coupon/UserCouponList';
+import UserCouponList from '@components/mypage/UserCouponList';
 
-export default function () {
-  // TODO: userId 집어넣기
-  const userId = 3;
+export default function Mypage() {
+  const router = useRouter();
+
+  const [headers, setHeaders] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push(LINKS.SIGNIN);
+      }
+    }
+    setHeaders(useGetToken());
+  }, []);
 
   const [nowState, setNowState] = useState(0);
   const mypageStateList = [
@@ -22,24 +36,21 @@ export default function () {
 
   function showMypageMainComp(input) {
     if (input === 0) {
-      return <UserOrderList userId={userId} />;
+      return <UserOrderList headers={headers} />;
     } else if (input === 1) {
-      return <EventApplyList userId={userId} />;
+      return <EventApplyList headers={headers} />;
     } else if (input === 2) {
-      return <UserCouponList userId={userId} />;
+      return <UserCouponList headers={headers} />;
     } else if (input === 3) {
-      return <MyProfile userId={userId} />;
+      return <MyProfile headers={headers} />;
     }
   }
 
   return (
     <CommerceLayout>
       <SiteHead title="My page" />
-      <NavSection
-        color={ThemeBlueWhite}
-        className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center border-b"
-      >
-        <ul className="contents list-none text-center whitespace-nowrap">
+      <NavSection className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center border-b">
+        <MenuList className="contents list-none text-center whitespace-nowrap">
           {mypageStateList.map((state, index) => (
             <li className="float-left" key={index}>
               {nowState === index && (
@@ -48,9 +59,9 @@ export default function () {
                   onClick={() => {
                     setNowState(index);
                   }}
-                  className="flex title-font text-lg font-semibold items-center p-5 text-gray-900  cursor-pointer"
+                  className="select-nav flex title-font text-lg font-semibold items-center text-gray-900  cursor-pointer"
                 >
-                  <span className="ml-3 text-l text-blue-500">{state}</span>
+                  <MenuNameSpan className="text-blue-500">{state}</MenuNameSpan>
                 </SelectedNav>
               )}
               {nowState !== index && (
@@ -59,16 +70,16 @@ export default function () {
                   onClick={() => {
                     setNowState(index);
                   }}
-                  className="flex title-font text-lg font-semibold items-center p-5 text-gray-900  cursor-pointer"
+                  className="flex title-font text-lg font-semibold items-center text-gray-900  cursor-pointer"
                 >
-                  <span className="ml-3 text-l hover:text-blue-500">
+                  <MenuNameSpan className="hover:text-blue-500">
                     {state}
-                  </span>
+                  </MenuNameSpan>
                 </a>
               )}
             </li>
           ))}
-        </ul>
+        </MenuList>
       </NavSection>
       <div>{showMypageMainComp(nowState)}</div>
     </CommerceLayout>
@@ -76,10 +87,31 @@ export default function () {
 }
 
 const NavSection = styled.nav`
-  background-color: ${(props) => props.color};
+  background-color: ${ThemeBlueWhite};
 `;
 
 const SelectedNav = styled.a`
   color: ${MainBlue};
   border-bottom: 1px solid ${MainBlue};
+`;
+
+const MenuList = styled.ul`
+  @media (min-width: 767px) {
+  }
+  @media (max-width: 767px) {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: auto;
+  }
+`;
+
+const MenuNameSpan = styled.span`
+  @media (min-width: 767px) {
+    font-size: larger;
+    padding: 30px;
+  }
+  @media (max-width: 767px) {
+    font-size: large;
+    padding: 15px;
+  }
 `;
