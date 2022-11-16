@@ -108,12 +108,10 @@ const MenuList = styled.ul`
 const MenuNameSpan = styled.span`
   @media (min-width: 767px) {
     font-size: larger;
-    padding: 5rem;
-    margin-left: 3rem;
+    padding: 30px;
   }
   @media (max-width: 767px) {
     font-size: large;
-    padding: 1rem 0.3rem;
-    margin-left: 0.3rem;
+    padding: 15px;
   }
 `;

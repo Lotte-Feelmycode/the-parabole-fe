@@ -207,10 +207,10 @@ const MenuList = styled.ul`
 const MenuNameSpan = styled.span`
   @media (min-width: 767px) {
     font-size: large;
-    margin: 5rem;
+    margin: 20px;
   }
   @media (max-width: 767px) {
     font-size: medium;
-    margin: 1rem;
+    margin: 15px;
   }
 `;
