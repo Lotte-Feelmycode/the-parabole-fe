@@ -34,7 +34,7 @@ export default function SellerProductList() {
     }
     setHeaders(useGetToken());
 
-    GET_DATA(`/product/seller/list`, null, headers).then((res) => {
+    GET_DATA(`/product/seller/list`).then((res) => {
       if (res) {
         setProductList(res.content);
       }
@@ -220,7 +220,7 @@ export default function SellerProductList() {
             buttonText="등록하기"
             name="btnPost"
             onClickFunc={() => {
-              router.push('/seller/product/index');
+              router.push('/seller/product/new');
             }}
           />
         </Div>

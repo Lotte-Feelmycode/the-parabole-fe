@@ -3,9 +3,10 @@ import useInput from '@hooks/useInput';
 import CommerceLayout from '@components/common/CommerceLayout';
 import { POST, POST_DATA } from '@apis/defaultApi';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Blue } from '@components/input/Button';
 import { AUTH_ERROR } from '@utils/constants/errors';
+import { isEmpty } from '@utils/functions';
 
 export default function Signup() {
   const router = useRouter();
@@ -15,6 +16,15 @@ export default function Signup() {
   const [phone, onChangePhone] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [passwordConfirmation, onChangePasswordConfirmation] = useInput('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') !== null) {
+        alert('로그인 되어있어 접근할 수 없습니다.');
+        router.back();
+      }
+    }
+  }, []);
 
   function email_check(email) {
     var reg =
@@ -79,32 +89,22 @@ export default function Signup() {
       passwordConfirmation: passwordConfirmation,
     };
 
-    if (
-      !reqBody.email ||
-      !reqBody.name ||
-      !reqBody.nickname ||
-      !reqBody.phone ||
-      !reqBody.password ||
-      !reqBody.passwordConfirmation
-    ) {
-      alert(`입력란을 모두 채워주세요.`);
-      return;
+    if (validation(reqBody)) {
+      POST(`/auth/signup`, reqBody)
+        .then((res) => {
+          console.log(res);
+          if (res.success) {
+            alert('회원가입 성공');
+            router.push({
+              pathname: `./welcome/${res.data.name}`,
+            });
+          }
+        })
+        .catch(function (error) {
+          alert('회원가입 실패');
+          return {};
+        });
     }
-
-    POST(`/auth/signup`, reqBody)
-      .then((res) => {
-        console.log(res);
-        if (res.success) {
-          alert('회원가입 성공');
-          router.push({
-            pathname: `./welcome/${res.data.name}`,
-          });
-        }
-      })
-      .catch(function (error) {
-        alert('회원가입 실패');
-        return {};
-      });
   }
 
   return (

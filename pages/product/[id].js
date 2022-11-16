@@ -35,16 +35,6 @@ export default function ProductDetail() {
   const [headers, setHeaders] = useState();
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && typeof window !== undefined) {
-      if (localStorage.getItem('userId') === null) {
-        alert('로그인 해주세요.');
-        router.push(LINKS.SIGNIN);
-      }
-    }
-    setHeaders(useGetToken());
-  }, []);
-
-  useEffect(() => {
     const productId = router.query.id;
     if (productId) setProductId(productId);
     GET_DATA(`/product`, { productId: productId }).then((res) => {
