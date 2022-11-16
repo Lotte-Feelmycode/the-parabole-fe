@@ -73,7 +73,7 @@ export default function EventInfo({ eventInfo, eventImage, storeInfo }) {
                   </div>
                 </div>
                 <p className="mb-8" data-aos="zoom-y-out" data-aos-delay="150">
-                  {eventInfo.type === 'FCFS' && eventInfo.status !== 1 && (
+                  {eventInfo.type === 'FCFS' && eventInfo.status !== 0 && (
                     <Timer endAt={eventInfo.endAt} />
                   )}
                 </p>
@@ -90,12 +90,13 @@ export default function EventInfo({ eventInfo, eventImage, storeInfo }) {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="justify-self-center">
-              <img
-                src={eventImage.eventDetailImg || NO_EVENT_DETAIL_IMAGE}
-                layout="responsive"
-              />
+              <div className="place-self-center	mt-20">
+                <img
+                  className="justify-self-center"
+                  src={eventImage.eventDetailImg || NO_EVENT_DETAIL_IMAGE}
+                  layout="responsive"
+                />
+              </div>
             </div>
           </div>
         </div>
