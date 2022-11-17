@@ -17,15 +17,19 @@ export default function OrderDetailContent({ orderInfoResponseDtos }) {
         <table className="w-full text-m text-center">
           <tbody>
             <tr>
-              <TdImg rowSpan={5}>
-                <a
-                  onClick={() => {
-                    goToProductDetail({ productId: product.productId });
-                  }}
-                >
-                  <img src={product.productThumbnailImg || NO_IMAGE} />
-                </a>
-              </TdImg>
+              <td rowSpan={5} width={'70px'}>
+                <OrderInfoImageSection className="order-info-image-section">
+                  <a
+                    onClick={() => {
+                      goToProductDetail({ productId: product.productId });
+                    }}
+                  >
+                    <OrderInfoImage
+                      src={product.productThumbnailImg || NO_IMAGE}
+                    />
+                  </a>
+                </OrderInfoImageSection>
+              </td>
               <td>
                 <InfoController>
                   <ProductName>{product.productName}</ProductName>
@@ -68,16 +72,23 @@ const ProductInfoContainer = styled.div`
   border-radius: 5px;
   padding: 10px;
   background-color: white;
-  height: 85px;
+  @media (min-width: 1024px) {
+    height: 85px;
+  }
 `;
 
-const TdImg = styled.td`
+const OrderInfoImageSection = styled.div`
   width: 64px;
   height: 64px;
+  overflow: hidden;
 
   &:hover {
     cursor: pointer;
   }
+`;
+
+const OrderInfoImage = styled.img`
+  object-fit: cover;
 `;
 
 const InfoController = styled.div`

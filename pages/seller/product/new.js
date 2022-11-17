@@ -8,6 +8,8 @@ import { POST_DATA } from '@apis/defaultApi';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useGetToken } from '@hooks/useGetToken';
+import { API_BASE_URL } from '@apis/api-config';
+import { isEmpty } from '@utils/functions';
 
 export default function SellerProductNew() {
   const router = useRouter();
@@ -29,7 +31,7 @@ export default function SellerProductNew() {
   const [remain, setRemain] = useState();
   const [price, setPrice] = useState();
   const [fileList, setFileList] = useState([]); // 업로드한 파일들을 저장하는 배열
-  const [productId, setProductId] = useState();
+  const [productId, setProductId] = useState(-1);
 
   const css = {
     width: '100%',
@@ -77,6 +79,20 @@ export default function SellerProductNew() {
   };
 
   function setProduct() {
+    if (isEmpty(name)) {
+      alert('상품 명이 비어있습니다.');
+      return;
+    } else if (isEmpty(category)) {
+      alert('카테고리 정보가 비어있습니다.');
+      return;
+    } else if (isEmpty(remain)) {
+      alert('재고가 비어있습니다.');
+      return;
+    } else if (isEmpty(price)) {
+      alert('가격이 비어있습니다.');
+      return;
+    }
+
     const params = {
       productName: name,
       productCategory: category,
@@ -96,13 +112,29 @@ export default function SellerProductNew() {
       formData.append('images', fileList[i]);
     }
 
+    if (productId === -1) {
+      return;
+    }
+
+    if (isEmpty(name)) {
+      alert('상품 명이 비어있습니다.');
+      return;
+    }
     axios
       .post(
-        `http://localhost:8080/api/v1/s3?productId=${productId}`,
+        API_BASE_URL + `/s3?productId=${productId}`,
+
         formData,
         { headers: { 'Content-Type': 'multipart/form-data' } },
       )
-      .then((res) => {
+      .then(function () {
+        alert('상품이 등록되었습니다.');
+        router.push({
+          pathname: `/seller/product/list`,
+        });
+      })
+      .catch(function () {
+        alert('상품이 등록되었습니다.');
         router.push({
           pathname: `/seller/product/list`,
         });
@@ -110,56 +142,104 @@ export default function SellerProductNew() {
   }, [productId]);
 
   return (
-    <>
-      <SellerLayout>
-        <SiteHead title="상품 등록" />
-        <Div>
-          상품명
-          <br /> <Input css={css} onChange={onChangeName}></Input>
-          <br />
-          카테고리
-          <br />
-          <Input css={css} onChange={onChangeCategory}></Input>
-          <br />
-          재고
-          <br />
-          <Input css={css} onChange={onChangeRemain}></Input>
-          <br />
-          가격
-          <br />
-          <Input css={css} onChange={onChangePrice}></Input>
-          <br />
-          썸네일 이미지
-          <br />
-          <input
-            css={css}
-            type="file"
-            accept="image/jpg, image/png, image/jpeg"
-            onChange={onChangeThumbnailImg}
-          />
-          <br />
-          상세 이미지
-          <br />
-          <input
-            css={css}
-            type="file"
-            accept="image/jpg, image/png, image/jpeg"
-            multiple
-            onChange={onChangeDetailImg}
-          />
-          <br />
-          <Button.Pink
-            buttonText="상품 등록"
-            name="setProduct"
-            onClickFunc={setProduct}
-          ></Button.Pink>
-        </Div>
-      </SellerLayout>
-    </>
+    <SellerLayout>
+      <SiteHead title="상품 등록" />
+
+      <div className="bg-white py-6 sm:py-8 lg:py-12">
+        <div className="max-w-screen-2xl px-4 md:px-8 mx-auto">
+          <h2 className="text-gray-800 text-2xl lg:text-3xl font-bold text-center mb-4 md:mb-8">
+            상품 등록
+          </h2>
+
+          <div className="max-w-lg border rounded-lg mx-auto">
+            <div className="flex flex-col gap-4 p-4 md:p-8">
+              <div>
+                <label className="inline-block text-gray-800 text-sm sm:text-base mb-2">
+                  상품명
+                </label>
+                <input
+                  className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                  type="text"
+                  placeHolder="상품명을 입력하세요."
+                  onChange={onChangeName}
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="inline-block text-gray-800 text-sm sm:text-base mb-2">
+                  카테고리
+                </label>
+                <input
+                  className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                  type="text"
+                  placeHolder="상품 카테고리를 입력하세요."
+                  onChange={onChangeCategory}
+                  required
+                />
+              </div>
+              <div>
+                <label className="inline-block text-gray-800 text-sm sm:text-base mb-2">
+                  재고
+                </label>
+                <input
+                  type="number"
+                  className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                  placeHolder="상품 재고를 입력하세요."
+                  onChange={onChangeRemain}
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="inline-block text-gray-800 text-sm sm:text-base mb-2">
+                  가격
+                </label>
+                <input
+                  type="number"
+                  className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                  placeHolder="상품 가격을 입력하세요."
+                  onChange={onChangePrice}
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="inline-block text-gray-800 text-sm sm:text-base mb-2">
+                  썸네일 이미지
+                </label>
+                <input
+                  className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                  onChange={onChangeThumbnailImg}
+                  type="file"
+                  accept="image/jpg, image/png, image/jpeg"
+                  required
+                />
+              </div>
+              <div>
+                <label className="inline-block text-gray-800 text-sm sm:text-base mb-2">
+                  상세 이미지
+                </label>
+                <input
+                  className="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+                  onChange={onChangeDetailImg}
+                  type="file"
+                  multiple
+                  accept="image/jpg, image/png, image/jpeg"
+                  required
+                />
+              </div>
+              <div className="py-1" />
+
+              <Button.Pink
+                buttonText="상품 등록"
+                name="setProduct"
+                onClickFunc={setProduct}
+              ></Button.Pink>
+            </div>
+          </div>
+        </div>
+      </div>
+    </SellerLayout>
   );
 }
-
-const Div = styled.div`
-  width: 300px;
-  margin: auto;
-`;

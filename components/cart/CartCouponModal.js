@@ -1,7 +1,10 @@
 import styled from '@emotion/styled';
 import { useEffect, useRef } from 'react';
 import {
+  MainBlue,
   ThemeGray1,
+  ThemeGray2,
+  ThemeGray4,
   ThemeWhite,
   ThemeGray5,
 } from '@utils/constants/themeColor';
@@ -60,7 +63,7 @@ export default function CartCouponModal({
         <DetailSection>
           <ModalTitleSection>{storeName}에서 사용가능한 쿠폰</ModalTitleSection>
           <ModalTableSection>
-            <ShowCouponTable
+            <ShowCouponList
               couponDto={couponArray}
               contentTotalPrice={contentTotalPrice}
             />
@@ -71,30 +74,14 @@ export default function CartCouponModal({
   );
 }
 
-function ShowCouponTable({ couponDto, contentTotalPrice }) {
+function ShowCouponList({ couponDto, contentTotalPrice }) {
   if (couponDto && couponDto.length > 0) {
     return (
-      <CouponTable className="coupon-table">
-        <thead className="text-m uppercase">
-          <tr className="bg-white border-b">
-            <th className="text-sm font-medium text-gray-900 px-6 py-4 ">
-              쿠폰이름
-            </th>
-            <th className="text-sm font-medium text-gray-900 px-6 py-4 ">
-              쿠폰설명
-            </th>
-            <th className="text-sm font-medium text-gray-900 px-6 py-4 ">
-              할인금액
-            </th>
-            <th className="text-sm font-medium text-gray-900 px-6 py-4">
-              적용후금액
-            </th>
-          </tr>
-        </thead>
-        <tbody className="text-m">
+      <div>
+        <CouponListSection className="coupon-list-section text-m">
           {couponDto &&
             couponDto.map((coupon, index) => (
-              <CouponTableRow
+              <ShowCoupon
                 key={coupon.couponName + index}
                 couponName={coupon.couponName}
                 type={coupon.type}
@@ -103,15 +90,18 @@ function ShowCouponTable({ couponDto, contentTotalPrice }) {
                 contentTotalPrice={contentTotalPrice}
               />
             ))}
-        </tbody>
-      </CouponTable>
+        </CouponListSection>
+        <BottomSection>
+          <span>{'(쿠폰 적용은 주문시 가능)'}</span>
+        </BottomSection>
+      </div>
     );
   } else {
-    return <div>쿠폰이 없습니다.</div>;
+    return <div className="mb-8">쿠폰이 없습니다.</div>;
   }
 }
 
-function CouponTableRow({
+function ShowCoupon({
   couponName,
   type,
   discountValue,
@@ -122,7 +112,7 @@ function CouponTableRow({
   if (type === 'RATE') {
     description = discountValue + '%';
   } else if (type === 'AMOUNT') {
-    description = discountValue + '원';
+    description = (numberToMonetary(discountValue) || 0) + '원';
   } else {
     description = discountValue;
   }
@@ -130,20 +120,24 @@ function CouponTableRow({
   description = description + ' 할인쿠폰';
 
   return (
-    <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-        <span>{couponName}</span>
-      </td>
-      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-        {description}
-      </td>
-      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-        {numberToMonetary(discountPrice)}
-      </td>
-      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-        {numberToMonetary(contentTotalPrice - discountPrice) || 0}
-      </td>
-    </tr>
+    <CouponSection>
+      <CouponNameSection className="truncate font-bold text-xl text-black-600">
+        <p>{couponName}</p>
+      </CouponNameSection>
+      <CouponDescriptionSection>
+        <p>{description}</p>
+      </CouponDescriptionSection>
+      <CouponAmountSection>
+        <CouponDiscountValue>
+          {'할인금액 : ' + (numberToMonetary(discountPrice) || 0) + '원'}
+        </CouponDiscountValue>
+        <p>
+          {'적용금액 : ' +
+            (numberToMonetary(contentTotalPrice - discountPrice) || 0) +
+            '원'}
+        </p>
+      </CouponAmountSection>
+    </CouponSection>
   );
 }
 
@@ -161,28 +155,28 @@ const BackgroundDIM = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  /* 최상단 위치 */
   z-index: 999;
 
-  /* 중앙 배치 */
-  /* top, bottom, left, right 는 브라우저 기준으로 작동한다. */
-  /* translate는 본인의 크기 기준으로 작동한다. */
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 
-  /* 모달창 디자인 */
   background-color: ${ThemeGray5};
   border: 1px solid black;
   border-radius: 8px;
 
-  /* 모달창 크기 */
-  @media (max-width: 1024px) {
-    width: 90%;
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 767px) {
+    max-width: 400px;
+    width: 100%;
   }
-  @media (min-width: 1024px) {
-    width: 800px;
+  @media (max-width: 767px) {
+    max-width: 400px;
+    width: 100%;
+    height: 490px;
   }
 `;
 
@@ -196,22 +190,90 @@ const DetailSection = styled.div`
 `;
 
 const ModalTitleSection = styled.div`
-  margin: 0 30px;
+  width: 80%;
+  padding: 10px;
+  margin: 0 auto;
   background-color: ${ThemeWhite};
   font-size: 1.5rem;
   font-weight: bolder;
+  border: 1px solid ${ThemeGray2};
   border-radius: 1rem;
 `;
 
 const ModalTableSection = styled.div`
-  margin: 30px 0;
+  margin: 30px 0 0 0;
 `;
 
-const CouponTable = styled.table`
-  margin: 5%;
+const CouponListSection = styled.div`
+  margin: auto;
+  margin-bottom: 0;
   width: 90%;
+
   text-align: center;
   border-radius: 10px;
-  max-height: 400px;
+  border: 1px solid ${ThemeGray2};
   overflow: auto;
+
+  background-color: ${ThemeWhite};
+
+  @media (min-width: 767px) {
+    height: 400px;
+  }
+  @media (max-width: 767px) {
+    height: 300px;
+  }
+`;
+
+const CouponSection = styled.div`
+  text-align: left;
+  margin: 10px;
+  padding: 10px 30px;
+  border: 1px solid ${ThemeGray4};
+  border-radius: 20px;
+  background-color: white;
+`;
+
+const CouponNameSection = styled.div`
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-all;
+  font-weight: 700;
+  color: ${MainBlue};
+`;
+
+const CouponDescriptionSection = styled.div`
+  word-break: break-all;
+  font-weight: 700;
+`;
+
+const CouponAmountSection = styled.div`
+  font-size: small;
+  color: ${ThemeGray1};
+  @media (min-width: 1024px) {
+    display: flex;
+    margin-top: 5px;
+    justify-content: center;
+  }
+  @media (max-width: 1024px) {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
+const CouponDiscountValue = styled.p`
+  @media (min-width: 1024px) {
+    padding-right: 10px;
+    margin-right: 10px;
+    border-right: 1px solid ${ThemeGray2};
+  }
+`;
+
+const BottomSection = styled.div`
+  text-align: right;
+  font-size: smaller;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 20px;
 `;

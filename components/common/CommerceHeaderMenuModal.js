@@ -1,44 +1,54 @@
 import Link from 'next/link';
-import styled from '@emotion/styled';
-import CloseButton from '@components/input/CloseButton';
-import { LINKS } from '@utils/constants/links';
-import { Blue, LineBlue } from '@components/input/Button';
-import { ICON_GIFT } from '@utils/constants/icons';
-import { ICON_BASKET } from '../../utils/constants/icons';
 import { useRouter } from 'next/router';
+import styled from '@emotion/styled';
+import { LINKS } from '@utils/constants/links';
+import { ICON_GIFT } from '@utils/constants/icons';
+import { ICON_BASKET } from '@utils/constants/icons';
+import { ThemeGray1 } from '@utils/constants/themeColor';
+import CloseButton from '@components/input/CloseButton';
+import { Blue, LineBlue } from '@components/input/Button';
 
-export default function CommerceHeaderMenuModal({ closeModalFunc, token }) {
+export default function CommerceHeaderMenuModal({
+  closeModalFunc,
+  token,
+  setToken,
+}) {
+  const router = useRouter();
   const btnCss = { width: '100%' };
 
-  const router = useRouter();
+  const signout = () => {
+    if (confirm('로그아웃 하시겠습니까?')) {
+      localStorage.clear();
+      setToken('');
+      alert('로그아웃 되었습니다.');
+      router.push(LINKS.MAIN);
+    }
+  };
 
-  function CheckTocken({ token }) {
-    if (token) {
+  function MainMenu() {
+    return (
+      <ul>
+        <ShowLinkList
+          href={LINKS.PRODUCT}
+          imgSrc={ICON_BASKET}
+          name={'스토어'}
+          isMain={true}
+        />
+        <ShowLinkList
+          href={LINKS.EVENT}
+          imgSrc={ICON_GIFT}
+          name={'이벤트'}
+          isMain={true}
+        />
+      </ul>
+    );
+  }
+
+  function TopButton({ token }) {
+    console.log(token);
+    if (token === '' || token === null) {
       return (
-        <MainButtonSection>
-          <ButtonSection>
-            <LineBlue
-              buttonText={'마이페이지'}
-              css={btnCss}
-              onClickFunc={() => {
-                router.push(LINKS.MYPAGE);
-              }}
-            />
-          </ButtonSection>
-          <ButtonSection>
-            <Blue
-              buttonText={'로그아웃'}
-              css={btnCss}
-              onClickFunc={() => {
-                router.push(LINKS.SIGNOUT);
-              }}
-            />
-          </ButtonSection>
-        </MainButtonSection>
-      );
-    } else {
-      return (
-        <MainButtonSection>
+        <TopButtonList>
           <ButtonSection>
             <LineBlue
               buttonText={'로그인'}
@@ -57,22 +67,59 @@ export default function CommerceHeaderMenuModal({ closeModalFunc, token }) {
               }}
             />
           </ButtonSection>
-        </MainButtonSection>
+        </TopButtonList>
       );
     }
   }
 
-  function LinkListSection({ href, imgSrc, name }) {
-    return (
-      <li>
-        <Link href={href}>
-          <LinkSection className="hover:scale-110">
-            <img src={imgSrc} className="w-8" />
-            <span className="pl-2">{name}</span>
-          </LinkSection>
-        </Link>
-      </li>
-    );
+  function ShowLinkList({ href, imgSrc, name, isMain }) {
+    if (isMain) {
+      return (
+        <li>
+          <Link href={href}>
+            <MainLinkSection className="hover:scale-110">
+              <img src={imgSrc} className="w-8" />
+              <span className="pl-2">{name}</span>
+            </MainLinkSection>
+          </Link>
+        </li>
+      );
+    } else {
+      return (
+        <li>
+          <Link href={href}>
+            <SubLinkSection className="hover:scale-110">
+              <span className="pl-2">{name}</span>
+            </SubLinkSection>
+          </Link>
+        </li>
+      );
+    }
+  }
+
+  function SubMenu({ token }) {
+    if (token !== '' && token !== null) {
+      return (
+        <ul>
+          <ShowLinkList href={LINKS.CART} name={'장바구니'} isMain={false} />
+          <ShowLinkList
+            href={LINKS.MYPAGE}
+            name={'마이페이지'}
+            isMain={false}
+          />
+        </ul>
+      );
+    }
+  }
+
+  function BottomMenu({ token }) {
+    if (token !== '' && token !== null) {
+      return (
+        <a onClick={signout}>
+          <span>로그아웃</span>
+        </a>
+      );
+    }
   }
 
   return (
@@ -91,23 +138,17 @@ export default function CommerceHeaderMenuModal({ closeModalFunc, token }) {
             </TopLogoSection>
           </Link>
           <TopButtonSection className="top-button-section">
-            <CheckTocken token={token} />
+            <TopButton token={token} />
           </TopButtonSection>
         </TopSection>
         <MiddleSection className="middleSection">
-          <ul>
-            <LinkListSection
-              href={LINKS.PRODUCT}
-              imgSrc={ICON_BASKET}
-              name={'스토어'}
-            />
-            <LinkListSection
-              href={LINKS.EVENT}
-              imgSrc={ICON_GIFT}
-              name={'이벤트'}
-            />
-          </ul>
+          <MainMenu />
+          <br />
+          <SubMenu token={token} />
         </MiddleSection>
+        <BottomSection>
+          <BottomMenu token={token} />
+        </BottomSection>
       </CommerceHeaderMenuModalSection>
     </CommerceHeaderMenuModalBackgroundSection>
   );
@@ -155,7 +196,7 @@ const TopSection = styled.div`
   padding: 10px;
 `;
 
-const MainButtonSection = styled.div`
+const TopButtonList = styled.div`
   display: flex;
   padding: 0 2%;
   align-items: center;
@@ -174,10 +215,25 @@ const MiddleSection = styled.div`
   padding: 0px 20px;
 `;
 
-const LinkSection = styled.div`
+const BottomSection = styled.div`
+  margin-top: 20px;
+  margin-right: 20px;
+  text-align: right;
+  padding: 0px 20px;
+  font-size: small;
+  color: ${ThemeGray1};
+`;
+
+const MainLinkSection = styled.div`
   display: inline-flex;
   padding: 10px 10px;
   font-size: larger;
+`;
+
+const SubLinkSection = styled.div`
+  display: inline-flex;
+  padding: 10px 10px;
+  font-size: medium;
 `;
 
 const ButtonSection = styled.div`

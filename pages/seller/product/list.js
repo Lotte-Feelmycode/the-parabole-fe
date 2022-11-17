@@ -7,11 +7,13 @@ import { LINKS } from '@utils/constants/links';
 import SellerLayout from '@components/seller/SellerLayout';
 import Heading from '@components/input/Heading';
 import { SmallPink } from '@components/input/Button';
-import { isEmpty, numberToMonetary } from '@utils/functions';
+import { numberToMonetary } from '@utils/functions';
 import SortButton from '@components/input/SortButton';
 import { getState } from '@utils/functions';
 import { PRODUCT_STATE } from '@utils/constants/types';
 import { ColorBlue1 } from '@utils/constants/themeColor';
+import { NO_IMAGE } from '@utils/constants/images';
+import Link from 'next/link';
 
 export default function SellerProductList() {
   const router = useRouter();
@@ -184,10 +186,27 @@ export default function SellerProductList() {
                   className="h-24 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                 >
                   <td className="bg-gray-50 py-2 px-4 w-52 text-left">
-                    {product.productName}
+                    <div>
+                      <Link href={`/product/${product.productId}`}>
+                        {product.productName}
+                      </Link>
+                    </div>
                   </td>
-                  <td className="py-2 px-4 mx-2 w-16">
-                    <img src={product.productThumbnailImg} alt="상품"></img>
+                  <td className="bg-gray-50 py-2 px-4 w-52 text-left">
+                    <div
+                      style={{
+                        width: '100px',
+                        height: '100px',
+                        margin: 'auto',
+                      }}
+                    >
+                      <Link href={`/product/${product.productId}`}>
+                        <img
+                          src={product.productThumbnailImg || NO_IMAGE}
+                          alt="상품"
+                        ></img>
+                      </Link>
+                    </div>
                   </td>
                   <td className=" py-2 px-4  w-24">
                     {product.productCategory}
@@ -200,7 +219,7 @@ export default function SellerProductList() {
                   </td>
                   <td className=" py-2 px-4  w-24">
                     <Tags>
-                      {getState(PRODUCT_STATE, product.productStatus)}
+                      {getState(PRODUCT_STATE, product.productStatus) || "판매중"}
                     </Tags>
                   </td>
                 </tr>
@@ -220,7 +239,7 @@ export default function SellerProductList() {
             buttonText="등록하기"
             name="btnPost"
             onClickFunc={() => {
-              router.push('/seller/product/index');
+              router.push('/seller/product/new');
             }}
           />
         </Div>
