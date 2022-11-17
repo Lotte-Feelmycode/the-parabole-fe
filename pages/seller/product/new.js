@@ -115,13 +115,7 @@ export default function SellerProductNew() {
     if (productId === -1) {
       return;
     }
-    /*
-          productName: name,
-      productCategory: category,
-      productRemains: remain,
-      productPrice: price,
-      productThumbnailImg: '',
-      */
+ 
     if (isEmpty(name)) {
       alert('상품 명이 비어있습니다.');
       return;
