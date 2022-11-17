@@ -9,6 +9,7 @@ import { FRONT_BASE_URL, FRONT_DEPLOY_URL } from '@apis/api-config';
 import { LINKS } from '@utils/constants/links';
 import { AUTH_ERROR } from '@utils/constants/errors';
 import { isEmpty } from '@utils/functions';
+import { useEffect } from 'react';
 
 export default function Signin() {
   const router = useRouter();
@@ -23,6 +24,15 @@ export default function Signin() {
 
   const NAVER_REDIRECT_URI = FRONT_DEPLOY_URL + '/code/naver';
   const NAVER_AUTH_URI = `${process.env.NEXT_PUBLIC_NAVER_AUTH}?client_id=${process.env.NEXT_PUBLIC_NAVER_REST_API_KEY}&redirect_uri=${NAVER_REDIRECT_URI}&response_type=code&state=${process.env.NEXT_PUBLIC_NAVER_STATE}`;
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') !== null) {
+        alert('로그인 되어있어 접근할 수 없습니다.');
+        router.back();
+      }
+    }
+  }, []);
 
   function email_check(email) {
     var reg =
@@ -68,13 +78,12 @@ export default function Signin() {
             localStorage.setItem('authProvider', res.data.authProvider);
             localStorage.setItem('sellerId', res.data.sellerId);
             localStorage.setItem('token', res.data.token);
-
-            alert('로그인 성공');
+            alert('로그인 되었습니다.');
             router.push(LINKS.MAIN);
           }
         })
         .catch(function (error) {
-          alert('로그인 실패');
+          alert('로그인 실패. 다시 시도해주세요');
         });
     }
   }

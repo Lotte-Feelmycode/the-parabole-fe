@@ -78,4 +78,4 @@ export const ORDER_PAY_STATE = [
   { value: 'NAVER_PAY', name: '네이버페이' },
 ];
 
-export const PRODUCT_STATE = [{ value: 1, name: '판매 중' }];
+export const PRODUCT_STATE = [{ value: 0, name: '판매중'}, {value: 1, name: '판매중' }];

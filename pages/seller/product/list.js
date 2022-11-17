@@ -200,7 +200,7 @@ export default function SellerProductList() {
                   </td>
                   <td className=" py-2 px-4  w-24">
                     <Tags>
-                      {getState(PRODUCT_STATE, product.productStatus)}
+                      {getState(PRODUCT_STATE, product.productStatus) || "판매중"}
                     </Tags>
                   </td>
                 </tr>
@@ -220,7 +220,7 @@ export default function SellerProductList() {
             buttonText="등록하기"
             name="btnPost"
             onClickFunc={() => {
-              router.push('/seller/product/index');
+              router.push('/seller/product/new');
             }}
           />
         </Div>

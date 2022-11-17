@@ -77,13 +77,13 @@ export default function MyProfile({ headers }) {
           </LabelInputSection>
         </LabelSection>
         <LabelSection>
-          <LabelTitle>계정정보</LabelTitle>
+          <LabelTitle>휴대전화</LabelTitle>
           <LabelInputSection>
             <LargeInput
               type="text"
               attr={{ readOnly: true }}
               css={{ width: '100%' }}
-              value={userInfo.role || ''}
+              value={userInfo.phone || ''}
             />
           </LabelInputSection>
         </LabelSection>
@@ -105,16 +105,33 @@ const LabelSection = styled.div`
   display: flex;
   width: 90%;
   margin: 20px;
+  @media (min-width: 767px) {
+  }
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
 `;
 
 const LabelTitle = styled.span`
   margin: auto;
   font-size: 1.2rem;
   font-weight: bold;
-  width: 30%;
+  @media (min-width: 767px) {
+    width: 30%;
+  }
+  @media (max-width: 767px) {
+    width: 100%;
+    text-align: center;
+  }
 `;
 
 const LabelInputSection = styled.span`
   display: inline-flex;
-  width: 70%;
+  @media (min-width: 767px) {
+    width: 70%;
+  }
+  @media (max-width: 767px) {
+    margin-top: 5px;
+    width: 100%;
+  }
 `;

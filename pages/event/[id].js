@@ -2,21 +2,36 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { GET_DATA, POST_DATA } from '@apis/defaultApi';
-import { getDateTime } from '@utils/functions';
-import EventPrize from '@components/event/eventPrize';
 import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead';
+import { useGetToken } from '@hooks/useGetToken';
 
 export default function EventDetail() {
-  //TODO userId 객체 받아오기
-  const userId = 3;
-
   const [eventInfo, setEventInfo] = useState({});
   const [eventImage, setEventImage] = useState({});
   const router = useRouter();
   const [eventId, setEventId] = useState(router.query.id);
+  const [storeInfo, setStoreInfo] = useState();
+
   const [eventPrizes, setEventPrizes] = useState([]);
   const [applyStatus, setApplyStatus] = useState('');
+
+  const [headers, setHeaders] = useState();
+  useEffect(() => {
+    let getHeaders = useGetToken();
+    setHeaders(getHeaders);
+
+    if (localStorage.getItem('userId')) {
+      POST_DATA('/event/participant/check', { eventId }, useGetToken()).then(
+        (res) => {
+          console.log('이벤트 응모 여부', res);
+          if (!res) {
+            setApplyStatus('disabled');
+          }
+        },
+      );
+    }
+  }, []);
 
   useEffect(() => {
     const eventId = router.query.id;
@@ -28,24 +43,14 @@ export default function EventDetail() {
         setEventImage(res.eventImage);
         setEventPrizes(res.eventPrizes);
 
-        if (res.status !== 1) {
-          setApplyStatus('disabled');
-        }
+        GET_DATA('/seller', { sellerId: res.sellerId }).then((res) => {
+          if (res) {
+            setStoreInfo(res);
+          }
+        });
       }
     });
   }, [router.query]);
-
-  useEffect(() => {
-    POST_DATA('/event/participant/check', {
-      userId,
-      eventId,
-    }).then((res) => {
-      if (!res) {
-        setApplyStatus('disabled');
-      }
-    });
-  }, []);
-
   return (
     <CommerceLayout>
       <SiteHead title={eventInfo.title} description={eventInfo.descript} url={`https://theparabole.shop/${eventId}`}/>

@@ -12,75 +12,16 @@ export default function CartContentDetail({
   cartCheckBoxChange,
   cartInfoChange,
 }) {
-  const router = useRouter();
   const headers = useContext(LoginHeaderContext);
-
-  const ProductCheckSection = styled.div`
-    position: relative;
-    display: block;
-    flex: 0 0 auto;
-    margin-right: 5px;
-    padding: 5px;
-    width: 20px;
-  `;
-
-  const ProductDetailSection = styled.div`
-    position: relative;
-    display: flex;
-    flex: 1 0 auto;
-
-    @media (max-width: 1024px) {
-      flex-direction: column;
-      width: min-content;
-    }
-    @media (min-width: 1024px) {
-      flex-direction: row;
-    }
-  `;
-
-  const ProductDeleteSection = styled.div`
-    position: relative;
-    flex: 0 0 auto;
-    padding-left: 5px;
-    display: block;
-    margin-left: auto;
-    width: 20px;
-
-    &:hover {
-      cursor: pointer;
-    }
-  `;
-
-  const CartDetailSection = styled.div`
-    padding-top: 5px;
-    padding-bottom: 10px;
-
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
-    display: flex;
-
-    @media (max-width: 1024px) {
-    }
-    @media (min-width: 1024px) {
-      height: 100px;
-    }
-  `;
-
-  const deleteCartItem = ({ input }) => {
-    const CartItemDeleteRequestDto = {
-      cartItemId: input,
-    };
-    if (confirm('장바구니에서 삭제하시겠습니까?')) {
-      DELETE(`/cart/delete`, CartItemDeleteRequestDto, headers);
-      router.reload();
-    }
-  };
 
   return (
     <div>
       {cartItemDtoList &&
         cartItemDtoList.map((item) => (
-          <CartDetailSection key={item.cartItemId}>
+          <CartDetailSection
+            className="cart-detail-section"
+            key={item.cartItemId}
+          >
             <ProductCheckSection className="product-check-section">
               <input
                 type="checkbox"
@@ -125,3 +66,63 @@ export default function CartContentDetail({
     </div>
   );
 }
+
+const ProductCheckSection = styled.div`
+  position: relative;
+  display: block;
+  flex: 0 0 auto;
+  margin-right: 5px;
+  padding: 5px;
+  width: 20px;
+`;
+
+const ProductDetailSection = styled.div`
+  position: relative;
+  display: flex;
+  flex: 1 0 auto;
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    width: min-content;
+  }
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
+`;
+
+const ProductDeleteSection = styled.div`
+  position: relative;
+  flex: 0 0 auto;
+  padding-left: 5px;
+  display: block;
+  margin-left: auto;
+  width: 20px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const CartDetailSection = styled.div`
+  padding-top: 5px;
+  padding-bottom: 10px;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  display: flex;
+
+  @media (max-width: 1024px) {
+  }
+  @media (min-width: 1024px) {
+    height: 100px;
+  }
+`;
+
+const deleteCartItem = ({ input }) => {
+  const CartItemDeleteRequestDto = {
+    cartItemId: input,
+  };
+  if (confirm('장바구니에서 삭제하시겠습니까?')) {
+    DELETE(`/cart/delete`, CartItemDeleteRequestDto, headers);
+    router.reload();
+  }
+};
