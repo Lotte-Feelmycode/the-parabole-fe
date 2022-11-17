@@ -159,7 +159,7 @@ export default function ProductDetail() {
 
   return (
     <CommerceLayout>
-      <SiteHead title={product.productName} />
+      <SiteHead title={product.productName} url={`https://theparabole.shop/${productId}`}/>
       <section className="flex min-h-screen flex-col text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">
           {/* <span>상품 상세 화면</span> */}
