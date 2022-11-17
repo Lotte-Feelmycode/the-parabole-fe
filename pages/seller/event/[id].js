@@ -122,7 +122,7 @@ export default function EventDetail() {
                 event.eventPrizes.map((eventPrize, index) => (
                   <div
                     key={index}
-                    className="text-gray-900 border-1 border py-2 px-8 mb-4 h-full flex sm:flex-row flex-col items-center sm:justify-start justify-center text-center sm:text-left"
+                    className="text-gray-900 border-1 border py-2 px-4 mb-4 h-full flex sm:flex-row flex-col items-center sm:justify-start justify-center text-center sm:text-left"
                   >
                     {eventPrize.prizeType === 'PRODUCT' ? (
                       <>
@@ -131,7 +131,7 @@ export default function EventDetail() {
                           className="flex-shrink-0 rounded-lg w-24 h-24 object-cover object-center sm:mb-0 mb-4"
                           src={eventPrize.productImg || NO_IMAGE}
                         />
-                        <div className="flex-grow sm:pl-8">
+                        <div className="flex-grow sm:pl-4">
                           <h2 className="title-font font-bold text-lg text-gray-900">
                             {eventPrize.productName}
                           </h2>
@@ -140,7 +140,7 @@ export default function EventDetail() {
                           </h3>
                           <p className="mb-4">수량 {eventPrize.stock}개</p>
                         </div>
-                        <div className="mb-4 justify-self-end rounded-full py-2 px-4 bg-pink-400 text-white font-bold">
+                        <div className="mb-4 justify-self-end rounded-full py-2 px-2 bg-pink-400 text-white">
                           상품
                         </div>
                       </>
@@ -151,7 +151,7 @@ export default function EventDetail() {
                           className="flex-shrink-0 rounded-lg w-28 h-28 object-contain sm:mb-0 mb-4"
                           src={ICON_COUPON}
                         />
-                        <div className="flex-grow sm:pl-8">
+                        <div className="flex-grow sm:pl-4">
                           <h2 className="title-font font-bold text-lg text-gray-900">
                             {eventPrize.couponName}
                           </h2>
@@ -160,7 +160,7 @@ export default function EventDetail() {
                           </h3>
                           <p className="mb-4">수량 {eventPrize.stock}개</p>
                         </div>
-                        <div className="mb-4 justify-self-end rounded-full py-2 px-4 bg-pink-400 text-white font-bold">
+                        <div className="mb-4 justify-self-end rounded-full py-2 px-3 bg-pink-400 text-white">
                           쿠폰
                         </div>
                       </>
