@@ -173,22 +173,16 @@ export default function SellerOrderList() {
       <table className="w-full text-m text-center">
         <thead className="text-base text-black uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr className="h-14">
-            <th scope="col" className="py-3 px-12 w-52 bg-gray-50">
+            <th scope="col" className="py-3 px-12 w-60 bg-gray-50">
               <div className="flex items-center justify-center">
                 주문상품
                 <SortButton onClickFunc={(e) => sortListByName(e)} />
               </div>
             </th>
-            <th scope="col" className="p-4 w-18">
+            <th scope="col" className="p-4 w-20">
               상품 이미지
             </th>
-            <th scope="col" className="py-3 px-2 w-20">
-              할인가격
-            </th>
-            <th scope="col" className="py-3 px-2 w-20">
-              주문가격
-            </th>
-            <th scope="col" className="py-3 px-2 w-24">
+            <th scope="col" className="py-3 px-2 w-40">
               <div className="flex justify-center items-center">
                 주문수량
                 <SortButton onClickFunc={(e) => sortListByOrders(e)} />
@@ -196,14 +190,14 @@ export default function SellerOrderList() {
             </th>
             <th scope="col" className="py-3 px-2 w-24">
               <div className="flex justify-center items-center">
-                결제금액
+                주문 총 금액
                 <SortButton onClickFunc={(e) => sortListByTotal(e)} />
               </div>
             </th>
-            <th scope="col" className="py-3 px-6 w-24">
-              상품재고
+            <th scope="col" className="py-3 px-6 w-40">
+              상품 재고
             </th>
-            <th scope="col" className="py-3 px-4 w-24">
+            <th scope="col" className="py-3 px-4 w-40">
               고객정보
             </th>
             <th scope="col" className="py-3 px-4 w-24">
@@ -211,9 +205,6 @@ export default function SellerOrderList() {
                 주문상태
                 <SortButton onClickFunc={(e) => sortListByState(e)} />
               </div>
-            </th>
-            <th scope="col" className="py-3 px-4 w-24">
-              결제수단
             </th>
           </tr>
         </thead>
@@ -225,8 +216,6 @@ export default function SellerOrderList() {
             <th scope="row" className="py-3 px-6 text-base">
               Total
             </th>
-            <td />
-            <td />
             <td colSpan={4} />
             <td className="text-right text-red-600 py-3 px-6">
               총 주문수 : {orderList.length}

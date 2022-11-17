@@ -5,6 +5,8 @@ import CouponList from '@components/coupon/CouponList';
 import { useGetToken } from '@hooks/useGetToken';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Heading from '@components/input/Heading';
+import { Divider } from '@mui/material';
 
 export default function SellersCouponList() {
   const router = useRouter();
@@ -27,13 +29,10 @@ export default function SellersCouponList() {
   return (
     <SellerLayout>
       <SiteHead title="Seller's Coupon List" />
-      <section className="flex min-h-screen flex-col text-gray-600 body-font">
-        <div className="container px-5 py-24 mx-auto">
-          <h1 className={styles.section}>THE PARABOLE</h1>
-          <h2 className={styles.section}>판매자가 등록한 쿠폰목록</h2>
-          <CouponList />
-        </div>
-      </section>
+      <Heading title="쿠폰 목록" type="h1" />
+      <div className="py-2" />
+      <Divider />
+      <CouponList />
     </SellerLayout>
   );
 }

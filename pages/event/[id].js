@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-import { GET_DATA, POST_DATA } from '@apis/defaultApi';
+import { GET_DATA } from '@apis/defaultApi';
 import CommerceLayout from '@components/common/CommerceLayout';
 import EventInfo from '@components/event/EvenInfo';
 import EventPrizeContainer from '@components/event/EventPrizeContainer';
-import { useGetToken } from '@hooks/useGetToken';
 import SiteHead from '@components/common/SiteHead';
+import { useGetToken } from '@hooks/useGetToken';
 
 export default function EventDetail() {
   const [eventInfo, setEventInfo] = useState({});
@@ -16,23 +16,11 @@ export default function EventDetail() {
   const [storeInfo, setStoreInfo] = useState();
 
   const [eventPrizes, setEventPrizes] = useState([]);
-  const [applyStatus, setApplyStatus] = useState('');
 
   const [headers, setHeaders] = useState();
   useEffect(() => {
     let getHeaders = useGetToken();
     setHeaders(getHeaders);
-
-    if (localStorage.getItem('userId')) {
-      POST_DATA('/event/participant/check', { eventId }, useGetToken()).then(
-        (res) => {
-          console.log('이벤트 응모 여부', res);
-          if (!res) {
-            setApplyStatus('disabled');
-          }
-        },
-      );
-    }
   }, []);
 
   useEffect(() => {
@@ -99,16 +87,9 @@ export default function EventDetail() {
           eventPrizes={eventPrizes}
           eventType={eventInfo.type}
           eventStatus={eventInfo.status}
-          applyStatus={applyStatus}
           headers={headers}
         />
       </main>
     </CommerceLayout>
   );
 }
-
-const EventPrizeListSection = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 10px;
-`;
