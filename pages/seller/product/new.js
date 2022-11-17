@@ -115,6 +115,7 @@ export default function SellerProductNew() {
     if (productId === -1) {
       return;
     }
+
     if (isEmpty(name)) {
       alert('상품 명이 비어있습니다.');
       return;
