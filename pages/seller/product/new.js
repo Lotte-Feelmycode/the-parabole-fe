@@ -100,7 +100,7 @@ export default function SellerProductNew() {
       .post(
         `http://localhost:8080/api/v1/s3?productId=${productId}`,
         formData,
-        { headers: { 'Content-Type': 'multipart/form-data' } }, // Content-Type을 반드시 이렇게 하여야 한다.
+        { headers: { 'Content-Type': 'multipart/form-data' } },
       )
       .then((res) => {
         router.push({
