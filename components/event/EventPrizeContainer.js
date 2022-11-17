@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Blue } from '@components/input/Button';
 import { POST } from '@apis/defaultApi';
 import { ICON_COUPON } from '@utils/constants/icons';
@@ -6,17 +6,25 @@ import styled from '@emotion/styled';
 import Heading from '@components/input/Heading';
 import { getDate } from '@utils/functions';
 import { NO_IMAGE } from '@utils/constants/images';
+import { POST_DATA } from '@apis/defaultApi';
 
 export default function EventPrizeContainer({
   eventId,
   eventPrizes,
   eventType,
   eventStatus,
-  applyStatus,
   headers,
 }) {
-  const [applySts, setApplySts] = useState(applyStatus);
+  const [applySts, setApplySts] = useState();
   const [status, setStatus] = useState(eventStatus || 0);
+
+  useEffect(() => {
+    POST_DATA('/event/participant/check', { eventId }, headers).then((res) => {
+      if (!res) {
+        setApplySts('disabled');
+      }
+    });
+  }, []);
 
   function applyEvent(eventId, eventPrizeId, prizeName) {
     if (confirm(prizeName + '에 응모하시겠습니까?')) {
@@ -45,10 +53,10 @@ export default function EventPrizeContainer({
   function ProductCard({ prize }) {
     return (
       <div className="flex flex-col max-h-96 place-items-center">
-          <img
-            className="justify-self-center prize-img w-48 max-h-48 content-center mb-4"
-            src={prize.productImg || NO_IMAGE}
-          />
+        <img
+          className="justify-self-center prize-img w-48 max-h-48 content-center mb-4"
+          src={prize.productImg || NO_IMAGE}
+        />
         <div className="w-60">
           <h4 className="text-black text-2xl text-center font-bold leading-snug tracking-tight mb-3">
             {prize.productName || '상품명'}
@@ -166,24 +174,6 @@ export default function EventPrizeContainer({
     </>
   );
 }
-
-const ImgSection = styled.div`
-  overflow: hidden;
-  width: 100%;
-  padding: 10px;
-  text-align: center;
-  justify-self: center;
-
-`;
-
-const EventPrizeProductImg = styled.img`
-  overflow: hidden;
-  object-fit: cover;
-  object-position: center;
-  min-width: 200px;
-  aspect-ratio: 1 / 1;
-  border-radius: 20px;
-`;
 
 const EventPrizeCouponImg = styled.img`
   padding: 23px 0;
