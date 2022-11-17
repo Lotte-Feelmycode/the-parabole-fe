@@ -26,4 +26,4 @@ if (host === 'domain') {
 }
 
 export const FRONT_BASE_URL = `${frontendHost}`;
-export const FRONT_DEPLOY_URL = `http://theparabole.shop`;
+export const FRONT_DEPLOY_URL = `https://theparabole.shop`;
