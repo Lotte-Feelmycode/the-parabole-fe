@@ -9,7 +9,7 @@ import CustomSwiper from '@components/common/CustomSwiper';
 export default function EventHome() {
   return (
     <CommerceLayout>
-      <SiteHead title="EventHome" />
+      <SiteHead title="이벤트" url="https://theparabole.shop/event" />
       <div className="container py-12">
         <CustomSwiper />
         <Row>

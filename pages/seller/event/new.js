@@ -441,7 +441,7 @@ export default function Event() {
     e.preventDefault();
 
     let fromDTM = e.target.value;
-    setStartAt(fromDTM.substr(0, 13) + ':00');
+    setStartAt(fromDTM.substr(0, 13) + ':00:00');
 
     if (eventType === 'FCFS') {
       setEndAt(fromDTM.substr(0, 13) + ':50:00');
@@ -464,7 +464,7 @@ export default function Event() {
   const endAtChangeHandler = (e) => {
     e.preventDefault();
     let toDTM = e.target.value;
-    setEndAt(toDTM.substr(0, 13) + ':00');
+    setEndAt(toDTM.substr(0, 13) + ':00:00');
   };
 
   const showModal = (e) => {
@@ -641,8 +641,8 @@ export default function Event() {
     const eventParams = {
       createdBy: 'SELLER',
       type: eventType,
-      startAt: startAt + ':00',
-      endAt: endAt + ':00',
+      startAt: startAt,
+      endAt: endAt,
       title: title,
       descript: descript,
       eventPrizeCreateRequestDtos: copyArr,
@@ -658,8 +658,9 @@ export default function Event() {
             'Content-Type': 'multipart/form-data',
             Authorization: token,
           },
-        }) // Content-Type을 반드시 이렇게 하여야 한다.
+        }) 
         .then((res) => {
+          console.log(res);
           if (res) {
             alert('이벤트 등록이 완료되었습니다.');
             router.push(
