@@ -31,6 +31,8 @@ export const ICON_WARNING_SIGN = require('@assets/icon-warning-sign.svg')
 export const ICON_MENU = require('@assets/icon-menu.svg').default.src;
 export const ICON_GIFT = require('@assets/icon-gift.svg').default.src;
 export const ICON_BASKET = require('@assets/icon-basket.svg').default.src;
+export const ICON_GITHUB = require('@assets/icon-github.svg').default.src;
+export const ICON_NOTION = require('@assets/icon-notion.svg').default.src;
 
 // img
 export const ICON_COUPON = require('@assets/coupon.svg').default.src;
