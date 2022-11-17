@@ -10,7 +10,7 @@ export default function Footer() {
   return (
     <>
       <footer className="text-gray-600 md:p-10 sm:p-4 body-font bg-gray-50">
-        <div className="container flex flex-wrap text-left sm:pt-4 text-center order-first">
+        <div className="container mx-auto flex flex-wrap text-left order-first">
           <DescriptionSection className="px-4 text-left">
             <a className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
               <span className="text-xl">Parabole</span>
