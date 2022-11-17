@@ -12,8 +12,7 @@ import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead.js';
 import { SmallLineWhite, LineBlue, Blue } from '@components/input/Button';
 import Input from '@components/input/Input';
-import CouponListModal from '@components/coupon/CouponListModal';
-import { NO_IMAGE } from '@utils/constants/images';
+import CouponListModal from '@components/coupon/StoreCouponListModal';
 
 export default function ProductDetail() {
   const router = useRouter();

@@ -2,7 +2,7 @@ import { Blue } from '@components/input/Button';
 import { ICON_SHOP } from '@utils/constants/icons';
 import { useEffect, useState } from 'react';
 import { GET_DATA } from '@apis/defaultApi';
-import CouponListModal from '@components/coupon/CouponListModal';
+import CouponListModal from '@components/coupon/StoreCouponListModal';
 import styled from '@emotion/styled';
 
 export default function StoreInfo({ total, storeId, storeName }) {

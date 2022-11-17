@@ -1,12 +1,16 @@
 import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
-import { MainBlue, ThemeBlueWhite } from '@utils/constants/themeColor';
+import {
+  MainBlue,
+  ThemeBlueWhite,
+  ThemeGray5,
+} from '@utils/constants/themeColor';
 import { POST } from '@apis/defaultApi';
 import { numberToMonetary, getDateShort, isEmpty } from '@utils/functions';
 import { useRouter } from 'next/router';
 import CloseButton from '@components/input/CloseButton';
 
-export default function CouponListModal({
+export default function ProductCouponListModal({
   setModalState,
   couponList,
   storeName,
@@ -83,10 +87,10 @@ export default function CouponListModal({
               <CloseButton />
             </a>
           </CloseButtonSection>
-          <div className="text-center mt-2 md:mt-8 font-bold text-7xl text-black-600">
+          <div className="text-center md:mt-8 font-bold text-7xl text-black-600">
             💌
           </div>
-          <div className="text-center px-2 mt-4 md:mt-8 font-bold text-2xl text-black-600">
+          <div className="text-center px-2 mt-2 md:mt-8 font-bold text-2xl text-black-600">
             {storeName}에서 도착한 쿠폰을 확인해보세요!
           </div>
           <div className="text-center text-gray-500 px-2 my-2">
@@ -118,7 +122,7 @@ export default function CouponListModal({
                         className="w-full"
                         onClick={(e) => setCoupon(e, coupon.couponId)}
                       >
-                        <div className="flex flex-col p-4 text-left">
+                        <div className="flex flex-col p-1 md:p-4 text-left">
                           <CouponNameSection className="truncate font-bold text-xl text-black-600">
                             <span>{coupon.name}</span>
                           </CouponNameSection>
@@ -128,7 +132,7 @@ export default function CouponListModal({
                           <div className="truncate pl-2 pt-1">
                             {coupon.detail}
                           </div>
-                          <div className="text-sm text-gray-400 text-right">
+                          <div className="text-sm text-gray-700 text-right">
                             {getDateShort(coupon.expiresAt) + ' 까지 사용가능'}
                           </div>
                         </div>
@@ -140,7 +144,7 @@ export default function CouponListModal({
                         className="w-full"
                         onClick={(e) => setCoupon(e, coupon.couponId)}
                       >
-                        <div className="flex flex-col p-4 text-left">
+                        <div className="flex flex-col p-1 md:p-4 text-left">
                           <CouponNameSection className="truncate font-bold text-xl">
                             <span>{coupon.name}</span>
                           </CouponNameSection>
@@ -150,7 +154,7 @@ export default function CouponListModal({
                           <div className="truncate pl-2 pt-1">
                             {coupon.detail}
                           </div>
-                          <div className="text-sm text-gray-400 text-right">
+                          <div className="text-sm text-gray-700 text-right">
                             {getDateShort(coupon.expiresAt) + ' 까지 사용가능'}
                           </div>
                         </div>
@@ -194,7 +198,7 @@ const ModalContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 
-  background-color: #ffffff;
+  background-color: white;
   border: 0px;
   border-radius: 20px;
 
@@ -233,7 +237,7 @@ const ModalTableSection = styled.div`
   }
   @media (max-width: 767px) {
     max-height: 410px;
-    height: 42%;
+    height: 43%;
   }
 `;
 
@@ -242,6 +246,7 @@ const SelectedCouponSection = styled.div`
 `;
 
 const NoneSelectedCouponSection = styled.div`
+  background-color: white;
   &:hover {
     background-color: ${ThemeBlueWhite};
   }
