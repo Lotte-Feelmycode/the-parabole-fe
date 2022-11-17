@@ -41,35 +41,42 @@ export default function EventInfo({ eventInfo, eventImage, storeInfo }) {
                     </p>
                   </div>
                   <div className="flex justify-center item-center flex-col">
-                    <table>
+                    <InfoTable>
                       <tbody>
                         <tr>
-                          <th className="w-32 px-2 text-left">
+                          <InfoTableTh className="text-left">
                             <p className="text-left text-l md:text-xl text-bold text-gray-900">
                               응모기간
                             </p>
-                          </th>
+                          </InfoTableTh>
                           <td>
-                            <p className="text-left text-l md:text-xl text-bold text-gray-900">
-                              {getDateTimeShort(eventInfo.startAt)} -{' '}
-                              {getDateTimeShort(eventInfo.endAt)}{' '}
-                            </p>
+                            <div className="flex">
+                              <p className="contents text-left text-l md:text-xl text-bold text-gray-900">
+                                {getDateTimeShort(eventInfo.startAt)}
+                              </p>
+                              <p className="contents text-left text-l md:text-xl text-bold text-gray-900">
+                                {' - '}
+                              </p>
+                              <p className="contents text-left text-l md:text-xl text-bold text-gray-900">
+                                {getDateTimeShort(eventInfo.endAt)}
+                              </p>
+                            </div>
                           </td>
                         </tr>
                         <tr>
-                          <th className="w-32 px-2 text-left">
+                          <InfoTableTh className="text-left">
                             <p className="text-left text-l md:text-xl text-bold text-gray-900">
                               당첨자 발표
                             </p>
-                          </th>
+                          </InfoTableTh>
                           <td>
-                            <p className="text-left text-l md:text-xl text-bold text-gray-900">
+                            <p className="text-center text-l md:text-xl text-bold text-gray-900">
                               {getDate(eventInfo.endAt)}
                             </p>
                           </td>
                         </tr>
                       </tbody>
-                    </table>
+                    </InfoTable>
                   </div>
                 </div>
                 <p className="mb-8" data-aos="zoom-y-out" data-aos-delay="150">
@@ -104,6 +111,24 @@ export default function EventInfo({ eventInfo, eventImage, storeInfo }) {
     </>
   );
 }
+
+const InfoTable = styled.table`
+  @media (min-width: 767px) {
+    width: 400px;
+  }
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+`;
+
+const InfoTableTh = styled.th`
+  @media (min-width: 767px) {
+    width: 31%;
+  }
+  @media (max-width: 767px) {
+    width: 33%;
+  }
+`;
 
 const H1 = styled.div`
   font-family: 'AppleSDGothicNeoB';

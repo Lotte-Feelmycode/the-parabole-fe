@@ -4,6 +4,7 @@ import { GET_DATA } from '@apis/defaultApi';
 import { ThemeGray4, ThemeGray1, MainBlue } from '@utils/constants/themeColor';
 import { APPLY_TYPE } from '@utils/constants/types';
 import { getDateTimeShort } from '@utils/functions';
+import { NO_EVENT_BANNER_IMAGE } from '@utils/constants/images';
 
 export default function EventApplyList({ headers }) {
   const [total, setTotal] = useState([]);
@@ -20,18 +21,47 @@ export default function EventApplyList({ headers }) {
 
   function EventApply({ applyInfo }) {
     function EventStatus({ status }) {
-      var statusString = status;
-      if (1 === status) statusString = '진행중';
-      else if (2 === status) statusString = '종료';
-
-      return (
-        <>
-          <EventApplySection>{statusString}</EventApplySection>
-        </>
-      );
+      if (1 === status) {
+        return (
+          <>
+            <EventOnAirState>{'진행중'}</EventOnAirState>
+          </>
+        );
+      } else if (2 === status) {
+        return (
+          <>
+            <EventEndState className="text-black">{'종료'}</EventEndState>
+          </>
+        );
+      } else {
+        return (
+          <>
+            <EventEndState>{status}</EventEndState>
+          </>
+        );
+      }
     }
 
-    const EventApplySection = styled.div`
+    const EventOnAirState = styled.div`
+      margin-left: auto;
+      color: ${MainBlue};
+      border-radius: 2rem;
+      display: initial;
+      font-weight: bolder;
+      font-size: 16px;
+      padding-right: 10px;
+    `;
+
+    const EventEndState = styled.div`
+      margin-left: auto;
+      border-radius: 2rem;
+      display: initial;
+      font-weight: bolder;
+      font-size: 16px;
+      padding-right: 10px;
+    `;
+
+    const EventStateStringSection = styled.div`
       border-radius: 2rem;
       color: ${MainBlue};
       display: initial;
@@ -42,22 +72,26 @@ export default function EventApplyList({ headers }) {
     return (
       <EventSection className="col-12 col-md-10 offset-md-1 col-lg-6 offset-lg-0">
         <EventImgSection className="img-section">
-          <EventImg loading="lazy" src={applyInfo.eventImg} />
+          <EventImg
+            className="event-img"
+            loading="lazy"
+            src={applyInfo.eventImg || NO_EVENT_BANNER_IMAGE}
+          />
         </EventImgSection>
         <EventStatusSection className="status-section">
           <EventTitleSection className="title-section">
             {applyInfo.eventTitle}
           </EventTitleSection>
           <EventDetailSection>
-            <EventStatus status={applyInfo.status} />
             <ApplyTime>
               {getDateTimeShort(applyInfo.startAt)}
               {' ~ '}
               {getDateTimeShort(applyInfo.endAt)}
             </ApplyTime>
+            <EventStatus status={applyInfo.status} />
           </EventDetailSection>
           <EventWinnerApplySection>
-            <EventApplySection>추첨 여부</EventApplySection>
+            <EventStateStringSection>추첨 여부</EventStateStringSection>
             <EventWinnerApplyStatus>
               {applyInfo.winnerStatus}
             </EventWinnerApplyStatus>
@@ -66,7 +100,7 @@ export default function EventApplyList({ headers }) {
             <>
               {applyInfo.prizeName != null ? (
                 <>
-                  <EventApplySection>응모 상품</EventApplySection>
+                  <EventStateStringSection>응모 상품</EventStateStringSection>
                   <EventWinnerPrizeName>
                     {applyInfo.prizeName}
                   </EventWinnerPrizeName>
@@ -156,7 +190,6 @@ export default function EventApplyList({ headers }) {
 
   const ApplyTime = styled.div`
     font-size: 13px;
-    margin-left: auto;
     padding-right: 10px;
     color: ${ThemeGray1};
   `;
