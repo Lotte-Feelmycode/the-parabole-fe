@@ -40,7 +40,7 @@ export default function EventApplyList({ headers }) {
     `;
 
     return (
-      <EventSection className="justify-center col-12 col-md-10 offset-md-1 col-lg-6 offset-lg-0">
+      <EventSection className="col-12 col-md-10 offset-md-1 col-lg-6 offset-lg-0">
         <EventImgSection className="img-section">
           <EventImg loading="lazy" src={applyInfo.eventImg} />
         </EventImgSection>
@@ -105,11 +105,11 @@ export default function EventApplyList({ headers }) {
     border: 1px solid ${ThemeGray4};
     border-radius: 10px;
     @media (min-width: 767px) {
-      margin: 10px;
+      margin: 0.3% 1.2%;
       width: 47%;
     }
     @media (max-width: 767px) {
-      margin: auto;
+      margin: 1% 1.2%;
       width: 100%;
       text-align: center;
     }
@@ -163,7 +163,7 @@ export default function EventApplyList({ headers }) {
 
   function PrintEventTable() {
     return (
-      <ul className="flex flex-wrap row justify-center">
+      <ul className="flex flex-wrap row">
         {total &&
           total.map((event) => {
             if (nowState === 3) {
