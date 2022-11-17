@@ -105,11 +105,11 @@ export default function EventApplyList({ headers }) {
     border: 1px solid ${ThemeGray4};
     border-radius: 10px;
     @media (min-width: 767px) {
-      margin: 10px;
-      width: 49%;
+      margin: 0.3% 1.2%;
+      width: 47%;
     }
     @media (max-width: 767px) {
-      margin: auto;
+      margin: 1% 1.2%;
       width: 100%;
       text-align: center;
     }
