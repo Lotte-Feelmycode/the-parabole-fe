@@ -6,6 +6,7 @@ import CommerceLayout from '@components/common/CommerceLayout';
 import EventInfo from '@components/event/EvenInfo';
 import EventPrizeContainer from '@components/event/EventPrizeContainer';
 import { useGetToken } from '@hooks/useGetToken';
+import SiteHead from '@components/common/SiteHead';
 
 export default function EventDetail() {
   const [eventInfo, setEventInfo] = useState({});
@@ -54,6 +55,11 @@ export default function EventDetail() {
   }, [router.query]);
   return (
     <CommerceLayout>
+      <SiteHead
+        title={eventInfo.title}
+        description={eventInfo.descript}
+        url={`https://theparabole.shop/${eventId}`}
+      />
       <div
         className="absolute left-1/2 transform -translate-x-1/2 bottom-0 pointer-events-none"
         aria-hidden="true"

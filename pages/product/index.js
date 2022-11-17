@@ -19,7 +19,7 @@ export default function Products({}) {
   return (
     <>
       <CommerceLayout>
-        <SiteHead title="ProductHome" />
+        <SiteHead title="스토어" url="https://theparabole.shop/product" />
         <SearchBarSection className="search-bar-section">
           <SearchBar
             placeholder={inputSearchValue || '검색어를 입력해주세요'}

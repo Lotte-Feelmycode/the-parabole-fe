@@ -56,11 +56,48 @@ export default function EventApplyList({ headers }) {
               {getDateTimeShort(applyInfo.endAt)}
             </ApplyTime>
           </EventDetailSection>
+          <EventWinnerApplySection>
+            <EventApplySection>추첨 여부</EventApplySection>
+            <EventWinnerApplyStatus>
+              {applyInfo.winnerStatus}
+            </EventWinnerApplyStatus>
+          </EventWinnerApplySection>
+          <EventWinnerPrizeSection>
+            <>
+              {applyInfo.prizeName != null ? (
+                <>
+                  <EventApplySection>응모 상품</EventApplySection>
+                  <EventWinnerPrizeName>
+                    {applyInfo.prizeName}
+                  </EventWinnerPrizeName>
+                </>
+              ) : null}
+            </>
+          </EventWinnerPrizeSection>
         </EventStatusSection>
       </EventSection>
     );
   }
-
+  const EventWinnerPrizeSection = styled.div`
+    display: inline-flex;
+    align-items: center;
+  `;
+  const EventWinnerPrizeName = styled.div`
+    font-size: 13px;
+    margin-left: auto;
+    padding-right: 10px;
+    color: ${ThemeGray1};
+  `;
+  const EventWinnerApplySection = styled.div`
+    display: inline-flex;
+    align-items: center;
+  `;
+  const EventWinnerApplyStatus = styled.div`
+    font-size: 13px;
+    margin-left: auto;
+    padding-right: 10px;
+    color: ${ThemeGray1};
+  `;
   const EventSection = styled.li`
     display: flex;
     flex-wrap: wrap;

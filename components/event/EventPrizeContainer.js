@@ -19,7 +19,7 @@ export default function EventPrizeContainer({
   const [status, setStatus] = useState(eventStatus || 0);
 
   function applyEvent(eventId, eventPrizeId, prizeName) {
-    if (confirm('경품' + prizeName + '에 응모하시겠습니까?')) {
+    if (confirm(prizeName + '에 응모하시겠습니까?')) {
       POST(
         '/event/participant',
         {
@@ -44,16 +44,16 @@ export default function EventPrizeContainer({
 
   function ProductCard({ prize }) {
     return (
-      <div className="h-100 place-content-center justify-center content-center">
-        <ImgSection>
+      <div className="flex flex-col max-h-96 place-items-center">
           <img
-            className="prize-img w-48 h-48 object-center"
+            className="justify-self-center prize-img w-48 max-h-48 content-center mb-4"
             src={prize.productImg || NO_IMAGE}
           />
-        </ImgSection>
-        <h4 className="text-black text-2xl text-center font-bold leading-snug tracking-tight mb-3">
-          {prize.productName || '상품명'}
-        </h4>
+        <div className="w-60">
+          <h4 className="text-black text-2xl text-center font-bold leading-snug tracking-tight mb-3">
+            {prize.productName || '상품명'}
+          </h4>
+        </div>
         {eventStatus === 1 && (
           <div className="flex justify-center">
             <Blue
@@ -75,10 +75,10 @@ export default function EventPrizeContainer({
 
   function CouponCard({ prize }) {
     return (
-      <div className="h-100 place-items-center justify-center content-center">
-        <ImgSection>
+      <div className="flex flex-col max-h-96 place-items-center">
+        <div className="justify-self-center prize-img w-48 max-h-48 content-center mb-4">
           <EventPrizeCouponImg className="prize-img" src={ICON_COUPON} />
-        </ImgSection>
+        </div>
         <h4 className="text-black text-2xl text-center font-bold leading-snug tracking-tight mb-3">
           {prize.couponName || '쿠폰명'}
         </h4>
@@ -120,7 +120,7 @@ export default function EventPrizeContainer({
             {eventPrizes &&
             Array.isArray(eventPrizes) &&
             eventPrizes.length === 1 ? (
-              <div className="w-96 mx-auto justify-center items-start md:max-w-2xl lg:max-w-none">
+              <div className="flex flex-row items-center w-96 mx-auto justify-center items-start md:max-w-2xl lg:max-w-none">
                 {eventPrizes &&
                   eventPrizes.map((prize) => {
                     return (
@@ -148,7 +148,7 @@ export default function EventPrizeContainer({
                         key={prize.id}
                         className="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
                       >
-                        <div className="relative flex flex-col items-center content-center place-content-center p-6 bg-white rounded shadow-xl">
+                        <div className="h-100 relative flex flex-col items-center content-center place-content-center p-6 bg-white rounded shadow-xl">
                           {prize && prize.prizeType === 'PRODUCT' ? (
                             <ProductCard prize={prize} />
                           ) : (
@@ -172,6 +172,8 @@ const ImgSection = styled.div`
   width: 100%;
   padding: 10px;
   text-align: center;
+  justify-self: center;
+
 `;
 
 const EventPrizeProductImg = styled.img`

@@ -13,6 +13,7 @@ import SiteHead from '@components/common/SiteHead.js';
 import { SmallLineWhite, LineBlue, Blue } from '@components/input/Button';
 import Input from '@components/input/Input';
 import CouponListModal from '@components/coupon/CouponListModal';
+import { NO_IMAGE } from '@utils/constants/images';
 
 export default function ProductDetail() {
   const router = useRouter();
@@ -27,8 +28,6 @@ export default function ProductDetail() {
 
   const [maxCount, setMaxCount] = useState(100);
   const minCount = 0;
-
-  const [headers, setHeaders] = useState();
 
   useEffect(() => {
     const productId = router.query.id;
@@ -155,7 +154,10 @@ export default function ProductDetail() {
 
   return (
     <CommerceLayout>
-      <SiteHead title={product.productName} />
+      <SiteHead
+        title={product.productName}
+        url={`https://theparabole.shop/${productId}`}
+      />
       <ProductWrap>
         <ProductTopSection className="product-top-section">
           <ProductThumbnailImgSection className="product-thumbnail-img-section">
@@ -249,7 +251,7 @@ export default function ProductDetail() {
                 <li key={detail.productDetailId}>
                   <ProductDetailImage
                     className="product-detail-img"
-                    src={detail.img}
+                    src={detail.img || NO_IMAGE}
                   />
                   <span>{detail.imgCaption}</span>
                 </li>
@@ -260,6 +262,13 @@ export default function ProductDetail() {
     </CommerceLayout>
   );
 }
+
+const ProductLayout = styled.div`
+  overflow: hidden;
+  object-fit: cover;
+  object-position: center;
+  margin: auto;
+`;
 
 const ProductWrap = styled.div`
   width: 100%;
@@ -302,6 +311,7 @@ const ProductThumbnailImg = styled.img`
 
 const ProductDetailTop = styled.div`
   display: flex;
+  overflow: hidden;
   flex-direction: column;
   flex-wrap: nowrap;
   flex: 1 1 auto;
@@ -338,6 +348,7 @@ const StoreSection = styled.a`
     flex-direction: column;
   }
 `;
+
 const StoreNameSection = styled.div`
   display: flex;
   flex-direction: row;

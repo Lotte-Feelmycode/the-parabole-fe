@@ -51,7 +51,7 @@ export default function EventInfo({ eventInfo, eventImage, storeInfo }) {
                           </th>
                           <td>
                             <p className="text-left text-l md:text-xl text-bold text-gray-900">
-                              {getDateTimeShort(eventInfo.startAt)}-{' '}
+                              {getDateTimeShort(eventInfo.startAt)} -{' '}
                               {getDateTimeShort(eventInfo.endAt)}{' '}
                             </p>
                           </td>
