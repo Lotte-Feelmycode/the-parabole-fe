@@ -651,14 +651,14 @@ export default function Event() {
     const eventInfos = JSON.stringify(eventParams);
     const blob = new Blob([eventInfos], { type: 'application/json' });
     formData.append('eventDtos', blob);
-    if (validation(eventParams) & confirm('이벤트를 등록하시겠습니까?')) {
+    if (validation(eventParams) && confirm('이벤트를 등록하시겠습니까?')) {
       axios
         .post(`${API_BASE_URL}/event`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             Authorization: token,
           },
-        }) 
+        })
         .then((res) => {
           console.log(res);
           if (res) {
