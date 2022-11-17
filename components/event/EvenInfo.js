@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import * as btn from '@components/input/Button';
+import { Blue } from '@components/input/Button';
 import { getDate, getDateTimeShort } from '@utils/functions';
 import styled from '@emotion/styled';
 import Timer from '@components/common/Timer';
@@ -90,7 +90,7 @@ export default function EventInfo({ eventInfo, eventImage, storeInfo }) {
                   data-aos-delay="300"
                 >
                   <div className="animate-pulse">
-                    <btn.Blue
+                    <Blue
                       buttonText={'상품 더 보러가기'}
                       onClickFunc={goToStore}
                     />
@@ -123,10 +123,11 @@ const InfoTable = styled.table`
 
 const InfoTableTh = styled.th`
   @media (min-width: 767px) {
-    width: 31%;
+    width: 30%;
   }
   @media (max-width: 767px) {
     width: 33%;
+    min-width: 74px;
   }
 `;
 
