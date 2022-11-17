@@ -4,11 +4,7 @@ import styled from '@emotion/styled';
 
 import { GET_DATA, POST } from '@apis/defaultApi';
 import { numberToMonetary } from '@utils/functions';
-import {
-  ColorBlue2,
-  ThemeBlueWhite,
-  ThemeGray4,
-} from '@utils/constants/themeColor';
+import { ThemeGray4 } from '@utils/constants/themeColor';
 import { LINKS } from '@utils/constants/links';
 import { useGetToken } from '@hooks/useGetToken';
 import CommerceLayout from '@components/common/CommerceLayout';
@@ -17,6 +13,7 @@ import { SmallLineWhite, LineBlue, Blue } from '@components/input/Button';
 import Input from '@components/input/Input';
 import { ICON_SHOP } from '@utils/constants/icons';
 import CouponListModal from '@components/coupon/CouponListModal';
+import { NO_IMAGE } from '@utils/constants/images';
 
 export default function ProductDetail() {
   const router = useRouter();
@@ -157,7 +154,10 @@ export default function ProductDetail() {
 
   return (
     <CommerceLayout>
-      <SiteHead title={product.productName} />
+      <SiteHead
+        title={product.productName}
+        url={`https://theparabole.shop/${productId}`}
+      />
       <section className="flex min-h-screen flex-col text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">
           {/* <span>상품 상세 화면</span> */}
@@ -166,7 +166,7 @@ export default function ProductDetail() {
               <ProductThumbnailImgSection className="product-thumbnail-img-section">
                 <ProductThumbnailImg
                   className="product-thumbnail-img"
-                  src={product.productThumbnailImg}
+                  src={product.productThumbnailImg || NO_IMAGE}
                 />
               </ProductThumbnailImgSection>
               <ProductDetailTop className="product-detail-top">
@@ -254,7 +254,7 @@ export default function ProductDetail() {
                     <li key={detail.productDetailId}>
                       <ProductDetailImage
                         className="product-detail-img"
-                        src={detail.img}
+                        src={detail.img || NO_IMAGE}
                       />
                       <span>{detail.imgCaption}</span>
                     </li>

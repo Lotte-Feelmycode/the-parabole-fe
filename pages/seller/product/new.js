@@ -115,13 +115,6 @@ export default function SellerProductNew() {
     if (productId === -1) {
       return;
     }
-    /*
-          productName: name,
-      productCategory: category,
-      productRemains: remain,
-      productPrice: price,
-      productThumbnailImg: '',
-      */
     if (isEmpty(name)) {
       alert('상품 명이 비어있습니다.');
       return;
@@ -131,11 +124,9 @@ export default function SellerProductNew() {
         API_BASE_URL + `/s3?productId=${productId}`,
 
         formData,
-        { headers: { 'Content-Type': 'multipart/form-data' } }, // Content-Type을 반드시 이렇게 하여야 한다.
+        { headers: { 'Content-Type': 'multipart/form-data' } },
       )
-      .then((res) => {
-        // TODO: s3 동작후에 axios 성공오지 않지만 DB저장 GOOD S3 GOOD 상태
-        // 단, 등록버튼 한번 누르면 정상동작 되기 때문에 안된 줄 알고 한번 더 누르면 사진 4장 들어감
+      .then(function () {
         alert('상품이 등록되었습니다.');
         router.push({
           pathname: `/seller/product/list`,
@@ -160,7 +151,6 @@ export default function SellerProductNew() {
           </h2>
 
           <div className="max-w-lg border rounded-lg mx-auto">
-            {/* <form className="max-w-lg border rounded-lg mx-auto"> */}
             <div className="flex flex-col gap-4 p-4 md:p-8">
               <div>
                 <label className="inline-block text-gray-800 text-sm sm:text-base mb-2">
@@ -246,7 +236,6 @@ export default function SellerProductNew() {
                 onClickFunc={setProduct}
               ></Button.Pink>
             </div>
-            {/* </form> */}
           </div>
         </div>
       </div>
