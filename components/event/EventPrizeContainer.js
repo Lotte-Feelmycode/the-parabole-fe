@@ -19,7 +19,7 @@ export default function EventPrizeContainer({
   const [status, setStatus] = useState(eventStatus || 0);
 
   function applyEvent(eventId, eventPrizeId, prizeName) {
-    if (confirm('경품' + prizeName + '에 응모하시겠습니까?')) {
+    if (confirm(prizeName + '에 응모하시겠습니까?')) {
       POST(
         '/event/participant',
         {

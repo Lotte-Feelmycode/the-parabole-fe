@@ -4,11 +4,7 @@ import styled from '@emotion/styled';
 
 import { GET_DATA, POST } from '@apis/defaultApi';
 import { numberToMonetary } from '@utils/functions';
-import {
-  ColorBlue2,
-  ThemeBlueWhite,
-  ThemeGray4,
-} from '@utils/constants/themeColor';
+import { ThemeGray4 } from '@utils/constants/themeColor';
 import { LINKS } from '@utils/constants/links';
 import { useGetToken } from '@hooks/useGetToken';
 import CommerceLayout from '@components/common/CommerceLayout';
@@ -17,6 +13,7 @@ import { SmallLineWhite, LineBlue, Blue } from '@components/input/Button';
 import Input from '@components/input/Input';
 import { ICON_SHOP } from '@utils/constants/icons';
 import CouponListModal from '@components/coupon/CouponListModal';
+import { NO_IMAGE } from '@utils/constants/images';
 
 export default function ProductDetail() {
   const router = useRouter();
@@ -31,8 +28,6 @@ export default function ProductDetail() {
 
   const [maxCount, setMaxCount] = useState(100);
   const minCount = 0;
-
-  const [headers, setHeaders] = useState();
 
   useEffect(() => {
     const productId = router.query.id;
@@ -159,7 +154,10 @@ export default function ProductDetail() {
 
   return (
     <CommerceLayout>
-      <SiteHead title={product.productName} url={`https://theparabole.shop/${productId}`}/>
+      <SiteHead
+        title={product.productName}
+        url={`https://theparabole.shop/${productId}`}
+      />
       <section className="flex min-h-screen flex-col text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">
           {/* <span>상품 상세 화면</span> */}
@@ -168,7 +166,7 @@ export default function ProductDetail() {
               <ProductThumbnailImgSection className="product-thumbnail-img-section">
                 <ProductThumbnailImg
                   className="product-thumbnail-img"
-                  src={product.productThumbnailImg}
+                  src={product.productThumbnailImg || NO_IMAGE}
                 />
               </ProductThumbnailImgSection>
               <ProductDetailTop className="product-detail-top">
@@ -256,7 +254,7 @@ export default function ProductDetail() {
                     <li key={detail.productDetailId}>
                       <ProductDetailImage
                         className="product-detail-img"
-                        src={detail.img}
+                        src={detail.img || NO_IMAGE}
                       />
                       <span>{detail.imgCaption}</span>
                     </li>
@@ -269,6 +267,13 @@ export default function ProductDetail() {
     </CommerceLayout>
   );
 }
+
+const ProductLayout = styled.div`
+  overflow: hidden;
+  object-fit: cover;
+  object-position: center;
+  margin: auto;
+`;
 
 const ProductWrap = styled.div`
   width: 100%;
@@ -293,6 +298,7 @@ const ProductThumbnailImgSection = styled.div`
   margin: 10px 10px 10px 0;
   max-width: 100%;
   min-width: 300px;
+  overflow: hidden;
 
   @media (min-width: 768px) {
     width: 50%;
@@ -305,8 +311,8 @@ const ProductThumbnailImgSection = styled.div`
 
 const ProductDetailTop = styled.div`
   max-width: 100%;
-  min-width: 300px;
   display: flex;
+  overflow: hidden;
   flex-direction: column;
   flex-wrap: nowrap;
   flex: 1 1 auto;
@@ -324,6 +330,7 @@ const StoreSection = styled.a`
   align-items: center;
   margin: 20px 0px;
 `;
+
 const StoreNameSection = styled.div`
   display: flex;
   flex-direction: row;
@@ -332,18 +339,6 @@ const StoreNameSection = styled.div`
 
 const StoreBtnSection = styled.div`
   margin-left: auto;
-`;
-
-const StoreBenfitBox = styled.div`
-  background-color: ${ThemeBlueWhite};
-  border-radius: 0.375rem;
-  width: 100%;
-  height: 3rem;
-
-  &:hover {
-    background-color: ${ColorBlue2};
-    cursor: pointer;
-  }
 `;
 
 const InputSection = styled.div`
@@ -385,7 +380,9 @@ const DetailLayout = styled.div`
 
 const ProductThumbnailImg = styled.img`
   width: 100%;
+  object-fix: cover;
 `;
+
 const ProductDetailImage = styled.img`
   width: 100%;
 `;
