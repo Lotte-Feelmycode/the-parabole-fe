@@ -1,12 +1,14 @@
-import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { getDateTime } from '@utils/functions';
+import { isEmpty } from './../../utils/functions';
 
 export default function EventParticipant({ idx, participant }) {
   const [partinfo, setPartinfo] = useState(participant);
 
   useEffect(() => {
     setPartinfo(partinfo);
+
+    console.log(partinfo.eventPrizes);
   }, [participant]);
 
   return (
@@ -22,8 +24,16 @@ export default function EventParticipant({ idx, participant }) {
         {partinfo.userEmail}
       </td>
       <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-        {partinfo.eventPrizes[0].coupon.name ||
-          partinfo.eventPrizes[0].product.name}
+        {partinfo &&
+          partinfo.eventPrizes[0] &&
+          !isEmpty(partinfo.eventPrizes[0].coupon) && (
+            <div>{partinfo.eventPrizes[0].coupon.name}</div>
+          )}
+        {partinfo &&
+          partinfo.eventPrizes[0] &&
+          !isEmpty(partinfo.eventPrizes[0].product) && (
+            <div>{partinfo.eventPrizes[0].product.name}</div>
+          )}
       </td>
       <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
         {getDateTime(partinfo.eventTimeStartAt)}
