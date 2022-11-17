@@ -1,19 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-
 import { GET_DATA, POST } from '@apis/defaultApi';
+import { useGetToken } from '@hooks/useGetToken';
 import { numberToMonetary } from '@utils/functions';
 import { ThemeGray4 } from '@utils/constants/themeColor';
 import { LINKS } from '@utils/constants/links';
-import { useGetToken } from '@hooks/useGetToken';
+import { ICON_SHOP } from '@utils/constants/icons';
+import { NO_IMAGE } from '@utils/constants/images';
 import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead.js';
 import { SmallLineWhite, LineBlue, Blue } from '@components/input/Button';
 import Input from '@components/input/Input';
-import { ICON_SHOP } from '@utils/constants/icons';
-import CouponListModal from '@components/coupon/CouponListModal';
-import { NO_IMAGE } from '@utils/constants/images';
+import CouponListModal from '@components/coupon/StoreCouponListModal';
 
 export default function ProductDetail() {
   const router = useRouter();
@@ -158,112 +157,107 @@ export default function ProductDetail() {
         title={product.productName}
         url={`https://theparabole.shop/${productId}`}
       />
-      <section className="flex min-h-screen flex-col text-gray-600 body-font">
-        <div className="container px-5 py-24 mx-auto">
-          {/* <span>상품 상세 화면</span> */}
-          <ProductWrap>
-            <ProductTopSection className="product-top-section">
-              <ProductThumbnailImgSection className="product-thumbnail-img-section">
-                <ProductThumbnailImg
-                  className="product-thumbnail-img"
-                  src={product.productThumbnailImg || NO_IMAGE}
+      <ProductWrap>
+        <ProductTopSection className="product-top-section">
+          <ProductThumbnailImgSection className="product-thumbnail-img-section">
+            <ProductThumbnailImg
+              className="product-thumbnail-img"
+              src={product.productThumbnailImg || NO_IMAGE}
+            />
+          </ProductThumbnailImgSection>
+          <ProductDetailTop className="product-detail-top">
+            <div className="product-name-title max-w-2xl overflow-ellipsis">
+              <ProductName>{product.productName}</ProductName>
+            </div>
+            <div className="product-price border-b-2 pb-4">
+              <ProductPrice>
+                {numberToMonetary(product.productPrice)}
+              </ProductPrice>
+              원
+            </div>
+            <StoreSection onClick={() => goToStore(product.sellerId)}>
+              <StoreNameSection>
+                <img
+                  src={ICON_SHOP}
+                  loading="lazy"
+                  className="w-7 h-7 mx-2 object-cover object-center"
                 />
-              </ProductThumbnailImgSection>
-              <ProductDetailTop className="product-detail-top">
-                <div className="product-name-title max-w-2xl overflow-ellipsis">
-                  <ProductName>{product.productName}</ProductName>
-                </div>
-                <div className="product-price border-b-2 pb-4">
-                  <ProductPrice>
-                    {numberToMonetary(product.productPrice)}
-                  </ProductPrice>
-                  원
-                </div>
-                <StoreSection onClick={() => goToStore(product.sellerId)}>
-                  <StoreNameSection>
-                    <img
-                      src={ICON_SHOP}
-                      loading="lazy"
-                      className="w-7 h-7 mx-2 object-cover object-center"
-                    />
-                    <span className="text-lg"> {seller} </span>
-                  </StoreNameSection>
-                  <StoreBtnSection>
-                    <SmallLineWhite buttonText="브랜드홈 ▶" />
-                  </StoreBtnSection>
-                </StoreSection>
-                <div className="flex border-t-2 py-2">
-                  <LineBlue
-                    buttonText="스토어 혜택을 받아보세요!"
-                    onClickFunc={(e) => showBenefitModal(e, product.sellerId)}
-                    css={{ width: '100%', fontWeight: 'bold' }}
+                <span className="text-lg"> {seller} </span>
+              </StoreNameSection>
+              <StoreBtnSection>
+                <SmallLineWhite buttonText="브랜드홈 ▶" />
+              </StoreBtnSection>
+            </StoreSection>
+            <div className="flex border-t-2 py-2">
+              <LineBlue
+                buttonText="스토어 혜택을 받아보세요!"
+                onClickFunc={(e) => showBenefitModal(e, product.sellerId)}
+                css={{ width: '100%', fontWeight: 'bold' }}
+              />
+            </div>
+            <div>
+              {modalState && (
+                <CouponListModal
+                  setModalState={setModalState}
+                  couponList={coupons}
+                  storeName={seller}
+                />
+              )}
+            </div>
+            <InputSection>
+              <ProductCountSection>
+                <Input
+                  type="number"
+                  onChange={onCountChange}
+                  value={count}
+                  attr={{
+                    min: minCount,
+                    max: maxCount,
+                  }}
+                  css={{
+                    width: '100%',
+                    height: '40px',
+                    fontSize: '20px',
+                    border: '0px',
+                  }}
+                />
+              </ProductCountSection>
+              <TotalInputSection>
+                <TotalPrice>
+                  {numberToMonetary(count * product.productPrice) || 0}
+                </TotalPrice>
+                원
+              </TotalInputSection>
+            </InputSection>
+            <BtnSection>
+              <LineBlue
+                buttonText="장바구니"
+                onClickFunc={addCart}
+                css={{ width: '49%', marginRight: '1%' }}
+              />
+              <Blue
+                buttonText="바로구매"
+                onClickFunc={directOrder}
+                css={{ width: '49%', marginLeft: '1%' }}
+              />
+            </BtnSection>
+          </ProductDetailTop>
+        </ProductTopSection>
+        <DetailLayout>
+          <ul>
+            {productDetail &&
+              productDetail.map((detail) => (
+                <li key={detail.productDetailId}>
+                  <ProductDetailImage
+                    className="product-detail-img"
+                    src={detail.img || NO_IMAGE}
                   />
-                </div>
-                <div>
-                  {modalState && (
-                    <CouponListModal
-                      setModalState={setModalState}
-                      couponList={coupons}
-                      storeName={seller}
-                    />
-                  )}
-                </div>
-                <InputSection>
-                  <ProductCountSection>
-                    <Input
-                      type="number"
-                      onChange={onCountChange}
-                      value={count}
-                      attr={{
-                        min: minCount,
-                        max: maxCount,
-                      }}
-                      css={{
-                        width: '100%',
-                        height: '40px',
-                        fontSize: '20px',
-                        border: '0px',
-                      }}
-                    />
-                  </ProductCountSection>
-                  <TotalInputSection>
-                    <TotalPrice>
-                      {numberToMonetary(count * product.productPrice) || 0}
-                    </TotalPrice>
-                    원
-                  </TotalInputSection>
-                </InputSection>
-                <BtnSection>
-                  <LineBlue
-                    buttonText="장바구니"
-                    onClickFunc={addCart}
-                    css={{ width: '49%', marginRight: '1%' }}
-                  />
-                  <Blue
-                    buttonText="바로구매"
-                    onClickFunc={directOrder}
-                    css={{ width: '49%', marginLeft: '1%' }}
-                  />
-                </BtnSection>
-              </ProductDetailTop>
-            </ProductTopSection>
-            <DetailLayout>
-              <ul>
-                {productDetail &&
-                  productDetail.map((detail) => (
-                    <li key={detail.productDetailId}>
-                      <ProductDetailImage
-                        className="product-detail-img"
-                        src={detail.img || NO_IMAGE}
-                      />
-                      <span>{detail.imgCaption}</span>
-                    </li>
-                  ))}
-              </ul>
-            </DetailLayout>
-          </ProductWrap>
-        </div>
-      </section>
+                  <span>{detail.imgCaption}</span>
+                </li>
+              ))}
+          </ul>
+        </DetailLayout>
+      </ProductWrap>
     </CommerceLayout>
   );
 }
@@ -282,9 +276,14 @@ const ProductWrap = styled.div`
 `;
 
 const ProductName = styled.span`
-  font-size: 36px;
   font-weight: 500;
   text-overflow: elipsis;
+  @media (min-width: 768px) {
+    font-size: 36px;
+  }
+  @media (max-width: 768px) {
+    font-size: 25px;
+  }
 `;
 
 const ProductTopSection = styled.div`
@@ -295,50 +294,81 @@ const ProductTopSection = styled.div`
 `;
 
 const ProductThumbnailImgSection = styled.div`
-  margin: 10px 10px 10px 0;
-  max-width: 100%;
-  min-width: 300px;
   overflow: hidden;
-
   @media (min-width: 768px) {
-    width: 50%;
+    width: 49%;
   }
-
   @media (max-width: 768px) {
     width: 100%;
   }
 `;
 
+const ProductThumbnailImg = styled.img`
+  width: 100%;
+  object-fit: cover;
+`;
+
 const ProductDetailTop = styled.div`
-  max-width: 100%;
   display: flex;
   overflow: hidden;
   flex-direction: column;
   flex-wrap: nowrap;
   flex: 1 1 auto;
-  margin: 20px;
+  @media (min-width: 768px) {
+    margin-left: 2%;
+    width: 48%;
+  }
+  @media (max-width: 768px) {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+  }
 `;
 
 const ProductPrice = styled.span`
-  font-size: 30px;
   font-weight: 900;
   margin-right: 4px;
+  @media (min-width: 768px) {
+    font-size: 30px;
+  }
+  @media (max-width: 768px) {
+    font-size: 23px;
+  }
 `;
 
 const StoreSection = styled.a`
   display: flex;
-  align-items: center;
   margin: 20px 0px;
+
+  @media (min-width: 768px) {
+    align-items: center;
+  }
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const StoreNameSection = styled.div`
   display: flex;
   flex-direction: row;
   vertical-align: center;
+  @media (min-width: 768px) {
+  }
+  @media (max-width: 768px) {
+    margin-left: auto;
+    margin-right: auto;
+  }
 `;
 
 const StoreBtnSection = styled.div`
-  margin-left: auto;
+  @media (min-width: 768px) {
+    margin-left: auto;
+  }
+  @media (max-width: 768px) {
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 `;
 
 const InputSection = styled.div`
@@ -375,12 +405,9 @@ const BtnSection = styled.div`
 `;
 
 const DetailLayout = styled.div`
-  padding: 20px 24px;
-`;
-
-const ProductThumbnailImg = styled.img`
-  width: 100%;
-  object-fix: cover;
+  @media (min-width: 768px) {
+    padding: 20px 24px;
+  }
 `;
 
 const ProductDetailImage = styled.img`
