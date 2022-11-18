@@ -20,7 +20,6 @@ export default function CartContentFooter({
       { sellerId, totalFee: contentTotalPrice },
       headers,
     ).then((res) => {
-      console.log(res);
       if (res) {
         setCouponArray(res);
       }

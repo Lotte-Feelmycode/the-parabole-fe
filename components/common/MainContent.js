@@ -61,11 +61,11 @@ export default function MainContent({ title, content }) {
           </div>
 
           {eventList && eventList.length > 1 && (
-            <div
-              onClick={() => onClick(eventList[0].id)}
-              className="w-full lg:w-2/3 flex mb-12 md:mb-16"
-            >
-              <div className="bg-gray-100 rounded-lg shadow-lg overflow-hidden relative z-10 top-12 md:top-16 left-12 md:left-16 -ml-12 lg:ml-0 w-1/2">
+            <div className="w-full lg:w-2/3 flex mb-12 md:mb-16">
+              <div
+                onClick={() => onClick(eventList[0].id)}
+                className="bg-gray-100 rounded-lg shadow-lg overflow-hidden relative z-10 top-12 md:top-16 left-12 md:left-16 -ml-12 lg:ml-0 w-1/2"
+              >
                 <img
                   src={eventList[0].eventImage.eventBannerImg}
                   alit={eventList[0].title}
@@ -76,7 +76,7 @@ export default function MainContent({ title, content }) {
 
               <div
                 onClick={() => onClick(eventList[1].id)}
-                className="bg-gray-100 rounded-lg shadow-lg overflow-hidden z-8  left-12 md:left-16 -ml-12 lg:ml-0 w-1/2"
+                className="bg-gray-100 rounded-lg shadow-lg overflow-hidden z-8 left-12 md:left-16 -ml-12 lg:ml-0 w-1/2"
               >
                 <img
                   src={eventList[1].eventImage.eventBannerImg}
