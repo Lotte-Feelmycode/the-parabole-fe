@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import { DELETE } from '@apis/defaultApi';
 import { ThemeGray1 } from '@utils/constants/themeColor';
 import CartProduct from '@components/cart/CartProduct';
+import { useGetToken } from '@hooks/useGetToken';
+import { useRouter } from 'next/router';
 
 export default function CartContentDetail({
   cartItemDtoList,
@@ -9,6 +11,19 @@ export default function CartContentDetail({
   cartCheckBoxChange,
   cartInfoChange,
 }) {
+  const router = useRouter();
+
+  const deleteCartItem = ({ input }) => {
+    const CartItemDeleteRequestDto = {
+      cartItemId: input,
+    };
+    const headers = useGetToken();
+    if (confirm('장바구니에서 삭제하시겠습니까?')) {
+      DELETE(`/cart/delete`, CartItemDeleteRequestDto, headers);
+      router.reload();
+    }
+  };
+
   return (
     <div>
       {cartItemDtoList &&
@@ -110,14 +125,3 @@ const CartDetailSection = styled.div`
     height: 100px;
   }
 `;
-
-const deleteCartItem = ({ input }) => {
-  const CartItemDeleteRequestDto = {
-    cartItemId: input,
-  };
-  const headers = useGetToken();
-  if (confirm('장바구니에서 삭제하시겠습니까?')) {
-    DELETE(`/cart/delete`, CartItemDeleteRequestDto, headers);
-    router.reload();
-  }
-};
