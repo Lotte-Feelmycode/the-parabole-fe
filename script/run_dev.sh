@@ -4,7 +4,7 @@ PROJECT_NAME="The Parabole"
 
 TODAY=$(date +"%Y%m%d")
 
-DEPLOY_PATH=/home/ubuntu
+DEPLOY_PATH=/home/ec2-user
 
 LOG_PATH=$DEPLOY_PATH/log
 LINK_LOG_FILE=$LOG_PATH/parabole.log
