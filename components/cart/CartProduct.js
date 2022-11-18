@@ -1,12 +1,12 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { PATCH } from '@apis/defaultApi';
 import { numberToMonetary } from '@utils/functions';
 import { SmallWhite } from '@components/input/Button';
 import Input from '@components/input/Input';
-import { LoginHeaderContext } from '@pages/user/cart/index';
 import { NO_IMAGE } from '@utils/constants/images';
+import { useGetToken } from '@hooks/useGetToken';
 
 export default function CartProduct({
   cartItemId,
@@ -15,7 +15,6 @@ export default function CartProduct({
   setCountFunc,
 }) {
   const router = useRouter();
-  const headers = useContext(LoginHeaderContext);
 
   const goToProductDetail = (id) => {
     router.push({
@@ -30,6 +29,7 @@ export default function CartProduct({
 
   useEffect(() => {
     countCheck(optionCount);
+    const headers = useGetToken();
     if (optionCount != optionCountHistory) {
       PATCH(
         `/cart/update/cnt`,
@@ -46,7 +46,6 @@ export default function CartProduct({
             setCountFunc({ cartItemId: cartItemId, cnt: optionCount });
           } else {
             alert(res.message);
-            console.log(res);
             setOptionCount(optionCountHistory);
           }
         } else {
