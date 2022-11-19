@@ -9,10 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@devexpress/dx-react-core": "^3.0.6",
+    "@devexpress/dx-react-scheduler": "^3.0.6",
+    "@devexpress/dx-react-scheduler-material-ui": "^3.0.6",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/material": "^5.10.12",
     "axios": "^0.27.2",
     "next": "12.3.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "swiper": "^8.4.4"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.12",
@@ -24,6 +31,8 @@
     "eslint-plugin-react": "^7.31.8",
     "postcss": "^8.4.16",
     "prettier": "2.7.1",
+    "sass": "^1.55.0",
+    "styled-jsx-plugin-sass": "^1.0.0",
     "tailwindcss": "^3.1.8"
   }
 }

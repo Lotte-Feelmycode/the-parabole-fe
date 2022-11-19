@@ -1,190 +1,114 @@
+import { SmallLinePink, SmallLineBlue } from '@components/input/Button';
+import { LINKS } from '@utils/constants/links';
+import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
+import { ICON_GITHUB, ICON_NOTION } from '@utils/constants/icons';
+
 export default function Footer() {
+  const router = useRouter();
+
   return (
     <>
-      <footer className="text-gray-600 body-font">
-        <div className="container px-5 py-24 mx-auto">
-          <div className="flex flex-wrap md:text-left text-center order-first">
-            <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-              <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-                CATEGORIES
-              </h2>
-              <nav className="list-none mb-10">
-                <li>
-                  <a className="text-gray-600 hover:text-gray-800">
-                    First Link
-                  </a>
-                </li>
-                <li>
-                  <a className="text-gray-600 hover:text-gray-800">
-                    Second Link
-                  </a>
-                </li>
-                <li>
-                  <a className="text-gray-600 hover:text-gray-800">
-                    Third Link
-                  </a>
-                </li>
-                <li>
-                  <a className="text-gray-600 hover:text-gray-800">
-                    Fourth Link
-                  </a>
-                </li>
-              </nav>
-            </div>
-            <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-              <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-                CATEGORIES
-              </h2>
-              <nav className="list-none mb-10">
-                <li>
-                  <a className="text-gray-600 hover:text-gray-800">
-                    First Link
-                  </a>
-                </li>
-                <li>
-                  <a className="text-gray-600 hover:text-gray-800">
-                    Second Link
-                  </a>
-                </li>
-                <li>
-                  <a className="text-gray-600 hover:text-gray-800">
-                    Third Link
-                  </a>
-                </li>
-                <li>
-                  <a className="text-gray-600 hover:text-gray-800">
-                    Fourth Link
-                  </a>
-                </li>
-              </nav>
-            </div>
-            <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-              <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-                CATEGORIES
-              </h2>
-              <nav className="list-none mb-10">
-                <li>
-                  <a className="text-gray-600 hover:text-gray-800">
-                    First Link
-                  </a>
-                </li>
-                <li>
-                  <a className="text-gray-600 hover:text-gray-800">
-                    Second Link
-                  </a>
-                </li>
-                <li>
-                  <a className="text-gray-600 hover:text-gray-800">
-                    Third Link
-                  </a>
-                </li>
-                <li>
-                  <a className="text-gray-600 hover:text-gray-800">
-                    Fourth Link
-                  </a>
-                </li>
-              </nav>
-            </div>
-            <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-              <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">
-                SUBSCRIBE
-              </h2>
-              <div className="flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap justify-center items-end md:justify-start">
-                <div className="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2">
-                  <label
-                    htmlFor="footer-field"
-                    className="leading-7 text-sm text-gray-600"
-                  >
-                    Placeholder
-                  </label>
-                </div>
-                <button className="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
-                  Button
-                </button>
-              </div>
-              <p className="text-gray-500 text-sm mt-2 md:text-left text-center">
-                Bitters chicharrones fanny pack
+      <footer className="text-gray-600 md:p-10 sm:p-4 body-font bg-gray-50">
+        <div className="container mx-auto flex flex-wrap text-left order-first">
+          <DescriptionSection className="px-4 text-left">
+            <a className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
+              <span className="text-xl">Parabole</span>
+            </a>
+            <h2 className="title-font font-bolder tracking-widest">
+              필마이코드 주식회사
+            </h2>
+            <nav className="list-none">
+              <li>
+                <a className="text-gray-600 hover:text-gray-800">
+                  대표 : 신은총, 장혜원, 정다은, 정은우, 최형준
+                </a>
+              </li>
+              <li>
+                <a className="text-gray-600 hover:text-gray-800">
+                  주소 : 서울특별시 송파구 올림픽로 300 롯데월드타워 26층
+                </a>
+              </li>
+              <li>
+                <a className="text-gray-600 hover:text-gray-800">
+                  호스팅 서비스사업자 : 필마이코드 e커머스사업부
+                </a>
+              </li>
+            </nav>
+
+            <div className="container py-3 flex items-center sm:flex-row flex-col">
+              <p className="text-sm text-gray-500 sm:mt-0 mt-4">
+                © 2022 Parabole —
+                <a
+                  href="https://github.com/Lotte-Feelmycode"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 ml-1"
+                  target="_blank"
+                >
+                  Feel My Code
+                </a>
               </p>
             </div>
-          </div>
-        </div>
-        <div className="bg-gray-100">
-          <div className="container px-5 py-6 mx-auto flex items-center sm:flex-row flex-col">
-            <a className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-              <span className="ml-3 text-xl">Parabole</span>
-            </a>
-            <p className="text-sm text-gray-500 sm:ml-6 sm:mt-0 mt-4">
-              © 2020 Parabole —
-              <a
-                href="https://twitter.com/knyttneve"
-                rel="noopener noreferrer"
-                className="text-gray-600 ml-1"
-                target="_blank"
-              >
-                @knyttneve
-              </a>
-            </p>
-            <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
-              <a className="text-gray-500">
-                <svg
-                  fill="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
-                </svg>
-              </a>
-              <a className="ml-3 text-gray-500">
-                <svg
-                  fill="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
-                </svg>
-              </a>
-              <a className="ml-3 text-gray-500">
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                >
-                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
-                </svg>
-              </a>
-              <a className="ml-3 text-gray-500">
-                <svg
-                  fill="currentColor"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="0"
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="none"
-                    d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"
-                  ></path>
-                  <circle cx="4" cy="4" r="2" stroke="none"></circle>
-                </svg>
-              </a>
-            </span>
-          </div>
+          </DescriptionSection>
+          <ButtonSection className="p-4">
+            <FeelMyCodeButtonSection>
+              <LogoLinkButtion>
+                <a href="https://github.com/Lotte-Feelmycode">
+                  <img src={ICON_GITHUB} />
+                </a>
+              </LogoLinkButtion>
+              <LogoLinkButtion>
+                <a href="https://www.notion.so/jungew1509/Feel-My-Code-189d61715c984d24b452acc20f55f764">
+                  <img src={ICON_NOTION} />
+                </a>
+              </LogoLinkButtion>
+            </FeelMyCodeButtonSection>
+            <MarketButtonSection>
+              <SmallLineBlue
+                buttonText="마켓 센터"
+                css={{ margin: '5px' }}
+                onClickFunc={() => {
+                  router.push(LINKS.MAIN);
+                }}
+              />
+              <SmallLinePink
+                buttonText="판매자 센터"
+                css={{ margin: '5px' }}
+                onClickFunc={() => {
+                  router.push(LINKS.SELLER_MAIN);
+                }}
+              />
+            </MarketButtonSection>
+          </ButtonSection>
         </div>
       </footer>
     </>
   );
 }
+
+const DescriptionSection = styled.div``;
+
+const ButtonSection = styled.div`
+  margin-left: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+  flex-direction: column;
+`;
+
+const FeelMyCodeButtonSection = styled.div`
+  display: inline-flex;
+  margin-left: auto;
+`;
+
+const LogoLinkButtion = styled.div`
+  margin: 5px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+`;
+
+const MarketButtonSection = styled.div`
+  margin-left: auto;
+`;
