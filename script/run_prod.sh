@@ -40,7 +40,7 @@ npm install
 npm install -g pm2
 
 echo "> Deploy start "
-next build
+npm run build
 pm2 reload all
 
 echo "> End of run.sh" >> $LOG_FILE
