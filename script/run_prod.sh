@@ -23,7 +23,7 @@ cd ~/the-parabole-fe
 
 echo "> git pull start" >> $LOG_FILE
 
-git pull -f origin dev
+git pull
 
 cd submodule
 git fetch 
