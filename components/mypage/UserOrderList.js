@@ -12,12 +12,13 @@ export default function OrderList({ headers }) {
   const router = useRouter();
 
   useEffect(() => {
-    GET_DATA(`/order`, null, headers).then((res) => {
+    console.log(headers);
+    GET_DATA(`/order`, '', headers).then((res) => {
       if (res) {
         setOrderList(res);
       }
     });
-  }, [headers]);
+  }, []);
 
   if (orderList && orderList.length > 0) {
     return (
