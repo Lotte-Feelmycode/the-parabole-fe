@@ -48,11 +48,10 @@ export default function Event() {
   const [prizeList, setprizeList] = useState([]);
   const [scheduleList, setScheduleList] = useState([]);
 
-  const [fileList, setFileList] = useState([]); // 업로드한 파일들을 저장하는 배열
+  const [fileList, setFileList] = useState([]);
   const [title, onChangeTitle] = useInput('');
   const [descript, onChangeDescript] = useInput('');
   const [eventType, setEventType] = useState('');
-  const [chatOpen, onChatOpen] = useCheck(true);
   const [startAt, setStartAt] = useState();
   const [endAt, setEndAt] = useState();
   const [stockList, setStockList] = useState([]);
@@ -262,9 +261,6 @@ export default function Event() {
                       혜택
                     </th>
                     <th scope="col" className="py-2 px-2">
-                      쿠폰 시작일
-                    </th>
-                    <th scope="col" className="py-2 px-2">
                       쿠폰 만료일
                     </th>
                     <th scope="col" className="py-2 px-2">
@@ -286,7 +282,6 @@ export default function Event() {
                             ? coupon.discountValue + '%'
                             : numberToMonetary(coupon.discountValue) + '원'}
                         </td>
-                        <td className="py-4 w-20">{getDate(coupon.validAt)}</td>
                         <td className="py-4 w-20">
                           {getDate(coupon.expiresAt)}
                         </td>
