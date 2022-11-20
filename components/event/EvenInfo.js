@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import * as btn from '@components/input/Button';
+import { Blue } from '@components/input/Button';
 import { getDate, getDateTimeShort } from '@utils/functions';
 import styled from '@emotion/styled';
 import Timer from '@components/common/Timer';
@@ -41,35 +41,42 @@ export default function EventInfo({ eventInfo, eventImage, storeInfo }) {
                     </p>
                   </div>
                   <div className="flex justify-center item-center flex-col">
-                    <table>
+                    <InfoTable>
                       <tbody>
                         <tr>
-                          <th className="w-32 px-2 text-left">
+                          <InfoTableTh className="text-left">
                             <p className="text-left text-l md:text-xl text-bold text-gray-900">
                               응모기간
                             </p>
-                          </th>
+                          </InfoTableTh>
                           <td>
-                            <p className="text-left text-l md:text-xl text-bold text-gray-900">
-                              {getDateTimeShort(eventInfo.startAt)} -{' '}
-                              {getDateTimeShort(eventInfo.endAt)}{' '}
-                            </p>
+                            <div className="flex">
+                              <p className="contents text-left text-l md:text-xl text-bold text-gray-900">
+                                {getDateTimeShort(eventInfo.startAt)}
+                              </p>
+                              <p className="contents text-left text-l md:text-xl text-bold text-gray-900">
+                                {' - '}
+                              </p>
+                              <p className="contents text-left text-l md:text-xl text-bold text-gray-900">
+                                {getDateTimeShort(eventInfo.endAt)}
+                              </p>
+                            </div>
                           </td>
                         </tr>
                         <tr>
-                          <th className="w-32 px-2 text-left">
+                          <InfoTableTh className="text-left">
                             <p className="text-left text-l md:text-xl text-bold text-gray-900">
                               당첨자 발표
                             </p>
-                          </th>
+                          </InfoTableTh>
                           <td>
-                            <p className="text-left text-l md:text-xl text-bold text-gray-900">
+                            <p className="text-center text-l md:text-xl text-bold text-gray-900">
                               {getDate(eventInfo.endAt)}
                             </p>
                           </td>
                         </tr>
                       </tbody>
-                    </table>
+                    </InfoTable>
                   </div>
                 </div>
                 <p className="mb-8" data-aos="zoom-y-out" data-aos-delay="150">
@@ -83,7 +90,7 @@ export default function EventInfo({ eventInfo, eventImage, storeInfo }) {
                   data-aos-delay="300"
                 >
                   <div className="animate-pulse">
-                    <btn.Blue
+                    <Blue
                       buttonText={'상품 더 보러가기'}
                       onClickFunc={goToStore}
                     />
@@ -104,6 +111,25 @@ export default function EventInfo({ eventInfo, eventImage, storeInfo }) {
     </>
   );
 }
+
+const InfoTable = styled.table`
+  @media (min-width: 767px) {
+    width: 400px;
+  }
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+`;
+
+const InfoTableTh = styled.th`
+  @media (min-width: 767px) {
+    width: 30%;
+  }
+  @media (max-width: 767px) {
+    width: 33%;
+    min-width: 74px;
+  }
+`;
 
 const H1 = styled.div`
   font-family: 'AppleSDGothicNeoB';

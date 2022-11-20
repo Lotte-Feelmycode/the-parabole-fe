@@ -4,7 +4,7 @@ let backendHost;
 const hostname = 'dev';
 
 if (hostname === 'prod') {
-  backendHost = 'http://api.theparabole.shop:8000';
+  backendHost = 'http://43.201.150.249:8000';
 } else if (hostname === 'dev') {
   backendHost = 'http://3.39.25.221:8000';
 } else {
@@ -18,7 +18,7 @@ let frontendHost;
 const host = 'domain';
 
 if (host === 'domain') {
-  frontendHost = 'https://theparabole.shop';
+  frontendHost = 'http://theparabole.shop';
 } else if (host === 'dev') {
   frontendHost = 'http://3.39.167.221';
 } else {
@@ -26,4 +26,4 @@ if (host === 'domain') {
 }
 
 export const FRONT_BASE_URL = `${frontendHost}`;
-export const FRONT_DEPLOY_URL = `https://theparabole.shop`;
+export const FRONT_DEPLOY_URL = `http://theparabole.shop`;

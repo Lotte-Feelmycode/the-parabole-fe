@@ -176,6 +176,15 @@ export default function OrderAndPayment() {
       }
     });
 
+    if (typeof window !== 'undefined' && typeof window !== undefined) {
+      if (localStorage.getItem('userId') === null) {
+        alert('로그인 해주세요.');
+        router.push(LINKS.SIGNIN);
+      }
+    }
+    const getToken = useGetToken();
+    setHeaders(getToken);
+
     POST(
       `/order`,
       {
@@ -188,7 +197,7 @@ export default function OrderAndPayment() {
         deliveryComment: receiverMemo,
         orderPayState: payStateString,
       },
-      headers,
+      getToken,
     ).then((res) => {
       console.log(res);
       if (res) {

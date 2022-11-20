@@ -7,6 +7,7 @@ import Heading from '@components/input/Heading';
 import { getDate } from '@utils/functions';
 import { NO_IMAGE } from '@utils/constants/images';
 import { POST_DATA } from '@apis/defaultApi';
+import { useGetToken } from '@hooks/useGetToken';
 
 export default function EventPrizeContainer({
   eventId,
@@ -15,18 +16,33 @@ export default function EventPrizeContainer({
   eventStatus,
   headers,
 }) {
-  const [applySts, setApplySts] = useState();
-  const [status, setStatus] = useState(eventStatus || 0);
+  const disabledPush = true;
+  const canPush = false;
+  const [applySts, setApplySts] = useState(canPush);
 
   useEffect(() => {
-    POST_DATA('/event/participant/check', { eventId }, headers).then((res) => {
-      if (!res) {
-        setApplySts('disabled');
-      }
-    });
-  }, []);
+    if (eventId !== null && eventId !== undefined && headers) {
+      POST_DATA('/event/participant/check', { eventId }, headers).then(
+        (res) => {
+          if (res) {
+            setApplySts(canPush);
+          } else {
+            setApplySts(disabledPush);
+          }
+        },
+      );
+    } else {
+      setApplySts(disabledPush);
+    }
+  }, [eventId]);
 
   function applyEvent(eventId, eventPrizeId, prizeName) {
+    if (localStorage.getItem('userId') === null) {
+      alert('로그인 해주세요.');
+      setApplySts(disabledPush);
+      router.push(LINKS.SIGNIN);
+    }
+
     if (confirm(prizeName + '에 응모하시겠습니까?')) {
       POST(
         '/event/participant',
@@ -34,14 +50,15 @@ export default function EventPrizeContainer({
           eventId,
           eventPrizeId,
         },
-        headers,
+        useGetToken(),
       ).then((res) => {
         if (res) {
           if (res.success) {
             alert('응모 성공');
-            setApplySts('disabled');
+            setApplySts(disabledPush);
           } else {
             alert('이미 응모 하셨습니다.');
+            setApplySts(disabledPush);
           }
         } else {
           alert('잠시후 다시 시도해주세요');
@@ -114,26 +131,25 @@ export default function EventPrizeContainer({
   return (
     <>
       <section className="relative">
-        <div className="absolute left-0 right-0 bottom-0 m-auto w-px p-px h-20 bg-gray-200 transform translate-y-1/2"></div>
+        <GrayLine className="gray-line absolute left-0 right-0 bottom-0 m-auto w-px p-px h-20 bg-gray-200 transform translate-y-1/2" />
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
           <div className="py-12 md:py-20">
             <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
               <Heading type={'h1'} title={'경품을 확인해 보세요!'} />
-              <p className="text-xl text-gray-600">
-                한 가지 경품만 응모할 수 있습니다.
-              </p>
+              <p className="text-xl text-gray-600">한 가지 경품만</p>
+              <p className="text-xl text-gray-600">응모할 수 있습니다.</p>
             </div>
 
             {eventPrizes &&
             Array.isArray(eventPrizes) &&
             eventPrizes.length === 1 ? (
-              <div className="flex flex-row items-center w-96 mx-auto justify-center items-start md:max-w-2xl lg:max-w-none">
+              <div className="flex flex-row items-center mx-auto justify-center items-start md:max-w-2xl lg:max-w-none">
                 {eventPrizes &&
-                  eventPrizes.map((prize) => {
+                  eventPrizes.map((prize, index) => {
                     return (
                       <div
-                        key={prize.id}
+                        key={index}
                         className="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
                       >
                         <div className="relative flex flex-col items-center content-center place-content-center p-6 bg-white rounded shadow-xl">
@@ -150,10 +166,10 @@ export default function EventPrizeContainer({
             ) : (
               <div className="max-w-sm mx-auto justify-center grid gap-6 md:grid-cols-2 lg:grid-cols-3 items-start md:max-w-2xl lg:max-w-none">
                 {eventPrizes &&
-                  eventPrizes.map((prize) => {
+                  eventPrizes.map((prize, index) => {
                     return (
                       <div
-                        key={prize.id}
+                        key={index}
                         className="transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
                       >
                         <div className="h-100 relative flex flex-col items-center content-center place-content-center p-6 bg-white rounded shadow-xl">
@@ -174,6 +190,11 @@ export default function EventPrizeContainer({
     </>
   );
 }
+const GrayLine = styled.div`
+  @media (max-width: 767px) {
+    display: none;
+  }
+`;
 
 const EventPrizeCouponImg = styled.img`
   padding: 23px 0;

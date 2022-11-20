@@ -1,10 +1,9 @@
-import { useContext } from 'react';
-import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { DELETE } from '@apis/defaultApi';
 import { ThemeGray1 } from '@utils/constants/themeColor';
 import CartProduct from '@components/cart/CartProduct';
-import { LoginHeaderContext } from '@pages/user/cart/index';
+import { useGetToken } from '@hooks/useGetToken';
+import { useRouter } from 'next/router';
 
 export default function CartContentDetail({
   cartItemDtoList,
@@ -12,7 +11,18 @@ export default function CartContentDetail({
   cartCheckBoxChange,
   cartInfoChange,
 }) {
-  const headers = useContext(LoginHeaderContext);
+  const router = useRouter();
+
+  const deleteCartItem = ({ input }) => {
+    const CartItemDeleteRequestDto = {
+      cartItemId: input,
+    };
+    const headers = useGetToken();
+    if (confirm('장바구니에서 삭제하시겠습니까?')) {
+      DELETE(`/cart/delete`, CartItemDeleteRequestDto, headers);
+      router.reload();
+    }
+  };
 
   return (
     <div>
@@ -36,7 +46,6 @@ export default function CartContentDetail({
             </ProductCheckSection>
             <ProductDetailSection className="product-detail-section">
               <CartProduct
-                headers={headers}
                 cartItemId={item.cartItemId}
                 product={item.product}
                 count={item.count}
@@ -116,13 +125,3 @@ const CartDetailSection = styled.div`
     height: 100px;
   }
 `;
-
-const deleteCartItem = ({ input }) => {
-  const CartItemDeleteRequestDto = {
-    cartItemId: input,
-  };
-  if (confirm('장바구니에서 삭제하시겠습니까?')) {
-    DELETE(`/cart/delete`, CartItemDeleteRequestDto, headers);
-    router.reload();
-  }
-};

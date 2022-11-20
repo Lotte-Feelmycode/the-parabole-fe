@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import styled from '@emotion/styled';
 import { GET_DATA } from '@apis/defaultApi';
 import CommerceLayout from '@components/common/CommerceLayout';
 import EventInfo from '@components/event/EvenInfo';
@@ -25,21 +24,22 @@ export default function EventDetail() {
 
   useEffect(() => {
     const eventId = router.query.id;
-    if (eventId) setEventId(eventId);
+    if (eventId) {
+      setEventId(eventId);
+      GET_DATA(`/event/${eventId}`).then((res) => {
+        if (res) {
+          setEventInfo(res);
+          setEventImage(res.eventImage);
+          setEventPrizes(res.eventPrizes);
 
-    GET_DATA(`/event/${eventId}`).then((res) => {
-      if (res) {
-        setEventInfo(res);
-        setEventImage(res.eventImage);
-        setEventPrizes(res.eventPrizes);
-
-        GET_DATA('/seller', { sellerId: res.sellerId }).then((res) => {
-          if (res) {
-            setStoreInfo(res);
-          }
-        });
-      }
-    });
+          GET_DATA('/seller', { sellerId: res.sellerId }).then((res) => {
+            if (res) {
+              setStoreInfo(res);
+            }
+          });
+        }
+      });
+    }
   }, [router.query]);
   return (
     <CommerceLayout>
