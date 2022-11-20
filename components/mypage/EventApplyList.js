@@ -17,7 +17,7 @@ export default function EventApplyList({ headers }) {
         setTotal(res);
       }
     });
-  }, []);
+  }, [headers]);
 
   function EventApply({ applyInfo }) {
     function EventStatus({ status }) {

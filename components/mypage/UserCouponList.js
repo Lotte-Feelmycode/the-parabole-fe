@@ -27,7 +27,7 @@ export default function UserCouponList({ headers }) {
         alert('권한이 없어 접근할 수 없습니다. 로그인 해주세요.');
         router.push(LINKS.MAIN);
       });
-  }, []);
+  }, [headers]);
 
   if (userCouponList && userCouponList.length > 0) {
     return (

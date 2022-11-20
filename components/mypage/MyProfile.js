@@ -12,7 +12,7 @@ export default function MyProfile({ headers }) {
         setUserInfo(res);
       }
     });
-  }, []);
+  }, [headers]);
 
   function GetEmail({ email }) {
     if (email && email.split('@')[1]) {

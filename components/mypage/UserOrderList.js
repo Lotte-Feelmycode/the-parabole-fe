@@ -18,7 +18,7 @@ export default function OrderList({ headers }) {
         setOrderList(res);
       }
     });
-  }, []);
+  }, [headers]);
 
   if (orderList && orderList.length > 0) {
     return (
