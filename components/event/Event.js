@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { EVENT_TYPE } from '@utils/constants/types';
+import { EVENT_TYPE, EVENT_STATUS } from '@utils/constants/types';
 import { getDateTime, getState } from '@utils/functions';
 import { NO_IMAGE } from '@utils/constants/images';
 
@@ -10,6 +10,7 @@ import {
   ThemeWhite,
   ThemeBlack,
   MainBlue,
+  MainPink, 
 } from '@utils/constants/themeColor';
 
 export default function Event({ event }) {
@@ -34,7 +35,15 @@ export default function Event({ event }) {
           <TitleSection className="title-section">{event.title}</TitleSection>
           <TypeSection className="type-section">
             <StoreNameSection>{event.storeName}</StoreNameSection>
-            <Tags>{getState(EVENT_TYPE, event.type)}</Tags>
+            <div className="flex flex-row justify-end">
+              <TypeTag>{getState(EVENT_TYPE, event.type)}</TypeTag>
+              {event && event.status && event.status === 1 ? (
+                <OpenedTag>{getState(EVENT_STATUS, event.status)}</OpenedTag>
+              ) : (
+                <ClosedTag>{getState(EVENT_STATUS, event.status)}</ClosedTag>
+              )}
+            </div>
+
           </TypeSection>
           <TimeSection className="time-section">
             {getDateTime(event.startAt)}
@@ -130,11 +139,30 @@ const TimeSection = styled.div`
   }
 `;
 
-const Tags = styled.span`
+const TypeTag = styled.span`
   background-color: ${ThemeBlack};
   color: ${ThemeWhite};
   font-size: 1rem;
-  margin-left: auto;
+  margin-left: 5px;
+  padding: 0.5rem 1rem;
+  border-radius: 3rem;
+`;
+
+const ClosedTag = styled.span`
+  background-color: ${ThemeWhite};
+  color: ${ThemeBlack};
+  font-size: 1rem;
+  margin-left: 5px;
+  padding: 0.5rem 1rem;
+  border-radius: 3rem;
+`;
+
+
+const OpenedTag = styled.span`
+  background-color: ${MainPink};
+  color: ${ThemeWhite};
+  font-size: 1rem;
+  margin-left: 5px;
   padding: 0.5rem 1rem;
   border-radius: 3rem;
 `;

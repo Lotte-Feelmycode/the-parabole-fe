@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import CloseButton from '@components/input/CloseButton';
 import EventInfo from '@components/event/EvenInfo';
 import EventPrizeContainer from '@components/event/EventPrizeContainer';
@@ -11,6 +11,26 @@ export default function EventSampleModal({ setModalState, event }) {
     e.preventDefault();
     setModalState(false);
   };
+
+  useEffect(() => {
+    const handler = () => {
+      // mousedown 이벤트가 발생한 영역이 모달창이 아닐 때, 모달창 제거 처리
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setModalState(false);
+      }
+    };
+
+    // 이벤트 핸들러 등록
+    document.addEventListener('mouseup', handler);
+    document.addEventListener('touchstart', handler); // 모바일 대응
+
+    return () => {
+      // 이벤트 핸들러 해제
+      document.removeEventListener('mouseup', handler);
+      document.removeEventListener('touchstart', handler); // 모바일 대응
+    };
+  });
+
   return (
     <BackgroundDIM>
       <ModalContainer ref={modalRef} className="modal-container">
