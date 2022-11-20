@@ -1,22 +1,12 @@
-import { GET_DATA } from '@apis/defaultApi';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import EventParticipant from './EventParticipant';
 import SortButton from '@components/input/SortButton';
 import { isEmpty } from '@utils/functions';
-export default function EventParticipantList({ eventId }) {
-  const [participantList, setParticipantList] = useState([]);
+export default function EventParticipantList({ participantList }) {
 
   const [mailSortDesc, setMailSortDesc] = useState(false);
   const [nameSortDesc, setNameSortDesc] = useState(false);
   const [dateSortDesc, setDateSortDesc] = useState(true);
-
-  useEffect(() => {
-    if (eventId) {
-      GET_DATA(`/event/seller/participant/${eventId}`).then((res) => {
-        setParticipantList(res);
-      });
-    }
-  }, []);
 
   function sortListByMail(e) {
     e.preventDefault();
@@ -151,11 +141,6 @@ export default function EventParticipantList({ eventId }) {
                 <EventParticipant idx={index} participant={participant} />
               ))}
           </tbody>
-          <tfoot>
-            <tr className="text-right text-base font-semibold bg-gray-100 text-gray-900 dark:text-white">
-                <td className="py-2 px-4" colSpan="5">응모고객 수 : {participantList && participantList.length}명</td>
-            </tr>
-          </tfoot>
         </table>
       ) : (
         <div className="ml-2 font-semibold">
