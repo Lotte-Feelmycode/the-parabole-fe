@@ -1,14 +1,7 @@
 import { GET_DATA } from '@apis/defaultApi';
 import { useEffect, useState } from 'react';
 import EventWinner from '@components/event/EventWinner';
-export default function EventWinnerList({ eventId }) {
-  const [eventWinnerList, setEventWinnerList] = useState([]);
-
-  useEffect(() => {
-    GET_DATA(`/event/seller/eventWinner/list/${eventId}`).then((res) => {
-      setEventWinnerList(res);
-    });
-  }, [eventId]);
+export default function EventWinnerList({ eventWinnerList }) {
 
   return (
     <>

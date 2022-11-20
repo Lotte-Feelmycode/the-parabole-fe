@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { GET, DELETE } from '@apis/defaultApi';
+import { GET, GET_DATA, DELETE } from '@apis/defaultApi';
 import styled from '@emotion/styled';
 import SellerLayout from '@components/seller/SellerLayout';
 import SiteHead from '@components/common/SiteHead';
@@ -20,6 +20,8 @@ export default function EventDetail() {
   const [eventId, setEventId] = useState(router.query.id);
   const [event, setEvent] = useState([]);
   const [modalState, setModalState] = useState(false);
+  const [participantList, setParticipantList] = useState([]);
+  const [eventWinnerList, setEventWinnerList] = useState([]);
 
   const EVENT_BEFORE = 0;
   const EVENT_PRGS = 1;
@@ -52,7 +54,16 @@ export default function EventDetail() {
           router.replace(`/seller/event/list`);
         }
       });
+      GET_DATA(`/event/seller/participant/${eventId}`).then((res) => {
+        setParticipantList(res);
+      });
+      GET_DATA(`/event/seller/eventWinner/list/${eventId}`).then((res) => {
+        setEventWinnerList(res);
+      });
     }
+
+    
+
   }, [router.query]);
 
   const deleteClickHandler = async (e) => {
@@ -180,17 +191,16 @@ export default function EventDetail() {
           </div>
 
           <div className="mb-12 overflow-y-auto max-h-96">
-            <EventParticipant eventId={eventId}></EventParticipant>
+            <EventParticipant participantList={participantList}/>
           </div>
 
           <div className="flex flex-col mb-14">
             <span className="py-1 px-3 text-2xl font-bold mb-2 bg-gray-50">
               이벤트 당첨 고객
             </span>
-            {/* TODO : 이벤트 당첨자 리스트 수정예정 */}
             {event.status === EVENT_END ? (
               <div className="mb-12 overflow-y-auto max-h-96">
-                <EventWinnerList eventId={eventId} />
+                <EventWinnerList eventWinnerList={eventWinnerList} />
               </div>
             ) : (
               <div className="ml-2">이벤트 종료 후 추첨됩니다.</div>
