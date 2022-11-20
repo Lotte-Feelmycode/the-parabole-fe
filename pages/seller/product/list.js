@@ -138,6 +138,7 @@ export default function SellerProductList() {
       <SellerLayout>
         <Heading title="상품 목록" type="h1" />
         <Divider />
+        <div className="overflow-auto">
         <table className="w-full text-m text-center">
           <thead className="text-base text-black uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr className="h-14">
@@ -233,7 +234,7 @@ export default function SellerProductList() {
             )}
           </tbody>
         </table>
-
+        </div>
         <Div>
           <SmallPink
             buttonText="등록하기"
