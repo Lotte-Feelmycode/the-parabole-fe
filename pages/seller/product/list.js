@@ -36,7 +36,11 @@ export default function SellerProductList() {
     }
     setHeaders(useGetToken());
 
-    GET_DATA(`/product/seller/list`, null, headers).then((res) => {
+    GET_DATA(
+      `/product/seller/list`,
+      { page: 0, sort: 'createdAt,desc' },
+      headers,
+    ).then((res) => {
       if (res) {
         setProductList(res.content);
       }
@@ -219,7 +223,8 @@ export default function SellerProductList() {
                   </td>
                   <td className=" py-2 px-4  w-24">
                     <Tags>
-                      {getState(PRODUCT_STATE, product.productStatus) || "판매중"}
+                      {getState(PRODUCT_STATE, product.productStatus) ||
+                        '판매중'}
                     </Tags>
                   </td>
                 </tr>
