@@ -24,6 +24,8 @@ export default function EventPrizeContainer({
     if (eventId !== null && eventId !== undefined && headers) {
       POST_DATA('/event/participant/check', { eventId }, headers).then(
         (res) => {
+          console.log(res);
+
           if (res) {
             setApplySts(canPush);
           } else {
@@ -86,7 +88,7 @@ export default function EventPrizeContainer({
               onClickFunc={() =>
                 applyEvent(eventId, prize.eventPrizeId, prize.productName)
               }
-              attr={{ disabled: applySts }}
+              // attr={{ disabled: applySts }}
               css={{
                 marginTop: 'auto',
                 marginBottom: '10px',
@@ -117,7 +119,7 @@ export default function EventPrizeContainer({
               onClickFunc={() =>
                 applyEvent(eventId, prize.eventPrizeId, prize.couponName)
               }
-              attr={{ disabled: applySts }}
+              // attr={{ disabled: applySts }}
               css={{
                 marginTop: 'auto',
                 marginBottom: '10px',

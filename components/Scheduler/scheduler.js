@@ -34,8 +34,8 @@ export default function EventScheduler({ input }) {
           defaultCurrentViewName="Week"
         />
 
-        <DayView startDayHour={0} endDayHour={23} cellDuration={60} />
-        <WeekView startDayHour={0} endDayHour={23} cellDuration={60} />
+        <DayView startDayHour={8} endDayHour={24} cellDuration={60} />
+        <WeekView startDayHour={8} endDayHour={24} cellDuration={60} />
 
         <Toolbar />
         <ViewSwitcher />
