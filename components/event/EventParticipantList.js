@@ -151,6 +151,11 @@ export default function EventParticipantList({ eventId }) {
                 <EventParticipant idx={index} participant={participant} />
               ))}
           </tbody>
+          <tfoot>
+            <tr className="text-right text-base font-semibold bg-gray-100 text-gray-900 dark:text-white">
+                <td className="py-2 px-4" colSpan="5">응모고객 수 : {participantList && participantList.length}명</td>
+            </tr>
+          </tfoot>
         </table>
       ) : (
         <div className="ml-2 font-semibold">

@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { getDateTime } from '@utils/functions';
 
 export default function EventWinner({ eventWinner }) {
   const [winnerInfo, setWinnerInfo] = useState(eventWinner);
@@ -10,15 +9,16 @@ export default function EventWinner({ eventWinner }) {
   }, [eventWinner]);
 
   return (
-    <tr>
-      <Td>{eventWinner.eventTitle}</Td>
-      <Td>{eventWinner.userEmail}</Td>
-      <Td>{eventWinner.prizeName}</Td>
+    <tr
+      key={eventWinner.eventWinnerId}
+      className="text-base h-12 bg-white border-b hover:bg-gray-50"
+    >
+      <td className="py-4 px-4 w-40 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        {eventWinner.userEmail}
+      </td>
+      <td className="py-4 px-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        {eventWinner.prizeName}
+      </td>
     </tr>
   );
 }
-
-const Td = styled.td`
-  padding: 30px;
-  font-family: 'SansLight';
-`;
