@@ -10,6 +10,7 @@ export default function SellerOrderList() {
 
   const [nameSortDesc, setNameSortDesc] = useState(false);
   const [orderCntSortDesc, setOrderCntSortDesc] = useState(true);
+  const [priceSortDesc, setPriceSortDesc] = useState(true);
   const [totalSortDesc, setTotalSortDesc] = useState(true);
   const [stateSortDesc, setStateSortDesc] = useState(true);
 
@@ -95,6 +96,39 @@ export default function SellerOrderList() {
     setOrderList(copyArray);
   }
 
+  
+  // 가격정렬
+  function sortListByPrice(e) {
+    e.preventDefault();
+
+    let copyArray = [...orderList];
+
+    if (priceSortDesc) {
+      copyArray.sort(function (a, b) {
+        // 내림차순
+        return a.productPrice > b.productPrice
+          ? -1
+          : a.productPrice < b.productPrice
+          ? 1
+          : 0;
+      });
+      setPriceSortDesc(false);
+    } else {
+      copyArray.sort(function (a, b) {
+        // 오름차순
+        return a.productPrice < b.productPrice
+          ? -1
+          : a.productPrice > b.productPrice
+          ? 1
+          : 0;
+      });
+      setPriceSortDesc(true);
+    }
+
+    setOrderList(copyArray);
+  }
+
+
   // 주문총금액 정렬
   function sortListByTotal(e) {
     e.preventDefault();
@@ -104,11 +138,11 @@ export default function SellerOrderList() {
     if (totalSortDesc) {
       copyArray.sort(function (a, b) {
         // 내림차순
-        return a.productCnt * a.productdiscountPrice >
-          b.productCnt * b.productdiscountPrice
+        return a.productCnt * a.productPrice >
+          b.productCnt * b.productPrice
           ? -1
-          : a.productCnt * a.productdiscountPrice <
-            b.productCnt * b.productdiscountPrice
+          : a.productCnt * a.productPrice <
+            b.productCnt * b.productPrice
           ? 1
           : 0;
       });
@@ -116,11 +150,11 @@ export default function SellerOrderList() {
     } else {
       copyArray.sort(function (a, b) {
         // 오름차순
-        return a.productCnt * a.productdiscountPrice <
-          b.productCnt * b.productdiscountPrice
+        return a.productCnt * a.productPrice <
+          b.productCnt * b.productPrice
           ? -1
-          : a.productCnt * a.productdiscountPrice >
-            b.productCnt * b.productdiscountPrice
+          : a.productCnt * a.productPrice >
+            b.productCnt * b.productPrice
           ? 1
           : 0;
       });
@@ -182,19 +216,25 @@ export default function SellerOrderList() {
             <th scope="col" className="p-4 w-20">
               상품 이미지
             </th>
-            <th scope="col" className="py-3 px-2 w-40">
+            <th scope="col" className="py-3 px-2 w-24">
               <div className="flex justify-center items-center">
                 주문수량
                 <SortButton onClickFunc={(e) => sortListByOrders(e)} />
               </div>
             </th>
-            <th scope="col" className="py-3 px-2 w-24">
+            <th scope="col" className="py-3 px-2 w-40">
+              <div className="flex justify-center items-center">
+                가격
+                <SortButton onClickFunc={(e) => sortListByPrice(e)} />
+              </div>
+            </th>
+            <th scope="col" className="py-3 px-2 w-40">
               <div className="flex justify-center items-center">
                 주문 총 금액
                 <SortButton onClickFunc={(e) => sortListByTotal(e)} />
               </div>
             </th>
-            <th scope="col" className="py-3 px-6 w-40">
+            <th scope="col" className="py-3 px-6 w-24">
               상품 재고
             </th>
             <th scope="col" className="py-3 px-4 w-40">
@@ -216,11 +256,11 @@ export default function SellerOrderList() {
             <th scope="row" className="py-3 px-6 text-base">
               Total
             </th>
-            <td colSpan={4} />
-            <td className="text-right text-red-600 py-3 px-6">
+            <td colSpan={3} />
+            <td colSpan={2} className="text-right text-red-600 py-3 px-6">
               총 주문수 : {orderList.length}
             </td>
-            <td colSpan={2} className="text-right text-red-600 py-3 px-6">
+            <td colSpan={3} className="text-right text-red-600 py-3 px-6">
               총 주문 금액 : {numberToMonetary(sumTotal())}원
             </td>
           </tr>
