@@ -19,7 +19,6 @@ export default function EventPrizeContainer({
   const disabledPush = true;
   const canPush = false;
   const [applySts, setApplySts] = useState(canPush);
-  console.log('applyst', applySts);
 
   useEffect(() => {
     if (eventId !== null && eventId !== undefined && headers) {
@@ -29,9 +28,7 @@ export default function EventPrizeContainer({
 
           if (res) {
             setApplySts(canPush);
-            console.log('applyst', applySts);
           } else {
-            console.log('applyst', applySts);
             setApplySts(disabledPush);
           }
         },
