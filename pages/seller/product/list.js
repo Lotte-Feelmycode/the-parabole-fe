@@ -198,20 +198,14 @@ export default function SellerProductList() {
                       </div>
                     </td>
                     <td className="bg-gray-50 py-2 px-4 w-52 text-left">
-                      <div
-                        style={{
-                          width: '100px',
-                          height: '100px',
-                          margin: 'auto',
-                        }}
-                      >
-                        <Link href={`/product/${product.productId}`}>
-                          <img
+                      <Link href={`/product/${product.productId}`}>
+                        <ProductImageSection>
+                          <ProductImage
                             src={product.productThumbnailImg || NO_IMAGE}
                             alt="상품"
-                          ></img>
-                        </Link>
-                      </div>
+                          />
+                        </ProductImageSection>
+                      </Link>
                     </td>
                     <td className=" py-2 px-4  w-24">
                       {product.productCategory}
@@ -272,4 +266,17 @@ const Div = styled.div`
   display: flex;
   flex-direction: row-reverse;
   margin: 20px;
+`;
+
+const ProductImageSection = styled.div`
+  overflow: hidden;
+  width: 100px;
+  height: 100px;
+  margin: auto;
+`;
+
+const ProductImage = styled.img`
+  object-fit: cover;
+  width: 100%;
+  aspect-ratio: 1;
 `;
