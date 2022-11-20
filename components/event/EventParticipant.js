@@ -7,8 +7,6 @@ export default function EventParticipant({ idx, participant }) {
 
   useEffect(() => {
     setPartinfo(partinfo);
-
-    console.log(partinfo.eventPrizes);
   }, [participant]);
 
   return (
@@ -25,14 +23,16 @@ export default function EventParticipant({ idx, participant }) {
       </td>
       <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
         {partinfo &&
-          partinfo.eventPrizes[0] &&
-          !isEmpty(partinfo.eventPrizes[0].coupon) && (
-            <div>{partinfo.eventPrizes[0].coupon.name}</div>
+          partinfo.eventPrizes &&
+          partinfo.eventPrizes.prizeType === "COUPON" && 
+          !isEmpty(partinfo.eventPrizes.coupon) && (
+            <div>{partinfo.eventPrizes.coupon.name}</div>
           )}
         {partinfo &&
-          partinfo.eventPrizes[0] &&
-          !isEmpty(partinfo.eventPrizes[0].product) && (
-            <div>{partinfo.eventPrizes[0].product.name}</div>
+          partinfo.eventPrizes &&
+          partinfo.eventPrizes.prizeType === "PRODUCT" && 
+          !isEmpty(partinfo.eventPrizes.product) && (
+            <div>{partinfo.eventPrizes.product.name}</div>
           )}
       </td>
       <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
