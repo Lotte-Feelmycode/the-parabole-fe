@@ -147,7 +147,7 @@ export default function Signin() {
                 </span>
               </div>
 
-              <Link href={NAVER_AUTH_URI}>
+              {/* <Link href={NAVER_AUTH_URI}>
                 <button className="flex justify-center items-center bg-green-500 hover:bg-green-600 active:bg-green-700 focus-visible:ring ring-green-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3">
                   <a
                     title="Gapo, Public domain, via Wikimedia Commons"
@@ -165,7 +165,7 @@ export default function Signin() {
                   </a>{' '}
                   Continue with Naver
                 </button>
-              </Link>
+              </Link> */}
 
               <Link href={KAKAO_AUTH_URI}>
                 <button className="flex justify-center items-center bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-700 focus-visible:ring ring-yellow-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 gap-2 px-8 py-3">
