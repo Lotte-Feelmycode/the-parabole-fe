@@ -1,24 +1,50 @@
 import styled from '@emotion/styled';
 import CommerceLayout from '@components/common/CommerceLayout';
 import SiteHead from '@components/common/SiteHead.js';
+import MainContent from '@components/common/MainContent';
+import IconList from '@components/common/IconList';
+import ProductList from '@components/product/ProductList';
 import ChatContainer from '@components/chat/ChatContainer';
-import { Blue } from '@components/input/Button';
 
 export default function Home() {
+  const productListProps = {
+    size: 12,
+    page: 0,
+    sort: 'createdAt,desc',
+  };
+
   return (
     <CommerceLayout>
       <SiteHead title="Home" />
+      <div className="z-50 rounded p-4 h-96 w-72 bottom-20 right-10 bg-gray-100 fixed">
+        <ChatContainer />
+      </div>
       <div className="container px-5 py-12 mx-auto">
-        <div className="bg-white py-6 sm:py-8 lg:py-12">
-          <div className="max-w-screen-2xl px-4 md:px-8 mx-auto">
-            <form className="max-w-lg border rounded-lg mx-auto">
-              <div className="flex flex-col gap-4 p-4 md:p-8">
-                <ChatContainer />
-              </div>
-            </form>
-          </div>
-        </div>
+        <MainContent
+          title="더파라볼래"
+          content="셀러가 직접 등록하는 다양한 이벤트에 참여해보세요!"
+        />
+        <Row>
+          <IconList />
+        </Row>
+        <Row>
+          <ProductList {...productListProps} />
+        </Row>
+      </div>
+      <div className="z-50 h-24 bg-white fixed">
+        <ChatContainer />
       </div>
     </CommerceLayout>
   );
 }
+
+const Row = styled.div`
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  margin-right: -10px;
+  margin-left: -10px;
+  align-items: stretch;
+  margin-bottom: 40px;
+`;
