@@ -28,6 +28,8 @@ export default function ChatContainer({}) {
       return;
     }
     const newMessage = { username, content };
+
+    stompClient.send('');
     stompClient.send('/app/sendMessage', {}, JSON.stringify('_메시지_'));
     setMessage('');
     addMessage({
@@ -40,6 +42,13 @@ export default function ChatContainer({}) {
     setContents((prev) => [...prev, message]);
   };
 
+  const handleOnKeyPress = (e) => {
+    e.preventDefault();
+    if (e.key === 'Enter') {
+      handleEnter('username', message);
+    }
+  };
+
   return (
     <div className="container drop-shadow-xl rounded">
       <ChatPresenter
@@ -49,6 +58,7 @@ export default function ChatContainer({}) {
         setMessage={setMessage}
         username={username}
         setUsername={setUsername}
+        setKeyPress={handleOnKeyPress}
       />
     </div>
   );

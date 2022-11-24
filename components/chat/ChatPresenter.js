@@ -7,6 +7,7 @@ export const ChatPresenter = ({
   setMessage,
   setUsername,
   handleEnter,
+  setKeyPress,
 }) => {
   return (
     <div className="chat-box flex flex-col">
@@ -36,6 +37,7 @@ export const ChatPresenter = ({
           placeholder="input your messages..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          onKeyUp={setKeyPress}
         />
       </div>
       <SmallBlue
