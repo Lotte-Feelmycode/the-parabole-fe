@@ -38,7 +38,7 @@ export const ChatPresenter = ({
       </div>
       <SmallBlue
         buttonText="채팅보내기"
-        onClickFunc={(value) => handleEnter(username, value)}
+        onClickFunc={(value) => handleEnter('username', value)}
       />
     </div>
   );
