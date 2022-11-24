@@ -2,6 +2,7 @@ import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import { useState, useEffect } from 'react';
 import { ChatPresenter } from './ChatPresenter';
+import { isEmpty } from '@utils/functions';
 
 let sockJS = new SockJS('http://localhost:8080/ws');
 let stompClient = Stomp.over(sockJS);
@@ -22,9 +23,17 @@ export default function ChatContainer({}) {
   }, [contents]);
 
   const handleEnter = (username, content) => {
+    if (isEmpty(message)) {
+      alert('메시지를 입력해주세요');
+      return;
+    }
     const newMessage = { username, content };
     stompClient.send('/app/sendMessage', {}, JSON.stringify('_메시지_'));
     setMessage('');
+    addMessage({
+      username: localStorage.getItem('nickname'),
+      content: message,
+    });
   };
 
   const addMessage = (message) => {
@@ -32,7 +41,7 @@ export default function ChatContainer({}) {
   };
 
   return (
-    <div className={'container'}>
+    <div className="container drop-shadow-xl rounded">
       <ChatPresenter
         contents={contents}
         handleEnter={handleEnter}
