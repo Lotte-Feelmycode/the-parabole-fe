@@ -4,6 +4,7 @@ import SiteHead from '@components/common/SiteHead.js';
 import MainContent from '@components/common/MainContent';
 import IconList from '@components/common/IconList';
 import ProductList from '@components/product/ProductList';
+import ChatContainer from '@components/chat/ChatContainer';
 
 export default function Home() {
   const productListProps = {
@@ -15,6 +16,7 @@ export default function Home() {
   return (
     <CommerceLayout>
       <SiteHead title="Home" />
+      <ChatContainer></ChatContainer>
       <div className="container px-5 py-12 mx-auto">
         <MainContent
           title="더파라볼래"
