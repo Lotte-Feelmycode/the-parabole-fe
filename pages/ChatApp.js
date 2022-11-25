@@ -56,7 +56,7 @@ export default function ChatApp() {
 
     client.current.publish({
       destination: '/app/sendMessage',
-      body: JSON.stringify({ roomSeq: ROOM_SEQ, message }),
+      body: JSON.stringify({ name: localStorage.getItem('nickname'), message }),
     });
 
     // client.send('/app/chat/message', {}, JSON.stringify('_메시지_'));
