@@ -19,6 +19,16 @@ export default function ChatContainer({ setModalState }) {
           </a>
         </CloseButtonSection>
       </TopSection>
+      <MidSection />
+      <BottomSection>
+        <div className="w-1/5">+</div>
+        <input
+          type="text"
+          className="w-3/5 rounded border-1 border-slate-200"
+          placeholder="채팅을 입력하세요"
+        ></input>
+        <div className="w-1/5">전송</div>
+      </BottomSection>
     </ModalContainer>
   );
 }
@@ -47,4 +57,18 @@ const TopSection = styled.div`
 const CloseButtonSection = styled.div`
   padding-top: 5px;
   text-align: right;
+`;
+
+const MidSection = styled.div`
+  padding: 5px 15px;
+  height: 80%;
+`;
+
+const BottomSection = styled.div`
+  padding: 5px 15px;
+  height: 80%;
+  border-style: solid 1px gray;
+
+  display: flex;
+  flex-direction: row;
 `;
