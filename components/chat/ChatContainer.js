@@ -3,7 +3,7 @@ import Stomp from 'stompjs';
 import { useState, useEffect } from 'react';
 import { ChatPresenter } from './ChatPresenter';
 
-let sockJS = new SockJS('http://localhost:8080/ws');
+let sockJS = new SockJS('http://localhost:8000/chat');
 let stompClient = Stomp.over(sockJS);
 stompClient.debug = () => {};
 
@@ -14,7 +14,7 @@ export default function ChatContainer({}) {
 
   useEffect(() => {
     stompClient.connect({}, () => {
-      stompClient.subscribe('/topic/public', (data) => {
+      stompClient.subscribe('/receive/chat', (data) => {
         const newMessage = JSON.parse(data.body);
         addMessage(newMessage);
       });
@@ -23,7 +23,7 @@ export default function ChatContainer({}) {
 
   const handleEnter = (username, content) => {
     const newMessage = { username, content };
-    stompClient.send('/app/sendMessage', {}, JSON.stringify('_메시지_'));
+    stompClient.send('/app/message', {}, JSON.stringify('_메시지_'));
     setMessage('');
   };
 
