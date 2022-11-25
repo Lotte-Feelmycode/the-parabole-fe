@@ -5,18 +5,35 @@ import MainContent from '@components/common/MainContent';
 import IconList from '@components/common/IconList';
 import ProductList from '@components/product/ProductList';
 import ChatContainer from '@components/chat/ChatContainer';
+import { useState } from 'react';
 
 export default function Home() {
+  const [modalState, setModalState] = useState(false);
+
   const productListProps = {
     size: 12,
     page: 0,
     sort: 'createdAt,desc',
   };
 
+  const buttonHandler = (e) => {
+    e.preventDefault();
+    setModalState(true);
+  };
+
   return (
     <CommerceLayout>
       <SiteHead title="Home" />
-      <ChatContainer></ChatContainer>
+      <div>{modalState && <ChatContainer setModalState={setModalState} />}</div>
+      <div>
+        <button
+          onClick={buttonHandler}
+          title="Contact Sale"
+          className="fixed z-90 bottom-10 right-8 bg-blue-600 w-16 h-16 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:bg-blue-700 hover:drop-shadow-2xl hover:animate-bounce duration-300"
+        >
+          &#9993;
+        </button>
+      </div>
       <div className="container px-5 py-12 mx-auto">
         <MainContent
           title="더파라볼래"
