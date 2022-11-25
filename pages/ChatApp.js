@@ -17,7 +17,7 @@ export default function ChatApp() {
 
   const connect = () => {
     client.current = new StompJs.Client({
-      brokerURL: 'ws://localhost:8080/ws/chat', // 웹소켓 서버로 직접 접속
+      brokerURL: 'ws://localhost:8000/chat', // 웹소켓 서버로 직접 접속
       // webSocketFactory: () => new SockJS('/ws-stomp'), // proxy를 통한 접속
       // connectHeaders: {
       //   'auth-token': 'spring-chat-auth-token',
@@ -44,7 +44,7 @@ export default function ChatApp() {
   };
 
   const subscribe = () => {
-    client.current.subscribe(`/topic/public/${ROOM_SEQ}`, ({ body }) => {
+    client.current.subscribe(`/receive/chat/${ROOM_SEQ}`, ({ body }) => {
       setChatMessages((_chatMessages) => [..._chatMessages, JSON.parse(body)]);
     });
   };
@@ -59,7 +59,7 @@ export default function ChatApp() {
     //   body: JSON.stringify({ roomSeq: ROOM_SEQ, message }),
     // });
 
-    client.send('/app/sendMessage', {}, JSON.stringify('_메시지_'));
+    client.send('/app/message', {}, JSON.stringify('_메시지_'));
 
     setMessage('');
   };
