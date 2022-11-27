@@ -97,8 +97,6 @@ export default function ChatContainer({ setModalState }) {
       </TopSection>
       <MidSection className="overflow-y-auto">
         <MessageNode text="방문해주셔서 감사합니다 :) 어떻게 도와드릴까요?"/>
-        <MessageNode text="u1-s1's store , u4-s2's store"/>
-        <SendMessageNode text="u1-s1's store , u4-s2's store"/>
 
         {messageList && messageList.length > 0 &&
           messageList.map((message, index) => (
