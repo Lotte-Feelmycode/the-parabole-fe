@@ -123,7 +123,7 @@ export default function ChatContainer({ setModalState }) {
   const handleOnKeyPress = (e) => {
     e.preventDefault();
     if (e.key === 'Enter') {
-      submitHandler();
+      submitHandler(e);
     }
   };
 
@@ -156,7 +156,7 @@ export default function ChatContainer({ setModalState }) {
       <BottomSection>
         <input
           value={sendMessage}
-          onKeyUp={(e) => submitHandler(e)}
+          onKeyUp={(e) => handleOnKeyPress(e)}
           onChange={changeSendMsgHandler}
           className="block h-10 mx-2 p-2 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" 
           placeholder="채팅을 입력하세요"/>
