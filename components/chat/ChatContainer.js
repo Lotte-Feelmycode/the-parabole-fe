@@ -4,6 +4,7 @@ import MessageNode from '@components/chat/MessageNode';
 import { GET_DATA } from '@apis/defaultApi';
 
 import { useState } from 'react';
+import SendMessageNode from './SendMessageNode';
 
 export default function ChatContainer({ setModalState }) {
   const [sendMessage, setSendMessage] = useState("");
@@ -23,7 +24,7 @@ export default function ChatContainer({ setModalState }) {
 
   const changeSendMsgHandler = (e) => {
     e.preventDefault();
-    setSendMessage(e.target.value);
+    setSendMessage("//" + e.target.value);
   }
 
   const submitHandler = (e) => {
@@ -39,7 +40,8 @@ export default function ChatContainer({ setModalState }) {
     }
 
     if (Array.isArray(storeList) && (sendMessage.includes(storeList[0]) || sendMessage.includes(storeList[1]) || sendMessage.includes(storeList[2]))) {
-      GET_DATA(`/list?storeName=${sendMessage}`).then((res) => {
+      let searchStoreProduct = sendMessage.startsWith("//") && sendMessage.split("//")[1];
+      GET_DATA(`/list?storeName=${searchStoreProduct}`).then((res) => {
         setProductList(res);
 
         let msg = res.toString();
@@ -48,8 +50,10 @@ export default function ChatContainer({ setModalState }) {
     }
 
     if (Array.isArray(storeList) && (sendMessage.includes(storeList[0]) || sendMessage.includes(storeList[1]) || sendMessage.includes(storeList[2]))) {
-      selectStore(sendMessage);
-      GET_DATA(`/list?storeName=${sendMessage}`).then((res) => {
+      let searchStores = sendMessage.startsWith("//") && sendMessage.split("//")[1];
+
+      selectStore(searchStores);
+      GET_DATA(`/list?storeName=${searchStores}`).then((res) => {
         setProductList(res);
 
         let msg = res.toString();
@@ -58,7 +62,9 @@ export default function ChatContainer({ setModalState }) {
     }
 
     if (selectStore && sendMessage.includes("쿠폰")) {
-      GET_DATA(`/coupon?storeName=${selectStore}`).then((res) => {
+      let searchStoreCoupon = sendMessage.startsWith("//") && sendMessage.split("//")[1];
+
+      GET_DATA(`/coupon?storeName=${searchStoreCoupon}`).then((res) => {
         setCouponList(res);
 
         let msg = res.toString();
@@ -66,6 +72,7 @@ export default function ChatContainer({ setModalState }) {
       });
     }
 
+    setMessageList((_chatMessages) => [..._chatMessages, sendMessage]);
     setSendMessage("");
   }
   return (
@@ -84,10 +91,15 @@ export default function ChatContainer({ setModalState }) {
       <MidSection className="overflow-y-auto">
         <MessageNode text="방문해주셔서 감사합니다 :) 어떻게 도와드릴까요?"/>
         <MessageNode text="u1-s1's store , u4-s2's store"/>
+        <SendMessageNode text="u1-s1's store , u4-s2's store"/>
 
         {messageList && messageList.length > 0 &&
           messageList.map((message, index) => (
-            <MessageNode text={message}/>
+            message && message.startsWith("//") ? (
+              <SendMessageNode text={message}/> 
+            ) : (
+              <MessageNode text={message}/> 
+            )
           ))
         }
       </MidSection>
