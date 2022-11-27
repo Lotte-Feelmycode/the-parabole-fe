@@ -5,6 +5,7 @@ import { GET_DATA } from '@apis/defaultApi';
 
 import { useState } from 'react';
 import SendMessageNode from './SendMessageNode';
+import { isEmpty } from '@utils/functions';
 
 export default function ChatContainer({ setModalState }) {
   const [sendMessage, setSendMessage] = useState("");
@@ -24,11 +25,21 @@ export default function ChatContainer({ setModalState }) {
 
   const changeSendMsgHandler = (e) => {
     e.preventDefault();
+    setSendMessage(e.target.value);
+  }
+
+  const setMsgHandler = (e) => {
+    e.preventDefault();
     setSendMessage("//" + e.target.value);
   }
 
   const submitHandler = (e) => {
     e.preventDefault();
+
+    if (isEmpty(sendMessage)) {
+      alert("메시지를 입력해주세요.");
+      return;
+    }
 
     if (sendMessage.includes("스토어")) {
       GET_DATA('/chat').then((res) => {
@@ -107,6 +118,7 @@ export default function ChatContainer({ setModalState }) {
         <input
           value={sendMessage}
           onChange={changeSendMsgHandler}
+          onKeyDown={setMsgHandler}
           className="block h-10 mx-2 p-2 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" 
           placeholder="채팅을 입력하세요"/>
           <button onClick={submitHandler} type="submit" className="inline-flex justify-center p-2 max-h-10 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100">
