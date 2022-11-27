@@ -36,50 +36,110 @@ export default function ChatContainer({ setModalState }) {
       alert("메시지를 입력해주세요.");
       return;
     }
+    setMessageList((_chatMessages) => [..._chatMessages, "//" + sendMessage]);
 
+
+    // 스토어 전체 조회
     if (sendMessage.includes("스토어")) {
       GET_DATA('/chat').then((res) => {
         setStoreList(res);
 
-        let msg = res.toString();
+        let msg = "인기 스토어 목록입니다.";
+        msg += "\n";
+
+        res.map((item, index) => {
+          msg += "🏠"
+          msg += item;
+          msg += "\n";
+        });
+        
         setMessageList((_chatMessages) => [..._chatMessages, msg]);
       });
     }
 
-    if (Array.isArray(storeList) && (sendMessage.includes(storeList[0]) || sendMessage.includes(storeList[1]) || sendMessage.includes(storeList[2]))) {
-      let searchStoreProduct = sendMessage.startsWith("//") && sendMessage.split("//")[1];
-      GET_DATA(`/list?storeName=${searchStoreProduct}`).then((res) => {
+
+    // 스토어 상품 조회
+    if (Array.isArray(storeList) && (storeList[0].includes(sendMessage) || storeList[1].includes(sendMessage))) {
+      GET_DATA(`/chat/list?storeName=${sendMessage}`).then((res) => {
         setProductList(res);
+        setSelectStore(sendMessage);
 
-        let msg = res.toString();
+        
+        let msg = sendMessage + "로 검색하신 스토어의 인기 상품 TOP3 입니다.";
+        msg += "\n";
+
+        res.map((item, index) => {
+          msg += "✨"
+          msg += item;
+          msg += "\n";
+        });
+        
+
+        console.log(res);
         setMessageList((_chatMessages) => [..._chatMessages, msg]);
       });
     }
 
-    if (Array.isArray(storeList) && (sendMessage.includes(storeList[0]) || sendMessage.includes(storeList[1]) || sendMessage.includes(storeList[2]))) {
-      let searchStores = sendMessage.startsWith("//") && sendMessage.split("//")[1];
+    // if (Array.isArray(storeList) && (sendMessage.includes(storeList[0]) || sendMessage.includes(storeList[1]) || sendMessage.includes(storeList[2]))) {
+    //   let searchStores = sendMessage.startsWith("//") && sendMessage.split("//")[1];
 
-      selectStore(searchStores);
-      GET_DATA(`/list?storeName=${searchStores}`).then((res) => {
-        setProductList(res);
+    //   selectStore(searchStores);
+    //   GET_DATA(`/chat/list?storeName=${sendMessage}`).then((res) => {
+    //     setProductList(res);
 
-        let msg = res.toString();
-        setMessageList((_chatMessages) => [..._chatMessages, msg]);
-      });
-    }
+    //     let msg = res.toString();
+    //     setMessageList((_chatMessages) => [..._chatMessages, msg]);
+    //   });
+    // }
 
-    if (selectStore && sendMessage.includes("쿠폰")) {
-      let searchStoreCoupon = sendMessage.startsWith("//") && sendMessage.split("//")[1];
-
-      GET_DATA(`/coupon?storeName=${searchStoreCoupon}`).then((res) => {
+    if (selectStore && sendMessage.includes("쿠폰") && !sendMessage.includes("다운")) {
+      GET_DATA(`/chat/coupon?storeName=${selectStore}`)
+      .then((res) => {
         setCouponList(res);
 
-        let msg = res.toString();
+        let msg = sendMessage + "로 검색하신 스토어의 쿠폰목록 입니다.";
+        msg += "\n";
+
+        res.map((item, index) => {
+          msg += "🎈 "
+          msg += item;
+          msg += "\n";
+        });
+        
         setMessageList((_chatMessages) => [..._chatMessages, msg]);
-      });
+      })
     }
 
-    setMessageList((_chatMessages) => [..._chatMessages, "//" + sendMessage]);
+    if (sendMessage.includes("셀러")) {
+      let msg = "📌 셀러 등록 방법";
+      msg += "\n우선 더 파라볼래 회원가입을 하시고, 고객센터로 문의해주세요!";
+      msg += "\n";
+      msg += "\n더 파라볼래 셀러 회원 등록시 이벤트 등록, 쿠폰 등 다양한 마케팅 혜택을 체험할 수 있습니다.";
+      setMessageList((_chatMessages) => [..._chatMessages, msg]);
+    }
+
+    if (sendMessage.includes("쿠폰") && sendMessage.includes("다운")) {
+      let msg = "🎁 쿠폰 다운로드 방법";
+      msg += "\nA. 상품 상세 페이지에서 해당 스토어의 혜택을 확인할 수 있어요! ";
+      msg += "\nB. 스토어 홈에서도 혜택 받기 버튼을 통해 쿠폰을 다운로드할 수 있어요!";
+
+      msg += "\n";
+      msg += "\n(다운로드 받은 쿠폰은 주문 시 적용가능합니다.)";
+      setMessageList((_chatMessages) => [..._chatMessages, msg]);
+    }
+
+    if (sendMessage.includes("이벤트") && sendMessage.includes("등록")) {
+      let msg = "📌 이벤트 등록 방법";
+      msg += "\nA. 우선 셀러로 로그인 해주세요. ";
+      msg += "\nB. 셀러 오피스에서 이벤트 등록 메뉴로 진입해주세요.";
+      msg += "\nC. 이벤트 정보들을 입력해주세요!";
+
+      msg += "\n";
+      msg += "\n(선착순 이벤트의 경우 기존 스케쥴이 있는지 확인 해주세요!)";
+      setMessageList((_chatMessages) => [..._chatMessages, msg]);
+    }
+
+
     setSendMessage("");
   }
   return (
