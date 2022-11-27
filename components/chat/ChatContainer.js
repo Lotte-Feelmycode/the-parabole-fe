@@ -6,6 +6,7 @@ import { GET_DATA } from '@apis/defaultApi';
 import { useState } from 'react';
 import SendMessageNode from './SendMessageNode';
 import { isEmpty } from '@utils/functions';
+import { useGetToken } from '@hooks/useGetToken';
 
 export default function ChatContainer({ setModalState }) {
   const [sendMessage, setSendMessage] = useState("");
@@ -17,6 +18,11 @@ export default function ChatContainer({ setModalState }) {
   const [selectStore, setSelectStore] = useState();
   const [selectProduct, setSelectProduct] = useState();
   const [selectCoupon, setSelectCoupon] = useState();
+
+  let infoTxt = "1. 스토어\n";
+  infoTxt += "2. 상품(이름으로 검색)\n";
+  infoTxt += "3. 상품(스토어로 검색)\n";
+  infoTxt += "4. 쿠폰(스토어로 검색)";
 
   const closeModal = (e) => {
     e.preventDefault();
@@ -109,12 +115,51 @@ export default function ChatContainer({ setModalState }) {
       msg += "\n";
       msg += "\n(선착순 이벤트의 경우 기존 스케쥴이 있는지 확인 해주세요!)";
       setMessageList((_chatMessages) => [..._chatMessages, msg]);
-    } else {
+    } else if (sendMessage.includes("주문")) {
+      GET_DATA(`/chat/order`, '', useGetToken()).then((res) => {
+        let msg = "";
+        if (!isEmpty(res)) {
+          msg = localStorage.getItem("name")+"님의 총 주문 금액은";
+          msg += res
+          msg += "입니다";
+        } else {
+          msg = localStorage.getItem("name")+"님의 주문내역이 없습니다.";
+          setMessageList((_chatMessages) => [..._chatMessages, msg]);
+        }
+      });
+    } else if (sendMessage.includes("이벤트")) {
+      
+      let eStatus = -1;
+      if (sendMessage.includes("진행전") || sendMessage.includes("시작전")) {
+        eStatus = 0;
+      } else if (sendMessage.includes("진행 중") || sendMessage.includes("진행중")) {
+        eStatus = 1;
+      } else if (sendMessage.includes("진행 중") || sendMessage.includes("진행중")) {
+        eStatus = 2;
+      } 
+
+      GET_DATA(`/event/list`,  { eventStatus: eStatus }).then((res) => {
+        let msg = "";
+
+        if (res && res.length > 0) {
+          msg = "현재 진행중인 이벤트 목록입니다.";
+          res.map((item, index) => {
+            msg += "🎁 "
+            msg += item.title;
+            msg += "\n";
+          });
+        } else {
+          msg = "현재 진행중인 이벤트가 없습니다!";
+        }
+
+        setMessageList((_chatMessages) => [..._chatMessages, msg]);
+      });
+    }
+    else {
       let msg = "죄송해요. 질문을 이해하지 못했어요.";
       msg += "\n다시 말씀해주세요.";
 
       setMessageList((_chatMessages) => [..._chatMessages, msg]);
-
     }
 
     setSendMessage("");
@@ -142,6 +187,7 @@ export default function ChatContainer({ setModalState }) {
       </TopSection>
       <MidSection className="overflow-y-auto">
         <MessageNode text="방문해주셔서 감사합니다 :) 어떻게 도와드릴까요?"/>
+        <MessageNode text="1. 스토어 2. 상품(이름으로 검색) 3. 상품(스토어로 검색) 4. 쿠폰(스토어로 검색)"/>
 
         {messageList && messageList.length > 0 &&
           messageList.map((message, index) => (
