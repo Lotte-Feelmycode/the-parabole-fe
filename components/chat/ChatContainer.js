@@ -34,26 +34,26 @@ export default function ChatContainer({ setModalState }) {
         setStoreList(res);
 
         let msg = res.toString();
-        setMessageList((_chatMessages) => [..._chatMessages, res]);
+        setMessageList((_chatMessages) => [..._chatMessages, msg]);
       });
     }
 
-    if (sendMessage.includes(storeList[0]) || sendMessage.includes(storeList[1]) || sendMessage.includes(storeList[2])) {
+    if (Array.isArray(storeList) && (sendMessage.includes(storeList[0]) || sendMessage.includes(storeList[1]) || sendMessage.includes(storeList[2]))) {
       GET_DATA(`/list?storeName=${sendMessage}`).then((res) => {
         setProductList(res);
 
         let msg = res.toString();
-        setMessageList((_chatMessages) => [..._chatMessages, res]);
+        setMessageList((_chatMessages) => [..._chatMessages, msg]);
       });
     }
 
-    if (sendMessage.includes(storeList[0]) || sendMessage.includes(storeList[1]) || sendMessage.includes(storeList[2])) {
+    if (Array.isArray(storeList) && (sendMessage.includes(storeList[0]) || sendMessage.includes(storeList[1]) || sendMessage.includes(storeList[2]))) {
       selectStore(sendMessage);
       GET_DATA(`/list?storeName=${sendMessage}`).then((res) => {
         setProductList(res);
 
         let msg = res.toString();
-        setMessageList((_chatMessages) => [..._chatMessages, res]);
+        setMessageList((_chatMessages) => [..._chatMessages, msg]);
       });
     }
 
@@ -62,7 +62,7 @@ export default function ChatContainer({ setModalState }) {
         setCouponList(res);
 
         let msg = res.toString();
-        setMessageList((_chatMessages) => [..._chatMessages, res]);
+        setMessageList((_chatMessages) => [..._chatMessages, msg]);
       });
     }
 
